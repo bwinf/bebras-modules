@@ -10,6 +10,8 @@ function getUrlParameterByName(name) {
 }
 
 function isCrossDomain() {
+   return true;
+
    function isInIframe() {
       try {
          return window.self !== window.top;
@@ -199,7 +201,7 @@ if (!isCrossDomain()) {
       }
    };
    platform.stop = function() {
-      platform.chan.destroy(); 
+      platform.chan.destroy();
    };
    platform.validate = function (sMode, success, error) {
       if (!success) success = function(){}; // not mandatory, as most code doesn't use it
