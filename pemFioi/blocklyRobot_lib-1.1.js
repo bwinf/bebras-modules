@@ -1690,7 +1690,7 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-              dropObject: "bemale Feld",
+              dropObject: "färbe das Feld",
               onContainer: "auf Markierung",
               readNumber: "lese Zahl auf dem Feld",
             },
@@ -2105,13 +2105,13 @@ var getContext = function(display, infos, curLevel) {
          ],
          backgroundColor: "#d3e7b6",
          itemTypes: {
-            red_robot: { img: imgPath+"red_robot_alt.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             cell: {num: 1, color: "#d3e7b6", side: 60, isObstacle: true, zOrder: 0 },
-            box: { num: 3, img: imgPath+"chest.png", side: 60, isExit: true },
-            leftArrow: { num: 4, img: imgPath+"leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
-            rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
-            topArrow: { num: 6, img: imgPath+"topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
-            bottomArrow: { num: 7, img: imgPath+"bottomArrow.png", side: 60, forwardsBottom: true, zOrder: 0}
+            box: { num: 3, img: "box.png", side: 60, isExit: true },
+            leftArrow: { num: 4, img: "leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
+            rightArrow: { num: 5, img: "rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
+            topArrow: { num: 6, img: "topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
+            bottomArrow: { num: 7, img: "bottomArrow.png", side: 60, forwardsBottom: true, zOrder: 0}
          },
          checkEndCondition: robotEndConditions.checkReachExit
       },
@@ -2309,22 +2309,22 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          backgroundColor: "#abeaf4",
          itemTypes: {
-            red_robot: { img: imgPath+"red_robot_alt.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
-            square: { num: 2, img: imgPath+"card_square.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isSquare === true; }, zOrder: 0 },
-            round: { num: 3, img: imgPath+"card_round.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isRound === true; }, zOrder: 0 },
-            triangle: { num: 4, img: imgPath+"card_triangle.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isTriangle === true; }, zOrder: 0 },
-            dotted: { num: 5, img: imgPath+"card_dotted.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isDotted === true; }, zOrder: 0 },
-            striped: { num: 6, img: imgPath+"card_striped.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isStriped === true; }, zOrder: 0 },
-            quadrille: { num: 7, img: imgPath+"card_quadrille.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isQuadrille === true; }, zOrder: 0 },
-            roundQuadrille: { img: imgPath+"card_roundQuadrille.png", side: 60, isWithdrawable: true, isRound: true, isQuadrille: true, zOrder: 1 },
-            squareQuadrille: { img: imgPath+"card_squareQuadrille.png", side: 60, isWithdrawable: true, isSquare: true, isQuadrille: true, zOrder: 1 },
-            triangleQuadrille: { img: imgPath+"card_triangleQuadrille.png", side: 60, isWithdrawable: true, isTriangle: true, isQuadrille: true, zOrder: 1 },
-            roundStriped: { img: imgPath+"card_roundStriped.png", side: 60, isWithdrawable: true, isRound: true, isStriped: true, zOrder: 1 },
-            squareStriped: { img: imgPath+"card_squareStriped.png", side: 60, isWithdrawable: true, isSquare: true, isStriped: true, zOrder: 1 },
-            triangleStriped: { img: imgPath+"card_triangleStriped.png", side: 60, isWithdrawable: true, isTriangle: true, isStriped: true, zOrder: 1 },
-            roundDotted: { img: imgPath+"card_roundDotted.png", side: 60, isWithdrawable: true, isRound: true, isDotted: true, zOrder: 1 },
-            squareDotted: { img: imgPath+"card_squareDotted.png", side: 60, isWithdrawable: true, isSquare: true, isDotted: true, zOrder: 1 },
-            triangleDotted: { img: imgPath+"card_triangleDotted.png", side: 60, isWithdrawable: true, isTriangle: true, isDotted: true, zOrder: 1 }
+            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            square: { num: 2, img: "purple.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isSquare === true; }, zOrder: 0 },
+            round: { num: 3, img: "green.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isRound === true; }, zOrder: 0 },
+            triangle: { num: 4, img: "orange.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isTriangle === true; }, zOrder: 0 },
+            dotted: { num: 5, img: "dotted.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isDotted === true; }, zOrder: 0 },
+            striped: { num: 6, img: "striped.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isStriped === true; }, zOrder: 0 },
+            quadrille: { num: 7, img: "quadrille.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isQuadrille === true; }, zOrder: 0 },
+            roundQuadrille: { img: "roundQuadrille.png", side: 60, isWithdrawable: true, isRound: true, isQuadrille: true, zOrder: 1 },
+            squareQuadrille: { img: "squareQuadrille.png", side: 60, isWithdrawable: true, isSquare: true, isQuadrille: true, zOrder: 1 },
+            triangleQuadrille: { img: "triangleQuadrille.png", side: 60, isWithdrawable: true, isTriangle: true, isQuadrille: true, zOrder: 1 },
+            roundStriped: { img: "roundStriped.png", side: 60, isWithdrawable: true, isRound: true, isStriped: true, zOrder: 1 },
+            squareStriped: { img: "squareStriped.png", side: 60, isWithdrawable: true, isSquare: true, isStriped: true, zOrder: 1 },
+            triangleStriped: { img: "triangleStriped.png", side: 60, isWithdrawable: true, isTriangle: true, isStriped: true, zOrder: 1 },
+            roundDotted: { img: "roundDotted.png", side: 60, isWithdrawable: true, isRound: true, isDotted: true, zOrder: 1 },
+            squareDotted: { img: "squareDotted.png", side: 60, isWithdrawable: true, isSquare: true, isDotted: true, zOrder: 1 },
+            triangleDotted: { img: "triangleDotted.png", side: 60, isWithdrawable: true, isTriangle: true, isDotted: true, zOrder: 1 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -2567,7 +2567,6 @@ var getContext = function(display, infos, curLevel) {
             green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             earth: { num: 2, img: imgPath+"earth.png", side: 60, isContainer: true, zOrder: 0 },
             flower: { num: 3, img: imgPath+"flower.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
-            flag: { num: 4, img: imgPath+"flag.png", side: 60, isExit: true, zOrder: 0},
             fixed_flower: { num: 5, img: imgPath+"fixed_flower.png", side: 60, isObstacle: true, zOrder: 1 },
             number: { num: 6, side: 60, zOrder: 1 }
          },
@@ -2618,12 +2617,12 @@ var getContext = function(display, infos, curLevel) {
             },
          ],
          itemTypes: {
-            green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            obstacle: { num: 2, img: imgPath+"wall.png", side: 60, isObstacle: true },
+            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true },
             green: { num: 3, color: "#b5e61d", side: 60, isGreen: true, isExit: true},
             number: { num: 4, side: 60, zOrder: 1 },
             board: {num: 5, side: 60, isWritable: true, zOrder: 1 },
-            object: {num: 6, img: imgPath+"red_cube.png", side : 40, isWithdrawable: true, autoWithdraw: true, offsetX: 10, offsetY: -10, zOrder: 1}
+            object: {num: 6, img: "object.png", side : 40, isWithdrawable: true, autoWithdraw: true, offsetX: 10, offsetY: -10, zOrder: 1}
          },
          checkEndCondition: robotEndConditions.checkReachExit
       },
@@ -2830,7 +2829,7 @@ var getContext = function(display, infos, curLevel) {
             rocket: { num: 5, img: imgPath+"rocket.png", side: 60, isExit: true, zOrder: 1 },
             // obstacle: { num: 6, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 1 },
             objet1: { num: 7, img: imgPath+"solar_panel.png", side: 60, isWithdrawable: true, zOrder: 1 },
-            objet2: { num: 8, img: imgPath+"solar_panel.png", side: 60, isWithdrawable: true, zOrder: 1 }, 
+            // objet2: { num: 8, img: "objet2.png", side: 60, isWithdrawable: true, zOrder: 1 }, 
             number: { side: 60, zOrder: 1 }            
          },
          checkEndCondition: robotEndConditions.checkReachExit
