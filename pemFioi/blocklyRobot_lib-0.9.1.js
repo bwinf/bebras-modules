@@ -281,7 +281,7 @@ var getContext = function(display, infos, curLevel) {
             south: "unten",
             west: "links",
             north: "oben",
-            paint: "färbe",
+            paint: "faerbe",
             pickTransportable: "hebeAuf",
             dropTransportable: "legeAb",
             onTransportable: "aufMurmel",
