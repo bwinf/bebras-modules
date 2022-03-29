@@ -1862,7 +1862,7 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilled: "Es gibt noch Kisten, die nicht an ihrem Platz sind.",
                failureNothingToPush: "Hier gibt es keine Kiste zum Herumschieben!",
                failureWhilePushing: "Der Roboter kann hier nicht schieben!",
-               obstacle: "Der Roboter versucht, gegen eine Wand oder eine Kiste zu krachen!"
+               obstacle: "Der Roboter ist gegen ein Hindernis gelaufen!"
             }
          },
       },
