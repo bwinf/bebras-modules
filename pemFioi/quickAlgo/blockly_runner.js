@@ -64,7 +64,7 @@ function initBlocklyRunner(context, messageCallback) {
                displayStr = value.data ? runner.strings.valueTrue : runner.strings.valueFalse;
             }
             if(varName == '@@LOOP_ITERATION@@') { 
-               displayStr = runner.strings.loopIteration + ' <xmp>' + displayStr + '</xmp>';
+               displayStr = runner.strings.loopIteration + ' <div><xmp>Test' + displayStr + '</xmp></div>';
             } else if(varName) {
                varName = varName.toString();
                // Get the original variable name
@@ -82,7 +82,7 @@ function initBlocklyRunner(context, messageCallback) {
                      break;
                   }
                }
-               displayStr = varName + ' = <xmp>' + displayStr + '</xmp>';
+               displayStr = varName + ' = <div><xmp>Test' + displayStr + '</xmp></div>';
             }
             context.blocklyHelper.workspace.reportValue(id, displayStr);
          }
