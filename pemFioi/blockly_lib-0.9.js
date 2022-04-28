@@ -2276,7 +2276,7 @@ function initBlocklyRunner(context, messageCallback, language) {
                      break;
                   }
                }
-               displayStr = varName + ' = ' + displayStr;
+               displayStr = varName + ' = <xmp>' + displayStr + '</xmp>';
             }
             context.blocklyHelper.workspace.reportValue(id, displayStr);
          }

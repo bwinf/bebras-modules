@@ -63,8 +63,8 @@ function initBlocklyRunner(context, messageCallback) {
             if(value && value.type == 'boolean') {
                displayStr = value.data ? runner.strings.valueTrue : runner.strings.valueFalse;
             }
-            if(varName == '@@LOOP_ITERATION@@') {
-               displayStr = runner.strings.loopIteration + ' ' + displayStr;
+            if(varName == '@@LOOP_ITERATION@@') { 
+               displayStr = runner.strings.loopIteration + ' <xmp>' + displayStr + '</xmp>';
             } else if(varName) {
                varName = varName.toString();
                // Get the original variable name
@@ -82,7 +82,7 @@ function initBlocklyRunner(context, messageCallback) {
                      break;
                   }
                }
-               displayStr = varName + ' = ' + displayStr;
+               displayStr = varName + ' = <xmp>' + displayStr + '</xmp>';
             }
             context.blocklyHelper.workspace.reportValue(id, displayStr);
          }
