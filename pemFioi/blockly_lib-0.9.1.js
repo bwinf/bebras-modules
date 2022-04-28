@@ -2558,7 +2558,7 @@ function initBlocklyRunner(context, messageCallback, language) {
                displayStr = value.data ? runner.strings.valueTrue : runner.strings.valueFalse;
             }
             if(varName) {
-               displayStr = varName.toString() + ' = <div><xmp>Test' + displayStr + '</xmp></div>';
+               displayStr = varName.toString() + ' = <xmp>' + displayStr + '</xmp>';
             }
             context.blocklyHelper.workspace.reportValue(id, displayStr);
          }
