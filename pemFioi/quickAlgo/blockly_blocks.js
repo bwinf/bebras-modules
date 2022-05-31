@@ -710,7 +710,7 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
                lists: 260,
                colour: 20,
                variables: 330,
-               functions: 290,
+               functions: "#9911a5",
                _default: 65
             },
             blocks: {}
@@ -2242,7 +2242,7 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
 
             categoriesInfos["variables"] = {
                blocksXml: blocksXml,
-               colour: 330
+               colour: "#a5416b"
             }
          }
 

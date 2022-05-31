@@ -423,7 +423,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.LOOPS_HUE = "120";
 /** @export */ Blockly.Msg.LISTS_HUE = "260";
 /** @export */ Blockly.Msg.LOGIC_HUE = "210";
-/** @export */ Blockly.Msg.VARIABLES_HUE = "330";
+/** @export */ Blockly.Msg.VARIABLES_HUE = "#a5416b";
 /** @export */ Blockly.Msg.TEXTS_HUE = "160";
 /** @export */ Blockly.Msg.PROCEDURES_HUE = "290";
 /** @export */ Blockly.Msg.COLOUR_HUE = "20";

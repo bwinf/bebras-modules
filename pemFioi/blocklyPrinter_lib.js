@@ -132,14 +132,15 @@ var getContext = function(display, infos) {
          context.provideBlocklyColours = function() {
             return {
                categories: {
-                  logic: 100,
-                  loops: 180,
-                  math: 220,
-                  texts: 250,
-                  lists: 60,
+                  logic: "#81b31d",
+                  loops: "#2fb5bd",
+                  math: "#3950a5",
+                  texts: "#6638a5",
+                  lists: "#dac221",
                   colour: 310,
-                  read: 10,
-                  print: 60,
+                  read: "#a50101",
+                  print: "#d8892b",
+                  variables: "#a5416b",
                   _default: 280
                },
                blocks: {}

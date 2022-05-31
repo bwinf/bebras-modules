@@ -410,15 +410,14 @@ var getContext = function(display, infos) {
          context.provideBlocklyColours = function() {
             return {
                categories: {
-                  logic: 100,
-                  loops: 180,
-                  math: 230,
-                  texts: 60,
-                  lists: 40,
-                  colour: 20,
-                  variables: 330,
-                  functions: 290,
-                  turtle: 260,
+                  logic: "#81b31d",
+                  loops: "#2fb5bd",
+                  math: "#3950a5",
+                  texts: "#6638a5",
+                  lists: "#dac221",
+                  colour: 310,
+                  functions: "#9911a5",
+                  turtle: "#723ca5",
                   turtleInput: 200,
                   _default: 0
                },

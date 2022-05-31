@@ -3693,16 +3693,18 @@ var getContext = function(display, infos, curLevel) {
          context.provideBlocklyColours = function() {
             return {
                categories: {
-                  logic: 100,
-                  loops: 180,
-                  math: 230,
-                  text: 60,
-                  lists: 40,
-                  colour: 20,
-                  variables: 330,
-                  functions: 290,
-                  actions: 260,
-                  sensors: 200,
+                  logic: "#81b31d",
+                  loops: "#2fb5bd",
+                  math: "#3950a5",
+                  texts: "#6638a5",
+                  lists: "#dac221",
+                  colour: 310,
+                  read: "#a50101",
+                  print: "#d8892b",
+                  variables: "#a5416b",
+                  sensors: "#2b7ca5",
+                  actions: "#723ca5",
+                  functions: "#9911a5",
                   _default: 0
                },
                blocks: {}
