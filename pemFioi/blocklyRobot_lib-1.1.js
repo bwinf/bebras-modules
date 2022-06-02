@@ -528,7 +528,7 @@ var getContext = function(display, infos, curLevel) {
                turnAround: "drehe um",
                forward: "gehe vorwärts",
                backwards: "gehe rückwärts",
-               jump: "springe",
+               jump: "spring hoch",
                obstacleInFront: "vor Hindernis",
                obstacleEast: "Hindernis rechts",
                obstacleWest: "Hindernis links",
@@ -1305,7 +1305,7 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "hebe den Dominostein auf.",
+               withdrawObject: "hebe den Dominostein auf",
             },
             code: {
                withdrawObject: "hebeDominoAuf"
