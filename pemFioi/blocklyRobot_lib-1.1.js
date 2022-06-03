@@ -1570,7 +1570,7 @@ var getContext = function(display, infos, curLevel) {
                obstacleInFront: "asteroidVorraus"
             },
             messages: {
-               obstacle: "Achtung, vor dir sind Asteroiden!"
+               obstacle: "Achtung, der Roboter ist fast gegen einen Asteroiden gefahren!"
             }
          },
       },
@@ -2654,16 +2654,17 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkReachExit
       },
       laser: {
-         backgroundColor: "#33237a",
+         backgroundColor: "#422d53",
+         borderColor: "#912E54",
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
-            obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true, isOpaque: true },
-            light: { num: 3, img: "off_spot.png", states: ["off_spot.png", "on_spot.png"], isLight: true, state: 0, side: 60 },
-            launcher: { num: 5, img: "launcher.png", isLaser: true, side: 60 },
-            mirrorN: { num: 6, img: "mirrorN.png", isMirror: true, mirrorFunction: function(dir) { return (14 - dir) % 8; }, side: 60 },
-            mirrorZ: { num: 7, img: "mirrorZ.png", isMirror: true, mirrorFunction: function(dir) { return (10 - dir) % 8; }, side: 60 },
-            mirrorH: { num: 8, img: "mirrorH.png", isMirror: true, mirrorFunction: function(dir) { return (12 - dir) % 8; }, side: 60 },
-            mirrorI: { num: 9, img: "mirrorI.png", isMirror: true, mirrorFunction: function(dir) { return (8 - dir) % 8; }, side: 60 },
+            white_robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
+            obstacle: { num: 2, img: imgPath+"asteroide.png", side: 60, isObstacle: true, isOpaque: true },
+            light: { num: 3, img: imgPath+"off_spot.png", states: ["off_spot.png", "on_spot.png"], isLight: true, state: 0, side: 60 },
+            launcher: { num: 5, img: imgPath+"launcher2.png", isLaser: true, side: 60 },
+            mirrorN: { num: 6, img: imgPath+"mirrorN.png", isMirror: true, mirrorFunction: function(dir) { return (14 - dir) % 8; }, side: 60 },
+            mirrorZ: { num: 7, img: imgPath+"mirrorZ.png", isMirror: true, mirrorFunction: function(dir) { return (10 - dir) % 8; }, side: 60 },
+            mirrorH: { num: 8, img: imgPath+"mirrorH.png", isMirror: true, mirrorFunction: function(dir) { return (12 - dir) % 8; }, side: 60 },
+            mirrorI: { num: 9, img: imgPath+"mirrorI.png", isMirror: true, mirrorFunction: function(dir) { return (8 - dir) % 8; }, side: 60 },
             number: { side: 60, zOrder: 1 },
             board_background: { num: 4, color: "#685aa6", side: 60, zOrder: 0 },
          },
@@ -2686,11 +2687,11 @@ var getContext = function(display, infos, curLevel) {
       objects_in_space: {
          backgroundColor: "#666699",
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            stars: { num: 3, img: "stars.png", side: 60, zOrder: 0},
-            objet1: { num: 4, img: "objet1.png", side: 60, isWithdrawable: true, zOrder: 1 },
-            objet2: { num: 5, img: "objet2.png", side: 60, isWithdrawable: true, zOrder: 1 },
-            obstacle: { num: 6, img: "asteroide.png", side: 60, isObstacle: true, zOrder: 0 }
+            white_robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            stars: { num: 3, img: imgPath+"stars.png", side: 60, zOrder: 0},
+            objet1: { num: 4, img: imgPath+"objet1.png", side: 60, isWithdrawable: true, zOrder: 1 },
+            objet2: { num: 5, img: imgPath+"objet2.png", side: 60, isWithdrawable: true, zOrder: 1 },
+            obstacle: { num: 6, img: imgPath+"asteroide.png", side: 60, isObstacle: true, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkPickedAllWithdrawables
       },
