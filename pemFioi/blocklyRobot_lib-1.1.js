@@ -849,6 +849,33 @@ var getContext = function(display, infos, curLevel) {
             }
          },  
       },
+      gears: {
+         de:
+          {
+            label: {
+               withdrawObject: "hebe Zahnrad auf",
+               dropObject: "baue Zahnrad ein",
+               onObject: "auf einem Zahnrad", //auf Zahnrad?
+               onContainer: "auf einer Maschine"
+            },
+            code: {
+               withdrawObject: "hebeZahnradAuf",
+               dropObject: "baueZahnradEin",
+               onObject: "aufZahnrad",
+               onContainer: "aufMaschine"
+            },
+            messages: {
+               successContainersFilled: "Gut gemacht, die Maschinen sind startklar!",
+               failureContainersFilled: "Der Roboter hat nicht alle Zahnräder an der richtigen Stelle eingesetzt.",
+               failureContainersFilledLess: "Der Roboter hat nicht alle Zahnrädereingesetzt.",
+               failureContainersFilledBag: "Der Roboter muss alle Zahnräder in die Maschine einbauen.",
+               failureDropOutside: "Der Roboter kann hier kein Zahnrad einbauen.",
+               failureDropObject: "Diese Maschine benötigt kein weiteres Zahnrad",
+               emptyBag: "Der Roboter hat kein Zahnrad bei sich, welches er einbauen könnte.",
+               tooManyObjects: "Der Roboter kann nicht so viele Zahnräder auf einmal tragen!",
+            }
+          }
+      },
       cards: {
          fr: {
             label: {
@@ -1229,7 +1256,7 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successContainersFilled: "Großartig, der Roboter hat alle Blumen ausgesät!",
                failureContainersFilled: "Der Roboter hat Samen gesät wo keine Erde ist...",
-               failureContainersFilledLess: "Einige Erhaufen haben keine Samen!",
+               failureContainersFilledLess: "Einige Erdhaufen haben keine Samen!",
                failureDropObject: "Hier wächst schon eine Blume",
 					obstacle: "Vorsichtig, da steht eine Blume!",
             }
@@ -2843,6 +2870,31 @@ var getContext = function(display, infos, curLevel) {
             marker: { num: 3, img: imgPath+"marker.png", side: 60, isContainer: true, zOrder: 0 },
             box: { num: 4, img: imgPath+"box.png", side: 60, isObstacle: true, isPushable: true, isWithdrawable: true, zOrder: 1 },
             number: { num: 5, side: 60, zOrder: 1 }            
+         },
+         checkEndCondition: robotEndConditions.checkContainersFilled
+      },
+      gears: {
+         backgroundColor: "#f2f1e3",
+         hasGravity: true,
+         bagSize: 1,
+         containerSize: 1,
+         itemTypes: {
+            green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, offsetY: 15, zOrder: 3 },
+            platform: { num: 2, img: imgPath+"platform.png", side: 60, isObstacle: true, zOrder: 0 },
+            gears: { num: 4, img: imgPath+"gears.png", side: 60, isContainer: true, zOrder: 1},
+            wheel: { num:5, img: imgPath+"wheel.png", side: 60, isWithdrawable: true, zOrder: 2},
+            projectile: {num: 6, img: imgPath+"projectile.png", side: 60, zOrder: 4, action: function(item, time) { this.moveProjectile(item); }, isProjectile: true},
+            //door: { num: 8, img: imgPath+"door.png", side: 60, isExit: true, zOrder: 1},
+            dispersion: {img: imgPath+"dispersion.png", side: 60, zOrder: 4, action: function(item, time) { this.destroy(item); }, isProjectile: true},
+            dispersion_robot: {img: imgPath+"dispersion.png", side: 60, zOrder: 4, offsetY: -15, action: function(item, time) { this.destroy(item); }, isProjectile: true},
+            projectile_generator: {num: 7, side: 60, action: function(item, time) {
+               if(item.period == undefined)
+                  item.period = 1;
+               if(item.start == undefined)
+                  item.start = 1;
+               if(time % item.period == item.start) 
+                  this.dropObject({type: "projectile"}, {row: item.row, col: item.col}); 
+            }}
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
