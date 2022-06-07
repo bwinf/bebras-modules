@@ -150,7 +150,7 @@ var getContext = function(display, infos) {
                   texts: 250,
                   lists: 60,
                   colour: 310,
-                  variables: 330,
+                  variables: "#a5416b",
                   functions: "#9911a5",
                   read: 10,
                   print: 60,

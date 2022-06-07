@@ -1227,7 +1227,7 @@ function getBlocklyHelper(maxBlocks, nbTestCases) {
                texts: 160,
                lists: 260,
                colour: 20,
-               variables: 330,
+               variables: "#a5416b",
                functions: "#9911a5",
                _default: 65
             },
@@ -1946,7 +1946,7 @@ function getBlocklyHelper(maxBlocks, nbTestCases) {
             }
             categoriesInfos["variables"] = {
                blocksXml: blocksXml,
-               colour: 330
+               colour: "#a5416b"
             }
          }
 

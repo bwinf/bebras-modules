@@ -1159,7 +1159,7 @@ function getBlocklyHelper(maxBlocks, nbTestCases) {
             {
                   category: "variables",
                   name: this.strings.variables,
-                  colour: 330,
+                  colour: "#a5416b",
                   custom: "VARIABLE",
                   blocks: []
             },
@@ -1239,7 +1239,7 @@ function getBlocklyHelper(maxBlocks, nbTestCases) {
                ($.inArray('variables_get', this.includedBlocks) != -1) ||
                ($.inArray('variables_set', this.includedBlocks) != -1)) {
             if (this.groupByCategory) {
-               xml += "<category name='" + this.strings.variables + "' colour='330'>";
+               xml += "<category name='" + this.strings.variables + "' colour='#a5416b'>";
             }
 
             // block for each availableVariable

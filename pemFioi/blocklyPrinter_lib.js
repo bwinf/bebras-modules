@@ -136,10 +136,10 @@ var getContext = function(display, infos) {
                   loops: "#2fb5bd",
                   math: "#3950a5",
                   texts: "#6638a5",
-                  lists: "#dac221",
+                  lists: "#d8892b",
                   colour: 310,
                   read: "#a50101",
-                  print: "#d8892b",
+                  print: "#dac221",
                   variables: "#a5416b",
                   _default: 280
                },
