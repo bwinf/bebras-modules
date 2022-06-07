@@ -519,7 +519,9 @@ var getContext = function(display, infos, curLevel) {
                row: "Zeile des Roboters",
                col: "Spalte des Roboters",
                wait: "warte",
-               north: "gehe nach oben",
+               north: "gehe nach oben", //TODO: HR - Sollte diskutiert werden. Wollen wir einheitlich mit Himmelsrichtungen arbeiten?
+                                       //Case dafür: Mit dem neuen Design, schaut man auf diese Art Roboter von oben drauf. Damit ist rechts, links eventuell verwirrend
+                                       //Muss dann aber einheitlich noch mal über alle Aufgaben getestet werden und mit showCardinals: true, versehen
                south: "gehe nach unten",
                east: "gehe nach rechts",
                west: "gehe nach links",
@@ -631,7 +633,7 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "Der Roboter ist gegen ein Hindernis gelaufen!",
                nothingToPickUp: "An dieser Stelle gibt es nichts zum aufheben!",
                nothingToLookAt: "An dieser Stelle gibt es nichts zum betrachten!",
-               falls: "Der Roboter fällt in den Abgrund!",
+               falls: "Achtung! Der Roboter würde in den Abgrund fallen!",
                willFallAndCrash: "Der Roboter würde hier runterfallen und kaputt gehen!",
                jumpOutsideGrid: "Der Roboter versucht, aus dem Gitter zu springen!",
                jumpObstacleBlocking: "Der Roboter kann hier nicht springen, weil ein Hindernis ihn blockiert.",
@@ -1643,26 +1645,26 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "lege Buch ab",
                withdrawNum_noShadow: "nimm %1 Bücher",
                dropNum_noShadow: "lege %1 Bücher ab",
-               nbWithdrawables: "Anzahl der Bücher in der Kiste",
-               containerSize: "Anzahl der bestellten Bücher",
-               onObject: "Bücher in Kiste",
+               nbWithdrawables: "Anzahl der Bücher",
+               containerSize: "Größe der Kiste",
+               onObject: "auf Buch",
                onContainer: "auf Kiste",
             },
             code: {
                withdrawObject: "nimmBuch",
                dropObject: "legeBuchAb",
-               onObject: "bücherInKiste",
+               onObject: "aufBuch",
                onContainer: "aufKiste",
-               nbWithdrawables: "anzahlBücherInKiste",
-               containerSize: "anzahlBestellteBücher",
+               nbWithdrawables: "anzahlDerBücher",
+               containerSize: "groesseDerKiste",
             },
             description: {
                withdrawObject: "nimmBuch() hebe das Buch an diesem Platz auf",
                dropObject: "legeBuchAb() lege das transportierte Buch in die Kiste",
-               onObject: "bücherInKiste() indique s'il y a un ou des livres sur la case",
-               onContainer: "aufKiste() zeigt an, ob sich ein oder mehrere Bücher auf dem Platz befinden",
-               nbWithdrawables: "anzahlBücherInKiste() gibt an, wie viele Bücher sich auf dem Platz befinden",
-               containerSize: "anzahlBestellteBücher() gibt an, wie viele Bücher bestellt wurden",
+               onObject: "aufBuch() gibt an, ob Bücher sich auf dem Platz befinden",
+               onContainer: "aufKiste() zeigt an, ob sich eine Kiste auf dem Platz befindet",
+               nbWithdrawables: "anzahlDerBücher() gibt an, wie viele Bücher sich auf dem Platz befinden",
+               containerSize: "groesseDerKiste() gibt an, wie wie viele Bücher in die Kiste passen",
                dropNum: "legeAb(anzahlBücher) lege anzahlBücher Bücher in die Kiste",
                withdrawNum: "nimm(anzahlBücher) hebe anzahlBücher Bücher auf",
             },
@@ -2771,7 +2773,7 @@ var getContext = function(display, infos, curLevel) {
          itemTypes: {
             blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
             initialPaint: { num: 2, color: "#2e1de5", side: 60, isPaint: true, zOrder: 1 },
-            marker: { num: 3, img: imgPath+"dot_black.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
+            marker: { num: 3, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             marker_white: { num: 4, img: imgPath+"dot_white.png", isContainer: true, isFake: true, side: 60, zOrder: 0 },
             paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, zOrder: 1 },
             // paint: { color: "#2e1de5", side: 60, isWithdrawable: true, zOrder: 1 },
@@ -3737,6 +3739,7 @@ var getContext = function(display, infos, curLevel) {
       infos.leftMargin += infos.cellSide * 1.8;
       infos.topMargin += infos.cellSide;
       infos.rightMargin += infos.cellSide;
+      //infos.rightMargin += infos.cellSide * 1.2;
       infos.bottomMargin += infos.cellSide;
    }
 
@@ -4104,6 +4107,7 @@ var getContext = function(display, infos, curLevel) {
          cardLabels[1].attr({x: middleX, y: paperHeight + (infos.cellSide / 2 - infos.bottomMargin) * scale}).attr(textFontSize);
          cardLabels[2].attr({x: (infos.leftMargin - (infos.showLabels ? infos.cellSide : 0) - infos.cellSide * 1.8 / 2) * scale, y: middleY}).attr(textFontSize);
          cardLabels[3].attr({x: paperWidth + (infos.cellSide / 2 - infos.rightMargin) * scale, y: middleY}).attr(textFontSize);
+         //cardLabels[3].attr({x: paperWidth + (infos.cellSide / 2 - infos.rightMargin + 12) * scale, y: middleY}).attr(textFontSize);
       }
       
       redisplayAllItems();      
