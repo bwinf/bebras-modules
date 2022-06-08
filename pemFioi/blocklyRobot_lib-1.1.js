@@ -658,7 +658,7 @@ var getContext = function(display, infos, curLevel) {
                failureWhilePushing: "Der Roboter hat es nicht geschafft, das Objekt zu schieben!",
                failureDropObject: "An dieser Stelle kann kein Objekt abgelegt werden!",
                failureDropPlatform: "An dieser Stelle kann kein Objekt abgelegt werden!",
-               failureDropOutside: "Der Roboter hat versucht ein Objekt vom Gitterrand zu schieben!",
+               failureDropOutside: "Der Roboter versucht ein Objekt vom Gitterrand zu schieben!",
                failureNotEnoughPlatform: "Nicht genügend Plattformen!",
                failureLights: "Der Roboter hat nicht alles beleuchtet!",
                successLights: "Bravo! Der Roboter hat alles beleuchtet.",
@@ -1721,7 +1721,7 @@ var getContext = function(display, infos, curLevel) {
             label: {
               dropObject: "färbe das Feld",
               onContainer: "auf Markierung",
-              readNumber: "lese Zahl auf dem Feld",
+              readNumber: "Zahl auf dem Feld",
             },
             code: {
                dropObject: "bemaleFeld",
@@ -1746,10 +1746,11 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             messages: {
-               successContainersFilled: "Bravo, deine Zeichnung ist identisch mit dem Modell. Was für ein Künstler!",
+               successContainersFilled: "Bravo, deine Zeichnung ist identisch mit dem Modell!",
                failureContainersFilled: "Zeichnung und Modell sind leider nicht identisch.",
 				   failureContainersFilledLess: "Die Zeichnung ist noch nicht fertig!",
 				   failureDropObject: "Der Roboter hat die falsche Farbe für das Feld genommen.",
+               failureDropOutside: "Der Roboter versucht außerhalb der Leinwand zu malen."
             }
          }
       },
@@ -1785,6 +1786,8 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successReachExit: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
                failureReachExit: "Der Roboter ist im Weltraum verloren.",
+               successPickedAllWithdrawables: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
+               failurePickedAllWithdrawables: "Der Roboter hat den Weltraumschrott liegen gelassen.",
                obstacle: "Achtung, Asteroiden!"
             }
          },
@@ -1872,7 +1875,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "auf Markierung",
                pushableInFront: "vor einer Kiste",
                obstacleInFront: "vor einem Hindernis",
-               readNumber: "lese Zahl auf dem Feld"
+               readNumber: "Zahl auf dem Feld" 
             },
             code: {
                pushObject: "schiebeKiste",
@@ -1887,7 +1890,7 @@ var getContext = function(display, infos, curLevel) {
                pushObject: "schiebeKiste() schiebt die Kiste ein Feld weiter",               
             },
             messages: {
-               successContainersFilled: "Herzlichen Glückwunsch, die Kisten sind aufgeräumt!",
+               successContainersFilled: "Herzlichen Glückwunsch, die Kisten sind alle auf den Markierungen!",
                failureContainersFilled: "Es gibt noch Kisten, die nicht an ihrem Platz sind.",
                failureNothingToPush: "Hier gibt es keine Kiste zum Herumschieben!",
                failureWhilePushing: "Der Roboter kann hier nicht schieben!",
@@ -1935,7 +1938,6 @@ var getContext = function(display, infos, curLevel) {
                failureDropObject: "Ce castor a déjà du bois.",
             }
          },
-
          es: {
             label: {
                withdrawObject: "recoger la bola",
@@ -1957,46 +1959,54 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilledLess: "Aún falta colocar una bola.",
                failureContainersFilledBag: "¡Debe colocar la bola en un agujero!",
             }
-         }
+         },
+         de: {
+            label: {
+               withdrawObject: "Holz einsammeln",
+               dropObject: "Holz übergeben",
+               withdrawNum_noShadow: "sammle %1 Holz ein",
+               dropNum_noShadow: "übergebe %1 Holz",
+               nbWithdrawables: "Anzahl Holzscheite",
+               containerSize: "bestellte Anzahl an Holzscheiten",
+               onObject: "auf Holzs",
+               onContainer: "beim Biber",
+            },
+            code: {
+               withdrawObject: "holzEinsammeln",
+               dropObject: "holzUebergeben",
+               onObject: "aufHolz",
+               onContainer: "beimBiber",
+               nbWithdrawables: "anzahlHolzscheite",
+               containerSize: "anzahlBestelltesHolz",
+            },
+            description: {
+               withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
+               dropObject: "holzUebergeben() legt einen Holzscheit auf dem Feld ab",
+               onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
+               onContainer: "beimBiber() zeigt an, ob sich ein Biber auf dem Feld befindet",
+               nbWithdrawables: "anzahlHolzscheite() gibt an, wie viele Holzscheite sich auf dem Feld befinden",
+               containerSize: "anzahlBestelltesHolz() gibt an, wie viele Holzscheite der Biber bestellt hat",
+               dropNum: "übergebe(Anzahl) überreicht dem Biber Anzahl Holzscheite",
+               withdrawNum: "sammle(Anzahl) sammelt Anzahl Holzscheite ein",
+            },
+            messages: {
+               emptyBag: "Der Roboter trägt kein Holz!",
+               tooManyObjects: "Der Roboter kann nicht so viel Holz auf einmal tragen.",
+               successContainersFilled: "Bravo, alle Biber haben Holz. Sie bedanken sich beim Roboter!",
+               failureContainersFilled: "Es wurde nicht das gesamte Holz verteilt.",
+               failureContainersFilledLess: "Es gibt noch Holz zu verteilen.",
+               failureContainersFilledBag: "Das Holz soll zu den Bibern gebracht werden.",
+               failureDropObject: "Dieser Biber hat nicht so viel Holz bestellt.",
+            }
+         },
       },
-      de: { //*TODO
-         label: {
-            withdrawObject: "ramasser le bois",
-            dropObject: "donner le bois au castor",
-            withdrawNum_noShadow: "ramasser %1 bûches",
-            dropNum_noShadow: "donner %1 bûches",
-            nbWithdrawables: "nombre de bûches sur la case",
-            containerSize: "nombre de bûches demandé",
-            onObject: "sur du bois",
-            onContainer: "chez un castor",
+      wiring: {
+         de: {
+            messages: {
+               successPlugsWired: "Super, alles wurde korrekt angeschlossen!",
+               failurePlugsWired: "Die Verkabelung ist so noch nicht korrekt.",
+            }
          },
-         code: {
-            withdrawObject: "ramasserBois",
-            dropObject: "donnerBois",
-            onObject: "surBois",
-            onContainer: "chezCastor",
-            nbWithdrawables: "nbBuchesSur",
-            containerSize: "nbBuchesADeposer",
-         },
-         description: {
-            withdrawObject: "ramasserBois() ramasse le bois qui se trouve sur la case",
-            dropObject: "donnerBois() dépose sur la case le bois transporté",
-            onObject: "surBois() indique s'il y a du bois sur la case",
-            onContainer: "chezCastor() indique s'il y a un castor sur la case",
-            nbWithdrawables: "nbBuchesSur() indique combien de bûches sont sur la case",
-            containerSize: "nbBuchesADeposer() indique combien de bûches sont demandées sur la case",
-            dropNum: "deposer(nbBuches) dépose nbBuches bûches sur la case",
-            withdrawNum: "ramasser(nbBuches) ramasse nbBuches bûches sur la case",
-         },
-         messages: {
-            emptyBag: "Le robot ne porte pas de bois !",
-            tooManyObjects: "Le robot porte déjà du bois !",
-            successContainersFilled: "Bravo, tous les castors ont du bois. Ils remercient votre robot !",
-            failureContainersFilled: "Tout le bois n'a pas été distribué.",
-            failureContainersFilledLess: "Il reste du bois à distribuer.",
-            failureContainersFilledBag: "Il faut donner le bois au castor !",
-            failureDropObject: "Ce castor a déjà du bois.",
-         }
       },
    };
    
@@ -2793,8 +2803,13 @@ var getContext = function(display, infos, curLevel) {
                     fr: {
                        label: translations["fr"][iColor],
                        code: translations["fr"][iColor],
-                       description: translations["fr"][iColor] + "(): Peint la case en " + translations["fr"][iColor]
-                    }
+                       description: translations["fr"][iColor] + "(): Peint la case en " + translations["de"][iColor]
+                    },
+                    de: {
+                     label: translations["de"][iColor],
+                     code: translations["de"][iColor],
+                     description: translations["de"][iColor] + "(): Bemale das Feld in " + translations["de"][iColor]
+                  }
                   },
                   category: "robot",
                   type: "actions",
@@ -2809,41 +2824,51 @@ var getContext = function(display, infos, curLevel) {
                      else if(this.isOn(function(obj) { return obj.isWithdrawable === true;})) {
                         throw(window.languageStrings.messages.failureRewrite);
                      }
-                     
+                     var coords = context.coordsInFront();
+                     var ttbo = context.tryToBeOn(coords.row, coords.col);
                      this.dropObject({type: "paint", color: cur_color});
-                     if (robot.col == context.nbCols - 1) {
-                        robot.row = (robot.row + 1) % context.nbRows;
-                        robot.col = 0;
-                        redisplayItem(robot);
-                        this.callCallback(callback);
-                     } else {
+                     if(ttbo === true) {
                         this.forward(callback);
-                     };
+                     } else {
+                        if (robot.col == context.nbCols - 1) {
+                           robot.row = (robot.row + 1) //% context.nbRows;
+                           if (robot.row == context.nbRows ) {
+                              //context.moveRobot(robot.row + (coords.row - robot.row) / 4, robot.col + (coords.col - robot.col) / 4, robot.dir);
+                              this.callCallback(callback)
+                              //throw(window.languageStrings.messages.leavesGrid);
+                           } else {
+                              robot.col = 0;
+                              redisplayItem(robot);
+                              this.callCallback(callback);
+                           }
+                        }
+                     } 
                   } })(colors[iColor])
                });
             }
             return blocks;
-         })(["red", "blue", "yellow", "white", "green", "orange", "pink", "purple", "brown", "grey", "black"], 
-            ["#ff0000", "#0000ff", "#ffff00", "#ffffff", "#00ff00", "#ff8000", "#ff80ff", "#800080", "#804d00", "#808080", "#000000"], 
-            ["#efa2a2", "#a2a2ef", "#efefa2", "#efefef", "#a2efa2", "#efb6a2", "#efb6ef", "#b6a2b6", "#b6a9a2", "#b6b6b6", "#a2a2a2"], 
-            ["#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd", "#dddddd"],
-            {fr: ["rouge", "bleu", "jaune", "blanc", "vert", "orange", "rose", "violet", "marron", "gris", "noir"]}),
+         })(["Gelb", "Orange", "Tangerine", "weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "schwarz"], 
+            ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"], 
+            ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"], 
+            ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"],
+            {fr: ["rouge", "bleu", "jaune", "blanc", "vert", "orange", "rose", "violet", "marron", "gris", "noir"],
+             de: ["Gelb", "Orange", "Tangerine", "weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "schwarz"]}),
          backgroundColor: "#ece4ce",
          ignoreBag: true,
          blockingFilter: false,
          itemTypes: {
             green_robot: { img: "cursor.png", side: 60, nbStates: 9, isRobot: true, zOrder: 2 },
-            marker_red: { num: 2, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff0000";} },
-            marker_blue: { num: 3, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#0000ff";} },
-            marker_yellow: { num: 4, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffff00";} },
-            marker_white: { num: 5, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffffff";} },
-            marker_green: { num: 6, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#00ff00";} },
-            marker_orange: { num: 7, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff8000";} },
-            marker_pink: { num: 8, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff80ff";} },
-            marker_purple: { num: 9, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#800080";} },
-            marker_brown: { num: 10, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#804d00";} },
-            marker_grey: { num: 11, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#808080";} },
-            marker_black: { num: 12, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#000000";} },
+            marker_Gelb: { num: 2, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffd35c";} },
+            marker_Orange: { num: 3, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff8201";} },
+            marker_Tangerine: { num: 4, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#f37252";} },
+            marker_Weiss: { num: 5, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffffff";} },
+            marker_Rot: { num: 6, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#c72c3a";} },
+            marker_Pink: { num: 7, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ea3e70";} },
+            marker_Violett: { num: 8, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#954567";} },
+            marker_Türkis: { num: 9, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#4bc4d5";} },
+            marker_Blau: { num: 10, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#0180b5";} },
+            marker_Blaugrün: { num: 11, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#02b5a0";} },
+            marker_Schwarz: { num: 12, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#000000";} },
             paint: { side: 60, isWithdrawable: true, zOrder: 1 },
             marker_paint: { num: 1, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.type === "paint";} },
          },
@@ -2927,6 +2952,7 @@ var getContext = function(display, infos, curLevel) {
       },
       wiring: {
         backgroundColor: "#00733f",
+        borderColor: "#ffd35c",
         maxWireLength: 100,
         maxTotalLength: 100000,
         itemTypes: {
@@ -3738,8 +3764,8 @@ var getContext = function(display, infos, curLevel) {
    if (infos.showCardinals) {
       infos.leftMargin += infos.cellSide * 1.8;
       infos.topMargin += infos.cellSide;
-      infos.rightMargin += infos.cellSide;
-      //infos.rightMargin += infos.cellSide * 1.2;
+      //infos.rightMargin += infos.cellSide;
+      infos.rightMargin += infos.cellSide * 1.2;
       infos.bottomMargin += infos.cellSide;
    }
 
@@ -4106,8 +4132,8 @@ var getContext = function(display, infos, curLevel) {
          cardLabels[0].attr({x: middleX, y: (infos.topMargin - (infos.showLabels ? infos.cellSide : 0) - infos.cellSide / 2) * scale}).attr(textFontSize);
          cardLabels[1].attr({x: middleX, y: paperHeight + (infos.cellSide / 2 - infos.bottomMargin) * scale}).attr(textFontSize);
          cardLabels[2].attr({x: (infos.leftMargin - (infos.showLabels ? infos.cellSide : 0) - infos.cellSide * 1.8 / 2) * scale, y: middleY}).attr(textFontSize);
-         cardLabels[3].attr({x: paperWidth + (infos.cellSide / 2 - infos.rightMargin) * scale, y: middleY}).attr(textFontSize);
-         //cardLabels[3].attr({x: paperWidth + (infos.cellSide / 2 - infos.rightMargin + 12) * scale, y: middleY}).attr(textFontSize);
+         //cardLabels[3].attr({x: paperWidth + (infos.cellSide / 2 - infos.rightMargin) * scale, y: middleY}).attr(textFontSize);
+         cardLabels[3].attr({x: paperWidth + (infos.cellSide / 2 - infos.rightMargin + 12) * scale, y: middleY}).attr(textFontSize);
       }
       
       redisplayAllItems();      
@@ -4946,6 +4972,7 @@ var robotEndConditions = {
          throw(window.languageStrings.messages.failurePlugsWired);
       }
    },
+   
    checkContainersFilled: function(context, lastTurn) {
       var solved = true;
       
