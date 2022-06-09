@@ -1011,16 +1011,22 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "hebe das Holz auf",
-               dropObject: "lege das Holz in den Kamin",
-               onObject: "auf einem Stapel Holz",
-               onContainer: "auf einem Kamin"
+               withdrawObject: "Holz einsammeln",
+               dropObject: "Holz ablegen",
+               onObject: "auf Holz",
+               onContainer: "beim Kamin"
             },
             code: {
-               withdrawObject: "hebeHolzAuf",
-               dropObject: "legeHolzAb",
+               withdrawObject: "holzEinsammeln",
+               dropObject: "holzAblegen",
                onObject: "aufHolz",
-               onContainer: "aufKamin"
+               onContainer: "beimKamin"
+            },
+            description: {
+               withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
+               dropObject: "holzAblegen() legt einen Holzscheit auf dem Feld ab",
+               onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
+               onContainer: "beimKamin() zeigt an, ob sich ein Kamin auf dem Feld befindet",
             },
             messages: {
                successContainersFilled: "Bravo, das Schloss wird gut beheizt!",
@@ -1968,7 +1974,7 @@ var getContext = function(display, infos, curLevel) {
                dropNum_noShadow: "übergebe %1 Holz",
                nbWithdrawables: "Anzahl Holzscheite",
                containerSize: "bestellte Anzahl an Holzscheiten",
-               onObject: "auf Holzs",
+               onObject: "auf Holz",
                onContainer: "beim Biber",
             },
             code: {
