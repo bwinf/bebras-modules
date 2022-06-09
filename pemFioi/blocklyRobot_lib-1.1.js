@@ -2144,7 +2144,7 @@ var getContext = function(display, infos, curLevel) {
          ],
          backgroundColor: "#d3e7b6",
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            red_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             cell: {num: 1, color: "#d3e7b6", side: 60, isObstacle: true, zOrder: 0 },
             box: { num: 3, img: "box.png", side: 60, isExit: true },
             leftArrow: { num: 4, img: "leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
@@ -2422,7 +2422,7 @@ var getContext = function(display, infos, curLevel) {
          },
          backgroundColor: "#f9f9c1",
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            green_robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -20, zOrder: 2 },
             marker: { num: 2, img: "marker.png", side: 60, isContainer: true, zOrder: 0 },
             cone: { num: 3, img: "cone.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
             contour: { num: 4, img: "contour.png", side: 60, zOrder: 1 },
@@ -2686,7 +2686,7 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          backgroundColor: "#dadada",
          itemTypes: {
-            red_robot: { img: imgPath+"red_robot_alt.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            red_robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
             blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
             hole: { num: 3, img: imgPath+"hole.png", side: 60, isContainer: true, zOrder: 0 },
             marble: { num: 4, img: imgPath+"marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
@@ -2907,7 +2907,7 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          containerSize: 1,
          itemTypes: {
-            green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, offsetY: 15, zOrder: 3 },
+            green_robot: { img: imgPath+"castle_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: 0, offsetY: 5, zOrder: 3 },
             platform: { num: 2, img: imgPath+"platform.png", side: 60, isObstacle: true, zOrder: 0 },
             gears: { num: 4, img: imgPath+"gears.png", side: 60, isContainer: true, zOrder: 1},
             wheel: { num:5, img: imgPath+"wheel.png", side: 60, isWithdrawable: true, zOrder: 2},
@@ -2956,7 +2956,7 @@ var getContext = function(display, infos, curLevel) {
         maxWireLength: 100,
         maxTotalLength: 100000,
         itemTypes: {
-          red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
+          red_robot: { img: imgPath+"red_robot.png", side:70, nbStates: 1, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 3 },
           wire: { img: "wire.png", side: 60, isWire: true, zOrder: 1},
           black_male: { num: 2, img: "black_male.png", side: 60, zOrder: 0, plugType: 1},
           black_female: { num: 3, img: "black_female.png", side: 60, zOrder: 0, plugType: -1},
