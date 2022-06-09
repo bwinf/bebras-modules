@@ -519,9 +519,7 @@ var getContext = function(display, infos, curLevel) {
                row: "Zeile des Roboters",
                col: "Spalte des Roboters",
                wait: "warte",
-               north: "gehe nach oben", //TODO: HR - Sollte diskutiert werden. Wollen wir einheitlich mit Himmelsrichtungen arbeiten?
-                                       //Case dafür: Mit dem neuen Design, schaut man auf diese Art Roboter von oben drauf. Damit ist rechts, links eventuell verwirrend
-                                       //Muss dann aber einheitlich noch mal über alle Aufgaben getestet werden und mit showCardinals: true, versehen
+               north: "gehe nach oben",
                south: "gehe nach unten",
                east: "gehe nach rechts",
                west: "gehe nach links",
@@ -2762,11 +2760,11 @@ var getContext = function(display, infos, curLevel) {
                      code: "casillaPintada",
                      description: "casillaPintada(): ¿El robot se encuentra sobre una casilla pintada?"
                   },
-                  es: {
+                  de: {
                      label: "bemaltes Feld",
                      code: "bemaltesFeld",
                      description: "bemaltesFeld(): Steht der Roboter auf einem bemalten Feld?"
-                  }
+                  },
                },
                category: "robot",
                type: "sensors",
