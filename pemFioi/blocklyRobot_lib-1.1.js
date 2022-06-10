@@ -567,8 +567,8 @@ var getContext = function(display, infos, curLevel) {
                connect: "ein Kabel anschließen",
                onMale: "auf einem Stecker",
                onFemale: "auf einer Dose",
-               dropPlatformInFront: "konstruiere eine Plattform davor",
-               dropPlatformAbove: "konstruiere eine Plattform darüber"
+               dropPlatformInFront: "baue eine Plattform davor",
+               dropPlatformAbove: "baue eine Plattform darüber"
                
             },
             code: {
@@ -1293,8 +1293,8 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             messages: {
-               successReachExit: "Bravo, der Roboter hat das grüne Feld erreicht.",
-               failureReachExit: "Der Roboter hat das grüne Feld nicht erreicht.",
+               successReachExit: "Bravo, der Roboter hat die Flagge erobert.",
+               failureReachExit: "Der Roboter hat die Flagge nicht erobert.",
                obstacle: "Der Roboter versucht gegen eine Wand zu rennen..."
             }
          },
@@ -2436,8 +2436,8 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       course: {
-         backgroundColor: "#fff1c4",
-         borderColor: "#d4eda5",
+         backgroundColor: "#d4e8c4", // "#e7d0bc",
+         borderColor: "#49b675",
          itemTypes: {
             red_robot: { img: imgPath+"red_robot.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
             red_robot_alt: { img: imgPath+"red_robot_alt.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
@@ -2545,7 +2545,7 @@ var getContext = function(display, infos, curLevel) {
            }
          ],
          noBorders: true,
-         backgroundColor: "#90569D",
+         backgroundColor: "#C4E0FF",
          borderColor: "#BDA6C9",
          itemTypes: {
             green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
