@@ -550,7 +550,7 @@ var getContext = function(display, infos, curLevel) {
                onWritable: "auf Tafel",
                onLauncher: "auf einem Laser", //Check this!
                writeNumber: "schreibe Zahl",
-               readNumber: "Zahl auf dem Feld",
+               readNumber: "lese Zahl",
                pushObject: "schiebe Object",
                pushableInFront: "vor beweglichen Object",
                dropNum: "lasse %1 Objekte fallen",
@@ -1725,12 +1725,12 @@ var getContext = function(display, infos, curLevel) {
             label: {
               dropObject: "färbe das Feld",
               onContainer: "auf Markierung",
-              readNumber: "Zahl auf dem Feld",
+              readNumber: "lese Zahl",
             },
             code: {
                dropObject: "bemaleFeld",
                onContainer: "aufMarkierung",
-               readNumber: "leseZahlaufFeld",
+               readNumber: "leseZahl",
             },
             messages: {
               successContainersFilled: "Bravo, der Roboter hat das vorgegebene Muster richtig gemalt!",
@@ -1879,14 +1879,14 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "auf Markierung",
                pushableInFront: "vor einer Kiste",
                obstacleInFront: "vor einem Hindernis",
-               readNumber: "Zahl auf dem Feld" 
+               readNumber: "lese Zahl" 
             },
             code: {
                pushObject: "schiebeKiste",
                onContainer: "aufMarkierung",
                pushableInFront: "vorKiste",
                obstacleInFront: "vorHindernis",
-               readNumber: "leseZahlAufFeld"
+               readNumber: "leseZahl"
             },
             description: {
                onContainer: "aufMarkierung() zeigt an, ob sich der Roboter auf einem markierten Feld befindet",
