@@ -2960,7 +2960,7 @@ var getContext = function(display, infos, curLevel) {
         maxWireLength: 100,
         maxTotalLength: 100000,
         itemTypes: {
-          red_robot: { img: imgPath+"red_robot.png", side:70, nbStates: 1, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 3 },
+          robot: { img: imgPath+"red_robot.png", side:70, nbStates: 1, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 3 },
           wire: { img: "wire.png", side: 60, isWire: true, zOrder: 1},
           black_male: { num: 2, img: "black_male.png", side: 60, zOrder: 0, plugType: 1},
           black_female: { num: 3, img: "black_female.png", side: 60, zOrder: 0, plugType: -1},
