@@ -2148,7 +2148,7 @@ var getContext = function(display, infos, curLevel) {
          ],
          backgroundColor: "#d3e7b6",
          itemTypes: {
-            red_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             cell: {num: 1, color: "#d3e7b6", side: 60, isObstacle: true, zOrder: 0 },
             box: { num: 3, img: "box.png", side: 60, isExit: true },
             leftArrow: { num: 4, img: "leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
