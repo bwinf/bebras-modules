@@ -2352,7 +2352,7 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          backgroundColor: "#abeaf4",
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             square: { num: 2, img: "purple.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isSquare === true; }, zOrder: 0 },
             round: { num: 3, img: "green.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isRound === true; }, zOrder: 0 },
             triangle: { num: 4, img: "orange.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isTriangle === true; }, zOrder: 0 },
@@ -2399,7 +2399,7 @@ var getContext = function(display, infos, curLevel) {
       },
       chticode_abs: {
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true },
             green: { num: 3, color: "#b5e61d", side: 60, isExit: true, zOrder: 0 },
             gem: { num: 4, img: "gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 },
@@ -2412,7 +2412,7 @@ var getContext = function(display, infos, curLevel) {
       },
       chticode_rel: {
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -14, zOrder: 2 },
+            robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -14, zOrder: 2 },
             obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true },
             green: { num: 3, color: "#b5e61d", side: 60, isExit: true},
             gem: { num: 4, img: "gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 }
@@ -2426,7 +2426,7 @@ var getContext = function(display, infos, curLevel) {
          },
          backgroundColor: "#f9f9c1",
          itemTypes: {
-            green_robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -20, zOrder: 2 },
+            robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -20, zOrder: 2 },
             marker: { num: 2, img: "marker.png", side: 60, isContainer: true, zOrder: 0 },
             cone: { num: 3, img: "cone.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
             contour: { num: 4, img: "contour.png", side: 60, zOrder: 1 },
@@ -2439,7 +2439,7 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#d4e8c4", // "#e7d0bc",
          borderColor: "#49b675",
          itemTypes: {
-            red_robot: { img: imgPath+"red_robot.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
+            robot: { img: imgPath+"red_robot.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
             red_robot_alt: { img: imgPath+"red_robot_alt.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
             bush: { num: 2, img: imgPath+"bush.png", side: 60, isObstacle: true, zOrder: 0 },
             flag: { num: 3, img: imgPath+"flag.png", side: 60, isExit: true, zOrder: 0},
@@ -2548,8 +2548,8 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#C4E0FF",
          borderColor: "#BDA6C9",
          itemTypes: {
-            green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            pink_robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            //green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             contour: { num: 2, img: imgPath+"contour.png", side: 60, zOrder: 0 },
             GG: { num: 3, img: imgPath+"GG.png", side: 60, isWithdrawable: true, isCross: true, zOrder: 1 },
             GO: { num: 4, img: imgPath+"GO.png", side: 60, isWithdrawable: true, isCross: true, isStar: true, zOrder: 1 },
@@ -2571,7 +2571,7 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          containerSize: 1,
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 60, nbStates: 1, isRobot: true, zOrder: 4, customDisplay: function(obj) {
+            robot: { img: "red_robot.png", side: 60, nbStates: 1, isRobot: true, zOrder: 4, customDisplay: function(obj) {
             	if(context.bag.length != 0)
             		obj.img = "red_robot_fishes.png";
             	else
@@ -2606,8 +2606,8 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#BFF4A6",
          borderColor: "#A5D88B",
          itemTypes: {
-            garden_robot: { img: imgPath+"garden_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            robot: { img: imgPath+"garden_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            //green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             earth: { num: 2, img: imgPath+"earth.png", side: 60, isContainer: true, zOrder: 0 },
             flower: { num: 3, img: imgPath+"flower.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
             fixed_flower: { num: 5, img: imgPath+"fixed_flower.png", side: 60, isObstacle: true, zOrder: 1 },
@@ -2620,7 +2620,7 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#BF5E47",
          borderColor: "#96413B",
          itemTypes: {
-            yellow_robot: { img: imgPath+"yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            robot: { img: imgPath+"yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             gem: { num: 3, img: imgPath+"gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 },
             obstacle: { num: 4, img: imgPath+"brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
             number: { num: 5, side: 60, zOrder: 1 }
@@ -2673,7 +2673,7 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#422d53",
          borderColor: "#912E54",
          itemTypes: {
-            white_robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
+            robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
             obstacle: { num: 2, img: imgPath+"asteroide.png", side: 60, isObstacle: true, isOpaque: true },
             light: { num: 3, img: imgPath+"off_spot.png", states: ["off_spot.png", "on_spot.png"], isLight: true, state: 0, side: 60 },
             launcher: { num: 5, img: imgPath+"launcher2.png", isLaser: true, side: 60 },
@@ -2690,8 +2690,8 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          backgroundColor: "#dadada",
          itemTypes: {
-            red_robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
-            blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            //blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
             hole: { num: 3, img: imgPath+"hole.png", side: 60, isContainer: true, zOrder: 0 },
             marble: { num: 4, img: imgPath+"marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { num: 5, side: 60, zOrder: 1 },
@@ -2703,7 +2703,7 @@ var getContext = function(display, infos, curLevel) {
       objects_in_space: {
          backgroundColor: "#666699",
          itemTypes: {
-            white_robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             stars: { num: 3, img: imgPath+"stars.png", side: 60, zOrder: 0},
             objet1: { num: 4, img: imgPath+"objet1.png", side: 60, isWithdrawable: true, zOrder: 1 },
             objet2: { num: 5, img: imgPath+"objet2.png", side: 60, isWithdrawable: true, zOrder: 1 },
@@ -2718,7 +2718,7 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#a0cc97",
          borderColor: "#81a279",
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 90, nbStates: 9, isRobot: true,  offsetX: -11, zOrder: 4, customDisplay: function(obj) {
+            robot: { img: "green_robot.png", side: 90, nbStates: 9, isRobot: true,  offsetX: -11, zOrder: 4, customDisplay: function(obj) {
             	if(context.bag.length != 0)
             		obj.img = "green_robot_book.png";
             	else
@@ -2785,7 +2785,7 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#c5e2dd",
          borderColor: "#b4ccc7",
          itemTypes: {
-            blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
+            robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
             initialPaint: { num: 2, color: "#2e1de5", side: 60, isPaint: true, zOrder: 1 },
             marker: { num: 3, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             marker_white: { num: 4, img: imgPath+"dot_white.png", isContainer: true, isFake: true, side: 60, zOrder: 0 },
@@ -2861,7 +2861,7 @@ var getContext = function(display, infos, curLevel) {
          ignoreBag: true,
          blockingFilter: false,
          itemTypes: {
-            green_robot: { img: "cursor.png", side: 60, nbStates: 9, isRobot: true, zOrder: 2 },
+            robot: { img: "cursor.png", side: 60, nbStates: 9, isRobot: true, zOrder: 2 },
             marker_Gelb: { num: 2, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffd35c";} },
             marker_Orange: { num: 3, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff8201";} },
             marker_Tangerine: { num: 4, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#f37252";} },
@@ -2911,7 +2911,7 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          containerSize: 1,
          itemTypes: {
-            green_robot: { img: imgPath+"castle_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: 0, offsetY: 5, zOrder: 3 },
+            robot: { img: imgPath+"castle_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: 0, offsetY: 5, zOrder: 3 },
             platform: { num: 2, img: imgPath+"platform.png", side: 60, isObstacle: true, zOrder: 0 },
             gears: { num: 4, img: imgPath+"gears.png", side: 60, isContainer: true, zOrder: 1},
             wheel: { num:5, img: imgPath+"wheel.png", side: 60, isWithdrawable: true, zOrder: 2},
