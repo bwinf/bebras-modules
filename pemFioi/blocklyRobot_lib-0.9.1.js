@@ -366,7 +366,7 @@ var getContext = function(display, infos, curLevel) {
          startingBlockName: "Roboter-Programm",
 
          exit_grid: "Der Roboter hat das Gitter verlassen!",
-         nothingToPickUp: "Hier gibt es nichts zum aufheben!",
+         nothingToPickUp: "Hier gibt es nichts zum Aufheben!",
          alreadyTransportingObject: "Der Roboter transportiert bereits etwas.",
          jumpOutsideGrid: "Der Roboter hat versucht, aus dem Gitter zu springen!",
          jumpObstacleBlocking: "Der Roboter hat versucht zu springen, aber ein Hindernis hat ihn blockiert.",
