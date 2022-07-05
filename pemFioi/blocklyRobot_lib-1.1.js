@@ -655,7 +655,7 @@ var getContext = function(display, infos, curLevel) {
                failureNothingToPush: "An dieser Stelle gibt es nichts zum Schieben!",
                failureWhilePushing: "Der Roboter hat es nicht geschafft, das Objekt zu schieben!",
                failureDropObject: "An dieser Stelle kann kein Objekt abgelegt werden!",
-               failureDropPlatform: "An dieser Stelle kann kein Objekt abgelegt werden!",
+               failureDropPlatform: "An dieser Stelle kann keine Plattform gebaut werden!",
                failureDropOutside: "Der Roboter versucht ein Objekt vom Gitterrand zu schieben!",
                failureNotEnoughPlatform: "Nicht genügend Plattformen!",
                failureLights: "Der Roboter hat nicht alles beleuchtet!",
@@ -2560,8 +2560,9 @@ var getContext = function(display, infos, curLevel) {
             BG: { num: 9, img: imgPath+"BG.png", side: 60, isWithdrawable: true, isSquare: true, isCross: true, zOrder: 1 },
             BO: { num: 10, img: imgPath+"BO.png", side: 60, isWithdrawable: true, isSquare: true, isStar: true, zOrder: 1 },
             BB: { num: 11, img: imgPath+"BB.png", side: 60, isWithdrawable: true, isSquare: true, zOrder: 1 },
-            board_background: { num: 12, color: "#ffffff", side: 60, zOrder: 0 },
-            board: {num: 13, side: 60, isWritable: true, zOrder: 1 },
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             obstacle: { num: 14, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
          }
       },
@@ -2682,7 +2683,9 @@ var getContext = function(display, infos, curLevel) {
             mirrorH: { num: 8, img: imgPath+"mirrorH.png", isMirror: true, mirrorFunction: function(dir) { return (12 - dir) % 8; }, side: 60 },
             mirrorI: { num: 9, img: imgPath+"mirrorI.png", isMirror: true, mirrorFunction: function(dir) { return (8 - dir) % 8; }, side: 60 },
             number: { side: 60, zOrder: 1 },
-            board_background: { num: 4, color: "#685aa6", side: 60, zOrder: 0 },
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
          },
          checkEndCondition: robotEndConditions.checkLights
       }, 
@@ -2695,7 +2698,9 @@ var getContext = function(display, infos, curLevel) {
             hole: { num: 3, img: imgPath+"hole.png", side: 60, isContainer: true, zOrder: 0 },
             marble: { num: 4, img: imgPath+"marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { num: 5, side: 60, zOrder: 1 },
-            board: { num: 6, side: 60, isWritable: true, zOrder: 1 },
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             white: { num: 7, color: imgPath+"shadow.png", side: 60, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
@@ -2786,14 +2791,15 @@ var getContext = function(display, infos, curLevel) {
          borderColor: "#b4ccc7",
          itemTypes: {
             robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
-            initialPaint: { num: 2, color: "#2e1de5", side: 60, isPaint: true, zOrder: 1 },
-            marker: { num: 3, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
+            initialPaint: { num: 3, color: "#2e1de5", side: 60, isPaint: true, zOrder: 1 },
+            marker: { num: 2, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             marker_white: { num: 4, img: imgPath+"dot_white.png", isContainer: true, isFake: true, side: 60, zOrder: 0 },
             paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, zOrder: 1 },
             // paint: { color: "#2e1de5", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { side: 60, zOrder: 2 },
-            board_background: { num: 5, color: "#ffffff", side: 60, zOrder: 0 },
-            board: { side: 60, isWritable: true, zOrder: 1 }
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -2882,7 +2888,9 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#2c293e",
          itemTypes: {
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            board_background: { num: 2, color: "#8d8dbe", side: 60, zOrder: 0},
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             // stars: { num: 3, img: "stars.png", side: 60, zOrder: 1},
             asteroide: { num: 4, img: imgPath+"asteroide.png", side: 60, isObstacle: true, zOrder: 1 },
             rocket: { num: 5, img: imgPath+"rocket.png", side: 60, isExit: true, zOrder: 1 },
