@@ -2373,7 +2373,7 @@ var getContext = function(display, infos, curLevel) {
       },
       castle: {
          backgroundColor: "#1f003c",
-         borderColor: "#2d0073",
+         borderColor: "#888888",
          hasGravity: true,
          bagSize: 1,
          containerSize: 1,
@@ -2383,17 +2383,17 @@ var getContext = function(display, infos, curLevel) {
             hearth: { num: 4, img: imgPath+"hearth.png", side: 60, isContainer: true, zOrder: 1},
             wood: { num:5, img: imgPath+"firewood.png", side: 60, isWithdrawable: true, zOrder: 2},
             // projectile: {num: 6, img: "projectile.png", side: 60, zOrder: 4, action: function(item, time) { this.moveProjectile(item); }, isProjectile: true},
-            // door: { num: 8, img: "door.png", side: 60, isExit: true, zOrder: 1},
+            // door: { num: 8, img: imgPath+"door.png", side: 60, isExit: true, zOrder: 1},
             // dispersion: {img: "dispersion.png", side: 60, zOrder: 4, action: function(item, time) { this.destroy(item); }, isProjectile: true},
             // dispersion_robot: {img: "dispersion.png", side: 60, zOrder: 4, offsetY: -15, action: function(item, time) { this.destroy(item); }, isProjectile: true},
-            projectile_generator: {num: 7, side: 60, action: function(item, time) {
-               if(item.period == undefined)
-                  item.period = 1;
-               if(item.start == undefined)
-                  item.start = 1;
-               if(time % item.period == item.start) 
-                  this.dropObject({type: "projectile"}, {row: item.row, col: item.col}); 
-            }}
+            // projectile_generator: {num: 7, side: 60, action: function(item, time) {
+            //    if(item.period == undefined)
+            //       item.period = 1;
+            //    if(item.start == undefined)
+            //       item.start = 1;
+            //    if(time % item.period == item.start) 
+            //       this.dropObject({type: "projectile"}, {row: item.row, col: item.col}); 
+            // }}
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -2450,6 +2450,9 @@ var getContext = function(display, infos, curLevel) {
             horizontal_open_door: { num: 11, img:  imgPath+"horizontal_open_door.png", side: 60, zOrder: 1},
             vertical_open_door: { num: 12, img:  imgPath+"vertical_open_door.png", side: 60, zOrder: 1},
             water: { num: 13, img: imgPath+"water.png", side: 60, isObstacle: true, zOrder: 1 },
+            water_full: { num: 17, img: imgPath+"water_full.png", side: 60, isObstacle: true, zOrder: 1 },
+            tree: { num: 15, img: imgPath+"tree.png", side: 80, isObstacle: true, zOrder: 2, offsetX: -15, offsetY: 8 },
+            flowers: { num: 16, img: imgPath+"flowers.png", side: 50, isObstacle: true, zOrder: 1, offsetX: 5 },
             board: { num: 14, img: imgPath+"water+board.png", side: 60, zOrder: 1 }
          },
          checkEndCondition: robotEndConditions.checkReachExit
@@ -2671,8 +2674,7 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkReachExit
       },
       laser: {
-         backgroundColor: "#422d53",
-         borderColor: "#912E54",
+         backgroundColor: "#666699",
          itemTypes: {
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
             obstacle: { num: 2, img: imgPath+"asteroide.png", side: 60, isObstacle: true, isOpaque: true },
@@ -2885,7 +2887,7 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       rocket: {
-         backgroundColor: "#2c293e",
+         backgroundColor: "#666699",
          itemTypes: {
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
