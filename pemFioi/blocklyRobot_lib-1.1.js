@@ -2443,6 +2443,7 @@ var getContext = function(display, infos, curLevel) {
             platform: { num: 2, img: imgPath+"platform.png", side: 60, isObstacle: true, zOrder: 0 },
             hearth: { num: 4, img: imgPath+"hearth.png", side: 60, isContainer: true, zOrder: 1},
             wood: { num:5, img: imgPath+"firewood.png", side: 60, isWithdrawable: true, zOrder: 2},
+            wall: { num: 6, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
             // projectile: {num: 6, img: "projectile.png", side: 60, zOrder: 4, action: function(item, time) { this.moveProjectile(item); }, isProjectile: true},
             // door: { num: 8, img: imgPath+"door.png", side: 60, isExit: true, zOrder: 1},
             // dispersion: {img: "dispersion.png", side: 60, zOrder: 4, action: function(item, time) { this.destroy(item); }, isProjectile: true},
@@ -2775,6 +2776,7 @@ var getContext = function(display, infos, curLevel) {
             stars: { num: 3, img: imgPath+"stars.png", side: 60, zOrder: 0},
             objet1: { num: 4, img: imgPath+"objet1.png", side: 60, isWithdrawable: true, zOrder: 1 },
             objet2: { num: 5, img: imgPath+"objet2.png", side: 60, isWithdrawable: true, zOrder: 1 },
+            objet3: { num: 7, img: imgPath+"solar_panel.png", side: 60, isWithdrawable: true, zOrder: 1 },
             obstacle: { num: 6, img: imgPath+"asteroide.png", side: 60, isObstacle: true, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkPickedAllWithdrawables
@@ -2829,9 +2831,9 @@ var getContext = function(display, infos, curLevel) {
                      description: "casillaPintada(): ¿El robot se encuentra sobre una casilla pintada?"
                   },
                   de: {
-                     label: "bemaltes Feld",
-                     code: "bemaltesFeld",
-                     description: "bemaltesFeld(): Steht der Roboter auf einem bemalten Feld?"
+                     label: "Farbe auf Feld",
+                     code: "farbeAufFeld",
+                     description: "farbeAufFeld(): Steht der Roboter auf einem bemalten Feld?"
                   },
                },
                category: "robot",
@@ -2841,7 +2843,8 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  this.callCallback(callback, this.isOn(function(obj) {return obj.isWithdrawable===true;}));
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.isPaint === true || 
+                     obj.isWithdrawable === true;}));
                }
             },
             {
