@@ -541,7 +541,7 @@ var getContext = function(display, infos, curLevel) {
                gridEdgeEast: "links vom Gitterrand",
                gridEdgeWest: "rechts vom Gitterrand",
                platformInFront: "vor Plattform",
-               platformAbove: "Plattform darüber",
+               platformAbove: "Plattform oben",
                withdrawObject: "hebe Objekt auf",
                dropObject: "lege Objekt ab",
                onObject: "auf Objekt",
@@ -568,7 +568,7 @@ var getContext = function(display, infos, curLevel) {
                onMale: "auf einem Stecker",
                onFemale: "auf einer Dose",
                dropPlatformInFront: "baue eine Plattform davor",
-               dropPlatformAbove: "baue eine Plattform darüber"
+               dropPlatformAbove: "baue eine Plattform oben"
                
             },
             code: {
@@ -817,6 +817,29 @@ var getContext = function(display, infos, curLevel) {
             },
             startingBlockName: "Programme du robot"
          },
+      },
+      labyrinth: {
+         fr: {
+            messages: {
+               successReachExit: "Bravo, le robot a atteint la case verte !",
+               failureReachExit: "Le robot n'est pas arrivé sur la case verte.",
+               obstacle: "Le robot tente de foncer dans un mur !"
+            }
+         },
+         en: {
+            messages: {
+               successReachExit: "Congratulations, the robot reached the green cell!",
+               failureReachExit: "The robot didn't reach the green cell.",
+               obstacle: "The robot is attempting to run into a wall!"
+            }
+         },
+         de: {
+            messages: {
+               obstacle: "Der Roboter ist gegen ein Hindernis gefahren",
+               successReachExit: "Gratulation, der Roboter hat den Ausgang gefunden!",
+               failureReachExit: "Der Roboter ist immer noch im Labyrinth."
+            }
+         }, 
       },
       arrows: {
          fr: {
@@ -1792,7 +1815,7 @@ var getContext = function(display, infos, curLevel) {
             },
             messages: {
                successReachExit: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
-               failureReachExit: "Der Roboter ist im Weltraum verloren.",
+               failureReachExit: "Der Roboter ist im Weltraum verloren. Er hat die Rakete nicht erreicht.",
                successPickedAllWithdrawables: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
                failurePickedAllWithdrawables: "Der Roboter hat den Weltraumschrott liegen gelassen.",
                obstacle: "Achtung, Asteroiden!"
@@ -2024,6 +2047,41 @@ var getContext = function(display, infos, curLevel) {
          ignoreInvalidMoves: false,
          checkEndEveryTurn: false,
          cellSide: 60
+      },
+      labyrinth: {
+         newBlocks: [
+            {
+               name: "onExit",
+               strings: {
+                  de: {
+                     label: "Flagge erobert",
+                     code: "flaggeErobert",
+                     description: "flaggeErobert(): steht der Roboter auf dem Feld der roten Flagge?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onExit",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) { return (obj.isExit === true); }));
+               }
+            }
+         ],
+         backgroundColor: "#c5b6af",
+         borderColor: "#888888",
+         //hasGravity: true, //Cannot move up if this thing is on
+         bagSize: 1,
+         containerSize: 1,
+         itemTypes: {
+            robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, offsetY: 3, zOrder: 3 },
+            obstacle: { num: 2, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
+            obstacle_small: { num: 4, img: imgPath+"grey_brick_wall_small.png", side: 60, isObstacle: true, zOrder: 0 },
+            flag: { num: 3, img: imgPath+"flag.png", side: 60, isExit: true, zOrder: 0},
+         },
+         checkEndCondition: robotEndConditions.checkReachExit
       },
       arrows: {
          newBlocks: [
@@ -2785,7 +2843,92 @@ var getContext = function(display, infos, curLevel) {
                func: function(callback) {
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isWithdrawable===true;}));
                }
-            }
+            },
+            {
+               name: "paintNorth",
+               strings: {
+                  de: {
+                     label: "Farbe oben",
+                     code: "farbeOben",
+                     description: "farbeOben(): ist das Feld über dem Roboter bemalt?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "paintNorth",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.hasOn(this.getRobot().row - 1, this.getRobot().col, function(obj) { return (obj.isPaint === true || 
+                     obj.isWithdrawable === true ); }));
+               }
+            },
+            {
+               name: "paintSouth",
+               strings: {
+                  de: {
+                     label: "Farbe unten",
+                     code: "farbeUnten",
+                     description: "farbeUnten(): ist das Feld unter dem Roboter bemalt?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "paintSouth",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.hasOn(this.getRobot().row + 1, this.getRobot().col, function(obj) { return (obj.isPaint === true || 
+                     obj.isWithdrawable === true ); }));
+               }
+            },
+            {
+               name: "paintNorthWest",
+               strings: {
+                  de: {
+                     label: "Farbe rechts oben",
+                     code: "farbeRechtsOben",
+                     description: "farbeRechtsOben(): ist das Feld rechts über dem Roboter bemalt?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "paintNorthWest",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.hasOn(this.getRobot().row - 1, this.getRobot().col + 1, function(obj) { return (obj.isPaint === true || 
+                     obj.isWithdrawable === true ); }));
+               }
+            },
+            {
+               name: "paintNorthEast",
+               strings: {
+                  de: {
+                     label: "Farbe links oben",
+                     code: "farbeObenLinks",
+                     description: "farbeObenLinks(): ist das Feld links über dem Roboter bemalt?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "paintNorthEast",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.hasOn(this.getRobot().row - 1, 
+                                             this.getRobot().col - 1, 
+                                             function(obj) { return (obj.isPaint === true || 
+                                                                     obj.isWithdrawable === true ); }
+                                                         )
+                                    );
+               }
+            },
+
          ],
          bagInit: {
            count: 200,
@@ -2796,10 +2939,10 @@ var getContext = function(display, infos, curLevel) {
          borderColor: "#b4ccc7",
          itemTypes: {
             robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
-            initialPaint: { num: 3, color: "#2e1de5", side: 60, isPaint: true, zOrder: 1 },
+            initialPaint: { num: 3, color: "#146c6e", side: 60, isPaint: true, isColor: true, zOrder: 1 },
             marker: { num: 2, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             marker_white: { num: 4, img: imgPath+"dot_white.png", isContainer: true, isFake: true, side: 60, zOrder: 0 },
-            paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, zOrder: 1 },
+            paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, isColor: true, zOrder: 1 },
             // paint: { color: "#2e1de5", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { side: 60, zOrder: 2 },
             board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
@@ -2890,6 +3033,27 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       rocket: {
+         newBlocks: [
+            {
+               name: "onExit",
+               strings: {
+                  de: {
+                     label: "Rakete erreicht",
+                     code: "raketeErreich",
+                     description: "raketeErreicht(): steht der Roboter auf dem Feld mit der Rakete?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onExit",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) { return (obj.isExit === true); }));
+               }
+            }
+         ],
          backgroundColor: "#666699",
          itemTypes: {
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
@@ -2898,7 +3062,7 @@ var getContext = function(display, infos, curLevel) {
             board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             // stars: { num: 3, img: "stars.png", side: 60, zOrder: 1},
             asteroide: { num: 4, img: imgPath+"asteroide.png", side: 60, isObstacle: true, zOrder: 1 },
-            rocket: { num: 5, img: imgPath+"rocket.png", side: 60, isExit: true, zOrder: 1 },
+            rocket: { num: 5, img: imgPath+"rocket.png", side: 80, offsetX: -11, isExit: true, zOrder: 1 },
             // obstacle: { num: 6, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 1 },
             objet1: { num: 7, img: imgPath+"solar_panel.png", side: 60, isWithdrawable: true, zOrder: 1 },
             // objet2: { num: 8, img: "objet2.png", side: 60, isWithdrawable: true, zOrder: 1 }, 
@@ -3269,7 +3433,7 @@ var getContext = function(display, infos, curLevel) {
          this.callCallback(callback, this.platformAbove());
       }
    });
-   
+
    infos.newBlocks.push({
       name: "withdrawObject",
       type: "actions",
@@ -4753,7 +4917,7 @@ var getContext = function(display, infos, curLevel) {
       var robot = context.getRobot();
       return context.hasOn(robot.row - 1, robot.col, function(obj) { return obj.isObstacle === true; });
    };
-   
+
    context.writeNumber = function(row, col, value) {
       var numbers = context.getItemsOn(row, col, function(obj) { return obj.isWritable === true; });
       
