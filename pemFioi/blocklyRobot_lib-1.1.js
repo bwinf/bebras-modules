@@ -1292,6 +1292,9 @@ var getContext = function(display, infos, curLevel) {
             }
          },
          de: {
+            label: {
+               onContainer: "auf Flagge",
+            },
             messages: {
                successReachExit: "Bravo, der Roboter hat die Flagge erobert.",
                failureReachExit: "Der Roboter hat die Flagge nicht erobert.",
