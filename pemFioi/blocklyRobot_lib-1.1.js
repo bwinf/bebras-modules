@@ -2493,6 +2493,27 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkReachExit
       },
       cones: {
+         newBlocks: [
+            {
+               name: "onExit",
+               strings: {
+                  de: {
+                     label: "Ausgang erreicht",
+                     code: "ausgangErreicht",
+                     description: "ausgangErreicht(): steht der Roboter auf dem Feld mit dem Ausgang?"
+                  },
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onExit",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) { return (obj.isExit === true); }));
+               }
+            }
+         ],
          bagInit: {
            count: 200,
            type: "cone"
@@ -2500,11 +2521,13 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#f9f9c1",
          itemTypes: {
             robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -20, zOrder: 2 },
-            marker: { num: 2, img: "marker.png", side: 60, isContainer: true, zOrder: 0 },
-            cone: { num: 3, img: "cone.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
-            contour: { num: 4, img: "contour.png", side: 60, zOrder: 1 },
-            fixed_cone: { num: 5, img: "cone.png", side: 60, isObstacle: true, zOrder: 1 },
-            number: { num: 6, side: 60, zOrder: 1 }
+            marker: { num: 2, img: imgPath+"marker.png", side: 60, isContainer: true, zOrder: 0 },
+            cone: { num: 3, img: imgPath+"cone.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
+            contour: { num: 4, img: imgPath+"contour.png", side: 60, zOrder: 1 },
+            fixed_cone: { num: 5, img: imgPath+"cone.png", side: 60, isObstacle: true, zOrder: 1 },
+            number: { num: 6, side: 60, zOrder: 1 },
+            exit: {num: 7, img: imgPath+"flag.png", side: 60, isExit: true},
+            wall: { num: 8, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
