@@ -2529,7 +2529,7 @@ var getContext = function(display, infos, curLevel) {
             water_full: { num: 17, img: imgPath+"water_full.png", side: 60, isObstacle: true, zOrder: 1 },
             tree: { num: 15, img: imgPath+"tree.png", side: 80, isObstacle: true, zOrder: 2, offsetX: -15, offsetY: 8 },
             flowers: { num: 16, img: imgPath+"flowers.png", side: 50, isObstacle: true, zOrder: 1, offsetX: 5 },
-            board: { num: 14, img: imgPath+"water+board.png", side: 60, zOrder: 1 }
+            bridge: { num: 14, img: imgPath+"water+board.png", side: 60, zOrder: 1 }
          },
          checkEndCondition: robotEndConditions.checkReachExit
       },
