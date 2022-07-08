@@ -2512,6 +2512,9 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#d4e8c4", // "#e7d0bc",
          borderColor: "#49b675",
          itemTypes: {
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             robot: { img: imgPath+"red_robot.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
             red_robot_alt: { img: imgPath+"red_robot_alt.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
             bush: { num: 2, img: imgPath+"bush.png", side: 60, isObstacle: true, zOrder: 0 },
