@@ -550,7 +550,7 @@ var getContext = function(display, infos, curLevel) {
                onWritable: "auf Tafel",
                onLauncher: "auf einem Laser", //Check this!
                writeNumber: "schreibe Zahl",
-               readNumber: "lese Zahl",
+               readNumber: "lies Zahl",
                pushObject: "schiebe Object",
                pushableInFront: "vor beweglichen Object",
                dropNum: "lasse %1 Objekte fallen",
@@ -1755,7 +1755,7 @@ var getContext = function(display, infos, curLevel) {
             label: {
               dropObject: "färbe das Feld",
               onContainer: "auf Markierung",
-              readNumber: "lese Zahl",
+              readNumber: "lies Zahl",
             },
             code: {
                dropObject: "bemaleFeld",
@@ -1909,7 +1909,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "auf Markierung",
                pushableInFront: "vor einer Kiste",
                obstacleInFront: "vor einem Hindernis",
-               readNumber: "lese Zahl" 
+               readNumber: "lies Zahl" 
             },
             code: {
                pushObject: "schiebeKiste",
