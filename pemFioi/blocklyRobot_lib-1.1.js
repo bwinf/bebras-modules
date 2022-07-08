@@ -865,6 +865,10 @@ var getContext = function(display, infos, curLevel) {
             }
          },
          de: {
+            label: {
+               dropObject: "färbe das Feld",
+               onContainer: "auf Markierung",
+             },
             messages: {
                obstacle: "Der Roboter verlässt den Weg, den die Pfeile vorgeben!",
                successReachExit: "Gratulation, der Roboter hat den Schatz geborgen!",
@@ -2208,14 +2212,21 @@ var getContext = function(display, infos, curLevel) {
             }
          ],
          backgroundColor: "#d3e7b6",
+         bagInit: {
+            count: 200,
+            type: "paint"
+          },
+         ignoreBag: true,
          itemTypes: {
             robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             cell: {num: 1, color: "#d3e7b6", side: 60, isObstacle: true, zOrder: 0 },
-            box: { num: 3, img: "box.png", side: 60, isExit: true },
-            leftArrow: { num: 4, img: "leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
-            rightArrow: { num: 5, img: "rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
-            topArrow: { num: 6, img: "topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
-            bottomArrow: { num: 7, img: "bottomArrow.png", side: 60, forwardsBottom: true, zOrder: 0}
+            box: { num: 3, img: "chest.png", side: 80, isExit: true, zOrder: 1, offsetX: -10, offsetY: 5 },
+            leftArrow: { num: 4, img: imgPath+"leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
+            rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
+            topArrow: { num: 6, img: imgPath+"topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
+            bottomArrow: { num: 7, img: imgPath+"bottomArrow.png", side: 60, forwardsBottom: true, zOrder: 0},
+            marker: { num: 2, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
+            paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, isColor: true, zOrder: 1 },
          },
          checkEndCondition: robotEndConditions.checkReachExit
       },
@@ -2754,6 +2765,46 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkLights
       }, 
       marbles: {
+         newBlocks: [
+            {
+              name: "onOrange",
+              strings: {
+                de: {
+                   label: "orange",
+                   code: "aufOrange",
+                   description: "aufOrange(): Steht der Roboter auf einem orangenen Feld?"
+                 }
+              },
+              category: "robot",
+              type: "sensors",
+              block: {
+                name: "onOrange",
+                yieldsValue: true
+              },
+              func: function(callback) {
+                this.callCallback(callback, this.isOn(function(obj) {return obj.isOrange===true;}));
+              }
+            },
+            {
+              name: "onBlue",
+              strings: {
+                de: {
+                   label: "blau",
+                   code: "aufBlau",
+                   description: "aufBlau(): Steht der Roboter auf einem blauen Feld?"
+                 }
+              },
+              category: "robot",
+              type: "sensors",
+              block: {
+                name: "onBlue",
+                yieldsValue: true
+              },
+              func: function(callback) {
+                this.callCallback(callback, this.isOn(function(obj) {return obj.isBlue===true;}));
+              }
+            }
+          ],
          bagSize: 1,
          backgroundColor: "#dadada",
          itemTypes: {
@@ -3077,6 +3128,9 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#c2c6f2",
          borderColor: "a4aacd",
          itemTypes: {
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             robot: { img: imgPath+"orange_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             wall: { num: 2, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
             marker: { num: 3, img: imgPath+"marker.png", side: 60, isContainer: true, zOrder: 0 },
