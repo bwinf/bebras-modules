@@ -2836,6 +2836,7 @@ var getContext = function(display, infos, curLevel) {
          itemTypes: {
             robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
             //blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            wall: { num: 2, img: imgPath+"wall.png", side: 60, isObstacle: true, zOrder: 0 },
             hole: { num: 3, img: imgPath+"hole.png", side: 60, isContainer: true, zOrder: 0 },
             marble: { num: 4, img: imgPath+"marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { num: 5, side: 60, zOrder: 1 },
