@@ -1289,9 +1289,9 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successContainersFilled: "Großartig, der Roboter hat alle Blumen ausgesät!",
                failureContainersFilled: "Der Roboter hat Samen gesät wo keine Erde ist.",
-               failureContainersFilledLess: "Einige Erdhaufen haben keine Samen!",
+               failureContainersFilledLess: "In einigen Erdhaufen wurden noch keine Blumen gepflanzt!",
                failureDropObject: "Hier wächst schon eine Blume",
-					obstacle: "Vorsichtig, da steht eine Blume!",
+					obstacle: "Vorsichtig, hier kann der Roboter nicht lang!",
             }
          },
       },   
@@ -1453,9 +1453,9 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "liefere einen Fisch ab",
                withdrawNum_noShadow: "fange %1 Fische",
                dropNum_noShadow: "liefere %1 Fische ab",
-               nbWithdrawables: "Anzahl der Fische im Netz",
+               nbWithdrawables: "Anzahl der Fische",
                containerSize: "Anzahl der bestellten Fische",
-               onObject: "Fische im Netz",
+               onObject: "auf Fischen",
                onContainer: "auf einer Insel",
             },
             code: {
@@ -1600,7 +1600,10 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               obstacleInFront: "Asteroid vorraus"
+               obstacleInFront: "Asteroid vorraus",
+               obstacleEast: "Asteroid rechts",
+               obstacleWest: "Asteroid links",
+               obstacleSouth: "Asteroid hinten",
             },
             code: {
                obstacleInFront: "asteroidVorraus"
@@ -2674,15 +2677,15 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          containerSize: 1,
          itemTypes: {
-            robot: { img: "red_robot.png", side: 60, nbStates: 1, isRobot: true, zOrder: 4, customDisplay: function(obj) {
+            robot: { img: imgPath+"buoy_robot.png", side: 60, nbStates: 1, isRobot: true, zOrder: 4, customDisplay: function(obj) {
             	if(context.bag.length != 0)
-            		obj.img = "red_robot_fishes.png";
+            		obj.img = imgPath+"buoy_robot_fishes.png";
             	else
-            		obj.img = "red_robot.png";
+            		obj.img = imgPath+"buoy_robot.png";
             } },
-            island: { num: 2, img: "island.png", side: 75, isContainer: true, offsetX: -7, offsetY: 0, zOrder: 0, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
-            fishes: { num: 3, img: "fishes.png", side: 60, isWithdrawable: true, offsetY: 2, zOrder: 1 },
-            fishes: { num: 4, img: "fishes.png", side: 60, isWithdrawable: true, offsetY: 8, offsetX: 2, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
+            island: { num: 2, img: imgPath+"island.png", side: 75, isContainer: true, offsetX: -7, offsetY: 0, zOrder: 0, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
+            fishes: { num: 3, img: imgPath+"fishes.png", side: 60, isWithdrawable: true, offsetY: 2, zOrder: 1 },
+            fishes: { num: 4, img: imgPath+"fishes.png", side: 60, isWithdrawable: true, offsetY: 8, offsetX: 2, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
             	if(context.hasOn(obj.row, obj.col, function(item) { return item.num == 2; }))
             		obj.offsetX = 0;
             } },
@@ -2696,8 +2699,8 @@ var getContext = function(display, infos, curLevel) {
                   return item.isContainer === true;
                })[0].containerSize;
             }, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -15, offsetY: -14},
-            obstacle: { num: 7, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
-            net: { num: 8, img: "net.png", side: 60, zOrder: 2 },
+            obstacle: { num: 7, img: imgPath+"brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
+            net: { num: 8, img: imgPath+"net.png", side: 60, zOrder: 2 },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -2714,7 +2717,11 @@ var getContext = function(display, infos, curLevel) {
             earth: { num: 2, img: imgPath+"earth.png", side: 60, isContainer: true, zOrder: 0 },
             flower: { num: 3, img: imgPath+"flower.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
             fixed_flower: { num: 5, img: imgPath+"fixed_flower.png", side: 60, isObstacle: true, zOrder: 1 },
-            number: { num: 6, side: 60, zOrder: 1 }
+            number: { num: 6, side: 60, zOrder: 1 },
+            bush: { num: 7, img: imgPath+"bush.png", side: 60, isObstacle: true, zOrder: 0 },
+            water: { num: 8, img: imgPath+"water.png", side: 60, isObstacle: true, zOrder: 1 },
+            tree: { num: 9, img: imgPath+"tree.png", side: 80, isObstacle: true, zOrder: 2, offsetX: -15, offsetY: 8 },
+            bridge: { num: 10, img: imgPath+"water+board.png", side: 60, zOrder: 1 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -3029,6 +3036,7 @@ var getContext = function(display, infos, curLevel) {
             board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
             board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
             board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
+            wall: { num: 5, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -3143,7 +3151,7 @@ var getContext = function(display, infos, curLevel) {
             board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
             // stars: { num: 3, img: "stars.png", side: 60, zOrder: 1},
             asteroide: { num: 4, img: imgPath+"asteroide.png", side: 60, isObstacle: true, zOrder: 1 },
-            rocket: { num: 5, img: imgPath+"rocket.png", side: 80, offsetX: -11, isExit: true, zOrder: 1 },
+            rocket: { num: 5, img: imgPath+"rocket.png", side: 65, offsetX: -1, offsetY: 4, isExit: true, zOrder: 1 },
             // obstacle: { num: 6, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 1 },
             objet1: { num: 7, img: imgPath+"solar_panel.png", side: 60, isWithdrawable: true, zOrder: 1 },
             // objet2: { num: 8, img: "objet2.png", side: 60, isWithdrawable: true, zOrder: 1 }, 
