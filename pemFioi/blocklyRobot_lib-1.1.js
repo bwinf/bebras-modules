@@ -957,7 +957,7 @@ var getContext = function(display, infos, curLevel) {
              messages: {
                successContainersFilled: "Bravo, der Roboter hat alle Karten an ihre Plätze sortiert!",
                failureContainersFilled: "Einige Karten sind nicht richtig einsortiert.",
-               failureContainersFilledLess: "Es gibt immer noch falsch einsortierte Karten.",
+               failureContainersFilledLess: "Es gibt noch falsch einsortierte Karten.",
                failureContainersFilledBag: "Der Roboter muss seine Karten ablegen."
             }
          },
@@ -2223,7 +2223,7 @@ var getContext = function(display, infos, curLevel) {
          itemTypes: {
             robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             cell: {num: 1, color: "#d3e7b6", side: 60, isObstacle: true, zOrder: 0 },
-            box: { num: 3, img: "chest.png", side: 80, isExit: true, zOrder: 1, offsetX: -10, offsetY: 5 },
+            box: { num: 3, img: imgPath+"chest.png", side: 80, isExit: true, zOrder: 1, offsetX: -10, offsetY: 5 },
             leftArrow: { num: 4, img: imgPath+"leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
             rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
             topArrow: { num: 6, img: imgPath+"topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
@@ -2251,9 +2251,9 @@ var getContext = function(display, infos, curLevel) {
                   },
 
                   de: {
-                     label: "Kreis auf der Karte",
-                     code: "kreisAufKarte",
-                     description: "kreisAufKarte(): Befindet sich der Roboter auf einer Karte mit Kreis?"
+                     label: "auf Kreis",
+                     code: "aufKreis",
+                     description: "aufKreis(): Befindet sich der Roboter auf einem Feld mit einem Kreis?"
                   }
                },
                category: "robot",
@@ -2263,8 +2263,8 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                  // if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
+                  //    throw(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isRound===true;}));
                }
             },
@@ -2282,9 +2282,9 @@ var getContext = function(display, infos, curLevel) {
                      description: "cuadradoCarta(): ¿está el robot sobre una carta que contiene un cuadrado?"
                   },
                   de: {
-                     label: "Viereck auf der Karte",
-                     code: "viereckAufKarte",
-                     description: "viereckAufKarte(): Befindet sich der Roboter auf einer Karte mit Viereck?"
+                     label: "auf Viereck",
+                     code: "aufViereck",
+                     description: "aufViereck(): Befindet sich der Roboter auf einem Feld mit einem Viereck?"
                   }
                },
                category: "robot",
@@ -2294,8 +2294,8 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                  // if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
+                  //    throw(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isSquare===true;}));
                }
             },
@@ -2313,9 +2313,9 @@ var getContext = function(display, infos, curLevel) {
                      description: "triánguloCarta(): ¿está el robot sobre una carta que contiene un triángulo?"
                   },
                   de: {
-                     label: "Dreieck auf der Karte",
-                     code: "dreieckAufKarte",
-                     description: "dreieckAufKarte(): Befindet sich der Roboter auf einer Karte mit Dreieck?"
+                     label: "auf Dreieck",
+                     code: "aufDreieck",
+                     description: "aufDreieck(): Befindet sich der Roboter auf einem Feld mit einem Dreieck?"
                   }
                },
                category: "robot",
@@ -2325,8 +2325,8 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                  // if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
+                  //    throw(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isTriangle===true;}));
                }
             },
@@ -2344,9 +2344,9 @@ var getContext = function(display, infos, curLevel) {
                      description: "sobreCudarícula(): ¿Está el robot sobre una carta cuadriculada?"
                   },
                   de: {
-                     label: "Gittermuster auf der Karte ",
-                     code: "gittermusterAufKarte",
-                     description: "gittermusterAufKarte(): Befindet sich der Roboter auf einer Karte mit Gittermuster?"
+                     label: "auf Gittermuster",
+                     code: "aufGittermuster",
+                     description: "aufGittermuster(): Befindet sich der Roboter auf einem Feld mit Gittermuster?"
                   }
                },
                category: "robot",
@@ -2356,8 +2356,8 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                  // if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
+                  //    throw(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isQuadrille===true;}));
                }
             },
@@ -2375,9 +2375,9 @@ var getContext = function(display, infos, curLevel) {
                      description: "sobreRayado(): ¿Está el robot sobre una carta rayada?"
                   },
                   de: {
-                     label: "Streifen auf der Karte ",
-                     code: "streifenAufKarte",
-                     description: "streifenAufKarte(): Befindet sich der Roboter auf einer Karte mit Streifen?"
+                     label: "auf Streifen",
+                     code: "aufStreifen",
+                     description: "aufStreifen(): Befindet sich der Roboter auf einem Feld mit Streifen?"
                   }
                },
                category: "robot",
@@ -2387,8 +2387,8 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                  // if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
+                  //    throw(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isStriped===true;}));
                }
             },
@@ -2406,9 +2406,9 @@ var getContext = function(display, infos, curLevel) {
                      description: "sobrePuntos(): ¿Está el robot sobre una carta con puntos?"
                   },
                   de: {
-                     label: "Punkte auf der Karte ",
-                     code: "punkteAufKarte",
-                     description: "punkteAufKarte(): Befindet sich der Roboter auf einer Karte mit Punkten?"
+                     label: "auf Punkten",
+                     code: "aufPunkten",
+                     description: "aufPunkten(): Befindet sich der Roboter auf einem Feld mit Punkten?"
                   }
                },
                category: "robot",
@@ -2418,31 +2418,31 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: true
                },
                func: function(callback) {
-                  if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                  // if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
+                  //    throw(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isDotted===true ;}));
                }
             }
          ],
          bagSize: 1,
-         backgroundColor: "#abeaf4",
+         backgroundColor: "#e5efef",
          itemTypes: {
-            robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
-            square: { num: 2, img: "purple.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isSquare === true; }, zOrder: 0 },
-            round: { num: 3, img: "green.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isRound === true; }, zOrder: 0 },
-            triangle: { num: 4, img: "orange.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isTriangle === true; }, zOrder: 0 },
-            dotted: { num: 5, img: "dotted.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isDotted === true; }, zOrder: 0 },
-            striped: { num: 6, img: "striped.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isStriped === true; }, zOrder: 0 },
-            quadrille: { num: 7, img: "quadrille.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isQuadrille === true; }, zOrder: 0 },
-            roundQuadrille: { img: "roundQuadrille.png", side: 60, isWithdrawable: true, isRound: true, isQuadrille: true, zOrder: 1 },
-            squareQuadrille: { img: "squareQuadrille.png", side: 60, isWithdrawable: true, isSquare: true, isQuadrille: true, zOrder: 1 },
-            triangleQuadrille: { img: "triangleQuadrille.png", side: 60, isWithdrawable: true, isTriangle: true, isQuadrille: true, zOrder: 1 },
-            roundStriped: { img: "roundStriped.png", side: 60, isWithdrawable: true, isRound: true, isStriped: true, zOrder: 1 },
-            squareStriped: { img: "squareStriped.png", side: 60, isWithdrawable: true, isSquare: true, isStriped: true, zOrder: 1 },
-            triangleStriped: { img: "triangleStriped.png", side: 60, isWithdrawable: true, isTriangle: true, isStriped: true, zOrder: 1 },
-            roundDotted: { img: "roundDotted.png", side: 60, isWithdrawable: true, isRound: true, isDotted: true, zOrder: 1 },
-            squareDotted: { img: "squareDotted.png", side: 60, isWithdrawable: true, isSquare: true, isDotted: true, zOrder: 1 },
-            triangleDotted: { img: "triangleDotted.png", side: 60, isWithdrawable: true, isTriangle: true, isDotted: true, zOrder: 1 }
+            robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
+            square: { num: 2, img: imgPath+"square_empty.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isSquare === true; }, zOrder: 0 },
+            round: { num: 3, img: imgPath+"round_empty.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isRound === true; }, zOrder: 0 },
+            triangle: { num: 4, img: imgPath+"triangle_empty.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isTriangle === true; }, zOrder: 0 },
+            dotted: { num: 5, img: imgPath+"dotted.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isDotted === true; }, zOrder: 0 },
+            striped: { num: 6, img: imgPath+"striped.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isStriped === true; }, zOrder: 0 },
+            quadrille: { num: 7, img: imgPath+"quadrille.png", side: 60, isContainer: true, containerFilter: function(obj) { return obj.isQuadrille === true; }, zOrder: 0 },
+            roundQuadrille: {num: 10, img: imgPath+"card_roundQuadrille.png", side: 60, isWithdrawable: true, isRound: true, isQuadrille: true, zOrder: 1 },
+            squareQuadrille: { num: 11,img: imgPath+"card_squareQuadrille.png", side: 60, isWithdrawable: true, isSquare: true, isQuadrille: true, zOrder: 1 },
+            triangleQuadrille: {num: 12, img: imgPath+"card_triangleQuadrille.png", side: 60, isWithdrawable: true, isTriangle: true, isQuadrille: true, zOrder: 1 },
+            roundStriped: {num: 13, img: imgPath+"card_roundStriped.png", side: 60, isWithdrawable: true, isRound: true, isStriped: true, zOrder: 1 },
+            squareStriped: {num: 14, img: imgPath+"card_squareStriped.png", side: 60, isWithdrawable: true, isSquare: true, isStriped: true, zOrder: 1 },
+            triangleStriped: {num: 15, img: imgPath+"card_triangleStriped.png", side: 60, isWithdrawable: true, isTriangle: true, isStriped: true, zOrder: 1 },
+            roundDotted: {num: 16, img: imgPath+"card_roundDotted.png", side: 60, isWithdrawable: true, isRound: true, isDotted: true, zOrder: 1 },
+            squareDotted: { num: 17,img: imgPath+"card_squareDotted.png", side: 60, isWithdrawable: true, isSquare: true, isDotted: true, zOrder: 1 },
+            triangleDotted: {num: 18, img: imgPath+"card_triangleDotted.png", side: 60, isWithdrawable: true, isTriangle: true, isDotted: true, zOrder: 1 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -2575,9 +2575,9 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCruz(): ¿Se encuentra el robot sobre una cruz?"
                },
                de: {
-                  label: "über einem Kreuz",
-                  code: "überKreuz",
-                  description: "überKreuz(): Steht der Roboter über einem Kreuz?"
+                  label: "auf Kreuz",
+                  code: "aufKreuz",
+                  description: "aufKreuz(): Steht der Roboter über einem Kreuz?"
                 }
              },
              category: "robot",
@@ -2604,9 +2604,9 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreEstrella(): ¿Se encuentra el robot sobre una estrella?"
                },
                de: {
-                  label: "über einem Stern",
-                  code: "überStern",
-                  description: "überStern(): Steht der Roboter über einem Stern?"
+                  label: "auf Stern",
+                  code: "aufStern",
+                  description: "aufStern(): Steht der Roboter über einem Stern?"
                 }
              },
              category: "robot",
@@ -2633,9 +2633,9 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCuadrado(): ¿Se encuentra el robot sobre un cuadrado?"
                },
                de: {
-                  label: "über einem Viereck",
-                  code: "überViereck",
-                  description: "überViereck(): Steht der Roboter über einem Viereck?"
+                  label: "auf Viereck",
+                  code: "aufViereck",
+                  description: "aufViereck(): Steht der Roboter über einem Viereck?"
                 }
              },
              category: "robot",
@@ -2668,7 +2668,7 @@ var getContext = function(display, infos, curLevel) {
             board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
             board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
             board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
-            obstacle: { num: 14, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
+            obstacle: { num: 14, img: imgPath+"brick_wall.png", side: 60, isObstacle: true, zOrder: 0 }
          }
       },
       fishing: {
@@ -2784,7 +2784,7 @@ var getContext = function(display, infos, curLevel) {
          itemTypes: {
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
             obstacle: { num: 2, img: imgPath+"asteroide.png", side: 60, isObstacle: true, isOpaque: true },
-            light: { num: 3, img: imgPath+"off_spot.png", states: ["off_spot.png", "on_spot.png"], isLight: true, state: 0, side: 60 },
+            light: { num: 3, img: imgPath+"off_spot.png", states: [imgPath+"off_spot.png", imgPath+"on_spot.png"], isLight: true, state: 0, side: 60 },
             launcher: { num: 5, img: imgPath+"launcher2.png", isLaser: true, side: 60 },
             mirrorN: { num: 6, img: imgPath+"mirrorN.png", isMirror: true, mirrorFunction: function(dir) { return (14 - dir) % 8; }, side: 60 },
             mirrorZ: { num: 7, img: imgPath+"mirrorZ.png", isMirror: true, mirrorFunction: function(dir) { return (10 - dir) % 8; }, side: 60 },
@@ -2798,46 +2798,46 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkLights
       }, 
       marbles: {
-         newBlocks: [
-            {
-              name: "onOrange",
-              strings: {
-                de: {
-                   label: "orange",
-                   code: "aufOrange",
-                   description: "aufOrange(): Steht der Roboter auf einem orangenen Feld?"
-                 }
-              },
-              category: "robot",
-              type: "sensors",
-              block: {
-                name: "onOrange",
-                yieldsValue: true
-              },
-              func: function(callback) {
-                this.callCallback(callback, this.isOn(function(obj) {return obj.isOrange===true;}));
-              }
-            },
-            {
-              name: "onBlue",
-              strings: {
-                de: {
-                   label: "blau",
-                   code: "aufBlau",
-                   description: "aufBlau(): Steht der Roboter auf einem blauen Feld?"
-                 }
-              },
-              category: "robot",
-              type: "sensors",
-              block: {
-                name: "onBlue",
-                yieldsValue: true
-              },
-              func: function(callback) {
-                this.callCallback(callback, this.isOn(function(obj) {return obj.isBlue===true;}));
-              }
-            }
-          ],
+         // newBlocks: [
+         //    {
+         //      name: "onOrange",
+         //      strings: {
+         //        de: {
+         //           label: "orange",
+         //           code: "aufOrange",
+         //           description: "aufOrange(): Steht der Roboter auf einem orangenen Feld?"
+         //         }
+         //      },
+         //      category: "robot",
+         //      type: "sensors",
+         //      block: {
+         //        name: "onOrange",
+         //        yieldsValue: true
+         //      },
+         //      func: function(callback) {
+         //        this.callCallback(callback, this.isOn(function(obj) {return obj.isOrange===true;}));
+         //      }
+         //    },
+         //    {
+         //      name: "onBlue",
+         //      strings: {
+         //        de: {
+         //           label: "blau",
+         //           code: "aufBlau",
+         //           description: "aufBlau(): Steht der Roboter auf einem blauen Feld?"
+         //         }
+         //      },
+         //      category: "robot",
+         //      type: "sensors",
+         //      block: {
+         //        name: "onBlue",
+         //        yieldsValue: true
+         //      },
+         //      func: function(callback) {
+         //        this.callCallback(callback, this.isOn(function(obj) {return obj.isBlue===true;}));
+         //      }
+         //    }
+         //  ],
          bagSize: 1,
          backgroundColor: "#dadada",
          itemTypes: {
@@ -2873,15 +2873,15 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#a0cc97",
          borderColor: "#81a279",
          itemTypes: {
-            robot: { img: "green_robot.png", side: 90, nbStates: 9, isRobot: true,  offsetX: -11, zOrder: 4, customDisplay: function(obj) {
+            robot: { img: imgPath+"green_robot.png", side: 90, nbStates: 9, isRobot: true,  offsetX: -11, zOrder: 4, customDisplay: function(obj) {
             	if(context.bag.length != 0)
-            		obj.img = "green_robot_book.png";
+            		obj.img = imgPath+"green_robot_book.png";
             	else
-            		obj.img = "green_robot.png";
+            		obj.img = imgPath+"green_robot.png";
             } },
-            box: { num: 2, img: "box.png", side: 60, isContainer: true, zOrder: 2, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
-            books: { num: 3, img: "books.png", side: 60, isWithdrawable: true, offsetY: 12, zOrder: 1 },
-            books_outside: { num: 4, img: "books.png", side: 60, isWithdrawable: true, offsetY: 12, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
+            box: { num: 2, img: imgPath+"box.png", side: 60, isContainer: true, zOrder: 2, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
+            books: { num: 3, img: imgPath+"books.png", side: 60, isWithdrawable: true, offsetY: 12, zOrder: 1 },
+            books_outside: { num: 4, img: imgPath+"books.png", side: 60, isWithdrawable: true, offsetY: 12, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
             	if(context.hasOn(obj.row, obj.col, function(item) { return item.num == 2; }))
             		obj.offsetY = -5;
             } },         
@@ -2895,8 +2895,8 @@ var getContext = function(display, infos, curLevel) {
                   return item.isContainer === true;
                })[0].containerSize;
             }, side: 60, isWritable: true, fontColor: "#666666", fontBold: true, zOrder: 3, offsetX: 0, offsetY: 13},
-            platform: { num: 7, img: "shelf.png", side: 60, isObstacle: true, zOrder: 0 },
-            square_platform: { num: 8, img: "square_shelf.png", side: 60, isObstacle: true, zOrder: 0 }
+            platform: { num: 7, img: imgPath+"shelf.png", side: 60, isObstacle: true, zOrder: 0 },
+            square_platform: { num: 8, img: imgPath+"square_shelf.png", side: 60, isObstacle: true, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -3104,7 +3104,7 @@ var getContext = function(display, infos, curLevel) {
          ignoreBag: true,
          blockingFilter: false,
          itemTypes: {
-            robot: { img: "cursor.png", side: 60, nbStates: 9, isRobot: true, zOrder: 2 },
+            robot: { img: imgPath+"cursor.png", side: 60, nbStates: 9, isRobot: true, zOrder: 2 },
             marker_Gelb: { num: 2, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffd35c";} },
             marker_Orange: { num: 3, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff8201";} },
             marker_Tangerine: { num: 4, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#f37252";} },
@@ -3184,18 +3184,18 @@ var getContext = function(display, infos, curLevel) {
             platform: { num: 2, img: imgPath+"platform.png", side: 60, isObstacle: true, zOrder: 0 },
             gears: { num: 4, img: imgPath+"gears.png", side: 60, isContainer: true, zOrder: 1},
             wheel: { num:5, img: imgPath+"wheel.png", side: 60, isWithdrawable: true, zOrder: 2},
-            projectile: {num: 6, img: imgPath+"projectile.png", side: 60, zOrder: 4, action: function(item, time) { this.moveProjectile(item); }, isProjectile: true},
-            //door: { num: 8, img: imgPath+"door.png", side: 60, isExit: true, zOrder: 1},
-            dispersion: {img: imgPath+"dispersion.png", side: 60, zOrder: 4, action: function(item, time) { this.destroy(item); }, isProjectile: true},
-            dispersion_robot: {img: imgPath+"dispersion.png", side: 60, zOrder: 4, offsetY: -15, action: function(item, time) { this.destroy(item); }, isProjectile: true},
-            projectile_generator: {num: 7, side: 60, action: function(item, time) {
-               if(item.period == undefined)
-                  item.period = 1;
-               if(item.start == undefined)
-                  item.start = 1;
-               if(time % item.period == item.start) 
-                  this.dropObject({type: "projectile"}, {row: item.row, col: item.col}); 
-            }}
+            // projectile: {num: 6, img: imgPath+"projectile.png", side: 60, zOrder: 4, action: function(item, time) { this.moveProjectile(item); }, isProjectile: true},
+            // //door: { num: 8, img: imgPath+"door.png", side: 60, isExit: true, zOrder: 1},
+            // dispersion: {img: imgPath+"dispersion.png", side: 60, zOrder: 4, action: function(item, time) { this.destroy(item); }, isProjectile: true},
+            // dispersion_robot: {img: imgPath+"dispersion.png", side: 60, zOrder: 4, offsetY: -15, action: function(item, time) { this.destroy(item); }, isProjectile: true},
+            // projectile_generator: {num: 7, side: 60, action: function(item, time) {
+            //    if(item.period == undefined)
+            //       item.period = 1;
+            //    if(item.start == undefined)
+            //       item.start = 1;
+            //    if(time % item.period == item.start) 
+            //       this.dropObject({type: "projectile"}, {row: item.row, col: item.col}); 
+            // }}
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
