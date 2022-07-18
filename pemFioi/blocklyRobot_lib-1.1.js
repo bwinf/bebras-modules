@@ -2879,7 +2879,7 @@ var getContext = function(display, infos, curLevel) {
             	else
             		obj.img = imgPath+"green_robot.png";
             } },
-            box: { num: 2, img: imgPath+"box.png", side: 60, isContainer: true, zOrder: 2, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
+            box: { num: 2, img: imgPath+"cardboard_box.png", side: 60, isContainer: true, zOrder: 2, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
             books: { num: 3, img: imgPath+"books.png", side: 60, isWithdrawable: true, offsetY: 12, zOrder: 1 },
             books_outside: { num: 4, img: imgPath+"books.png", side: 60, isWithdrawable: true, offsetY: 12, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
             	if(context.hasOn(obj.row, obj.col, function(item) { return item.num == 2; }))
