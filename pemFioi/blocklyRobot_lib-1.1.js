@@ -548,7 +548,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "auf Behälter",
                onNumber: "auf Zahl",
                onWritable: "auf Tafel",
-               onLauncher: "auf einem Laser", //Check this!
+               onLauncher: "auf Laser", //Check this!
                writeNumber: "schreibe Zahl",
                readNumber: "lies Zahl",
                pushObject: "schiebe Object",
@@ -565,8 +565,8 @@ var getContext = function(display, infos, curLevel) {
                shootCondition: "Rückkehr von der Schießrichtung %1",
                shootCondition_noShadow: "Rückkehr von der Schießrichtung %1",
                connect: "ein Kabel anschließen",
-               onMale: "auf einem Stecker",
-               onFemale: "auf einer Dose",
+               onMale: "auf Stecker",
+               onFemale: "auf Dose",
                dropPlatformInFront: "baue eine Plattform davor",
                dropPlatformAbove: "baue eine Plattform oben"
                
@@ -835,9 +835,9 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             messages: {
-               obstacle: "Der Roboter ist gegen ein Hindernis gefahren",
+               obstacle: "Der Roboter ist gegen ein Hindernis gefahren.",
                successReachExit: "Gratulation, der Roboter hat den Ausgang gefunden!",
-               failureReachExit: "Der Roboter ist immer noch im Labyrinth."
+               failureReachExit: "Der Roboter ist immer noch im Labyrinth. Er muss den Ausgang finden."
             }
          }, 
       },
@@ -866,7 +866,7 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               dropObject: "färbe das Feld",
+               dropObject: "färbe Feld",
                onContainer: "auf Markierung",
              },
             messages: {
@@ -882,8 +882,8 @@ var getContext = function(display, infos, curLevel) {
             label: {
                withdrawObject: "hebe Zahnrad auf",
                dropObject: "baue Zahnrad ein",
-               onObject: "auf einem Zahnrad", //auf Zahnrad?
-               onContainer: "auf einer Maschine"
+               onObject: "auf Zahnrad", //auf Zahnrad?
+               onContainer: "auf Maschine"
             },
             code: {
                withdrawObject: "hebeZahnradAuf",
@@ -949,10 +949,10 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "hebe die Karte auf",
-               dropObject: "lege die Karte ab",
-               onObject: "auf einer Karte",
-               onContainer: "auf einem Ablageplatz",
+               withdrawObject: "hebe Karte auf",
+               dropObject: "lege Karte ab",
+               onObject: "auf Karte",
+               onContainer: "auf Ablageplatz",
             },
              messages: {
                successContainersFilled: "Bravo, der Roboter hat alle Karten an ihre Plätze sortiert!",
@@ -1197,13 +1197,13 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               dropObject: "platziere einen Leitkegel",
-               onContainer: "auf einem markierten Quadrat",
-               obstacleInFront: "vor einem Leitkegel"
+               dropObject: "platziere Leitkegel",
+               onContainer: "auf Ablageplatz",
+               obstacleInFront: "vor Leitkegel"
             },
             code: {
                dropObject: "platziereLeitkegel",
-               onContainer: "aufMarkiertemQuadrat",
+               onContainer: "aufAblageplatz",
                obstacleInFront: "vorLeitkegel"
             },
             messages: {
@@ -1277,9 +1277,9 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               dropObject: "pflanze einen Samen",
-               onContainer: "auf einem Erdhaufen",
-               obstacleInFront: "vor einer Blume"
+               dropObject: "pflanze Samen",
+               onContainer: "auf Erdhaufen",
+               obstacleInFront: "vor Blume"
             },
             code: {
                dropObject: "pflanzeSamen",
@@ -1368,7 +1368,7 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "hebe den Dominostein auf",
+               withdrawObject: "hebe Dominostein auf",
             },
             code: {
                withdrawObject: "hebeDominoAuf"
@@ -1449,19 +1449,19 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "fange einen Fisch",
-               dropObject: "liefere einen Fisch ab",
+               withdrawObject: "fange Fisch",
+               dropObject: "liefere Fisch ab",
                withdrawNum_noShadow: "fange %1 Fische",
                dropNum_noShadow: "liefere %1 Fische ab",
                nbWithdrawables: "Anzahl der Fische",
                containerSize: "Anzahl der bestellten Fische",
-               onObject: "auf Fischen",
-               onContainer: "auf einer Insel",
+               onObject: "auf Fisch",
+               onContainer: "auf Insel",
             },
             code: {
                withdrawObject: "fangeFisch",
                dropObject: "legeFischAb",
-               onObject: "fischAufPlatz",
+               onObject: "aufFisch",
                onContainer: "aufInsel",
                nbWithdrawables: "anzahlFische",
                containerSize: "anzahlBestellteFische",
@@ -1471,7 +1471,7 @@ var getContext = function(display, infos, curLevel) {
             description: {
                withdrawObject: "fangeFisch() nimmt einen Fisch vom Platz",
                dropObject: "legeFischAb() legt einen Fisch ab",
-               onObject: "fischAufPlatz() zeigt an, ob sich ein oder mehrere Fische auf dem Feld befinden",
+               onObject: "aufFisch() zeigt an, ob sich ein oder mehrere Fische auf dem Feld befinden",
                onContainer: "aufInsel() zeigt an, ob sich auf dem Feld eine Insel befindet",
                nbWithdrawables: "anzahlFische() gibt an, wie viele Fische sich auf dem Platz befinden",
                containerSize: "anzahlBestellteFische() zeigt an, wie viele Fische auf die Insel geliefert werden müssen",
@@ -1756,12 +1756,12 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-              dropObject: "färbe das Feld",
+              dropObject: "färbe Feld",
               onContainer: "auf Markierung",
               readNumber: "lies Zahl",
             },
             code: {
-               dropObject: "bemaleFeld",
+               dropObject: "färbeFeld",
                onContainer: "aufMarkierung",
                readNumber: "leseZahl",
             },
@@ -1817,8 +1817,8 @@ var getContext = function(display, infos, curLevel) {
          },
          de: { 
             label: {
-               obstacleRight: "rechts von einem Asteroiden",
-               obstacleInFront: "vor einem Asteroiden",
+               obstacleRight: "rechts von Asteroiden",
+               obstacleInFront: "vor Asteroiden",
             },
             messages: {
                successReachExit: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
@@ -1910,8 +1910,8 @@ var getContext = function(display, infos, curLevel) {
             label: {
                pushObject: "schiebe Kiste",
                onContainer: "auf Markierung",
-               pushableInFront: "vor einer Kiste",
-               obstacleInFront: "vor einem Hindernis",
+               pushableInFront: "vor Kiste",
+               obstacleInFront: "vor Hindernis",
                readNumber: "lies Zahl" 
             },
             code: {
@@ -1919,7 +1919,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "aufMarkierung",
                pushableInFront: "vorKiste",
                obstacleInFront: "vorHindernis",
-               readNumber: "leseZahl"
+               readNumber: "liesZahl"
             },
             description: {
                onContainer: "aufMarkierung() zeigt an, ob sich der Roboter auf einem markierten Feld befindet",
@@ -2004,7 +2004,7 @@ var getContext = function(display, infos, curLevel) {
                withdrawNum_noShadow: "sammle %1 Holz ein",
                dropNum_noShadow: "übergebe %1 Holz",
                nbWithdrawables: "Anzahl Holzscheite",
-               containerSize: "bestellte Anzahl an Holzscheiten",
+               containerSize: "Anzahl der bestellten Holzscheite",
                onObject: "auf Holz",
                onContainer: "beim Biber",
             },
