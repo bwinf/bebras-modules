@@ -1277,18 +1277,18 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               dropObject: "pflanze Samen",
+               dropObject: "pflanze Blume",
                onContainer: "auf Erdhaufen",
                obstacleInFront: "vor Blume"
             },
             code: {
-               dropObject: "pflanzeSamen",
+               dropObject: "pflanzeBlume",
                onContainer: "aufErde",
                obstacleInFront: "vorBlume"
             },
             messages: {
-               successContainersFilled: "Großartig, der Roboter hat alle Blumen ausgesät!",
-               failureContainersFilled: "Der Roboter hat Samen gesät wo keine Erde ist.",
+               successContainersFilled: "Großartig, der Roboter hat alle Blumen gepflanzt!",
+               failureContainersFilled: "Der Roboter hat Blumen gepflanzt wo keine Erde ist.",
                failureContainersFilledLess: "In einigen Erdhaufen wurden noch keine Blumen gepflanzt!",
                failureDropObject: "Hier wächst schon eine Blume",
 					obstacle: "Vorsichtig, hier kann der Roboter nicht lang!",
