@@ -540,7 +540,7 @@ var getContext = function(display, infos, curLevel) {
                gridEdgeSouth: "über Rand des Gitters",
                gridEdgeEast: "links vom Gitterrand",
                gridEdgeWest: "rechts vom Gitterrand",
-               platformInFront: "vor Plattform",
+               platformInFront: "Plattform vorne",
                platformAbove: "Plattform oben",
                withdrawObject: "hebe Objekt auf",
                dropObject: "lege Objekt ab",
@@ -567,7 +567,7 @@ var getContext = function(display, infos, curLevel) {
                connect: "ein Kabel anschließen",
                onMale: "auf Stecker",
                onFemale: "auf Dose",
-               dropPlatformInFront: "baue eine Plattform davor",
+               dropPlatformInFront: "baue eine Plattform vorne",
                dropPlatformAbove: "baue eine Plattform oben"
                
             },
@@ -623,8 +623,8 @@ var getContext = function(display, infos, curLevel) {
                connect: "anschließen",
                onMale: "aufStecker",
                onFemale: "aufSteckdose",
-               dropPlatformInFront: "konstruierePlattformDavor",
-               dropPlatformAbove: "konstruierePlattformDarüber"
+               dropPlatformInFront: "konstruierePlattformVorne",
+               dropPlatformAbove: "konstruierePlattformOben"
             },
             messages: {
                leavesGrid: "Der Roboter hat das Gitter verlassen!",
@@ -3180,7 +3180,7 @@ var getContext = function(display, infos, curLevel) {
          bagSize: 1,
          containerSize: 1,
          itemTypes: {
-            robot: { img: imgPath+"castle_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: 0, offsetY: 5, zOrder: 3 },
+            robot: { img: imgPath+"castle_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, offsetY: 5, zOrder: 3 },
             platform: { num: 2, img: imgPath+"platform.png", side: 60, isObstacle: true, zOrder: 0 },
             gears: { num: 4, img: imgPath+"gears.png", side: 60, isContainer: true, zOrder: 1},
             wheel: { num:5, img: imgPath+"wheel.png", side: 60, isWithdrawable: true, zOrder: 2},
