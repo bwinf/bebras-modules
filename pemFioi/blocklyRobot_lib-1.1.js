@@ -2524,7 +2524,7 @@ var getContext = function(display, infos, curLevel) {
          backgroundColor: "#f9f9c1",
          itemTypes: {
             robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -20, zOrder: 2 },
-            marker: { num: 2, img: imgPath+"marker.png", side: 60, isContainer: true, zOrder: 0 },
+            marker: { num: 2, img: imgPath+"cones_marker.png", side: 60, isContainer: true, zOrder: 0 },
             cone: { num: 3, img: imgPath+"cone.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
             contour: { num: 4, img: imgPath+"contour.png", side: 60, zOrder: 1 },
             fixed_cone: { num: 5, img: imgPath+"cone.png", side: 60, isObstacle: true, zOrder: 1 },
