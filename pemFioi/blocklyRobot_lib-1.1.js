@@ -2032,7 +2032,7 @@ var getContext = function(display, infos, curLevel) {
                successContainersFilled: "Bravo, alle Biber haben Holz. Sie bedanken sich beim Roboter!",
                failureContainersFilled: "Es wurde nicht das gesamte Holz verteilt.",
                failureContainersFilledLess: "Es gibt noch Holz zu verteilen.",
-               failureContainersFilledBag: "Das Holz soll zu den Bibern gebracht werden.",
+               failureContainersFilledBag: "Der Roboter hat zu viel Holz eingesammelt.",
                failureDropObject: "Dieser Biber hat nicht so viel Holz bestellt.",
             }
          },

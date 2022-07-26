@@ -1520,27 +1520,31 @@ window.displayHelper = {
          avatarMood = "success";
          buttonText = this.strings.moveOn;
          fullMessage += "<br/><br/>";
+         //Shows the start as part of the popup-message
+         fullMessage += this.strings.scoreObtained + ' <span id="answerScore">' + this.submittedScore + " " + this.strings.point + " " + this.strings.outOf + " " + this.levelsMaxScores[this.taskLevel] + ".</span><br/>";
          var levelIdx = this.levelsIdx[gradedLevel];
          var nextLevel = levelIdx !== undefined && levelIdx < this.levels.length-1 ? this.levels[levelIdx+1] : null;
          if(nextLevel) {
+            // Do not use the threshold
             // Offer to try next task if the user solved this difficulty slowly
-            var threshold = this.thresholds[gradedLevel];
-            if(!threshold) {
-                if(gradedLevel == "medium") { threshold = this.thresholdMedium; }
-                else if(gradedLevel == "easy") { threshold = this.thresholdEasy; }
-            }
-            if(levelIdx == this.forceNextTaskAfter) {
-               // Move onto next task after a specified difficulty
-               actionNext = "top";
-               fullMessage += this.strings.tryNextTask;
-            } else if(!threshold || (threshold && secondsSinceLoaded < threshold)) {
+            //var threshold = this.thresholds[gradedLevel];
+            //var threshold = false;
+            // if(!threshold) {
+            //     if(gradedLevel == "medium") { threshold = this.thresholdMedium; }
+            //     else if(gradedLevel == "easy") { threshold = this.thresholdEasy; }
+            // }
+            // if(levelIdx == this.forceNextTaskAfter) {
+            //    // Move onto next task after a specified difficulty
+            //    actionNext = "top";
+            //    fullMessage += this.strings.tryNextTask;
+            // } else if(!threshold || (threshold && secondsSinceLoaded < threshold)) {
                actionNext = nextLevel;
                if(gradedLevel == "easy") { fullMessage += this.strings.tryMediumLevel; }
                if(gradedLevel == "medium") { fullMessage += this.strings.tryHardLevel; }
-            } else {
-               actionNext = "nextTask";
-               fullMessage += this.strings.tryNextTask;
-            }
+            // } else {
+            //    actionNext = "nextTask";
+            //    fullMessage += this.strings.tryNextTask;
+            // }
          } else {
             // Solved the last level, move on
             actionNext = "nextTask";
@@ -1565,7 +1569,9 @@ window.displayHelper = {
                self.setLevel(actionNext);
             }
          },
-         noButtonText,
+         // noButtonText,
+         //Offer to stay at version for all version. Button "No" is always in popup
+         this.strings.no,
          avatarMood
       );
    },
@@ -1680,7 +1686,7 @@ window.displayHelper = {
          if (this.submittedScore > 1) {
             strPoint = this.strings.points;
          }
-         message = this.strings.scoreObtained + ' <span id="answerScore">' + this.submittedScore + " " + strPoint + " " + this.strings.outOf + " " + maxScoreLevel + ".</span><br/>";
+         //message = this.strings.scoreObtained + ' <span id="answerScore">' + this.submittedScore + " " + strPoint + " " + this.strings.outOf + " " + maxScoreLevel + ".</span><br/>";
          if (this.hideScoreDetails) {
          } else if (this.hasSolution) {
             message += this.strings.contestOverAnswerNotSaved;
