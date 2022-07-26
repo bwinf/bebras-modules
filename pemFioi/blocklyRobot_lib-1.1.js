@@ -4743,6 +4743,10 @@ var getContext = function(display, infos, curLevel) {
       if(platforms.length == 0) {
          throw(context.strings.messages.jumpNoPlatform);
       }
+      var fake = context.getItemsOn(item.row - 1, item.col, function(obj) { return obj.isFake === true; });
+      if(fake.length != 0) {
+         throw(context.strings.messages.jumpObstacleBlocking);
+      }
       context.nbMoves++;
       context.moveRobot(item.row - 2, item.col, item.dir, callback);
    };
