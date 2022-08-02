@@ -2973,18 +2973,18 @@ var getContext = function(display, infos, curLevel) {
                }
             },
             {
-               name: "paintNorthWest",
+               name: "paintNorthEast",
                strings: {
                   de: {
                      label: "Farbe rechts oben",
-                     code: "farbeRechtsOben",
-                     description: "farbeRechtsOben(): ist das Feld rechts über dem Roboter bemalt?"
+                     code: "farbeObenRechts",
+                     description: "farbeObenRechts(): ist das Feld rechts über dem Roboter bemalt?"
                   },
                },
                category: "robot",
                type: "sensors",
                block: {
-                  name: "paintNorthWest",
+                  name: "paintNorthEast",
                   yieldsValue: true
                },
                func: function(callback) {
@@ -2993,7 +2993,7 @@ var getContext = function(display, infos, curLevel) {
                }
             },
             {
-               name: "paintNorthEast",
+               name: "paintNorthWest",
                strings: {
                   de: {
                      label: "Farbe links oben",
@@ -3004,7 +3004,7 @@ var getContext = function(display, infos, curLevel) {
                category: "robot",
                type: "sensors",
                block: {
-                  name: "paintNorthEast",
+                  name: "paintNorthWest",
                   yieldsValue: true
                },
                func: function(callback) {
