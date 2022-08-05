@@ -1473,12 +1473,12 @@ var getContext = function(display, infos, curLevel) {
             },
             code: {
                withdrawObject: "fangeFisch",
-               dropObject: "legeFischAb",
+               dropObject: "liefereFischAb",
                onObject: "aufFisch",
                onContainer: "aufInsel",
                nbWithdrawables: "anzahlFische",
                containerSize: "anzahlBestellteFische",
-               dropNum: "legeFischeAb",
+               dropNum: "liefereFischeAb",
                withdrawNum: "fangeFische",
             },
             description: {
