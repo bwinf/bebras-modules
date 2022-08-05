@@ -582,10 +582,10 @@ var getContext = function(display, infos, curLevel) {
                left: "dreheLinks",
                right: "dreheRechts",
                turnAround: "dreheUm",
-               forward: "vorwärts",
-               backwards: "rückwärts",
+               forward: "vorwaerts",
+               backwards: "rückwaerts",
                jump: "spring",
-               obstacleInFront: "vorHindernist",
+               obstacleInFront: "vorHindernis",
                obstacleEast: "hindernisRechts",
                obstacleWest: "hindernisLinks",
                obstacleNorth: "hindernisOben",
@@ -601,7 +601,7 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "hebeObjektAuf",
                dropObject: "legeObjektAb",
                onObject: "aufObject",
-               onContainer: "aufBehälter",
+               onContainer: "aufBehaelter",
                onNumber: "aufZahl",
                onWritable: "aufTafel",
                onLauncher: "aufLauncher", 
@@ -869,6 +869,10 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "färbe Feld",
                onContainer: "auf Markierung",
              },
+             code : {
+               dropObject: "faerbeFeld",
+               onContainer: "aufMarkierung",             
+             },
             messages: {
                obstacle: "Der Roboter verlässt den Weg, den die Pfeile vorgeben!",
                successReachExit: "Gratulation, der Roboter hat den Schatz geborgen!",
@@ -953,6 +957,12 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "lege Karte ab",
                onObject: "auf Karte",
                onContainer: "auf Ablageplatz",
+            },
+            code: {
+               withdrawObject: "hebeKarteAuf",
+               dropObject: "legeKarteAb",
+               onObject: "aufKarte",
+               onContainer: "aufAblageplatz",
             },
              messages: {
                successContainersFilled: "Bravo, der Roboter hat alle Karten an ihre Plätze sortiert!",
@@ -1283,7 +1293,7 @@ var getContext = function(display, infos, curLevel) {
             },
             code: {
                dropObject: "pflanzeBlume",
-               onContainer: "aufErde",
+               onContainer: "aufErdhaufen",
                obstacleInFront: "vorBlume"
             },
             messages: {
@@ -1321,6 +1331,9 @@ var getContext = function(display, infos, curLevel) {
          de: {
             label: {
                onContainer: "auf Flagge",
+            },
+            code: {
+               onContainer: "aufFlagge",
             },
             messages: {
                successReachExit: "Bravo, der Roboter hat die Flagge erobert.",
@@ -1371,7 +1384,7 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "hebe Dominostein auf",
             },
             code: {
-               withdrawObject: "hebeDominoAuf"
+               withdrawObject: "hebeDominosteinAuf"
             },
             messages: {
                "successPickedAllWithdrawables": "Super, der Roboter hat alle geforderten Dominosteine aufgehoben!",
@@ -1606,7 +1619,10 @@ var getContext = function(display, infos, curLevel) {
                obstacleSouth: "Asteroid hinten",
             },
             code: {
-               obstacleInFront: "asteroidVorraus"
+               obstacleInFront: "asteroidVorraus",
+               obstacleEast: "asteroidRechts",
+               obstacleWest: "asteroidLinks",
+               obstacleSouth: "asteroidHinten",
             },
             messages: {
                obstacle: "Achtung, der Roboter ist fast gegen einen Asteroiden gefahren!"
@@ -1761,7 +1777,7 @@ var getContext = function(display, infos, curLevel) {
               readNumber: "lies Zahl",
             },
             code: {
-               dropObject: "färbeFeld",
+               dropObject: "faerbeFeld",
                onContainer: "aufMarkierung",
                readNumber: "leseZahl",
             },
@@ -1819,6 +1835,10 @@ var getContext = function(display, infos, curLevel) {
             label: {
                obstacleRight: "rechts von Asteroiden",
                obstacleInFront: "vor Asteroiden",
+            },
+            code: {
+               obstacleRight: "rechtsVonAsteroiden",
+               obstacleInFront: "vorAsteroiden",
             },
             messages: {
                successReachExit: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
