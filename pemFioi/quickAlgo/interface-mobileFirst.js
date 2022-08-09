@@ -137,7 +137,7 @@ var quickAlgoInterface = {
                 title: document.title,
                 subject: $(".exerciseText").first().text(),
                 about: {
-                    authors: "France-Ioi",
+                    authors: "France-Ioi und BWINF",
                     license: ""
                 }
             };
