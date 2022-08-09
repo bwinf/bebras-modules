@@ -147,7 +147,7 @@ function LogicController(maxInstructions, subTask) {
     for(var j=0; j<foundFuncs.length; j++) {
        var re = new RegExp('\\W' + foundFuncs[j] + '([^A-Za-z0-9_( ]| +[^ (]|$)');
        if(re.exec(code)) {
-          display("Vous utilisez la fonction '" + foundFuncs[j] + "' sans les parenthèses. Ajoutez les parenthèses pour appeler la fonction.");
+          display("Die Funktion '" + foundFuncs[j] + "' wird ohne Klammern aufgerufen.");
           return false;
        }
     }
@@ -730,7 +730,7 @@ function LogicController(maxInstructions, subTask) {
 
     var forbidden = pythonForbidden(code, this.includeBlocks);
     if(forbidden) {
-      return {text: "Mot-clé interdit utilisé : "+forbidden, invalid: true, type: 'forbidden'};
+      return {text: "Nicht erlaubtes Schlüsselwort: "+forbidden, invalid: true, type: 'forbidden'};
     }
     var text = '';
     var remaining = 1;
