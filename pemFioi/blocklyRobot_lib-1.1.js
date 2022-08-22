@@ -2027,6 +2027,7 @@ var getContext = function(display, infos, curLevel) {
                containerSize: "Anzahl der bestellten Holzscheite",
                onObject: "auf Holz",
                onContainer: "beim Biber",
+               nbInBag: "Anzahl Holzscheite in der Tasche"
             },
             code: {
                withdrawObject: "holzEinsammeln",
@@ -2035,6 +2036,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "beimBiber",
                nbWithdrawables: "anzahlHolzscheite",
                containerSize: "anzahlBestelltesHolz",
+               nbInBag: "anzahlHolzscheiteInTasche"
             },
             description: {
                withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
@@ -2045,6 +2047,7 @@ var getContext = function(display, infos, curLevel) {
                containerSize: "anzahlBestelltesHolz() gibt an, wie viele Holzscheite der Biber bestellt hat",
                dropNum: "übergebe(Anzahl) überreicht dem Biber Anzahl Holzscheite",
                withdrawNum: "sammle(Anzahl) sammelt Anzahl Holzscheite ein",
+               nbInBag: "anzahlHolzscheiteInTasche() gibt die Anzahl der Holzscheite zurück, die der Roboter in diesem Moment bei sich trägt"
             },
             messages: {
                emptyBag: "Der Roboter trägt kein Holz!",
