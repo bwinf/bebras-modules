@@ -661,6 +661,7 @@ var getContext = function(display, infos, curLevel) {
                failureLights: "Der Roboter hat nicht alles beleuchtet!",
                successLights: "Bravo! Der Roboter hat alles beleuchtet.",
                failureLaser: "Der Roboter muss auf einem Laser stehen, um den Laserstrahl zu aktivieren!",
+               failureDirection: "Der Laser kann nur in ganzzahlige Richtungen schießen."
             },
             cardinals: {
                north: "Norden",
@@ -3838,6 +3839,9 @@ var getContext = function(display, infos, curLevel) {
             return;
          }
          if(this.isOn(function(obj) { return obj.isLaser === true; })) {
+            if (!(value % 1 === 0)){
+               throw(window.languageStrings.messages.failureDirection)
+            }
             this.shoot(this.getRobot().row, this.getRobot().col, value);
             if(this.display) {
                var robot = this.getRobot();
