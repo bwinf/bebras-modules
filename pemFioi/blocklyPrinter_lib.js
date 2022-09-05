@@ -48,14 +48,26 @@ var getContext = function(display, infos) {
             read: "lies Zeile",
             readInteger: "lies Zeile als ganze Zahl",
             readFloat: "lies Zeile als Komma-Zahl",
-            eof: "Ende der Eingabe"
+            eof: "Ende der Eingabe",
+            convToInt: "Zeichen zu Zahl",
+            convToString: "Zahl zu Zeichen"
+            // charToNumber: "Zeichen zu Zahl",
+            // numberToChar: "Zahl zu Zeichen",
+            // charToAscii: "ASCII-Zahl zu Zeichen",
+            // asciiToChar: "Zeichen zu ASCII-Zahl",
          },
          code: {
             print: "schreibe",
             read: "lies",
             readInteger: "liesGanzzahl",
             readFloat: "liesKommazahl",
-            eof: "eingabeEnde"
+            eof: "eingabeEnde",
+            convToInt: "zeichenZuZahl",
+            convToString: "zahlZuZeichen"
+            // charToNumber: "zeichenZuZahl",
+            // numberToChar: "zahlZuZeichen",
+            // asciiToChar: "zeichenZuAscii",
+            // charToAscii: "asciiZuZeichen",
          },
          description: {
          },
@@ -70,7 +82,9 @@ var getContext = function(display, infos) {
             tooFewLines: "Zu wenig Zeilen ausgegeben",
             tooManyLines: "Zu viele Zeilen ausgegeben",
             correctOutput: "Die Ausgabe ist richtig!",
-            moreThan100Moves: "Die Ausgabe ist richtig, aber du hast mehr als 100 Schritte benötigt …"
+            moreThan100Moves: "Die Ausgabe ist richtig, aber du hast mehr als 100 Schritte benötigt …",
+            notANumber: " kann nicht in eine Zahl konvertiert werden.",
+            emptyInput: "Es wurde kein Zeichen übergeben."
          }
       },
       sl: {
@@ -141,6 +155,7 @@ var getContext = function(display, infos) {
                   read: "#a50101",
                   print: "#dac221",
                   variables: "#a5416b",
+                  manipulate: "#26885f",
                   _default: 280
                },
                blocks: {}
@@ -247,6 +262,39 @@ var getContext = function(display, infos) {
       context.waitDelay(callback, false);
    }
 
+   context.printer.convToInt = function(char, callback) {
+      if(char == ""){
+         throw(char + strings.messages.emptyInput);
+      }
+      var number = isNaN(Number(char)) ? NaN : parseInt(char, 10)
+      if(isNaN(number)){
+         throw(char + strings.messages.notANumber);
+      }
+      context.waitDelay(callback, number);
+    }
+    context.printer.convToString = function(number, callback) {
+      var char = number.toString()
+      context.waitDelay(callback, char);
+    }
+
+
+   // context.printer.charToAscii = function(char, callback) {
+   //    var number = char.charCodeAt(0);
+   //    context.waitDelay(callback, number);
+   //  }
+   //  context.printer.asciiToChar = function(number, callback) {
+   //    var char = String.fromCharCode(number);
+   //    context.waitDelay(callback, char);
+   //  }
+   //  context.printer.charToNumber = function(char, callback) {
+   //    var number = char.charCodeAt(0) - 65;
+   //    context.waitDelay(callback, number);
+   //  }
+   //  context.printer.numberToChar = function(number, callback) {
+   //    var char = String.fromCharCode(number + 65);
+   //    context.waitDelay(callback, char);
+   //  }
+
 
    context.customBlocks = {
       printer: {
@@ -258,6 +306,14 @@ var getContext = function(display, infos) {
             { name: "readInteger", yieldsValue: true },
             { name: "readFloat", yieldsValue: true },
             { name: "eof", yieldsValue: true }
+         ],
+         manipulate: [
+            { name: "convToInt",  params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
+            { name: "convToString",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}},
+            // { name: "charToNumber", params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
+            // { name: "numberToChar", params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}},
+            // { name: "charToAscii",  params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
+            // { name: "asciiToChar",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}}
          ]
       }
    }
