@@ -1474,12 +1474,12 @@ var getContext = function(display, infos, curLevel) {
             },
             code: {
                withdrawObject: "fangeFisch",
-               dropObject: "liefereFischAb",
+               dropObject: "legeFischAb",
                onObject: "aufFisch",
                onContainer: "aufInsel",
                nbWithdrawables: "anzahlFische",
                containerSize: "anzahlBestellteFische",
-               dropNum: "liefereFischeAb",
+               dropNum: "legeFischeAb",
                withdrawNum: "fangeFische",
             },
             description: {
