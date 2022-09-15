@@ -131,8 +131,9 @@ function LogicController(maxInstructions, subTask) {
     for(var i=0; i < availableModules.length; i++) {
       var match = new RegExp('from\\s+' + availableModules[i] + '\\s+import\\s+\\*');
       match = match.exec(code);
-      if(match === null) {
-        display("Vous devez mettre la ligne <code>from " + availableModules[i] + " import *</code> dans votre programme.");
+      if(match === null) 
+      {
+        display("Es muss die Zeile <code>from " + availableModules[i] + " import *</code> in das Programm einfügt werden.");
         return false;
       }
     }
@@ -147,7 +148,7 @@ function LogicController(maxInstructions, subTask) {
     for(var j=0; j<foundFuncs.length; j++) {
        var re = new RegExp('\\W' + foundFuncs[j] + '([^A-Za-z0-9_( ]| +[^ (]|$)');
        if(re.exec(code)) {
-          display("Die Funktion '" + foundFuncs[j] + "' wird ohne Klammern aufgerufen.");
+          display("Die Funktion '" + foundFuncs[j] + "' darf nicht ohne Klammern aufgerufen werden.");
           return false;
        }
     }

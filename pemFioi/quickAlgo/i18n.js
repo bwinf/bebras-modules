@@ -428,7 +428,7 @@ var quickAlgoLanguageStrings = {
       seeTest: "Siehe Test",
       infiniteLoop: "Endlosschleife", 
       availableFunctions: "Verfügbare Funktionen:",
-      availableFunctionsVerbose: "Die verfügbaren Funktionen zum Steuern des Roboters sind:",
+      availableFunctionsVerbose: "Die verfügbaren Funktionen sind:",
       startingLine: "Dein Programm muss mit folgender Zeile beginnen",
       startingLines: "Dein Programm muss mit folgenden Zeilen beginnen",
       keyword: "Schlüsselwort",

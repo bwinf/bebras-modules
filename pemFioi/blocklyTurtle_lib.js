@@ -715,7 +715,7 @@ var getContext = function(display, infos) {
                {"type": "input_value", "name": "PARAM_0"},
                {"type": "field_dropdown", "name": "PARAM_1", "options":
                  [[localLanguageStrings[window.stringsLanguage]["left"],"l"],[localLanguageStrings[window.stringsLanguage]["right"],"r"]]}]}},
-            { name: "turneitheramountvalue", blocklyJson: {"args0": [
+            { name: "turneitheramountvalue", params: [null], blocklyJson: {"args0": [
                {"type": "field_angle", "name": "PARAM_0", "angle": 90},
                {"type": "field_dropdown", "name": "PARAM_1", "options":
                  [[localLanguageStrings[window.stringsLanguage]["left"],"l"],[localLanguageStrings[window.stringsLanguage]["right"],"r"]]}]}},

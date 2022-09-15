@@ -193,15 +193,15 @@ function PythonInterpreter(context, msgCallback) {
         maxArgs = Math.max(maxArgs, nbsArgs[i]);
       }
       if (minArgs === maxArgs) {
-        msg = name + "() takes exactly " + minArgs + " arguments";
+        msg = name + "() nimmt genau " + minArgs + " argument(e)";
       } else if (args.length < minArgs) {
-        msg = name + "() takes at least " + minArgs + " arguments";
+        msg = name + "() benötigt mindestesn " + minArgs + " argument(e)";
       } else if (args.length > maxArgs){
-        msg = name + "() takes at most " + maxArgs + " arguments";
+        msg = name + "() nimmt maximal " + maxArgs + " argument(e)";
       } else {
         msg = name + "() doesn't have a variant accepting this number of arguments";
       }
-      msg += " (" + args.length + " given)";
+      msg += " (" + args.length + " gegeben)";
       throw new Sk.builtin.TypeError(msg);
     }
   };
