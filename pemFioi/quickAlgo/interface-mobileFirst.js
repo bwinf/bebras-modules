@@ -123,6 +123,7 @@ var quickAlgoInterface = {
     },
 
     loadInterface: function(context, level) {
+        var link = "https://creativecommons.org/licenses/by-sa/4.0/legalcode";
         ////TODO: function is called twice
         // Load quickAlgo interface into the DOM
         this.context = context;
@@ -137,8 +138,8 @@ var quickAlgoInterface = {
                 title: document.title,
                 subject: $(".exerciseText").first().text(),
                 about: {
-                    authors: "France-Ioi",
-                    license: ""
+                    authors: "BWINF, France-IOI",
+                    license: "BWINF, France-IOI; Lizenz: "+"<a href=" + link + ">CC-BY-SA 4.0</a>",
                 }
             };
         } else {
@@ -537,7 +538,7 @@ var quickAlgoInterface = {
             "    </div>" +
             "    <div class=\"panel-body\" id='aboutPanel'>"+
             "       <div id='aboutAuthorsLicense'>" +
-                        aboutAuthorsLicenseSection +
+                        aboutAuthorsLicenseSection + 
             "       </div>" +
             "       <div id='aboutFranceIOI'>" +
             "           <br/>" +
