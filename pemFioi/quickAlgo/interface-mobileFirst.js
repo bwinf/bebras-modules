@@ -139,7 +139,7 @@ var quickAlgoInterface = {
                 subject: $(".exerciseText").first().text(),
                 about: {
                     authors: "BWINF, France-IOI",
-                    license: "BWINF, France-IOI; Lizenz: "+"<a href=" + link + ">CC-BY-SA 4.0</a>",
+                    license: "BWINF, France-IOI; Lizenz: "+"<a target=\"_blank\" href=" + link + ">CC-BY-SA 4.0</a>",
                 }
             };
         } else {
