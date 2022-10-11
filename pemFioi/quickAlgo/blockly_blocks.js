@@ -33,6 +33,7 @@ var blocklyToScratch = {
       'logic_boolean': [],
       'logic_compare': ['operator_equals', 'operator_gt', 'operator_gte', 'operator_lt', 'operator_lte', 'operator_not'],
       'logic_operation': ['operator_and', 'operator_or'],
+      //'logic_operation_or': ['operator_or', 'operator_and'],
       'text': [],
       'text_append': [],
       'text_join': ['operator_join'],
@@ -55,7 +56,7 @@ var blocklyAllowedSiblings = {
    'controls_whileUntil': ['controls_untilWhile'],
    'controls_untilWhile': ['controls_whileUntil'],
    'controls_if_else': ['controls_if'],
-   'lists_create_with_empty': ['lists_create_with']
+   'lists_create_with_empty': ['lists_create_with'],
 }
 
 
@@ -802,7 +803,11 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
                },
                {
                   name: "logic_operation",
-                  blocklyXml: "<block type='logic_operation' inline='false'></block>"
+                  blocklyXml: "<block type='logic_operation' inline='false'><field name='OP'>AND</field></block>"
+               },
+               {
+                  name: "logic_operation_or",
+                  blocklyXml: "<block type='logic_operation' inline='false'><field name='OP'>OR</field></block>"
                },
                {
                   name: "logic_negate",
@@ -1348,8 +1353,34 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
                               "</block>"
                },
                {
+                  name: "lists_getIndex_remove",
+                  blocklyXml: "<block type='lists_getIndex'>" +
+                                 "<mutation statement='true' at='true'></mutation>" +
+                                 "<field name='MODE'>REMOVE</field>" +
+                                 "<field name='WHERE'>FROM_START</field>" +
+                              "  <value name='VALUE'>" +
+                              "    <block type='variables_get'>" +
+                              "      <field name='VAR'>{listVariable}</field>" +
+                              "    </block>" +
+                              "  </value>" +
+                              "</block>"
+               },
+               {
                   name: "lists_setIndex",
                   blocklyXml: "<block type='lists_setIndex'>" +
+                              "  <value name='LIST'>" +
+                              "    <block type='variables_get'>" +
+                              "      <field name='VAR'>{listVariable}</field>" +
+                              "    </block>" +
+                              "  </value>" +
+                              "</block>"
+               },
+               {
+                  name: "lists_setIndex_insert_last",
+                  blocklyXml: "<block type='lists_setIndex'>" +
+                              "  <mutation at='false'></mutation>" +
+                              "  <field name='MODE'>INSERT</field>" +
+                              "  <field name='WHERE'>LAST</field>" +  
                               "  <value name='LIST'>" +
                               "    <block type='variables_get'>" +
                               "      <field name='VAR'>{listVariable}</field>" +
