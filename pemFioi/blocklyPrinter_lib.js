@@ -57,13 +57,13 @@ var getContext = function(display, infos) {
             // asciiToChar: "Zeichen zu ASCII-Zahl",
          },
          code: {
-            print: "schreibe",
-            read: "lies",
+            print: "print",
+            read: "readline",
             readInteger: "liesGanzzahl",
             readFloat: "liesKommazahl",
             eof: "eingabeEnde",
-            convToInt: "zeichenZuZahl",
-            convToString: "zahlZuZeichen"
+            convToInt: "int",
+            convToString: "str",
             // charToNumber: "zeichenZuZahl",
             // numberToChar: "zahlZuZeichen",
             // asciiToChar: "zeichenZuAscii",

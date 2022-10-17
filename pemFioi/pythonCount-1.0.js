@@ -78,6 +78,9 @@ var pythonForbiddenBlocks = {
       'controls_untilWhile': ['while'],
       'controls_infiniteloop': ['while']
     },
+    'text': {
+      'text_charAt': ['list_brackets', '__getitem__', '__setitem__'],
+    },
     'lists': {
       'lists_create_with_empty': ['list', 'set', 'list_brackets', '__getitem__', '__setitem__'],
       'lists_create_with': ['list', 'set', 'list_brackets', '__getitem__', '__setitem__'],

@@ -124,7 +124,7 @@ function LogicController(maxInstructions, subTask) {
       return false;
     }
     if(pythonCount(code) <= 0) {
-      display("Vous ne pouvez pas valider un programme vide !");
+      display("Ein leeres Programm kann nicht ausgeführt werden.");
       return false;
     }
     var availableModules = this.getAvailableModules();

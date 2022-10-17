@@ -2995,7 +2995,7 @@ function LogicController(nbTestCases, maxInstructions) {
       display('Vous utilisez trop souvent un mot-clé à utilisation limitée : "'+limited+'".');
     }
     if(pythonCount(code) <= 0) {
-      display("Vous ne pouvez pas valider un programme vide !");
+      display("Ein leeres Programm kann nicht ausgeführt werden.");
       return false;
     }
     var availableModules = this.getAvailableModules();
