@@ -4800,8 +4800,9 @@ var getContext = function(display, infos, curLevel) {
       var withdrawable = withdrawables[0];
       context.setIndexes();
       context.items.splice(withdrawable.index, 1);
-      context.bag.push(withdrawable);
-      
+      if (withdrawable.isFake !== true){
+         context.bag.push(withdrawable);
+      }
       if(context.display) {
          function removeWithdrawable() {
             withdrawable.element.remove();
