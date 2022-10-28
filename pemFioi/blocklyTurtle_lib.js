@@ -130,6 +130,8 @@ var getContext = function(display, infos) {
             turnrightamountvalue_options: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_moreoptions: "drehe um %1 nach links ↺",
             turnrightamountvalue_moreoptions: "drehe um %1 nach rechts ↻",
+            turnleftamountvalue_windrad: "drehe um %1 nach links ↺",
+            turnrightamountvalue_windrad: "drehe um %1 nach recht ↺",
             turneitheramount: "tourner de %1° vers la %2",
             turneitheramountvalue: "tourner de %1 vers la %2",
             row: "ligne de la tortue",
@@ -162,6 +164,8 @@ var getContext = function(display, infos) {
             turnrightamountvalue_options: "dreheRechtsGrad",
             turnleftamountvalue_moreoptions: "dreheLinksGrad",
             turnrightamountvalue_moreoptions: "dreheRechtsGrad",
+            turnleftamountvalue_windrad: "dreheLinksGrad",
+            turnrightamountvalue_windrad: "dreheRechtsGrad",
             turneitheramount: "tourner",
             turneitheramountvalue: "tourner",
             row: "ligneTortue",
@@ -225,6 +229,8 @@ var getContext = function(display, infos) {
             turnrightamountvalue_options: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_moreoptions: "drehe um %1 nach links ↺",
             turnrightamountvalue_moreoptions: "drehe um %1 nach rechts ↻",
+            turnleftamountvalue_windrad: "drehe um %1 nach links ↺",
+            turnrightamountvalue_windrad: "drehe um %1 nach rechts ↺",
             turnleftamountvalue_europe: "drehe um %1 nach links ↺",
             turnrightamountvalue_europe: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_nikolaus: "drehe um %1 nach links ↺",
@@ -267,6 +273,8 @@ var getContext = function(display, infos) {
             turnrightamountvalue_options: "dreheRechtsGrad",
             turnleftamountvalue_moreoptions: "dreheLinksGrad",
             turnrightamountvalue_moreoptions: "dreheRechtsGrad",
+            turnleftamountvalue_windrad: "dreheLinksGrad",
+            turnrightamountvalue_windrad: "dreheRechtsGrad",
             turnleftamountvalue_europe: "dreheLinksGrad",
             turnrightamountvalue_europe: "dreheRechtsGrad",
             turnleftamountvalue_nikolaus: "dreheLinksGrad",
@@ -326,6 +334,8 @@ var getContext = function(display, infos) {
             turnrightamountvalue_options: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_moreoptions: "drehe um %1 nach links ↺",
             turnrightamountvalue_moreoptions: "drehe um %1 nach rechts ↻",
+            turnleftamountvalue_windrad: "drehe um %1 nach links ↺",
+            turnrightamountvalue_windrad: "drehe um %1 nach rechts ↺",
             turneitheramount: "turn by %1° to the %2",
             turneitheramountvalue: "turn by %1 to the %2",
             row: "turtle's row",
@@ -358,6 +368,8 @@ var getContext = function(display, infos) {
             turnrightamountvalue_options: "dreheRechtsGrad",
             turnleftamountvalue_moreoptions: "dreheLinksGrad",
             turnrightamountvalue_moreoptions: "dreheRechtsGrad",
+            turnleftamountvalue_windrad: "dreheLinksGrad",
+            turnrightamountvalue_windrad: "dreheRechtsGrad",
             turneitheramount: "turn",
             turneitheramountvalue: "turn",
             row: "row",
@@ -637,6 +649,8 @@ var getContext = function(display, infos) {
    context.turtle.turnrightamountvalue_options = context.turtle.turnrightamount;
    context.turtle.turnleftamountvalue_moreoptions = context.turtle.turnleftamount;
    context.turtle.turnrightamountvalue_moreoptions = context.turtle.turnrightamount;
+   context.turtle.turnleftamountvalue_windrad = context.turtle.turnleftamount;
+   context.turtle.turnrightamountvalue_windrad = context.turtle.turnrightamount;
    context.turtle.turnleftamountvalue_europe = context.turtle.turnleftamount;
    context.turtle.turnrightamountvalue_europe = context.turtle.turnrightamount;
    context.turtle.turnleftamountvalue_nikolaus = context.turtle.turnleftamount;
@@ -683,6 +697,10 @@ var getContext = function(display, infos) {
             { name: "turnrightamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_angle", "name": "PARAM_0", "angle": 90}]}},
             { name: "turnleftamountvalue_noround", blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 90}]}},
             { name: "turnrightamountvalue_noround", blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 90}]}},
+            { name: "turnleftamountvalue_windrad", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+               ["90 °","90"],["120 °","120"]]}]}},
+           { name: "turnrightamountvalue_windrad", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+            ["90 °","90"],["120 °","120"]]}]}},
             { name: "turnleftamountvalue_options", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
                 ["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["180 °","180"]]}]}},
             { name: "turnrightamountvalue_options", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
