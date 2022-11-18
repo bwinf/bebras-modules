@@ -877,7 +877,24 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                obstacle: "Der Roboter verlässt den Weg, den die Pfeile vorgeben!",
                successReachExit: "Gratulation, der Roboter hat den Schatz geborgen!",
-               failureReachExit: "Der Roboter hat sich verirrt."
+               failureReachExit: "Der Roboter muss am Ende auf der Schatztruhe stehen."
+            }
+         },  
+      },
+      arrows_straight: {
+         de: {
+            label: {
+               dropObject: "färbe Feld",
+               onContainer: "auf Markierung",
+             },
+             code : {
+               dropObject: "faerbeFeld",
+               onContainer: "aufMarkierung",             
+             },
+            messages: {
+               obstacle: "Der Roboter ist gegen ein Hindernis gelaufen!",
+               successReachExit: "Gratulation, der Roboter hat den Schatz geborgen!",
+               failureReachExit: "Der Roboter muss am Ende auf der Schatztruhe stehen."
             }
          },  
       },
@@ -2252,6 +2269,164 @@ var getContext = function(display, infos, curLevel) {
             rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
             topArrow: { num: 6, img: imgPath+"topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
             bottomArrow: { num: 7, img: imgPath+"bottomArrow.png", side: 60, forwardsBottom: true, zOrder: 0},
+            marker: { num: 2, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
+            paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, isColor: true, zOrder: 1 },
+         },
+         checkEndCondition: robotEndConditions.checkReachExit
+      },
+      arrows_straight: {
+         newBlocks: [
+            {
+               name: "arrowInFront",
+               strings: {
+                  de: {
+                     label: "Pfeil vorne",
+                     code: "pfeilVorne",
+                     description: "pfeilVorne(): Befindet sich vor vom Roboter ein Pfeil?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "arrowInFront",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isInFront(function(obj) { return obj.isArrow === true; }));
+               }
+            },
+            {
+               name: "arrowLeft",
+               strings: {
+                  de: {
+                     label: "Pfeil links",
+                     code: "pfeilLinks",
+                     description: "pfeilLinks(): Befindet sich links vom Roboter ein Pfeil?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "arrowLeft",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  var robot = this.getRobot();
+                  var coords = this.coordsInFront(3);
+                  this.callCallback(callback, this.hasOn(coords.row, coords.col, function(obj) { return obj.isArrow === true; }));
+               }
+            },
+            {
+               name: "arrowRight",
+               strings: {
+                  de: {
+                     label: "Pfeil rechts",
+                     code: "pfeilRechts",
+                     description: "pfeilRechts(): Befindet sich rechts vom Roboter ein Pfeil?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "arrowRight",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  var robot = this.getRobot();
+                  var coords = this.coordsInFront(1);
+                  this.callCallback(callback, this.hasOn(coords.row, coords.col, function(obj) { return obj.isArrow === true; }));
+               }
+            },
+            {
+               name: "onRightArrow",
+               strings: {
+                  de: {
+                     label: "auf Pfeil nach rechts",
+                     code: "aufPfeilNachRechts",
+                     description: "aufPfeilNachRechts(): Befindet sich der Roboter auf einem Pfeil nach rechts?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onRightArrow",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsRight===true;}));
+               }
+            },
+            {
+               name: "onLeftArrow",
+               strings: {
+                  de: {
+                     label: "auf Pfeil nach links",
+                     code: "aufPfeilNachLinks",
+                     description: "aufPfeilNachLinks(): Befindet sich der Roboter auf einem Pfeil nach links?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onLeftArrow",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsLeft===true;}));
+               }
+            },
+            {
+               name: "onTopArrow",
+               strings: {
+                  de: {
+                     label: "auf Pfeil nach oben",
+                     code: "aufPfeilNachOben",
+                     description: "aufPfeilNachOben(): Befindet sich der Roboter auf einem Pfeil nach oben?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onTopArrow",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsTop===true;}));
+               }
+            },
+            {
+               name: "onBottomArrow",
+               strings: {
+                  de: {
+                     label: "auf Pfeil nach unten",
+                     code: "aufPfeilNachUnten",
+                     description: "aufPfeilNachUnten(): Befindet sich der Roboter auf einem Pfeil nach unten?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onBottomArrow",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsBottom===true;}));
+               }
+            }
+         ],
+         backgroundColor: "#e6e6fa",
+         bagInit: {
+            count: 200,
+            type: "paint"
+          },
+         ignoreBag: true,
+         itemTypes: {
+            robot: { img: imgPath+"yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            box: { num: 3, img: imgPath+"chest.png", side: 80, isExit: true, zOrder: 1, offsetX: -10, offsetY: 5 },
+            leftArrow: { num: 4, img: imgPath+"leftArrow.png", side: 60, forwardsLeft: true, isArrow: true, zOrder: 0},
+            rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, isArrow: true, zOrder: 0},
+            topArrow: { num: 6, img: imgPath+"topArrow.png", side: 60, forwardsTop: true, isArrow: true, zOrder: 0},
+            bottomArrow: { num: 7, img: imgPath+"bottomArrow.png", side: 60, forwardsBottom: true, isArrow: true, zOrder: 0},
             marker: { num: 2, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, isColor: true, zOrder: 1 },
          },
