@@ -1084,9 +1084,9 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successContainersFilled: "Bravo, das Schloss wird gut beheizt!",
                failureContainersFilled: "Der Roboter hat nicht alle Kamine mit Holz gefüllt.",
-               failureContainersFilledLess: "Der Roboter hat nicht alle Kamine mit Holz gefüllt...",
+               failureContainersFilledLess: "Der Roboter hat nicht alle Kamine mit Holz gefüllt.",
                failureContainersFilledBag: "Der Roboter soll das Holz in die Kamine legen.",
-               failureDropOutside: "Der Roboter versucht das Holz außerhalb des Kamins abzulegen.",
+               failureDropOutside: "Der Roboter versucht eine Plattform außerhalb des Gitters zu bauen.",
                failureDropObject: "In diesem Kamin ist bereits Holz.",
                emptyBag: "Der Roboter trägt kein Holz, das er hier ablegen könnte."
             }
