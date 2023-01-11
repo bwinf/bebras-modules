@@ -2412,6 +2412,29 @@ var getContext = function(display, infos, curLevel) {
                func: function(callback) {
                   this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsBottom===true;}));
                }
+            },
+            {
+               name: "arrowGetDirection",
+               type: "sensors",
+               category: "robot",
+               strings: {
+                  de: {
+                     label: "Pfeilrichtung",
+                     code: "pfeilrichtung",
+                     description: "pfeilrichtung(): In welche Richtung zeigt der Pfeil?"
+                  }
+               },
+               block: { name: "arrowGetDirection", yieldsValue: true, blocklyJson: {output: "string"} },
+               func: function(callback) {
+                  var right = this.isOn(function(obj) {return obj.forwardsRight===true;})
+                  var left = this.isOn(function(obj) {return obj.forwardsLeft===true;})
+                  var top = this.isOn(function(obj) {return obj.forwardsTop===true;})
+                  var bottom = this.isOn(function(obj) {return obj.forwardsBottom===true;})
+                  if(right){this.callCallback(callback, 'rechts');}
+                  if(left){this.callCallback(callback, 'links');}
+                  if(top){this.callCallback(callback, 'oben');}
+                  if(bottom){this.callCallback(callback, 'unten');}
+               }
             }
          ],
          backgroundColor: "#e6e6fa",
