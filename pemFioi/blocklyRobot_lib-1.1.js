@@ -2253,6 +2253,48 @@ var getContext = function(display, infos, curLevel) {
                func: function(callback) {
                   this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsBottom===true;}));
                }
+            },
+            {
+               name: "onArrow",
+               strings: {
+                  de: {
+                     label: "auf Pfeil",
+                     code: "aufPfeil",
+                     description: "aufPfeil(): Befindet sich der Roboter auf einem Pfeil?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onArrow",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.isArrow===true;}));
+               }
+            },
+            {
+               name: "arrowGetDirection",
+               type: "sensors",
+               category: "robot",
+               strings: {
+                  de: {
+                     label: "Pfeilrichtung",
+                     code: "pfeilrichtung",
+                     description: "pfeilrichtung(): In welche Richtung zeigt der Pfeil?"
+                  }
+               },
+               block: { name: "arrowGetDirection", yieldsValue: true, blocklyJson: {output: "string"} },
+               func: function(callback) {
+                  var right = this.isOn(function(obj) {return obj.forwardsRight===true;})
+                  var left = this.isOn(function(obj) {return obj.forwardsLeft===true;})
+                  var top = this.isOn(function(obj) {return obj.forwardsTop===true;})
+                  var bottom = this.isOn(function(obj) {return obj.forwardsBottom===true;})
+                  if(right){this.callCallback(callback, 'rechts');}
+                  if(left){this.callCallback(callback, 'links');}
+                  if(top){this.callCallback(callback, 'oben');}
+                  if(bottom){this.callCallback(callback, 'unten');}
+               }
             }
          ],
          backgroundColor: "#d3e7b6",
@@ -2265,10 +2307,10 @@ var getContext = function(display, infos, curLevel) {
             robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 2 },
             cell: {num: 1, color: "#d3e7b6", side: 60, isObstacle: true, zOrder: 0 },
             box: { num: 3, img: imgPath+"chest.png", side: 80, isExit: true, zOrder: 1, offsetX: -10, offsetY: 5 },
-            leftArrow: { num: 4, img: imgPath+"leftArrow.png", side: 60, forwardsLeft: true, zOrder: 0},
-            rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, zOrder: 0},
-            topArrow: { num: 6, img: imgPath+"topArrow.png", side: 60, forwardsTop: true, zOrder: 0},
-            bottomArrow: { num: 7, img: imgPath+"bottomArrow.png", side: 60, forwardsBottom: true, zOrder: 0},
+            leftArrow: { num: 4, img: imgPath+"leftArrow.png", isArrow:true, side: 60, forwardsLeft: true, zOrder: 0},
+            rightArrow: { num: 5, img: imgPath+"rightArrow.png", isArrow:true, side: 60, forwardsRight: true, zOrder: 0},
+            topArrow: { num: 6, img: imgPath+"topArrow.png",isArrow:true,  side: 60, forwardsTop: true, zOrder: 0},
+            bottomArrow: { num: 7, img: imgPath+"bottomArrow.png", isArrow:true, side: 60, forwardsBottom: true, zOrder: 0},
             marker: { num: 2, img: imgPath+"paint_marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             paint: { img: imgPath+"paint.png", side: 60, isWithdrawable: true, isColor: true, zOrder: 1 },
          },
@@ -2411,6 +2453,25 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   this.callCallback(callback, this.isOn(function(obj) {return obj.forwardsBottom===true;}));
+               }
+            },
+            {
+               name: "onArrow",
+               strings: {
+                  de: {
+                     label: "auf Pfeil",
+                     code: "aufPfeil",
+                     description: "aufPfeil(): Befindet sich der Roboter auf einem Pfeil?"
+                  }
+               },
+               category: "robot",
+               type: "sensors",
+               block: {
+                  name: "onArrow",
+                  yieldsValue: true
+               },
+               func: function(callback) {
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.isArrow===true;}));
                }
             },
             {
