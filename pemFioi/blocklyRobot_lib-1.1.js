@@ -3317,7 +3317,7 @@ var getContext = function(display, infos, curLevel) {
             number: { side: 60, zOrder: 2 },
             board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
             board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
-            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 2, isNumber: true },
             wall: { num: 5, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
