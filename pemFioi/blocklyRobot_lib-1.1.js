@@ -616,15 +616,15 @@ var getContext = function(display, infos, curLevel) {
                nbWithdrawables: "anzahlObjekteAnPlatz",
                withdrawNum: "nimmObjekte",
                withdrawNum_noShadow: "nimmObjekte",
-               shoot: "schiesseLaser",
-               shoot_noShadow: "schiesseLaser",
-               shootCondition: "schiesseLaserBeiBedingung",
-               shootCondition_noShadow: "schiesseLaserBeiBedingung",
+               shoot: "richteLaserstrahlAus",
+               shoot_noShadow: "richteLaserstrahlAus",
+               shootCondition: "richteLaserstrahlWenn",
+               shootCondition_noShadow: "richteLaserstrahlWenn",
                connect: "anschliessen",
                onMale: "aufStecker",
                onFemale: "aufSteckdose",
-               dropPlatformInFront: "konstruierePlattformVorne",
-               dropPlatformAbove: "konstruierePlattformOben"
+               dropPlatformInFront: "bauePlattformVorne",
+               dropPlatformAbove: "bauePlattformOben"
             },
             messages: {
                leavesGrid: "Der Roboter hat das Gitter verlassen!",
