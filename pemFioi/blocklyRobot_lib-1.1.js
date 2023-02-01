@@ -1075,12 +1075,12 @@ var getContext = function(display, infos, curLevel) {
                onObject: "aufHolz",
                onContainer: "beimKamin"
             },
-            description: {
-               withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
-               dropObject: "holzAblegen() legt einen Holzscheit auf dem Feld ab",
-               onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
-               onContainer: "beimKamin() zeigt an, ob sich ein Kamin auf dem Feld befindet",
-            },
+            // description: {
+            //    withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
+            //    dropObject: "holzAblegen() legt einen Holzscheit auf dem Feld ab",
+            //    onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
+            //    onContainer: "beimKamin() zeigt an, ob sich ein Kamin auf dem Feld befindet",
+            // },
             messages: {
                successContainersFilled: "Bravo, das Schloss wird gut beheizt!",
                failureContainersFilled: "Der Roboter hat nicht alle Kamine mit Holz gefüllt.",
@@ -1480,14 +1480,15 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "fange Fisch",
+               withdrawObject: "nimm Fisch",
                dropObject: "liefere Fisch ab",
-               withdrawNum_noShadow: "fange %1 Fische",
+               withdrawNum_noShadow: "nimm %1 Fische",
                dropNum_noShadow: "liefere %1 Fische ab",
                nbWithdrawables: "Anzahl der Fische",
                containerSize: "Anzahl der bestellten Fische",
                onObject: "auf Fisch",
                onContainer: "auf Insel",
+               nbInBag: "Anzahl Fische in Tasche"
             },
             code: {
                withdrawObject: "fangeFisch",
@@ -1499,16 +1500,16 @@ var getContext = function(display, infos, curLevel) {
                dropNum: "legeFischeAb",
                withdrawNum: "fangeFische",
             },
-            description: {
-               withdrawObject: "fangeFisch() nimmt einen Fisch vom Platz",
-               dropObject: "legeFischAb() legt einen Fisch ab",
-               onObject: "aufFisch() zeigt an, ob sich ein oder mehrere Fische auf dem Feld befinden",
-               onContainer: "aufInsel() zeigt an, ob sich auf dem Feld eine Insel befindet",
-               nbWithdrawables: "anzahlFische() gibt an, wie viele Fische sich auf dem Platz befinden",
-               containerSize: "anzahlBestellteFische() zeigt an, wie viele Fische auf die Insel geliefert werden müssen",
-               dropNum: "legeFischeAb(Anzahl) legt Anzahl Fische ab",
-               withdrawNum: "fangeFische(Anzahl) hebt Anzahl Fische auf",
-            },
+            // description: {
+            //    withdrawObject: "fangeFisch() nimmt einen Fisch vom Platz",
+            //    dropObject: "legeFischAb() legt einen Fisch ab",
+            //    onObject: "aufFisch() zeigt an, ob sich ein oder mehrere Fische auf dem Feld befinden",
+            //    onContainer: "aufInsel() zeigt an, ob sich auf dem Feld eine Insel befindet",
+            //    nbWithdrawables: "anzahlFische() gibt an, wie viele Fische sich auf dem Platz befinden",
+            //    containerSize: "anzahlBestellteFische() zeigt an, wie viele Fische auf die Insel geliefert werden müssen",
+            //    dropNum: "legeFischeAb(Anzahl) legt Anzahl Fische ab",
+            //    withdrawNum: "fangeFische(Anzahl) hebt Anzahl Fische auf",
+            // },
             messages: {
                emptyBag: "Der Roboter trägt keine Fische!",
                tooManyObjects: "Der Roboter trägt bereits einen Fisch!",
@@ -1589,12 +1590,12 @@ var getContext = function(display, infos, curLevel) {
                onObject: "aufMurmel",
                onContainer: "aufLoch",
             },   
-            description: {
-               withdrawObject: "hebeMurmelAuf() hebt die Murmel auf",
-               dropObject: "legeMurmelAb() legt die Murmel ab",
-               onObject: "aufMurmel() zeigt an, ob sich der Roboter auf einer Murmel befindet",
-               onContainer: "aufLoch() zeigt an, ob sich der Roboter auf einem Loch befindet",
-            },   
+            // description: {
+            //    withdrawObject: "hebeMurmelAuf() hebt die Murmel auf",
+            //    dropObject: "legeMurmelAb() legt die Murmel ab",
+            //    onObject: "aufMurmel() zeigt an, ob sich der Roboter auf einer Murmel befindet",
+            //    onContainer: "aufLoch() zeigt an, ob sich der Roboter auf einem Loch befindet",
+            // },   
             messages: {
                emptyBag: "Der Roboter trägt keine Murmel!",
                tooManyObjects: "Der Roboter kann nur eine Murmel tragen.",
@@ -1729,16 +1730,16 @@ var getContext = function(display, infos, curLevel) {
                nbWithdrawables: "anzahlDerBücher",
                containerSize: "groesseDerKiste",
             },
-            description: {
-               withdrawObject: "nimmBuch() hebe das Buch an diesem Platz auf",
-               dropObject: "legeBuchAb() lege das transportierte Buch in die Kiste",
-               onObject: "aufBuch() gibt an, ob Bücher sich auf dem Platz befinden",
-               onContainer: "aufKiste() zeigt an, ob sich eine Kiste auf dem Platz befindet",
-               nbWithdrawables: "anzahlDerBücher() gibt an, wie viele Bücher sich auf dem Platz befinden",
-               containerSize: "groesseDerKiste() gibt an, wie wie viele Bücher in die Kiste passen",
-               dropNum: "legeAb(anzahlBücher) lege anzahlBücher Bücher in die Kiste",
-               withdrawNum: "nimm(anzahlBücher) hebe anzahlBücher Bücher auf",
-            },
+            // description: {
+            //    withdrawObject: "nimmBuch() hebe das Buch an diesem Platz auf",
+            //    dropObject: "legeBuchAb() lege das transportierte Buch in die Kiste",
+            //    onObject: "aufBuch() gibt an, ob Bücher sich auf dem Platz befinden",
+            //    onContainer: "aufKiste() zeigt an, ob sich eine Kiste auf dem Platz befindet",
+            //    nbWithdrawables: "anzahlDerBücher() gibt an, wie viele Bücher sich auf dem Platz befinden",
+            //    containerSize: "groesseDerKiste() gibt an, wie wie viele Bücher in die Kiste passen",
+            //    dropNum: "legeAb(anzahlBücher) lege anzahlBücher Bücher in die Kiste",
+            //    withdrawNum: "nimm(anzahlBücher) hebe anzahlBücher Bücher auf",
+            // },
             messages: {
                emptyBag: "Der Roboter trägt keine Bücher!",
                tooManyObjects: "Der Roboter kann nur ein Buch tragen.",
@@ -1959,11 +1960,11 @@ var getContext = function(display, infos, curLevel) {
                obstacleInFront: "vorHindernis",
                readNumber: "liesZahl"
             },
-            description: {
-               onContainer: "aufMarkierung() zeigt an, ob sich der Roboter auf einem markierten Feld befindet",
-               pushableInFront: "vorKiste() gibt an, ob der Roboter vor einer Kiste steht",
-               pushObject: "schiebeKiste() schiebt die Kiste ein Feld weiter",               
-            },
+            // description: {
+            //    onContainer: "aufMarkierung() zeigt an, ob sich der Roboter auf einem markierten Feld befindet",
+            //    pushableInFront: "vorKiste() gibt an, ob der Roboter vor einer Kiste steht",
+            //    pushObject: "schiebeKiste() schiebt die Kiste ein Feld weiter",               
+            // },
             messages: {
                successContainersFilled: "Herzlichen Glückwunsch, die Kisten sind alle auf den Markierungen!",
                failureContainersFilled: "Es gibt noch Kisten, die nicht an ihrem Platz sind.",
@@ -2040,7 +2041,9 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "Holz einsammeln",
                dropObject: "Holz übergeben",
                withdrawNum_noShadow: "sammle %1 Holz ein",
+               withdrawNum: "sammle %1 Holz ein",
                dropNum_noShadow: "übergebe %1 Holz",
+               dropNum: "übergebe %1 Holz",
                nbWithdrawables: "Anzahl Holzscheite",
                containerSize: "Anzahl der bestellten Holzscheite",
                onObject: "auf Holz",
@@ -2056,17 +2059,17 @@ var getContext = function(display, infos, curLevel) {
                containerSize: "anzahlBestelltesHolz",
                nbInBag: "anzahlHolzscheiteInTasche"
             },
-            description: {
-               withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
-               dropObject: "holzUebergeben() legt einen Holzscheit auf dem Feld ab",
-               onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
-               onContainer: "beimBiber() zeigt an, ob sich ein Biber auf dem Feld befindet",
-               nbWithdrawables: "anzahlHolzscheite() gibt an, wie viele Holzscheite sich auf dem Feld befinden",
-               containerSize: "anzahlBestelltesHolz() gibt an, wie viele Holzscheite der Biber bestellt hat",
-               dropNum: "übergebe(Anzahl) überreicht dem Biber Anzahl Holzscheite",
-               withdrawNum: "sammle(Anzahl) sammelt Anzahl Holzscheite ein",
-               nbInBag: "anzahlHolzscheiteInTasche() gibt die Anzahl der Holzscheite zurück, die der Roboter in diesem Moment bei sich trägt"
-            },
+            // description: {
+            //    withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
+            //    dropObject: "holzUebergeben() legt einen Holzscheit auf dem Feld ab",
+            //    onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
+            //    onContainer: "beimBiber() zeigt an, ob sich ein Biber auf dem Feld befindet",
+            //    nbWithdrawables: "anzahlHolzscheite() gibt an, wie viele Holzscheite sich auf dem Feld befinden",
+            //    containerSize: "anzahlBestelltesHolz() gibt an, wie viele Holzscheite der Biber bestellt hat",
+            //    dropNum: "übergebe(Anzahl) überreicht dem Biber Anzahl Holzscheite",
+            //    withdrawNum: "sammle(Anzahl) sammelt Anzahl Holzscheite ein",
+            //    nbInBag: "anzahlHolzscheiteInTasche() gibt die Anzahl der Holzscheite zurück, die der Roboter in diesem Moment bei sich trägt"
+            // },
             messages: {
                emptyBag: "Der Roboter trägt kein Holz!",
                tooManyObjects: "Der Roboter kann nicht so viel Holz auf einmal tragen.",
@@ -2104,7 +2107,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Flagge erobert",
                      code: "flaggeErobert",
-                     description: "flaggeErobert(): steht der Roboter auf dem Feld der roten Flagge?"
+                     // description: "flaggeErobert(): steht der Roboter auf dem Feld der roten Flagge?"
                   },
                },
                category: "robot",
@@ -2149,7 +2152,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach rechts",
                      code: "aufPfeilNachRechts",
-                     description: "aufPfeilNachRechts(): Befindet sich der Roboter auf einem Pfeil nach rechts?"
+                     // description: "aufPfeilNachRechts(): Befindet sich der Roboter auf einem Pfeil nach rechts?"
                   }
                },
                category: "robot",
@@ -2179,7 +2182,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach links",
                      code: "aufPfeilNachLinks",
-                     description: "aufPfeilNachLinks(): Befindet sich der Roboter auf einem Pfeil nach links?"
+                     // description: "aufPfeilNachLinks(): Befindet sich der Roboter auf einem Pfeil nach links?"
                   }
                },
                category: "robot",
@@ -2210,7 +2213,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach oben",
                      code: "aufPfeilNachOben",
-                     description: "aufPfeilNachOben(): Befindet sich der Roboter auf einem Pfeil nach oben?"
+                     // description: "aufPfeilNachOben(): Befindet sich der Roboter auf einem Pfeil nach oben?"
                   }
                },
                category: "robot",
@@ -2241,7 +2244,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach unten",
                      code: "aufPfeilNachUnten",
-                     description: "aufPfeilNachUnten(): Befindet sich der Roboter auf einem Pfeil nach unten?"
+                     // description: "aufPfeilNachUnten(): Befindet sich der Roboter auf einem Pfeil nach unten?"
                   }
                },
                category: "robot",
@@ -2260,7 +2263,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil",
                      code: "aufPfeil",
-                     description: "aufPfeil(): Befindet sich der Roboter auf einem Pfeil?"
+                     // description: "aufPfeil(): Befindet sich der Roboter auf einem Pfeil?"
                   }
                },
                category: "robot",
@@ -2281,7 +2284,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Pfeilrichtung",
                      code: "pfeilrichtung",
-                     description: "pfeilrichtung(): In welche Richtung zeigt der Pfeil?"
+                     // description: "pfeilrichtung(): In welche Richtung zeigt der Pfeil?"
                   }
                },
                block: { name: "arrowGetDirection", yieldsValue: true, blocklyJson: {output: "string"} },
@@ -2324,7 +2327,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Pfeil vorne",
                      code: "pfeilVorne",
-                     description: "pfeilVorne(): Befindet sich vor vom Roboter ein Pfeil?"
+                     // description: "pfeilVorne(): Befindet sich vor vom Roboter ein Pfeil?"
                   }
                },
                category: "robot",
@@ -2343,7 +2346,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Pfeil links",
                      code: "pfeilLinks",
-                     description: "pfeilLinks(): Befindet sich links vom Roboter ein Pfeil?"
+                     // description: "pfeilLinks(): Befindet sich links vom Roboter ein Pfeil?"
                   }
                },
                category: "robot",
@@ -2364,7 +2367,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Pfeil rechts",
                      code: "pfeilRechts",
-                     description: "pfeilRechts(): Befindet sich rechts vom Roboter ein Pfeil?"
+                     // description: "pfeilRechts(): Befindet sich rechts vom Roboter ein Pfeil?"
                   }
                },
                category: "robot",
@@ -2385,7 +2388,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach rechts",
                      code: "aufPfeilNachRechts",
-                     description: "aufPfeilNachRechts(): Befindet sich der Roboter auf einem Pfeil nach rechts?"
+                     // description: "aufPfeilNachRechts(): Befindet sich der Roboter auf einem Pfeil nach rechts?"
                   }
                },
                category: "robot",
@@ -2404,7 +2407,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach links",
                      code: "aufPfeilNachLinks",
-                     description: "aufPfeilNachLinks(): Befindet sich der Roboter auf einem Pfeil nach links?"
+                     // description: "aufPfeilNachLinks(): Befindet sich der Roboter auf einem Pfeil nach links?"
                   }
                },
                category: "robot",
@@ -2423,7 +2426,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach oben",
                      code: "aufPfeilNachOben",
-                     description: "aufPfeilNachOben(): Befindet sich der Roboter auf einem Pfeil nach oben?"
+                     // description: "aufPfeilNachOben(): Befindet sich der Roboter auf einem Pfeil nach oben?"
                   }
                },
                category: "robot",
@@ -2442,7 +2445,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil nach unten",
                      code: "aufPfeilNachUnten",
-                     description: "aufPfeilNachUnten(): Befindet sich der Roboter auf einem Pfeil nach unten?"
+                     // description: "aufPfeilNachUnten(): Befindet sich der Roboter auf einem Pfeil nach unten?"
                   }
                },
                category: "robot",
@@ -2461,7 +2464,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Pfeil",
                      code: "aufPfeil",
-                     description: "aufPfeil(): Befindet sich der Roboter auf einem Pfeil?"
+                     // description: "aufPfeil(): Befindet sich der Roboter auf einem Pfeil?"
                   }
                },
                category: "robot",
@@ -2482,7 +2485,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Pfeilrichtung",
                      code: "pfeilrichtung",
-                     description: "pfeilrichtung(): In welche Richtung zeigt der Pfeil?"
+                     // description: "pfeilrichtung(): In welche Richtung zeigt der Pfeil?"
                   }
                },
                block: { name: "arrowGetDirection", yieldsValue: true, blocklyJson: {output: "string"} },
@@ -2536,7 +2539,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Kreis",
                      code: "aufKreis",
-                     description: "aufKreis(): Befindet sich der Roboter auf einem Feld mit einem Kreis?"
+                     // description: "aufKreis(): Befindet sich der Roboter auf einem Feld mit einem Kreis?"
                   }
                },
                category: "robot",
@@ -2567,7 +2570,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Viereck",
                      code: "aufViereck",
-                     description: "aufViereck(): Befindet sich der Roboter auf einem Feld mit einem Viereck?"
+                     // description: "aufViereck(): Befindet sich der Roboter auf einem Feld mit einem Viereck?"
                   }
                },
                category: "robot",
@@ -2598,7 +2601,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Dreieck",
                      code: "aufDreieck",
-                     description: "aufDreieck(): Befindet sich der Roboter auf einem Feld mit einem Dreieck?"
+                     // description: "aufDreieck(): Befindet sich der Roboter auf einem Feld mit einem Dreieck?"
                   }
                },
                category: "robot",
@@ -2629,7 +2632,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Gittermuster",
                      code: "aufGittermuster",
-                     description: "aufGittermuster(): Befindet sich der Roboter auf einem Feld mit Gittermuster?"
+                     // description: "aufGittermuster(): Befindet sich der Roboter auf einem Feld mit Gittermuster?"
                   }
                },
                category: "robot",
@@ -2660,7 +2663,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Streifen",
                      code: "aufStreifen",
-                     description: "aufStreifen(): Befindet sich der Roboter auf einem Feld mit Streifen?"
+                     // description: "aufStreifen(): Befindet sich der Roboter auf einem Feld mit Streifen?"
                   }
                },
                category: "robot",
@@ -2691,7 +2694,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf Punkten",
                      code: "aufPunkten",
-                     description: "aufPunkten(): Befindet sich der Roboter auf einem Feld mit Punkten?"
+                     // description: "aufPunkten(): Befindet sich der Roboter auf einem Feld mit Punkten?"
                   }
                },
                category: "robot",
@@ -2786,7 +2789,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Ausgang erreicht",
                      code: "ausgangErreicht",
-                     description: "ausgangErreicht(): steht der Roboter auf dem Feld mit dem Ausgang?"
+                     // description: "ausgangErreicht(): steht der Roboter auf dem Feld mit dem Ausgang?"
                   },
                },
                category: "robot",
@@ -2859,7 +2862,7 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Kreuz",
                   code: "aufKreuz",
-                  description: "aufKreuz(): Steht der Roboter über einem Kreuz?"
+                  // description: "aufKreuz(): Steht der Roboter über einem Kreuz?"
                 }
              },
              category: "robot",
@@ -2888,7 +2891,7 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Stern",
                   code: "aufStern",
-                  description: "aufStern(): Steht der Roboter über einem Stern?"
+                  // description: "aufStern(): Steht der Roboter über einem Stern?"
                 }
              },
              category: "robot",
@@ -2917,7 +2920,7 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Viereck",
                   code: "aufViereck",
-                  description: "aufViereck(): Steht der Roboter über einem Viereck?"
+                  // description: "aufViereck(): Steht der Roboter über einem Viereck?"
                 }
              },
              category: "robot",
@@ -3037,7 +3040,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf dem grünen Feld",
                      code: "aufGrünemFeld",
-                     description: "aufGrünemFeld(): Steht der Roboter auf dem grünen Feld?"
+                     // description: "aufGrünemFeld(): Steht der Roboter auf dem grünen Feld?"
                    }
                },
                category: "robot",
@@ -3200,7 +3203,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Farbe auf Feld",
                      code: "farbeAufFeld",
-                     description: "farbeAufFeld(): Steht der Roboter auf einem bemalten Feld?"
+                     //description: "farbeAufFeld(): Steht der Roboter auf einem bemalten Feld?"
                   },
                },
                category: "robot",
@@ -3220,7 +3223,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Farbe oben",
                      code: "farbeOben",
-                     description: "farbeOben(): ist das Feld über dem Roboter bemalt?"
+                     // description: "farbeOben(): ist das Feld über dem Roboter bemalt?"
                   },
                },
                category: "robot",
@@ -3240,7 +3243,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Farbe unten",
                      code: "farbeUnten",
-                     description: "farbeUnten(): ist das Feld unter dem Roboter bemalt?"
+                     // description: "farbeUnten(): ist das Feld unter dem Roboter bemalt?"
                   },
                },
                category: "robot",
@@ -3260,7 +3263,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Farbe rechts oben",
                      code: "farbeObenRechts",
-                     description: "farbeObenRechts(): ist das Feld rechts über dem Roboter bemalt?"
+                     // description: "farbeObenRechts(): ist das Feld rechts über dem Roboter bemalt?"
                   },
                },
                category: "robot",
@@ -3280,7 +3283,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Farbe links oben",
                      code: "farbeObenLinks",
-                     description: "farbeObenLinks(): ist das Feld links über dem Roboter bemalt?"
+                     // description: "farbeObenLinks(): ist das Feld links über dem Roboter bemalt?"
                   },
                },
                category: "robot",
@@ -3337,7 +3340,7 @@ var getContext = function(display, infos, curLevel) {
                     de: {
                      label: translations["de"][iColor],
                      code: translations["de"][iColor],
-                     description: translations["de"][iColor] + "(): Bemale das Feld in " + translations["de"][iColor]
+                     // description: translations["de"][iColor] + "(): Bemale das Feld in " + translations["de"][iColor]
                   }
                   },
                   category: "robot",
@@ -3411,7 +3414,7 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Rakete erreicht",
                      code: "raketeErreich",
-                     description: "raketeErreicht(): steht der Roboter auf dem Feld mit der Rakete?"
+                     // description: "raketeErreicht(): steht der Roboter auf dem Feld mit der Rakete?"
                   },
                },
                category: "robot",
