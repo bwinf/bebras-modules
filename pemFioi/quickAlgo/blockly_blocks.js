@@ -87,7 +87,6 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
       getBlockLabel: function(type, addQuotes) {
          // Fetch user-friendly name for the block
          // TODO :: Names for Blockly/Scratch blocks
-
          if(typeof type != 'string' && type.length > 1) {
             var res = [];
             for(var i = 0; i < type.length; i++) {
@@ -98,6 +97,13 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
 
          var msg = this.mainContext.strings.label[type];
          msg = msg ? msg : type;
+         // TODO: This is functional but ugly! Find translation for standardBlocks!
+         if(typeof msg != "string"){
+            msg = msg[0]
+            if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_repeat"){
+               msg = "Wiederhole _ mal"
+            }
+         }
          msg = msg.replace(/%\d/g, '_');
          if(addQuotes) {
             msg = '"' + msg + '"';

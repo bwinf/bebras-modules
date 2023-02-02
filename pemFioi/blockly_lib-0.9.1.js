@@ -238,8 +238,8 @@ var localLanguageStrings = {
       emptyProgram: "Das Programm enthält keine Befehle. Verbinde die Blöcke um ein Programm zu schreiben.", // TODO :: translate this one and next 9
       tooManyBlocks: "Du benutzt zu viele Bausteine!",
       uninitializedVar: "Nicht initialisierte Variable:",
-      valueTrue: 'wahr',
-      valueFalse: 'unwahr',
+      valueTrue: 'True',
+      valueFalse: 'False',
       correctAnswer: 'Richtige Antwort',
       partialAnswer: 'Teilweise richtige Antwort',
       wrongAnswer: 'Falsche Antwort',

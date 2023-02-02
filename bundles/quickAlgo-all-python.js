@@ -2264,8 +2264,8 @@ var localLanguageStrings = {
       limitedBlock: "You use too many of a limited use block:", // TODO
       uninitializedVar: "Nicht initialisierte Variable:",
       undefinedMsg: "Dies kann durch einen Zugriff auf einen Index außerhalb einer Liste oder eine undefinierte Variable verursacht werden.", // TODO :: translate
-      valueTrue: 'wahr',
-      valueFalse: 'unwahr',
+      valueTrue: 'True',
+      valueFalse: 'False',
       evaluatingAnswer: 'Evaluation in progress', // TODO
       correctAnswer: 'Richtige Antwort',
       partialAnswer: 'Teilweise richtige Antwort',
