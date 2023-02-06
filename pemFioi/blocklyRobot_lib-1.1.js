@@ -583,7 +583,7 @@ var getContext = function(display, infos, curLevel) {
                right: "dreheRechts",
                turnAround: "dreheUm",
                forward: "vorwaerts",
-               backwards: "rückwaerts",
+               backwards: "rueckwaerts",
                jump: "spring",
                obstacleInFront: "vorHindernis",
                obstacleEast: "hindernisRechts",
