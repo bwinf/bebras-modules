@@ -1074,8 +1074,20 @@ var quickAlgoInterface = {
         var browserWidth = document.documentElement.clientWidth;
         $('body').css('height', browserHeight);
 
+        // if($('#miniPlatformHeader').length) {
+        //     $('#task').css('height', (browserHeight - 40) + 'px');
+        // } else {
+        //     $('#task').css('height', '');
+        // }
+
         if($('#miniPlatformHeader').length) {
-            $('#task').css('height', (browserHeight - 40) + 'px');
+            if(browserHeight < 1024){
+
+                $('#task').css('height', (100 - browserHeight/100 + 1) + 'vh');
+            } else{
+                $('#task').css('height', (browserHeight) + 'px');
+            }
+
         } else {
             $('#task').css('height', '');
         }
