@@ -1073,17 +1073,10 @@ var quickAlgoInterface = {
         // iOS) because of the toolbar, so we set directly the height as pixels
         var browserHeight = document.documentElement.clientHeight;
         var browserWidth = document.documentElement.clientWidth;
-        console.log("clientHeight", document.documentElement.clientHeight)
-        console.log("clientWidth", document.documentElement.clientWidth)
-        console.log("innerHeight", window.innerHeight)
-        console.log("innerWidth", window.innerWidth)
-        console.log("offsetHeight", document.documentElement.offsetHeight)
-        console.log("offsetWidth", document.documentElement.offsetWidth)
-        console.log("clientTop",document.documentElement.clientTop)
         $('body').css('height', browserHeight);
 
         if($('#miniPlatformHeader').length) {
-            $('#task').css('height', (browserHeight - 50) + 'px');
+            $('#task').css('height', (browserHeight - 40) + 'px');
         } else {
             $('#task').css('height', '');
         }

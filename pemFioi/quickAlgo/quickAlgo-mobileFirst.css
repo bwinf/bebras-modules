@@ -290,7 +290,7 @@ p {
           justify-content: stretch;
   height: 100vh;
   width: 100vw;
-  height: var(--app-height);
+  height: var(--app-height)-100px;
 }
 #taskContent {
   -webkit-box-flex: 2;
