@@ -1071,15 +1071,19 @@ var quickAlgoInterface = {
     onResize: function(e) {
         // 100% and 100vh work erratically on some mobile browsers (Safari on
         // iOS) because of the toolbar, so we set directly the height as pixels
-        // var browserHeight = document.documentElement.clientHeight;
-        // var browserWidth = document.documentElement.clientWidth;
-        var browserHeight = window.innerHeight;
-        var browserWidth = window.innerWidth;
-        
+        var browserHeight = document.documentElement.clientHeight;
+        var browserWidth = document.documentElement.clientWidth;
+        console.log("clientHeight", document.documentElement.clientHeight)
+        console.log("clientWidth", document.documentElement.clientWidth)
+        console.log("innerHeight", window.innerHeight)
+        console.log("innerWidth", window.innerWidth)
+        console.log("offsetHeight", document.documentElement.offsetHeight)
+        console.log("offsetWidth", document.documentElement.offsetWidth)
+        console.log("clientTop",document.documentElement.clientTop)
         $('body').css('height', browserHeight);
 
         if($('#miniPlatformHeader').length) {
-            $('#task').css('height', (browserHeight - (40 + document.documentElement.offsetTop)) + 'px');
+            $('#task').css('height', (browserHeight - 50) + 'px');
         } else {
             $('#task').css('height', '');
         }
@@ -1128,8 +1132,7 @@ var quickAlgoInterface = {
     },
 
     checkHeight: function() {
-        //var browserHeight = document.documentElement.clientHeight;
-        var browserHeight = window.innerHeight
+        var browserHeight = document.documentElement.clientHeight;
         if(this.lastHeight !== null && this.lastHeight != browserHeight) {
             this.onResize();
         }
