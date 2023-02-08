@@ -1248,6 +1248,7 @@ body.fullscreen #taskToolbar {
     visibility: hidden;
     overflow: hidden;
     height: 0;
+    /* @HR: Note for later  */
     -webkit-box-flex: 0;
     -ms-flex: 0 0 0px;
         flex: 0 0 0;
@@ -1571,7 +1572,7 @@ button.videoBtn .icon {
 #taskIntroLong .panel-body {
   padding: 20px;
   overflow: auto;
-  max-height: calc(100% - 62px); /* 100% - height of panel-heading */
+  max-height: calc(100% - 62px); /* 100% - height of panel-heading; HR: Note for later*/
 }
 #taskIntro video {
   max-width: 100%;
