@@ -1079,7 +1079,7 @@ var quickAlgoInterface = {
         $('body').css('height', browserHeight);
 
         if($('#miniPlatformHeader').length) {
-            $('#task').css('height', (browserHeight - 40) + 'px');
+            $('#task').css('height', (browserHeight - (40 + document.documentElement.offsetTop)) + 'px');
         } else {
             $('#task').css('height', '');
         }
@@ -1128,7 +1128,8 @@ var quickAlgoInterface = {
     },
 
     checkHeight: function() {
-        var browserHeight = document.documentElement.clientHeight;
+        //var browserHeight = document.documentElement.clientHeight;
+        var browserHeight = window.innerHeight
         if(this.lastHeight !== null && this.lastHeight != browserHeight) {
             this.onResize();
         }
