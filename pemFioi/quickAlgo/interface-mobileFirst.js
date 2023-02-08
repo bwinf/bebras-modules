@@ -1071,8 +1071,11 @@ var quickAlgoInterface = {
     onResize: function(e) {
         // 100% and 100vh work erratically on some mobile browsers (Safari on
         // iOS) because of the toolbar, so we set directly the height as pixels
-        var browserHeight = document.documentElement.clientHeight;
-        var browserWidth = document.documentElement.clientWidth;
+        // var browserHeight = document.documentElement.clientHeight;
+        // var browserWidth = document.documentElement.clientWidth;
+        var browserHeight = window.innerHeight;
+        var browserWidth = window.innerWidth;
+        
         $('body').css('height', browserHeight);
 
         if($('#miniPlatformHeader').length) {
