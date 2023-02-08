@@ -1067,6 +1067,7 @@ var quickAlgoInterface = {
         }
     },
 
+
     onResize: function(e) {
         // 100% and 100vh work erratically on some mobile browsers (Safari on
         // iOS) because of the toolbar, so we set directly the height as pixels
@@ -1074,20 +1075,8 @@ var quickAlgoInterface = {
         var browserWidth = document.documentElement.clientWidth;
         $('body').css('height', browserHeight);
 
-        // if($('#miniPlatformHeader').length) {
-        //     $('#task').css('height', (browserHeight - 40) + 'px');
-        // } else {
-        //     $('#task').css('height', '');
-        // }
-
         if($('#miniPlatformHeader').length) {
-            if(browserHeight < 1024){
-
-                $('#task').css('height', (100 - browserHeight/100 + 1) + 'vh');
-            } else{
-                $('#task').css('height', (browserHeight) + 'px');
-            }
-
+            $('#task').css('height', (browserHeight - 40) + 'px');
         } else {
             $('#task').css('height', '');
         }
@@ -1388,6 +1377,13 @@ $(document).ready(function() {
         }
     }
 
+    const appHeight = () => {
+        const doc = document.documentElement
+        doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+    }
+    window.addEventListener('resize', appHeight)
+    appHeight()
+    
     // Set up task calls
     if(window.task) {
         // Add autoHeight = true to metadata sent back
