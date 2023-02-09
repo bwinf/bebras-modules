@@ -598,7 +598,7 @@ function LogicController(maxInstructions, subTask) {
           var func = this.includeBlocks.pythonAdditionalFunctions[i];
           completions.push({
             caption: func + '()',
-            snippet: getSnippet(func),
+            snippet: getSnippet(func + '()'),
             type: "snippet",
             docHTML: "<b>" + func + "()</b><hr></hr>"
           });
