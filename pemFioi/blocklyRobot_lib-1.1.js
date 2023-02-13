@@ -1317,7 +1317,7 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successContainersFilled: "Großartig, der Roboter hat alle Blumen gepflanzt!",
                failureContainersFilled: "Der Roboter hat Blumen gepflanzt wo keine Erde ist.",
-               failureContainersFilledLess: "In einigen Erdhaufen wurden noch keine Blumen gepflanzt!",
+               failureContainersFilledLess: "In mindestens einem Erdhaufen wurde noch keine Blumen gepflanzt!",
                failureDropObject: "Hier wächst schon eine Blume",
 					obstacle: "Vorsichtig, hier kann der Roboter nicht lang!",
             }
@@ -2568,8 +2568,8 @@ var getContext = function(display, infos, curLevel) {
                      description: "cuadradoCarta(): ¿está el robot sobre una carta que contiene un cuadrado?"
                   },
                   de: {
-                     label: "auf Viereck",
-                     code: "aufViereck",
+                     label: "auf Quadrat",
+                     code: "aufQuadrat",
                      // description: "aufViereck(): Befindet sich der Roboter auf einem Feld mit einem Viereck?"
                   }
                },
@@ -2860,7 +2860,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCruz(): ¿Se encuentra el robot sobre una cruz?"
                },
                de: {
-                  label: "auf Kreuz",
+                  label: "auf grünen Kreuz",
                   code: "aufKreuz",
                   // description: "aufKreuz(): Steht der Roboter über einem Kreuz?"
                 }
@@ -2889,7 +2889,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreEstrella(): ¿Se encuentra el robot sobre una estrella?"
                },
                de: {
-                  label: "auf Stern",
+                  label: "auf gelben Stern",
                   code: "aufStern",
                   // description: "aufStern(): Steht der Roboter über einem Stern?"
                 }
@@ -2918,8 +2918,8 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCuadrado(): ¿Se encuentra el robot sobre un cuadrado?"
                },
                de: {
-                  label: "auf Viereck",
-                  code: "aufViereck",
+                  label: "auf blauen Quadrat",
+                  code: "aufQuadrat",
                   // description: "aufViereck(): Steht der Roboter über einem Viereck?"
                 }
              },
