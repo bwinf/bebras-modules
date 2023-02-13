@@ -1379,7 +1379,7 @@ $(document).ready(function() {
 
     const appHeight = () => {
         const doc = document.documentElement
-        doc.style.setProperty('--app-height', `${$(window).height()}px`)
+        doc.style.setProperty('--app-height', `${document.documentElement.clientHeight}px`)
     }
     window.addEventListener('resize', appHeight)
     appHeight()
