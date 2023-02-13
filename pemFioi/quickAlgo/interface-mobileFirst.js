@@ -1380,6 +1380,14 @@ $(document).ready(function() {
     const appHeight = () => {
         const doc = document.documentElement
         doc.style.setProperty('--app-height', `${document.documentElement.clientHeight}px`)
+        console.log("clientHeight", document.documentElement.clientHeight)
+        console.log("clientWidth", document.documentElement.clientWidth)
+        console.log("innerHeight", window.innerHeight)
+        console.log("innerWidth", window.innerWidth)
+        console.log("offsetHeight", document.documentElement.offsetHeight)
+        console.log("offsetWidth", document.documentElement.offsetWidth)
+        console.log("clientTop",document.documentElement.clientTop)
+        console.log("window.height()", $(window).height())
     }
     window.addEventListener('resize', appHeight)
     appHeight()
