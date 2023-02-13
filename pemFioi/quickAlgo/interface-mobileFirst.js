@@ -1388,9 +1388,11 @@ $(document).ready(function() {
         console.log("offsetWidth", document.documentElement.offsetWidth)
         console.log("clientTop",document.documentElement.clientTop)
         console.log("window.height()", $(window).height())
-        console.log("mozilla", -moz-available)          /* WebKit-based browsers will ignore this. */
-        console.log("Safari,Chrome", -webkit-fill-available)  /* Mozilla-based browsers will ignore this. */
-        console.log("Other=",fill-available)
+        console.log("window.offsetHeight",window.offsetHeight)
+        console.log("window.offsetTop", window.offsetTop)
+        //console.log("mozilla", -moz-available)          /* WebKit-based browsers will ignore this. */
+        //console.log("Safari,Chrome", -webkit-fill-available)  /* Mozilla-based browsers will ignore this. */
+        //console.log("Other=", -fill-available)
     }
     window.addEventListener('resize', appHeight)
     appHeight()
