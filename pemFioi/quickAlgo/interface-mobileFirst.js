@@ -1379,17 +1379,21 @@ $(document).ready(function() {
 
     const appHeight = () => {
         const doc = document.documentElement
-        doc.style.setProperty('--app-height', `${document.documentElement.clientHeight}px`)
+        doc.style.setProperty('--app-height', `${$(window).height()}px`)
         console.log("clientHeight", document.documentElement.clientHeight)
         console.log("clientWidth", document.documentElement.clientWidth)
         console.log("innerHeight", window.innerHeight)
         console.log("innerWidth", window.innerWidth)
+        console.log("OffsetTop", document.documentElement.offsetTop)
+        console.log("ScrollHeight", document.documentElement.scrollHeight)
         console.log("offsetHeight", document.documentElement.offsetHeight)
         console.log("offsetWidth", document.documentElement.offsetWidth)
         console.log("clientTop",document.documentElement.clientTop)
         console.log("window.height()", $(window).height())
         console.log("window.offsetHeight",window.offsetHeight)
         console.log("window.offsetTop", window.offsetTop)
+        console.log(document.documentElement.scrollHeight - document.documentElement.clientHeight)
+        console.log($(window).height() - (document.documentElement.scrollHeight - document.documentElement.clientHeight))
         //console.log("mozilla", -moz-available)          /* WebKit-based browsers will ignore this. */
         //console.log("Safari,Chrome", -webkit-fill-available)  /* Mozilla-based browsers will ignore this. */
         //console.log("Other=", -fill-available)
