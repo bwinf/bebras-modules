@@ -1431,19 +1431,29 @@ $(document).ready(function() {
     const appHeight = () => {
         const doc = document.documentElement
         var browser = checkBrowser()
+        console.log(browser)
+        var appheight = window.innerHeight
         if(window.iOSDetected){
-            if(browser === "Safari"){
-                doc.style.setProperty('--app-height', `${window.innerHeight - 100}px`)
+            if(browser == "Safari"){
+                // doc.style.setProperty('--app-height', `${window.innerHeight - 100}px`)
+                appheight = window.innerHeight - 100
             } else{
-                doc.style.setProperty('--app-height', `${getIOSWindowHeight() - 50}px`)
+                // doc.style.setProperty('--app-height', `${getIOSWindowHeight() - 50}px`)
+                appheight = getIOSWindowHeight() - 50
             }
         } else {
             if(screen.availHeight > screen.availWidth){
-                doc.style.setProperty('--app-height', `${getIOSWindowHeight() - getHeightOfIOSToolbars()}px`)
+                // doc.style.setProperty('--app-height', `${getIOSWindowHeight() - getHeightOfIOSToolbars()}px`)
+                appheight = getIOSWindowHeight() - getHeightOfIOSToolbars()
             } else {
-                doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars() - 40}px`)
+                // doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars() - 40}px`)
+                appheight = getHeightOfIOSToolbars() - 40
             }
         }
+        if (window.offsetHeight < appheight ) {
+            appheight = window.offsetHeight
+        }
+        doc.style.setProperty('--app-height', `${appheight}px`)
 
        
         console.log("clientHeight", document.documentElement.clientHeight)
@@ -1459,12 +1469,7 @@ $(document).ready(function() {
         console.log("first:",getIOSWindowHeight())
         console.log("second:", getHeightOfIOSToolbars())
         console.log("Orientation", window.orientation)
-        console.log("Avail", screen.availHeight, screen.availWidth)
-        if(screen.availHeight > screen.availWidth){
-            console.log("Portrait");
-        } else {
-            console.log("Landscape")
-        }
+        console.log("Avail Height, Width", screen.availHeight, screen.availWidth)
     }
     window.addEventListener('resize', appHeight)
     appHeight()
