@@ -1403,7 +1403,7 @@ $(document).ready(function() {
 
     const appHeight = () => {
         const doc = document.documentElement
-        if(window.orientation === 0){
+        if(screen.availHeight > screen.availWidth){
             doc.style.setProperty('--app-height', `${getIOSWindowHeight() - getHeightOfIOSToolbars()}px`)
         } else {
             doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars() - 40}px`)
