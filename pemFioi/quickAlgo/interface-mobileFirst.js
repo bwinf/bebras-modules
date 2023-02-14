@@ -1382,12 +1382,13 @@ $(document).ready(function() {
         // Note, that such zoom detection might not work correctly in other browsers
         // We use width, instead of height, because there are no vertical toolbars :)
         var zoomLevel = document.documentElement.clientWidth / window.innerWidth;
-        console.log("ZoomLevelWidth",zoomLevel)
-        console.log("ZoomLevelHeight", document.documentElement.clientHeigth / window.innerHeight)
-        console.log("RealHeight_zoomwidth",  window.innerHeight * zoomLevel)
-        console.log("RealHeight_zoomHeight",  window.innerHeight * ( document.documentElement.clientHeigth / window.innerHeight))
-        console.log("RealWidth_zoomwidth",  window.innerWidth * zoomLevel)
-        console.log("RealWidth_zoomHeight",  window.innerWidth * ( document.documentElement.clientHeigth / window.innerHeight))
+        var zoomLevel2 = document.documentElement.clientHeight / window.innerHeight;
+        console.log("ZoomLevelWidth",zoomLevel);
+        console.log("ZoomLevelHeight", zoomLevel2);
+        console.log("RealHeight_zoomwidth",  window.innerHeight * zoomLevel);
+        console.log("RealHeight_zoomHeight",  window.innerHeight *  zoomLevel2);
+        console.log("RealWidth_zoomwidth",  window.innerWidth * zoomLevel);
+        console.log("RealWidth_zoomHeight",  window.innerWidth * zoomLevel2);
     
         // window.innerHeight returns height of the visible area. 
         // We multiply it by zoom and get out real height.
@@ -1416,6 +1417,12 @@ $(document).ready(function() {
         console.log("first:",getIOSWindowHeight())
         console.log("second:", getHeightOfIOSToolbars())
         console.log("Orientation", window.orientation)
+        console.log("Avail", screen.availHeight, screen.availWidth)
+        if(screen.availHeight > screen.availWidth){
+            console.log("Portrait");
+        } else {
+            console.log("Landscape")
+        }
     }
     window.addEventListener('resize', appHeight)
     appHeight()
