@@ -1403,7 +1403,12 @@ $(document).ready(function() {
 
     const appHeight = () => {
         const doc = document.documentElement
-        doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars()}px`)
+        if(window.orientation === 0){
+            doc.style.setProperty('--app-height', `${getIOSWindowHeight() - getHeightOfIOSToolbars()}px`)
+        } else {
+            doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars() - 40}px`)
+        }
+       
         console.log("clientHeight", document.documentElement.clientHeight)
         console.log("innerHeight", window.innerHeight)
         console.log("OffsetTop", document.documentElement.offsetTop)
