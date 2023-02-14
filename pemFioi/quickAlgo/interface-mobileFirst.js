@@ -1403,11 +1403,16 @@ $(document).ready(function() {
 
     const appHeight = () => {
         const doc = document.documentElement
-        if(screen.availHeight > screen.availWidth){
-            doc.style.setProperty('--app-height', `${getIOSWindowHeight() - getHeightOfIOSToolbars()}px`)
+        if(window.iOSDetected){
+            doc.style.setProperty('--app-height', `${getIOSWindowHeight() - 40}px`)
         } else {
-            doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars() - 40}px`)
+            if(screen.availHeight > screen.availWidth){
+                doc.style.setProperty('--app-height', `${getIOSWindowHeight() - getHeightOfIOSToolbars()}px`)
+            } else {
+                doc.style.setProperty('--app-height', `${getHeightOfIOSToolbars() - 40}px`)
+            }
         }
+
        
         console.log("clientHeight", document.documentElement.clientHeight)
         console.log("innerHeight", window.innerHeight)
