@@ -290,7 +290,7 @@ p {
           justify-content: stretch;
   height: 100vh;
   width: 100vw;
-  height: var(--app-height);
+  /* height: var(--app-height); */
 }
 #taskContent {
   -webkit-box-flex: 2;
@@ -1238,6 +1238,7 @@ body.fullscreen #taskToolbar {
         flex: 0 0 auto;
   z-index: 1;
   position: relative;
+  min-height: 30px;
 }
 @media /* Tablets and desktop */
   screen and (min-width: 768px) and (max-width: 1024.9px) and (orientation: portrait),
