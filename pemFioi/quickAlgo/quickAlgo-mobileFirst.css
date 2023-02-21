@@ -1239,7 +1239,8 @@ body.fullscreen #taskToolbar {
   position: relative;
 }
 @media /* Tablets and desktop */
-  screen and (min-width: 962px) and (max-height: 500px)  and (orientation: portrait){
+  screen and (min-width: 962px) and (max-height: 500px)  and (orientation: landscape),
+  screen and (min-width: 962px) and (max-height: 800px)  and (orientation: portrait){
   #taskToolbar {
     visibility: hidden;
     overflow: hidden;
