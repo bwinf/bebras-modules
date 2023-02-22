@@ -1238,7 +1238,8 @@ body.fullscreen #taskToolbar {
   z-index: 1;
   position: relative;
 }
-@media /* Tablets and desktop */
+
+/* @media  Tablets and desktop 
   screen and (min-width: 962px) and (max-height: 500px)  and (orientation: landscape),
   screen and (min-width: 962px) and (max-height: 800px)  and (orientation: portrait){
   #taskToolbar {
@@ -1250,7 +1251,7 @@ body.fullscreen #taskToolbar {
     -ms-flex: 0 0 0px;
         flex: 0 0 0;
   }
-}
+} */
 
 @media /* Tablets and desktop */
   screen and (min-width: 768px) and (max-width: 1024.9px) and (orientation: portrait),
