@@ -239,6 +239,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_DIVIDE = "Ist der Quotient zweier Zahlen.";
 /** @export */ Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_MINUS = "Ist die Differenz zweier Zahlen.";
 /** @export */ Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_MULTIPLY = "Ist das Produkt zweier Zahlen.";
+/** @export */ Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_DIVIDEFLOOR = "Ist der ganzzahligen Teil der Division zweier Zahlen.";
 /** @export */ Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_POWER = "Ist die erste Zahl potenziert mit der zweiten Zahl.";
 /** @export */ Blockly.Msg.MATH_CHANGE_TITLE = "erhöhe %1 um %2";
 /** @export */ Blockly.Msg.MATH_CHANGE_TOOLTIP = "Addiert eine Zahl zu \"%1\".";
@@ -419,6 +420,11 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.TEXT_CREATE_JOIN_ITEM_TITLE_ITEM = Blockly.Msg.VARIABLES_DEFAULT_NAME;
 /** @export */ Blockly.Msg.LISTS_INDEX_OF_INPUT_IN_LIST = Blockly.Msg.LISTS_INLIST;
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_COMMENT = Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT;
+
+
+
+
+
 
 /** @export */ Blockly.Msg.MATH_HUE = "230";
 /** @export */ Blockly.Msg.LOOPS_HUE = "120";
