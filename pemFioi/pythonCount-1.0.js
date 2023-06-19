@@ -72,6 +72,7 @@ var pythonForbiddenBlocks = {
     'loops': {
       'controls_repeat': ['for'],
       'controls_repeat_ext': ['for'],
+      "controls_repeat_ext_noShadow" : ['for'],
       'controls_for': ['for'],
       'controls_forEach': ['for'],
       'controls_whileUntil': ['while'],
