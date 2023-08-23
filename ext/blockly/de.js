@@ -34,7 +34,9 @@ goog.require('Blockly.Msg');
 /* @export */ Blockly.Msg.de.LISTS_APPEND_MSG="Zur Liste %1 das Element %2 hinzufügen.",
 /* @export */ Blockly.Msg.de.LISTS_APPEND_TOOLTIP="ein Element zur Liste '%1' hinzufügen",
 /* @export */ Blockly.Msg.de.LISTS_CREATE_WITH_TOO_LARGE="Größe der Liste zu groß: %1 > maximal zulässige Größe %2.",
-/* @export */ Blockly.Msg.de.LISTS_SORT_PLACE_TOOLTIP="Sortiert die Liste '%1' an Ort und Stelle.",
+/* @export */ Blockly.Msg.de.LISTS_SORT_PLACE_TOOLTIP="Sortiert die Liste '%1' in-place",
+/* @export */ Blockly.Msg.LISTS_SORT_PLACE_TITLE = "sort %1 %2 %3";
+/* @export */ Blockly.Msg.LISTS_SORT_PLACE_MSG = "die Liste %1 in-place sortieren";
 /* @export */ Blockly.Msg.de.INPUT_NUM_TOOLTIP="Liest eine einzelne Zahl in einer Zeile aus der Eingabe.",
 //** @export */ Blockly.Msg.de.INPUT_NUM_LIST="eine Liste von Zahlen in einer Zeile lesen",
 //** @export */ Blockly.Msg.de.INPUT_NUM_LIST_TOOLTIP="Liest eine einzeilige Liste von Zahlen aus dem Programmeintrag.",
