@@ -47,6 +47,30 @@ var conceptViewerStrings = {
       "arguments": 'Functions with arguments',
     }
   },
+  de: {
+    viewerTitle: "Hilfe",
+    selectLanguage: "Sprache wählen…",
+    selectTopic: "Thema wählen…",
+    reloadFromTask: "Please open this documentation from your exercise. You can close this window.", // TODO :: verify
+    concepts: {
+      "taskplatform": 'Aufgabe lösen',
+      "language": "Programmerstellung",
+      // "blockly_text_print": 'Afficher du texte',
+      // "blockly_text_print_noend": 'Afficher consécutivement du texte',
+      "blockly_controls_repeat": 'Wiederholungen mit fester Anzahl',
+      "blockly_controls_if": 'Fallunterscheidung',
+      "blockly_controls_if_else": 'Fallunterscheidung - Mehrere Fälle',
+      "blockly_controls_whileUntil": 'Bedingtes Wiederholen',
+      // "blockly_controls_infiniteloop": 'Infinite loop',
+      "blockly_logic_operation": 'Logische Operatoren',
+      // "extra_nested_repeat": 'Nested loops',
+      // "extra_variable": 'Variables',
+      // "extra_list": 'Lists',
+      // "extra_function": 'Functions',
+      // "robot_commands": 'Robot commands',
+      // "arguments": 'Functions with arguments',
+    }
+  },
   es: {
     viewerTitle: "Ayuda",
     selectLanguage: "Seleccione un lenguaje…",
@@ -238,7 +262,12 @@ var conceptViewer = {
 
   loadToc: function() {
     var html = '<div class="toc">';
-    html += '<h2 class="sectionTitle"><i class="fas fa-bars icon"></i> Table des matières</h2><hr>';
+    if(window.stringsLanguage == 'de'){
+      html += '<h2 class="sectionTitle"><i class="fas fa-bars icon"></i> Inhaltsverzeichnis </h2><hr>';
+    } else {
+      html += '<h2 class="sectionTitle"><i class="fas fa-bars icon"></i> Table des matières </h2><hr>';
+    }
+    
     html += '<ul><li><a onclick="conceptViewer.showTab(\'intro\');">' + window.languageStrings.introDetailsTitle + '</a></li>';
     html += '<li>Documentation<ul>';
     for (var i = 0; i < this.concepts.length; i++) {
@@ -336,7 +365,9 @@ var conceptViewer = {
       var language = conceptViewer.selectedLanguage;
       var urlSplit = conceptUrl.split('#');
       if(urlSplit[1]) {
-        urlSplit[urlSplit.length-1] = language+'-'+urlSplit[urlSplit.length-1];
+        if( window.stringsLanguage != 'de'){
+           urlSplit[urlSplit.length-1] = language+'-'+urlSplit[urlSplit.length-1];
+        }
       } else {
         urlSplit[1] = language;
       }
@@ -422,10 +453,17 @@ function getConceptViewerBaseUrl() {
     // argument or we are on concours2.castor-informatique.fr
     var baseUrl = '';
     baseUrl += (window.location.protocol == 'http:' ? 'http:' : 'https:') + '//';
-    baseUrl += ((window.location.search.indexOf('p=1') > -1
-        || window.location.hostname == 'concours2.castor-informatique.fr')
-       ? window.location.host : 'static4.castor-informatique.fr');
-    baseUrl += '/help/';
+    if(window.stringsLanguage != 'de'){
+       baseUrl += ((window.location.search.indexOf('p=1') > -1
+         || window.location.hostname == 'concours2.castor-informatique.fr')
+        ? window.location.host : 'static4.castor-informatique.fr');
+        baseUrl += '/help/';
+    } else {
+      baseUrl += ((window.location.search.indexOf('p=1') > -1
+         || window.location.hostname == 'concours2.castor-informatique.fr')
+        ? window.location.host : 'jwinf.de/tasks/jwinf/jwinf-aufgaben/help/');
+    }
+    
     return baseUrl;
 }
 
@@ -438,7 +476,8 @@ function getConceptViewerBaseConcepts() {
     } else {
         baseUrl += 'index.html';
     }
-    var baseConcepts = [
+    if(window.stringsLanguage != 'de'){
+      var baseConcepts = [
         {id: 'taskplatform', name: 'Résolution des exercices', url: baseUrl+'#taskplatform', language: 'all'},
         {id: 'language', name: "Création d'un programme", url: baseUrl+'#language'},
         {id: 'blockly_controls_repeat', name: 'Boucles de répétition', url: baseUrl+'#blockly_controls_repeat'},
@@ -459,6 +498,32 @@ function getConceptViewerBaseConcepts() {
         {id: 'blockly_text_join', name: 'Concaténer des chaînes', url: baseUrl+'#blockly_text_join'},
         {id: 'blockly_text_charAt', name: 'Obtenir un caractère d\'une chaîne', url: baseUrl+'#blockly_text_charAt'}
         ];
+    } else {
+      var baseConcepts = [
+        {id: 'language', name: "Programmerstellung", url: baseUrl+'#language'},
+        {id: 'blockly_controls_repeat', name: 'Wiederholungen mit fester Anzahl', url: baseUrl+'#blockly_controls_repeat'},
+        {id: 'extra_nested_repeat', name: 'Verschachteltes Wiederholen mit fester Anzahl', url: baseUrl+'#blockly_extra_nested_repeat'},
+        {id: 'blockly_controls_if', name: 'Fallunterscheidung', url: baseUrl+'#blockly_controls_if'},
+        {id: 'blockly_controls_if_else', name: 'Fallunterscheidung - Mehrere Fälle', url: baseUrl+'#blockly_controls_if_else'},
+
+        // {id: 'taskplatform', name: 'Résolution des exercices', url: baseUrl+'#taskplatform', language: 'all'},
+        // {id: 'blockly_controls_whileUntil', name: 'Boucles tant que ou jusqu\'à', url: baseUrl+'#blockly_controls_whileUntil'},
+        // {id: 'blockly_controls_infiniteloop', name: 'Boucle infinie', url: baseUrl+'#blockly_controls_infiniteloop'},
+        // {id: 'blockly_logic_operation', name: 'Opérateurs logiques', url: baseUrl+'#blockly_logic_operation'},
+        // {id: 'extra_nested_repeat', name: 'Boucles imbriquées', url: baseUrl+'#extra_nested_repeat'},
+        // {id: 'extra_variable', name: 'Variables', url: baseUrl+'#extra_variable'},
+        // {id: 'extra_list', name: 'Listes', url: baseUrl+'#extra_list'},
+        // {id: 'extra_function', name: 'Fonctions', url: baseUrl+'#extra_function'},
+        // {id: 'robot_commands', name: 'Commandes du robot', url: baseUrl+'#robot_commands'},
+        // {id: 'arguments', name: 'Fonctions avec arguments', url: baseUrl+'#arguments'},
+        // {id: 'blockly_text_print', name: 'Afficher du texte', url: baseUrl+'#blockly_text_print'},
+        // {id: 'blockly_text_print_noend', name: 'Afficher consécutivement du texte', url: baseUrl+'#blockly_text_print_noend'},
+        // {id: 'blockly_text_length', name: 'Longueur d\'une chaîne', url: baseUrl+'#blockly_text_length'},
+        // {id: 'blockly_text_join', name: 'Concaténer des chaînes', url: baseUrl+'#blockly_text_join'},
+        // {id: 'blockly_text_charAt', name: 'Obtenir un caractère d\'une chaîne', url: baseUrl+'#blockly_text_charAt'}
+          ];   
+      console.log(baseConcepts)   
+    }
     for (var iConcept = 0; iConcept < baseConcepts.length; iConcept++) {
        baseConcepts[iConcept].order = 100 + iConcept;
     }
