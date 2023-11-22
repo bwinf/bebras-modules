@@ -2073,7 +2073,7 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                emptyBag: "Der Roboter trägt kein Holz!",
                tooManyObjects: "Der Roboter kann nicht so viel Holz auf einmal tragen.",
-               successContainersFilled: "Bravo, alle Biber haben Holz. Sie bedanken sich beim Roboter!",
+               successContainersFilled: "Bravo, das Holz wurde verteilt!",
                failureContainersFilled: "Es wurde nicht das gesamte Holz verteilt.",
                failureContainersFilledLess: "Es gibt noch Holz zu verteilen.",
                failureContainersFilledBag: "Der Roboter hat zu viel Holz eingesammelt.",

@@ -59,7 +59,12 @@ var blocklyAllowedSiblings = {
    'lists_create_with_empty': ['lists_create_with'],
    'logic_operation_or': ['logic_operation', 'logic_operation_and'],
    'lists_getIndex_remove': ['lists_getIndex'],
-   'lists_setIndex_insert_last': ['lists_getIndex']
+   'lists_setIndex_insert_last': ['lists_getIndex'],
+   "text_charAt_noShadow" : ["text_charAt"],
+   "text_length_noShadow" : ["text_length"],
+   "text_charAt" : ["text_charAt_noShadow"],
+   "text_length" : ["text_length_noShadow"],
+
 }
 
 
@@ -2658,6 +2663,8 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
          var allowed = this.getBlocksAllowed();
          var blockList = xml.getElementsByTagName('block');
          var notAllowed = [];
+         // console.log(notAllowed)
+         // console.log(allowed)
          var that = this;
          function checkBlock(block) {
             var blockName = block.getAttribute('type');
