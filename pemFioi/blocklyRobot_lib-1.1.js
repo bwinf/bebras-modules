@@ -1064,9 +1064,9 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "Holz einsammeln",
-               dropObject: "Holz ablegen",
-               onObject: "auf Holz",
+               withdrawObject: "Holzstapel einsammeln",
+               dropObject: "Holzstapel ablegen",
+               onObject: "auf Holzstapel",
                onContainer: "beim Kamin"
             },
             code: {
@@ -2038,17 +2038,17 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               withdrawObject: "Holz einsammeln",
-               dropObject: "Holz übergeben",
-               withdrawNum_noShadow: "sammle %1 Holz ein",
-               withdrawNum: "sammle %1 Holz ein",
-               dropNum_noShadow: "übergebe %1 Holz",
-               dropNum: "übergebe %1 Holz",
-               nbWithdrawables: "Anzahl Holzscheite",
-               containerSize: "Anzahl der bestellten Holzscheite",
-               onObject: "auf Holz",
+               withdrawObject: "Holzstapel einsammeln",
+               dropObject: "Holzstapel übergeben",
+               withdrawNum_noShadow: "sammle %1 Holzstapel ein",
+               withdrawNum: "sammle %1 Holzstapel ein",
+               dropNum_noShadow: "übergebe %1 Holzstapel",
+               dropNum: "übergebe %1 Holzstapel",
+               nbWithdrawables: "Anzahl Holzstapel",
+               containerSize: "Anzahl der bestellten Holzstapel",
+               onObject: "auf Holzstapel",
                onContainer: "beim Biber",
-               nbInBag: "Anzahl Holzscheite in der Tasche"
+               nbInBag: "Anzahl Holzstapel in der Tasche"
             },
             code: {
                withdrawObject: "holzEinsammeln",
@@ -2071,13 +2071,13 @@ var getContext = function(display, infos, curLevel) {
             //    nbInBag: "anzahlHolzscheiteInTasche() gibt die Anzahl der Holzscheite zurück, die der Roboter in diesem Moment bei sich trägt"
             // },
             messages: {
-               emptyBag: "Der Roboter trägt kein Holz!",
-               tooManyObjects: "Der Roboter kann nicht so viel Holz auf einmal tragen.",
-               successContainersFilled: "Bravo, das Holz wurde verteilt!",
-               failureContainersFilled: "Es wurde nicht das gesamte Holz verteilt.",
-               failureContainersFilledLess: "Es gibt noch Holz zu verteilen.",
-               failureContainersFilledBag: "Der Roboter hat zu viel Holz eingesammelt.",
-               failureDropObject: "Dieser Biber hat nicht so viel Holz bestellt.",
+               emptyBag: "Der Roboter trägt kein Holz bei sich!",
+               tooManyObjects: "Der Roboter kann nicht so viele Holzstapel auf einmal tragen.",
+               successContainersFilled: "Bravo, die Holzstapel wurden übergeben!",
+               failureContainersFilled: "Es wurden nicht alle Holzstapel richtig übergeben.",
+               failureContainersFilledLess: "Es gibt noch Holzstapel zu übergeben.",
+               failureContainersFilledBag: "Der Roboter hat zu viele Holzstapel eingesammelt.",
+               failureDropObject: "Dieser Biber hat nicht so viele Holzstapel bestellt.",
             }
          },
       },
