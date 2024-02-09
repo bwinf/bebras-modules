@@ -1356,7 +1356,7 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successReachExit: "Bravo, der Roboter hat die Flagge erobert.",
                failureReachExit: "Der Roboter hat die Flagge nicht erobert.",
-               obstacle: "Der Roboter versucht gegen eine Wand zu rennen..."
+               obstacle: "Der Roboter ist gegen ein Hindernis gelaufen."
             }
          },
       },
