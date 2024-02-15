@@ -1180,7 +1180,9 @@ var blocklyToScratch = {
 // Allowed blocks that make another block allowed as well
 var blocklyAllowedSiblings = {
    'controls_if_else': ['controls_if'],
-   'lists_create_with_empty': ['lists_create_with']
+   'lists_create_with_empty': ['lists_create_with'],
+   'lists_setIndex' : ['lists_setIndex_insert_last'],
+   'lists_setIndex_insert_last' : ['lists_setIndex']
 }
 
 
