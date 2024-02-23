@@ -49,8 +49,8 @@ var getContext = function(display, infos) {
             readInteger: "lies Zeile als ganze Zahl",
             readFloat: "lies Zeile als Komma-Zahl",
             eof: "Ende der Eingabe",
-            convToInt: "Zeichen zu Zahl",
-            convToString: "Zahl zu Zeichen"
+            convToInt: "String zu Integer",
+            convToString: "Zahl zu String"
             // charToNumber: "Zeichen zu Zahl",
             // numberToChar: "Zahl zu Zeichen",
             // charToAscii: "ASCII-Zahl zu Zeichen",
