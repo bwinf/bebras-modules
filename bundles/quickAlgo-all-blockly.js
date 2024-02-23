@@ -1182,7 +1182,11 @@ var blocklyAllowedSiblings = {
    'controls_if_else': ['controls_if'],
    'lists_create_with_empty': ['lists_create_with'],
    'lists_setIndex' : ['lists_setIndex_insert_last'],
-   'lists_setIndex_insert_last' : ['lists_setIndex']
+   'lists_setIndex_insert_last' : ['lists_setIndex'],
+   'text_charAt_noShadow': ['text_chatAt'],
+   'text_getSubstring_noShadow': ['text_getSubstring'],
+   'text_chatAt': ['text_charAt_noShadow'],
+   'text_getSubstring': ['text_getSubstring_noShadow'],
 }
 
 

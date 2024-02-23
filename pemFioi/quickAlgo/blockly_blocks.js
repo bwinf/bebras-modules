@@ -65,6 +65,9 @@ var blocklyAllowedSiblings = {
    "text_charAt" : ["text_charAt_noShadow"],
    "text_length" : ["text_length_noShadow"],
    'lists_setIndex' : ['lists_setIndex_insert_last'],
+   'text_getSubstring_noShadow': ['text_getSubstring'],
+   'text_chatAt': ['text_charAt_noShadow'],
+   'text_getSubstring': ['text_getSubstring_noShadow'],
 
 }
 
