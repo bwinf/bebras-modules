@@ -2485,7 +2485,7 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
              .setCheck(null)
              .appendField(that.strings.infiniteLoop);
              this.setPreviousStatement(true, null);
-             this.setNextStatement(false, null);
+             this.setNextStatement(true, null);
              this.setColour(that.getDefaultColours().categories["loops"])
              this.setTooltip("");
              this.setHelpUrl("");
