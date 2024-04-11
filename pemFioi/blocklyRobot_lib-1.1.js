@@ -40,7 +40,9 @@ var getContext = function(display, infos, curLevel) {
          description: {}
       },
       de: {
-        label: {},
+        label: {
+         controls_repeat_ext: "Wiederhole X mal"
+        },
         code: {},
         messages: {},
         description: {}
