@@ -2133,6 +2133,7 @@ var getContext = function(display, infos, curLevel) {
             obstacle: { num: 2, img: imgPath+"grey_brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
             obstacle_small: { num: 4, img: imgPath+"grey_brick_wall_small.png", side: 60, isObstacle: true, zOrder: 0 },
             flag: { num: 3, img: imgPath+"flag.png", side: 60, isExit: true, zOrder: 0},
+            number: { num: 5, side: 60, zOrder: 1 },
          },
          checkEndCondition: robotEndConditions.checkReachExit
       },
