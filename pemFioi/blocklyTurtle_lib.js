@@ -314,7 +314,7 @@ var getContext = function(display, infos) {
          penup: "lift the paintbrush",
          pendown: "lower the paintbrush",
          categories: {
-            turtle: "Tortue"
+            turtle: "Turtle"
          },
          label: {
             move: "move forward",

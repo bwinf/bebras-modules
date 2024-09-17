@@ -50,11 +50,11 @@ var getContext = function(display, infos) {
             readFloat: "lies Zeile als Komma-Zahl",
             eof: "Ende der Eingabe",
             convToInt: "String zu Integer",
-            convToString: "Zahl zu String"
+            convToString: "Zahl zu String",
             // charToNumber: "Zeichen zu Zahl",
             // numberToChar: "Zahl zu Zeichen",
-            // charToAscii: "ASCII-Zahl zu Zeichen",
-            // asciiToChar: "Zeichen zu ASCII-Zahl",
+            charToAscii: "Zeichen zu Zahl (Unicode)",
+            asciiToChar: "Zahl (Unicode) zu Zeichen",
          },
          code: {
             print: "print",
@@ -66,8 +66,8 @@ var getContext = function(display, infos) {
             convToString: "str",
             // charToNumber: "zeichenZuZahl",
             // numberToChar: "zahlZuZeichen",
-            // asciiToChar: "zeichenZuAscii",
-            // charToAscii: "asciiZuZeichen",
+            asciiToChar: "zahlZuZeichen",
+            charToAscii: "ZeichenZuZahl",
          },
          description: {
          },
@@ -85,6 +85,51 @@ var getContext = function(display, infos) {
             moreThan100Moves: "Die Ausgabe ist richtig, aber du hast mehr als 100 Schritte benötigt …",
             notANumber: " kann nicht in eine Zahl konvertiert werden.",
             emptyInput: "Es wurde kein Zeichen übergeben."
+         }
+      },
+      en: {
+         label: {
+            print: "print",
+            read: "read line",
+            readInteger: "read line as integer",
+            readFloat: "read line as float",
+            eof: "end of input",
+            convToInt: "string to integer",
+            convToString: "integer to string",
+            // charToNumber: "Zeichen zu Zahl",
+            // numberToChar: "Zahl zu Zeichen",
+            charToAscii: "char to unicode",
+            asciiToChar: "unicode to char",
+         },
+         code: {
+            // print: "print",
+            // read: "readline",
+            // readInteger: "liesGanzzahl",
+            // readFloat: "liesKommazahl",
+            // eof: "eingabeEnde",
+            // convToInt: "int",
+            // convToString: "str",
+            // // charToNumber: "zeichenZuZahl",
+            // // numberToChar: "zahlZuZeichen",
+            // asciiToChar: "zahlZuZeichen",
+            // charToAscii: "ZeichenZuZahl",
+         },
+         description: {
+         },
+         startingBlockName: "Program",
+         messages: {
+            input: "Input:",
+            output: "Output:",
+            outputWrong: "The output is incorrect.",
+            outputCorrect: "Congratulations! The output is correct.",
+            tooFewChars: "Line too short: line .",
+            tooManyChars: "Line too long: line .",
+            tooFewLines: "Too few lines in output.",
+            tooManyLines: "Too many lines in output.",
+            correctOutput: "Congratulations! The output is correct.",
+            moreThan100Moves: "Output correct but too many moves.",
+            notANumber: " cannot be converted into a number.",
+            emptyInput: "Empty Input."
          }
       },
       sl: {
@@ -278,14 +323,14 @@ var getContext = function(display, infos) {
     }
 
 
-   // context.printer.charToAscii = function(char, callback) {
-   //    var number = char.charCodeAt(0);
-   //    context.waitDelay(callback, number);
-   //  }
-   //  context.printer.asciiToChar = function(number, callback) {
-   //    var char = String.fromCharCode(number);
-   //    context.waitDelay(callback, char);
-   //  }
+   context.printer.charToAscii = function(char, callback) {
+      var number = char.charCodeAt(0);
+      context.waitDelay(callback, number);
+    }
+    context.printer.asciiToChar = function(number, callback) {
+      var char = String.fromCharCode(number);
+      context.waitDelay(callback, char);
+    }
    //  context.printer.charToNumber = function(char, callback) {
    //    var number = char.charCodeAt(0) - 65;
    //    context.waitDelay(callback, number);
@@ -312,8 +357,8 @@ var getContext = function(display, infos) {
             { name: "convToString",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}},
             // { name: "charToNumber", params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
             // { name: "numberToChar", params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}},
-            // { name: "charToAscii",  params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
-            // { name: "asciiToChar",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}}
+            { name: "charToAscii",  params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
+            { name: "asciiToChar",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}}
          ]
       }
    }
