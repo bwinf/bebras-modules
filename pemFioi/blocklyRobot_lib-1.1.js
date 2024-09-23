@@ -239,7 +239,7 @@ var getContext = function(display, infos, curLevel) {
                north: "move up",
                south: "move down",
                east: "move right",
-               west: "more left",
+               west: "move left",
                left: "turn left",
                right: "turn right",
                turnAround: "turn around",
@@ -380,7 +380,7 @@ var getContext = function(display, infos, curLevel) {
                west: "West",
                east: "East"
             },
-            startingBlockName: "Program of the robot"
+            startingBlockName: "Robot program"
          },
          
          es: {
