@@ -2511,7 +2511,7 @@ var getContext = function(display, infos, curLevel) {
           },
          ignoreBag: true,
          itemTypes: {
-            robot: { img: imgPath+"yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            robot: { img: imgPath+"blue_robot.png", side: 80, nbStates: 1, isRobot: true, offsetX: -10, offsetY: 10, zOrder: 2 },
             box: { num: 3, img: imgPath+"chest.png", side: 80, isExit: true, zOrder: 1, offsetX: -10, offsetY: 5 },
             leftArrow: { num: 4, img: imgPath+"leftArrow.png", side: 60, forwardsLeft: true, isArrow: true, zOrder: 0},
             rightArrow: { num: 5, img: imgPath+"rightArrow.png", side: 60, forwardsRight: true, isArrow: true, zOrder: 0},
