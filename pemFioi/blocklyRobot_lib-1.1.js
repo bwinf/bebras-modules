@@ -2863,7 +2863,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCruz(): ¿Se encuentra el robot sobre una cruz?"
                },
                de: {
-                  label: "auf grünen Kreuz",
+                  label: "auf grünem Kreuz",
                   code: "aufKreuz",
                   // description: "aufKreuz(): Steht der Roboter über einem Kreuz?"
                 }
@@ -2892,7 +2892,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreEstrella(): ¿Se encuentra el robot sobre una estrella?"
                },
                de: {
-                  label: "auf gelben Stern",
+                  label: "auf gelbem Stern",
                   code: "aufStern",
                   // description: "aufStern(): Steht der Roboter über einem Stern?"
                 }
@@ -2921,7 +2921,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCuadrado(): ¿Se encuentra el robot sobre un cuadrado?"
                },
                de: {
-                  label: "auf blauen Quadrat",
+                  label: "auf blauem Quadrat",
                   code: "aufQuadrat",
                   // description: "aufViereck(): Steht der Roboter über einem Viereck?"
                 }
