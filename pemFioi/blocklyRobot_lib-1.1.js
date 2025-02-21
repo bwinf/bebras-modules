@@ -1634,13 +1634,13 @@ var getContext = function(display, infos, curLevel) {
          },
          de: {
             label: {
-               obstacleInFront: "Asteroid vorraus",
+               obstacleInFront: "Asteroid voraus",
                obstacleEast: "Asteroid rechts",
                obstacleWest: "Asteroid links",
                obstacleSouth: "Asteroid hinten",
             },
             code: {
-               obstacleInFront: "asteroidVorraus",
+               obstacleInFront: "asteroidVoraus",
                obstacleEast: "asteroidRechts",
                obstacleWest: "asteroidLinks",
                obstacleSouth: "asteroidHinten",
