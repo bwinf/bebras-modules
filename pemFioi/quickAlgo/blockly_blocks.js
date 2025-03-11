@@ -112,6 +112,9 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
             if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_repeat"){
                msg = "Wiederhole _ mal"
             }
+            if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_if"){
+               msg = "Fallunterscheidung (falls)"
+            }
          }
          msg = msg.replace(/%\d/g, '_');
          if(addQuotes) {
