@@ -115,6 +115,9 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
             if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_if"){
                msg = "Fallunterscheidung (falls)"
             }
+            if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "logic_compare"){
+               msg = "Vergleich"
+            }
          }
          msg = msg.replace(/%\d/g, '_');
          if(addQuotes) {
