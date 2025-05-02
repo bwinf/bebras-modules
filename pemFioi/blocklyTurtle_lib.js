@@ -726,9 +726,9 @@ var getContext = function(display, infos) {
             { name: "turnleftamountvalue_pentasimple", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
               ["18 °","18"],["72 °","72"],["90 °","90"],["108 °","108"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
             { name: "turnleftamountvalue_Ntimes30", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["180 °","180"]]}]}},
+              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["150 °","150"],["180 °","180"]]}]}},
             { name: "turnrightamountvalue_Ntimes30", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["180 °","180"]]}]}},
+              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["150 °","150"],["180 °","180"]]}]}},
             { name: "turneitheramount", blocklyJson: {"args0": [
                {"type": "input_value", "name": "PARAM_0"},
                {"type": "field_dropdown", "name": "PARAM_1", "options":

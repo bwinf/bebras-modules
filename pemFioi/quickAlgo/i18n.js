@@ -2,7 +2,6 @@
     i18n:
         Translations for the various strings in quickAlgo
 */
-
 var quickAlgoLanguageStrings = {
    fr: {
       categories: {
@@ -418,8 +417,8 @@ var quickAlgoLanguageStrings = {
       loopDo: "mache",
       loopIteration: "Wiederholung",
       displayVideo: "Zeige Video",
-      showDetails: "Weitere Hinweise <img src='../../../_common/modules/img/bulb.svg' style='max-width:15px; vertical-align: top;'>",
-      hideDetails: "Verstecke Hinweise",
+      showDetails: `Weitere Hinweise <img src="${modulesPath}/img/bulb.svg" style="max-width:15px; vertical-align: top;">`,
+      hideDetails: `Verstecke Hinweise <img src="${modulesPath}/img/bulb.svg" style="max-width:15px; vertical-align: top;">`,
       editor: "Editor",
       instructions: "Anweisungen",
       testLabel: "Test",
