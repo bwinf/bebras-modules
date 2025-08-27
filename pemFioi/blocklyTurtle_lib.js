@@ -1,7 +1,5 @@
-
-
-var makeTurtle = function(coords) {
-   this.reset = function(stepsize, newcoords) {
+var makeTurtle = function (coords) {
+   this.reset = function (stepsize, newcoords) {
       this.x = 150;
       this.y = 150;
 
@@ -9,14 +7,14 @@ var makeTurtle = function(coords) {
       this.direction = 0;
 
       var initcoords = newcoords || coords;
-      if(initcoords) {
+      if (initcoords) {
          this.x = initcoords.x;
          this.y = initcoords.y;
 
          if (initcoords.dir) {
-           this.directionDeg = initcoords.dir,
-           this.direction = this.directionDeg*Math.PI/180;
-        }
+            this.directionDeg = initcoords.dir,
+               this.direction = this.directionDeg * Math.PI / 180;
+         }
       }
 
       this.paint = true;
@@ -35,13 +33,13 @@ var makeTurtle = function(coords) {
    }
    this.reset(5);
 
-   this.turn = function(angle) {
-      this.direction += angle*Math.PI/180;
+   this.turn = function (angle) {
+      this.direction += angle * Math.PI / 180;
       if (this.turtle) {
          this.turtle.style.transform = "rotate(" + (-this.direction) + "rad)";
       }
    }
-   this.move = function(amount) {
+   this.move = function (amount) {
       if (this.paint) {
          this.drawingContext.beginPath();
          this.drawingContext.moveTo(this.x, this.y);
@@ -57,51 +55,56 @@ var makeTurtle = function(coords) {
 
       this.placeTurtle();
    }
-   this.start_painting = function() {
+   this.start_painting = function () {
       this.paint = true;
-      if(this.turtle) {
+      if (this.turtle) {
          this.turtle.src = this.turtle.getAttribute("pendown");
       }
    }
-   this.stop_painting = function() {
+   this.stop_painting = function () {
       this.paint = false;
-      if(this.turtle) {
+      if (this.turtle) {
          this.turtle.src = this.turtle.src = this.turtle.getAttribute("penup");
       }
    }
 
-   this.set_colour = function(colour) {
+   this.set_colour = function (colour) {
       this.drawingContext.strokeStyle = colour;
    }
-   this.set_stepsize = function(stepsize) {
+   this.set_stepsize = function (stepsize) {
       this.stepsize = stepsize;
    }
-   this.setDrawingContext = function(drawingContext) {
+   this.setDrawingContext = function (drawingContext) {
       this.drawingContext = drawingContext;
       this.drawingContext.lineWidth = 3;
       this.drawingContext.lineCap = 'round'
    }
-   this.setTurtle = function(turtle) {
+   this.setTurtle = function (turtle) {
       this.turtle = turtle;
       this.placeTurtle();
    }
-   this.placeTurtle = function() {
-      if(!this.turtle) { return; }
-      this.turtle.style.left= this.x - 12 + "px";
-      this.turtle.style.top= this.y - 15 + "px";
+   this.placeTurtle = function () {
+      if (!this.turtle) {
+         return;
+      }
+      this.turtle.style.left = this.x - 12 + "px";
+      this.turtle.style.top = this.y - 15 + "px";
    }
-   this.fixTurtle = function() {
+   this.fixTurtle = function () {
       // Add padding so the turtle styas centered
       this.turtle.style.paddingRight = '2px';
       this.turtle.style.paddingBottom = '3px';
    }
-   this.getCoords = function() {
-      return {x: this.x, y: this.y};
+   this.getCoords = function () {
+      return {
+         x: this.x,
+         y: this.y
+      };
    }
 };
 
 
-var getContext = function(display, infos) {
+var getContext = function (display, infos) {
    var localLanguageStrings = {
       fr: {
          turnleft: "droite ↺",
@@ -117,7 +120,9 @@ var getContext = function(display, infos) {
             moveamount: "avancer de %1 pas",
             movebackamount: "reculer de %1 pas",
             moveamountvalue: "avancer de %1 pas",
+            moveamountvalue_noshadow: "TODO",
             movebackamountvalue: "reculer de %1 pas",
+            movebackamountvalue_noshadow: "TODO",
             turnleft: "tourner vers la droite ↺",
             turnright: "tourner vers la gauche ↻",
             turnleftamount: "tourner de %1° vers la gauche ↺",
@@ -151,7 +156,9 @@ var getContext = function(display, infos) {
             moveamount: "avancer",
             movebackamount: "reculer",
             moveamountvalue: "avancer",
+            moveamountvalue_noshadow: "TODO",
             movebackamountvalue: "reculer",
+            movebackamountvalue_noshadow: "TODO",
             turnleft: "tournerGauche",
             turnright: "tournerDroite",
             turnleftamount: "gauche",
@@ -183,8 +190,10 @@ var getContext = function(display, infos) {
          description: {
             moveamount: '@() la tortue avance du nombre de pas indiqué en paramètre. Exemple : @(50)',
             moveamountvalue: '@() la tortue avance du nombre de pas indiqué en paramètre. Exemple : @(50)',
+            moveamountvalue_noshadow: "TODO",
             movebackamount: '@() la tortue recule du nombre de pas indiqué en paramètre. Exemple : @(50)',
             movebackamountvalue: '@() la tortue recule du nombre de pas indiqué en paramètre. Exemple : @(50)',
+            movebackamountvalue_noshadow: "TODO",
             turnleftamount: '@() la tortue pivote vers la gauche du nombre de degrés indiqué en paramètre. Exemple : @(90)',
             turnleftamountvalue: '@() la tortue pivote vers la gauche du nombre de degrés indiqué en paramètre. Exemple : @(90)',
             turnrightamount: '@() la tortue pivote vers la droite du nombre de degrés indiqué en paramètre. Exemple : @(90)',
@@ -216,7 +225,9 @@ var getContext = function(display, infos) {
             moveamount: "gehe %1 Schritte",
             movebackamount: "gehe %1 Schritte zurück",
             moveamountvalue: "gehe %1 Schritte",
+            moveamountvalue_noshadow: "gehe %1 Schritte",
             movebackamountvalue: "gehe %1 Schritte zurück",
+            movebackamountvalue_noshadow: "gehe %1 Schritte zurück",
             turnleft: "drehe nach links ↺",
             turnright: "drehe nach rechts ↻",
             turnleftamount: "drehe um %1° nach links ↺",
@@ -260,7 +271,9 @@ var getContext = function(display, infos) {
             moveamount: "geheSchritte",
             movebackamount: "geheZurueckSchritte",
             moveamountvalue: "geheSchritte",
+            moveamountvalue_noshadow: "geheSchritte",
             movebackamountvalue: "geheZurueckSchritte",
+            movebackamountvalue_noshadow: "geheZurueckSchritte",
             turnleft: "dreheLinks90Grad",
             turnright: "dreheRechts90Grad",
             turnleftamount: "dreheLinksGrad",
@@ -299,8 +312,7 @@ var getContext = function(display, infos) {
             log: "log",
             inputvalue: "eingabewert"
          },
-         description: {
-         },
+         description: {},
          startingBlockName: "Schildkröten-Programm",
          messages: {
             paintingWrong: "Die Schildkröte hat nicht alles richtig gezeichnet.",
@@ -321,7 +333,9 @@ var getContext = function(display, infos) {
             moveamount: "move forward by %1 step(s)",
             movebackamount: "move back by %1 step(s)",
             moveamountvalue: "move forward by %1 step(s)",
+            moveamountvalue_noshadow: "move forward by %1 step(s)",
             movebackamountvalue: "move back by %1 step(s)",
+            movebackamountvalue_noshadow: "move back by %1 step(s)",
             turnleft: "turn right ↺",
             turnright: "turn left ↻",
             turnleftamount: "turn to the left by %1° ↺",
@@ -355,7 +369,9 @@ var getContext = function(display, infos) {
             moveamount: "forward",
             movebackamount: "backward",
             moveamountvalue: "forward",
+            moveamountvalue_noshadow: "forward",
             movebackamountvalue: "backward",
+            movebackamountvalue_noshadow: "backward",
             turnleft: "turnLeft",
             turnright: "turnRight",
             turnleftamount: "left",
@@ -395,18 +411,17 @@ var getContext = function(display, infos) {
          }
       },
       none: {
-         comment: {
-         }
+         comment: {}
       }
    };
 
    var context = quickAlgoContext(display, infos);
    var strings = context.setLocalLanguageStrings(localLanguageStrings);
 
-   if(infos.turtleInputValueLabel) {
+   if (infos.turtleInputValueLabel) {
       strings.label.inputvalue = infos.turtleInputValueLabel;
    }
-   if(infos.turtleInputValueDescription) {
+   if (infos.turtleInputValueDescription) {
       strings.description.inputvalue = infos.turtleInputValueDescription;
    }
 
@@ -415,11 +430,16 @@ var getContext = function(display, infos) {
    var scale = 1;
    var paper;
 
-   context.turtle = {displayTurtle : new makeTurtle(infos.coords), displaySolutionTurtle : new makeTurtle(infos.coords), invisibleTurtle : new makeTurtle(infos.coords), invisibleSolutionTurtle : new makeTurtle(infos.coords)};
+   context.turtle = {
+      displayTurtle: new makeTurtle(infos.coords),
+      displaySolutionTurtle: new makeTurtle(infos.coords),
+      invisibleTurtle: new makeTurtle(infos.coords),
+      invisibleSolutionTurtle: new makeTurtle(infos.coords)
+   };
 
    switch (infos.blocklyColourTheme) {
       case "bwinf":
-         context.provideBlocklyColours = function() {
+         context.provideBlocklyColours = function () {
             return {
                categories: {
                   logic: "#81b31d",
@@ -441,7 +461,7 @@ var getContext = function(display, infos) {
          // we could set turtle specific default colours here, if we wanted to …
    }
 
-   context.debug_log = function(callback, message) {
+   context.debug_log = function (callback, message) {
       message = message ? message.toString() : '';
       if (context.display) {
          console.log("vvvvv");
@@ -453,11 +473,10 @@ var getContext = function(display, infos) {
       context.callCallback(callback);
    };
 
-   context.reset = function(gridInfos) {
-      if(gridInfos === undefined) {
+   context.reset = function (gridInfos) {
+      if (gridInfos === undefined) {
          gridInfos = context.defaultGridInfos;
-      }
-      else {
+      } else {
          context.defaultGridInfos = gridInfos;
       }
 
@@ -492,7 +511,7 @@ var getContext = function(display, infos) {
          context.turtle.invisibleSolutionTurtle.reset(context.infos.turtleStepSize, gridInfos.coords);
 
          context.drawSolution = gridInfos.drawSolution;
-         context.inputValue   = gridInfos.inputValue;
+         context.inputValue = gridInfos.inputValue;
 
          context.drawSolution(context.turtle.invisibleSolutionTurtle);
          if (context.display) {
@@ -501,7 +520,7 @@ var getContext = function(display, infos) {
       }
    };
 
-   context.resetDisplay = function() {
+   context.resetDisplay = function () {
       var turtleFileName = "turtle.svg";
 
       if ($("#turtleImg").length > 0) {
@@ -521,14 +540,13 @@ var getContext = function(display, infos) {
       context.updateScale(); // does nothing for now
    };
 
-   context.unload = function() {
+   context.unload = function () {
       if (context.display) {
          // ... clean up necessary?
       }
    };
 
-   context.updateScale = function() {
-   };
+   context.updateScale = function () {};
 
    function callOnAllTurtles(fn) {
       fn(context.turtle.invisibleTurtle);
@@ -537,26 +555,26 @@ var getContext = function(display, infos) {
       }
    }
 
-   context.turtle.moveamount = function(param, callback) {
+   context.turtle.moveamount = function (param, callback) {
       if (typeof callback == "undefined") {
          callback = param;
          param = 0;
       }
 
-      callOnAllTurtles(function(turtle) {
+      callOnAllTurtles(function (turtle) {
          turtle.move(param);
       })
 
       context.waitDelay(callback);
    }
 
-   context.turtle.movebackamount = function(param, callback) {
+   context.turtle.movebackamount = function (param, callback) {
       if (typeof callback == "undefined") {
          callback = param;
          param = 0;
       }
 
-      callOnAllTurtles(function(turtle) {
+      callOnAllTurtles(function (turtle) {
          turtle.move(-param);
       });
 
@@ -564,15 +582,15 @@ var getContext = function(display, infos) {
    }
 
    // DEPRECATED
-   context.turtle.turn = function(param, callback) {
-      callOnAllTurtles(function(turtle) {
+   context.turtle.turn = function (param, callback) {
+      callOnAllTurtles(function (turtle) {
          turtle.turn(param);
       })
 
       context.waitDelay(callback);
    }
 
-   context.turtle.turneitheramount = function(degree, direction, callback) {
+   context.turtle.turneitheramount = function (degree, direction, callback) {
       if (typeof callback == "undefined") {
          callback = direction;
          direction = "l";
@@ -582,11 +600,10 @@ var getContext = function(display, infos) {
          }
       }
 
-      callOnAllTurtles(function(turtle) {
+      callOnAllTurtles(function (turtle) {
          if (direction.search('l') != -1) {
             turtle.turn(degree);
-         }
-         else {
+         } else {
             turtle.turn(-degree);
          }
       });
@@ -594,12 +611,11 @@ var getContext = function(display, infos) {
       context.waitDelay(callback);
    }
 
-   context.turtle.peneither = function(status, callback) {
-      callOnAllTurtles(function(turtle) {
+   context.turtle.peneither = function (status, callback) {
+      callOnAllTurtles(function (turtle) {
          if (status == "up") {
             turtle.stop_painting();
-         }
-         else {
+         } else {
             turtle.start_painting();
          }
       })
@@ -607,39 +623,41 @@ var getContext = function(display, infos) {
       context.waitDelay(callback);
    }
 
-   context.turtle.row = function(callback) {
+   context.turtle.row = function (callback) {
       context.runner.noDelay(callback, context.turtle.invisibleTurtle.getCoords().y);
    }
-   context.turtle.col = function(callback) {
+   context.turtle.col = function (callback) {
       context.runner.noDelay(callback, context.turtle.invisibleTurtle.getCoords().x);
    }
-   context.turtle.move = function(callback) {
+   context.turtle.move = function (callback) {
       context.turtle.moveamount(1, callback);
    }
-   context.turtle.turnleftamount = function(param, callback) {
+   context.turtle.turnleftamount = function (param, callback) {
       context.turtle.turneitheramount(param, "l", callback);
    }
-   context.turtle.turnrightamount = function(param, callback) {
+   context.turtle.turnrightamount = function (param, callback) {
       context.turtle.turneitheramount(param, "r", callback);
    }
-   context.turtle.turnleft = function(callback) {
+   context.turtle.turnleft = function (callback) {
       context.turtle.turnleftamount(90, callback);
    }
-   context.turtle.turnright = function(callback) {
+   context.turtle.turnright = function (callback) {
       context.turtle.turnrightamount(90, callback);
    }
-   context.turtle.penup = function(callback) {
+   context.turtle.penup = function (callback) {
       context.turtle.peneither("up", callback);
    }
-   context.turtle.pendown = function(callback) {
+   context.turtle.pendown = function (callback) {
       context.turtle.peneither("down", callback);
    }
-   context.turtle.inputvalue = function(callback) {
+   context.turtle.inputvalue = function (callback) {
       context.callCallback(callback, context.inputValue);
    };
 
    context.turtle.moveamountvalue = context.turtle.moveamount;
+   context.turtle.moveamountvalue_noshadow = context.turtle.moveamount;
    context.turtle.movebackamountvalue = context.turtle.movebackamount;
+   context.turtle.movebackamountvalue_noshadow = context.turtle.movebackamount;
    context.turtle.turnleftamountvalue = context.turtle.turnleftamount;
    context.turtle.turnrightamountvalue = context.turtle.turnrightamount;
    context.turtle.turneitheramountvalue = context.turtle.turneitheramount;
@@ -662,13 +680,13 @@ var getContext = function(display, infos) {
    context.turtle.turnleftamountvalue_Ntimes30 = context.turtle.turnleftamount;
    context.turtle.turnrightamountvalue_Ntimes30 = context.turtle.turnrightamount;
 
-   context.turtle.colour2 = function(colour, callback) {
+   context.turtle.colour2 = function (colour, callback) {
       if (typeof callback == "undefined") {
          callback = colour;
          colour = "#000000";
       }
 
-      callOnAllTurtles(function(turtle) {
+      callOnAllTurtles(function (turtle) {
          turtle.set_colour(colour);
       })
 
@@ -677,86 +695,541 @@ var getContext = function(display, infos) {
    context.turtle.colourvalue = context.turtle.colour2;
 
    var defaultMoveAmount = 1;
-   if(context.infos.defaultMoveAmount != undefined)
+   if (context.infos.defaultMoveAmount != undefined)
       defaultMoveAmount = context.infos.defaultMoveAmount;
 
    context.customBlocks = {
       turtle: {
-         turtle: [
-            { name: "move" },
-            { name: "moveamount", params: [null]},
-            { name: "movebackamount", params: [null]},
-            { name: "moveamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": defaultMoveAmount}]}},
-            { name: "movebackamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": defaultMoveAmount}]}},
-            { name: "turnleft" },
-            { name: "turnright" },
-            { name: "turn",      params: [null]},
-            { name: "turnleftamount", params: [null]},
-            { name: "turnrightamount", params: [null]},
-            { name: "turnleftamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_angle", "name": "PARAM_0", "angle": 90}]}},
-            { name: "turnrightamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_angle", "name": "PARAM_0", "angle": 90}]}},
-            { name: "turnleftamountvalue_noround", blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 90}]}},
-            { name: "turnrightamountvalue_noround", blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 90}]}},
-            { name: "turnleftamountvalue_windrad", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-               ["90 °","90"],["120 °","120"]]}]}},
-           { name: "turnrightamountvalue_windrad", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-            ["90 °","90"],["120 °","120"]]}]}},
-            { name: "turnleftamountvalue_options", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-                ["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_options", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-               ["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["180 °","180"]]}]}},
-            { name: "turnleftamountvalue_moreoptions", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-               ["15 °","15"],["18 °","18"],["30 °","30"],["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["150 °","150"],["162 °","162"],["165 °","165"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_moreoptions", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-               ["15 °","15"],["18 °","18"],["30 °","30"],["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["150 °","150"],["162 °","162"],["165 °","165"],["180 °","180"]]}]}},
-            { name: "turnleftamountvalue_europe", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["15 °","15"],["30 °","30"],["75 °","75"],["90 °","90"],["105 °","105"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_europe", params: [null], blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["15 °","15"],["30 °","30"],["75 °","75"],["90 °","90"],["105 °","105"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
-            { name: "turnleftamountvalue_nikolaus", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["36.9 °","36.86989"],["53.1 °","53.13010"],["73.7 °","73.73979"],["90 °","90"],["106.3 °","106.26020"],["126.9 °","126.86989"],["143.1 °","143.13010"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_nikolaus", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["36.9 °","36.86989"],["53.1 °","53.13010"],["73.7 °","73.73979"],["90 °","90"],["106.3 °","106.26020"],["126.9 °","126.86989"],["143.1 °","143.13010"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_penta", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["18 °","18"],["36 °","36"],["54 °","54"],["72 °","72"],["90 °","90"],["108 °","108"],["126 °","126"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
-            { name: "turnleftamountvalue_penta", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["18 °","18"],["36 °","36"],["54 °","54"],["72 °","72"],["90 °","90"],["108 °","108"],["126 °","126"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_pentasimple", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["18 °","18"],["72 °","72"],["90 °","90"],["108 °","108"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
-            { name: "turnleftamountvalue_pentasimple", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["18 °","18"],["72 °","72"],["90 °","90"],["108 °","108"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
-            { name: "turnleftamountvalue_Ntimes30", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["150 °","150"],["180 °","180"]]}]}},
-            { name: "turnrightamountvalue_Ntimes30", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
-              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["150 °","150"],["180 °","180"]]}]}},
-            { name: "turneitheramount", blocklyJson: {"args0": [
-               {"type": "input_value", "name": "PARAM_0"},
-               {"type": "field_dropdown", "name": "PARAM_1", "options":
-                 [[localLanguageStrings[window.stringsLanguage]["left"],"l"],[localLanguageStrings[window.stringsLanguage]["right"],"r"]]}]}},
-            { name: "turneitheramountvalue", params: [null], blocklyJson: {"args0": [
-               {"type": "field_angle", "name": "PARAM_0", "angle": 90},
-               {"type": "field_dropdown", "name": "PARAM_1", "options":
-                 [[localLanguageStrings[window.stringsLanguage]["left"],"l"],[localLanguageStrings[window.stringsLanguage]["right"],"r"]]}]}},
-            { name: "row", yieldsValue: true },
-            { name: "col", yieldsValue: true },
-            { name: "penup" },
-            { name: "pendown" },
-            { name: "peneither", blocklyJson: {"args0": [
-               {"type": "field_dropdown", "name": "PARAM_0", "options":
-                 [[localLanguageStrings[window.stringsLanguage]["penup"],"up"],[localLanguageStrings[window.stringsLanguage]["pendown"],"down"]]}]}},
-            { name: "colour2", params: [null]},
-            { name: "colourvalue", params: [null], blocklyJson: {"args0": [{"type": "field_colour", "name": "PARAM_0", "colour": "#ff0000"}]}}
+         turtle: [{
+               name: "move"
+            },
+            {
+               name: "moveamount",
+               params: [null]
+            },
+            {
+               name: "movebackamount",
+               params: [null]
+            },
+            {
+               name: "moveamountvalue",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_number",
+                     "name": "PARAM_0",
+                     "value": defaultMoveAmount
+                  }]
+               }
+            },
+            {
+               name: "moveamountvalue_noshadow",
+               params: [null],
+               blocklyXml: "<block type='moveamountvalue_noshadow'>" +
+                  "  <value name='PARAM_0'>" +
+                  "    <shadow type='math_number'>" +
+                  "      <field name='NUM'>0</field>" +
+                  "    </shadow>" +
+                  "  </value>" +
+                  "</block>"
+            },
+            {
+               name: "movebackamountvalue",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_number",
+                     "name": "PARAM_0",
+                     "value": defaultMoveAmount
+                  }]
+               }
+            },
+            {
+               name: "movebackamountvalue_noshadow",
+               params: [null],
+               blocklyXml: "<block type='movebackamountvalue_noshadow'>" +
+                  "  <value name='PARAM_0'>" +
+                  "    <shadow type='math_number'>" +
+                  "      <field name='NUM'>0</field>" +
+                  "    </shadow>" +
+                  "  </value>" +
+                  "</block>"
+            },
+            {
+               name: "turnleft"
+            },
+            {
+               name: "turnright"
+            },
+            {
+               name: "turn",
+               params: [null]
+            },
+            {
+               name: "turnleftamount",
+               params: [null]
+            },
+            {
+               name: "turnrightamount",
+               params: [null]
+            },
+            {
+               name: "turnleftamountvalue",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_angle",
+                     "name": "PARAM_0",
+                     "angle": 90
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_angle",
+                     "name": "PARAM_0",
+                     "angle": 90
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_noround",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_number",
+                     "name": "PARAM_0",
+                     "value": 90
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_noround",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_number",
+                     "name": "PARAM_0",
+                     "value": 90
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_windrad",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["90 °", "90"],
+                        ["120 °", "120"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_windrad",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["90 °", "90"],
+                        ["120 °", "120"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_options",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["36 °", "36"],
+                        ["45 °", "45"],
+                        ["60 °", "60"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["120 °", "120"],
+                        ["135 °", "135"],
+                        ["144 °", "144"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_options",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["36 °", "36"],
+                        ["45 °", "45"],
+                        ["60 °", "60"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["120 °", "120"],
+                        ["135 °", "135"],
+                        ["144 °", "144"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_moreoptions",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["15 °", "15"],
+                        ["18 °", "18"],
+                        ["30 °", "30"],
+                        ["36 °", "36"],
+                        ["45 °", "45"],
+                        ["60 °", "60"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["120 °", "120"],
+                        ["135 °", "135"],
+                        ["144 °", "144"],
+                        ["150 °", "150"],
+                        ["162 °", "162"],
+                        ["165 °", "165"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_moreoptions",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["15 °", "15"],
+                        ["18 °", "18"],
+                        ["30 °", "30"],
+                        ["36 °", "36"],
+                        ["45 °", "45"],
+                        ["60 °", "60"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["120 °", "120"],
+                        ["135 °", "135"],
+                        ["144 °", "144"],
+                        ["150 °", "150"],
+                        ["162 °", "162"],
+                        ["165 °", "165"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_europe",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["15 °", "15"],
+                        ["30 °", "30"],
+                        ["75 °", "75"],
+                        ["90 °", "90"],
+                        ["105 °", "105"],
+                        ["144 °", "144"],
+                        ["162 °", "162"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_europe",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["15 °", "15"],
+                        ["30 °", "30"],
+                        ["75 °", "75"],
+                        ["90 °", "90"],
+                        ["105 °", "105"],
+                        ["144 °", "144"],
+                        ["162 °", "162"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_nikolaus",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["36.9 °", "36.86989"],
+                        ["53.1 °", "53.13010"],
+                        ["73.7 °", "73.73979"],
+                        ["90 °", "90"],
+                        ["106.3 °", "106.26020"],
+                        ["126.9 °", "126.86989"],
+                        ["143.1 °", "143.13010"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_nikolaus",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["36.9 °", "36.86989"],
+                        ["53.1 °", "53.13010"],
+                        ["73.7 °", "73.73979"],
+                        ["90 °", "90"],
+                        ["106.3 °", "106.26020"],
+                        ["126.9 °", "126.86989"],
+                        ["143.1 °", "143.13010"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_penta",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["18 °", "18"],
+                        ["36 °", "36"],
+                        ["54 °", "54"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["126 °", "126"],
+                        ["144 °", "144"],
+                        ["162 °", "162"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_penta",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["18 °", "18"],
+                        ["36 °", "36"],
+                        ["54 °", "54"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["126 °", "126"],
+                        ["144 °", "144"],
+                        ["162 °", "162"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_pentasimple",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["18 °", "18"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["144 °", "144"],
+                        ["162 °", "162"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_pentasimple",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["18 °", "18"],
+                        ["72 °", "72"],
+                        ["90 °", "90"],
+                        ["108 °", "108"],
+                        ["144 °", "144"],
+                        ["162 °", "162"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnleftamountvalue_Ntimes30",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["30 °", "30"],
+                        ["60 °", "60"],
+                        ["90 °", "90"],
+                        ["120 °", "120"],
+                        ["150 °", "150"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turnrightamountvalue_Ntimes30",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        ["30 °", "30"],
+                        ["60 °", "60"],
+                        ["90 °", "90"],
+                        ["120 °", "120"],
+                        ["150 °", "150"],
+                        ["180 °", "180"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "turneitheramount",
+               blocklyJson: {
+                  "args0": [{
+                        "type": "input_value",
+                        "name": "PARAM_0"
+                     },
+                     {
+                        "type": "field_dropdown",
+                        "name": "PARAM_1",
+                        "options": [
+                           [localLanguageStrings[window.stringsLanguage]["left"], "l"],
+                           [localLanguageStrings[window.stringsLanguage]["right"], "r"]
+                        ]
+                     }
+                  ]
+               }
+            },
+            {
+               name: "turneitheramountvalue",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                        "type": "field_angle",
+                        "name": "PARAM_0",
+                        "angle": 90
+                     },
+                     {
+                        "type": "field_dropdown",
+                        "name": "PARAM_1",
+                        "options": [
+                           [localLanguageStrings[window.stringsLanguage]["left"], "l"],
+                           [localLanguageStrings[window.stringsLanguage]["right"], "r"]
+                        ]
+                     }
+                  ]
+               }
+            },
+            {
+               name: "row",
+               yieldsValue: true
+            },
+            {
+               name: "col",
+               yieldsValue: true
+            },
+            {
+               name: "penup"
+            },
+            {
+               name: "pendown"
+            },
+            {
+               name: "peneither",
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_dropdown",
+                     "name": "PARAM_0",
+                     "options": [
+                        [localLanguageStrings[window.stringsLanguage]["penup"], "up"],
+                        [localLanguageStrings[window.stringsLanguage]["pendown"], "down"]
+                     ]
+                  }]
+               }
+            },
+            {
+               name: "colour2",
+               params: [null]
+            },
+            {
+               name: "colourvalue",
+               params: [null],
+               blocklyJson: {
+                  "args0": [{
+                     "type": "field_colour",
+                     "name": "PARAM_0",
+                     "colour": "#ff0000"
+                  }]
+               }
+            }
          ],
-         turtleInput: [
-            { name: "inputvalue", yieldsValue: true }
-          ]
+         turtleInput: [{
+            name: "inputvalue",
+            yieldsValue: true
+         }]
       },
       debug: {
-         debug: [
-            { name: "alert", params: [null], handler: context.debug_alert,
-              blocklyXml: "<block type='alert'><value name='PARAM_0'><block type='text'><field name='TEXT'></field></block></value></block>"},
-            { name: "log",   params: [null], handler: context.debug_log,
-              blocklyXml: "<block type='log'><value name='PARAM_0'><block type='text'><field name='TEXT'></field></block></value></block>"}
+         debug: [{
+               name: "alert",
+               params: [null],
+               handler: context.debug_alert,
+               blocklyXml: "<block type='alert'><value name='PARAM_0'><block type='text'><field name='TEXT'></field></block></value></block>"
+            },
+            {
+               name: "log",
+               params: [null],
+               handler: context.debug_log,
+               blocklyXml: "<block type='log'><value name='PARAM_0'><block type='text'><field name='TEXT'></field></block></value></block>"
+            }
          ]
       }
    };
@@ -764,9 +1237,11 @@ var getContext = function(display, infos) {
    return context;
 }
 
-if(window.quickAlgoLibraries) {
+if (window.quickAlgoLibraries) {
    quickAlgoLibraries.register('turtle', getContext);
 } else {
-   if(!window.quickAlgoLibrariesList) { window.quickAlgoLibrariesList = []; }
+   if (!window.quickAlgoLibrariesList) {
+      window.quickAlgoLibrariesList = [];
+   }
    window.quickAlgoLibrariesList.push(['turtle', getContext]);
 }
