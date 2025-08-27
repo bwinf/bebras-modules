@@ -199,6 +199,7 @@ var getContext = function(display, infos, curLevel) {
                failureUnfilteredObject: "Votre robot a ramassé un objet invalide",
                failureTooManyMoves: "Votre robot a effectué trop de déplacements.",
                failureWriteHere: "Votre robot ne peut pas écrire ici !",
+               failureNothingToWrite: "Der Roboter hat nichts, was er schreiben soll.", //TODO
                failureReadHere: "Il n'y a pas de nombre écrit ici !",
                successNumbersWritten: "Bravo, votre robot a écrit les bons nombres !",
                failureNumbersWritten: "Votre robot n'a pas écrit les bons nombres !",
@@ -352,6 +353,7 @@ var getContext = function(display, infos, curLevel) {
                failureUnfilteredObject: "Your robot picked an invalid object",
                failureTooManyMoves: "Your robot made too many moves.",
                failureWriteHere: "Your robot can't write here!",
+               failureNothingToWrite: "Der Roboter hat nichts, was er schreiben soll.", //TODO
                failureReadHere: "There is no number written here!",
                successNumbersWritten: "Congratulations, your robot wrote all the correct numbers!",
                failureNumbersWritten: "Your robot didn't write the correct numbers!",
@@ -495,6 +497,7 @@ var getContext = function(display, infos, curLevel) {
                failureUnfilteredObject: "Su robot ha recogido un objeto inválido",
                failureTooManyMoves: "Su robot ha realizado demasiados desplazamientos.",
                failureWriteHere: "¡Su robot no puede escribir aquí!",
+               failureNothingToWrite: "Der Roboter hat nichts, was er schreiben soll.", //TODO
                failureReadHere: "¡No hay un número aquí!",
                successNumbersWritten: "Bravo, su robot ha escrito los números correctos!",
                failureNumbersWritten: "Su robot no ha escrito los números correctos!",
@@ -651,6 +654,7 @@ var getContext = function(display, infos, curLevel) {
                failureUnfilteredObject: "Der Roboter hat ein nicht erlaubtes Objekt aufgehoben!",
                failureTooManyMoves: "Der Roboter hat zu viele Züge gemacht.",
                failureWriteHere: "Der Roboter kann an dieser Stelle nicht schreiben!",
+               failureNothingToWrite: "Der Roboter hat nichts, was er schreiben soll.",
                failureReadHere: "An dieser Stelle steht keine Zahl!",
                successNumbersWritten: "Bravo! Der Roboter hat die richtigen Zahlen geschrieben.",
                failureNumbersWritten: "Der Roboter hat nicht die richtigen Zahlen geschrieben!",
@@ -789,6 +793,7 @@ var getContext = function(display, infos, curLevel) {
                failureUnfilteredObject: "Votre robot a ramassé un objet invalide",
                failureTooManyMoves: "Votre robot a effectué trop de déplacements.",
                failureWriteHere: "Votre robot ne peut pas écrire ici !",
+               failureNothingToWrite: "Der Roboter hat nichts, was er schreiben soll.", //TODO
                failureReadHere: "Il n'y a pas de nombre écrit ici !",
                successNumbersWritten: "Bravo, votre robot a écrit les bons nombres !",
                failureNumbersWritten: "Votre robot n'a pas écrit les bons nombres !",
@@ -1745,7 +1750,7 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                emptyBag: "Der Roboter trägt keine Bücher!",
                tooManyObjects: "Der Roboter kann nur ein Buch tragen.",
-               successContainersFilled: "Bravo, alle Kisten sind gepackt. Die Pakete können ausgeliefert werden!",
+               successContainersFilled: "Bravo, alle Kisten sind gepackt.",
                failureContainersFilled: "Nicht alle Bücher sind verpackt.",
                failureContainersFilledLess: "Mindestens ein Buch muss noch in einer Kiste verpackt werden.",
                failureContainersFilledBag: "Der Roboter muss die Bücher in die Kisten packen.",
@@ -5308,13 +5313,17 @@ var getContext = function(display, infos, curLevel) {
 
    context.writeNumber = function(row, col, value) {
       var numbers = context.getItemsOn(row, col, function(obj) { return obj.isWritable === true; });
-      
       if(numbers.length == 0) {
          throw(strings.messages.failureWriteHere);
       }
       
       var number = numbers[0];
       number.value = value;
+      // console.log(number.value instanceof number)
+      console.log(typeof number.value)
+      if(typeof number.value !== "number") {
+         throw(strings.messages.failureNothingToWrite)
+      }
       if(context.display) {
          redisplayItem(number);
       }

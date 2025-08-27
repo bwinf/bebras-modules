@@ -1791,7 +1791,7 @@ window.displayHelper = {
          }
       } else {
          var strPoint = this.strings.point;
-         if (this.submittedScore > 1) {
+         if (this.submittedScore > 0) {
             strPoint = this.strings.points;
          }
          message = this.strings.scoreObtained + ' <span id="answerScore">' + this.submittedScore + " " + strPoint + " " + this.strings.outOf + " " + maxScoreLevel + ".</span><br/>";
