@@ -1019,11 +1019,11 @@ function LogicController(maxInstructions, subTask) {
       simpleHtml += '<br />' + this._strings.autorizedKeyWords + displaySimpleList(pflAllowed);
     }
 
-    if(pflInfos.allowed.indexOf('var_assign') > -1) {
-      fullHtml += '<p>' + window.languageStrings.variablesAllowed + '</p>';
-    } else {
-      fullHtml += '<p>' + window.languageStrings.variablesForbidden + '</p>';
-    }
+    // if(pflInfos.allowed.indexOf('var_assign') > -1) {
+    //   fullHtml += '<p>' + window.languageStrings.variablesAllowed + '</p>';
+    // } else {
+    //   fullHtml += '<p>' + window.languageStrings.variablesForbidden + '</p>';
+    // }
 
     fullHtml += '<p>' + window.languageStrings.readDocumentation + '</p>';
 

@@ -110,7 +110,7 @@ var pythonForbiddenBlocks = {
 
 function pythonForbiddenLists(includeBlocks) {
    // Check for forbidden keywords in code
-   var forbidden = ['for', 'while', 'if', 'else', 'elif', 'not', 'and', 'or', 'list', 'set', 'list_brackets', 'dict_brackets', '__getitem__', '__setitem__', 'var_assign', 'def', 'lambda', 'break', 'continue', 'setattr', 'map', 'split'];
+   var forbidden = ['for', 'while', 'if', 'else', 'elif', 'and', 'or', 'list', 'set', 'dict_brackets', '__getitem__', '__setitem__', 'def', 'lambda', 'break', 'continue', 'setattr', 'map', 'split'];
    var allowed = []
 
    if(!includeBlocks) {
@@ -232,6 +232,9 @@ function pythonForbidden(code, includeBlocks) {
 
    // Scan for each forbidden keyword
    for(var i=0; i<forbidden.length; i++) {
+      // if(forbidden[i] == 'not'){
+      //    continue;
+      // }
       if(forbidden[i] == 'list_brackets') {
          // Special pattern for lists
          var re = /[\[\]]/;
@@ -251,7 +254,12 @@ function pythonForbidden(code, includeBlocks) {
          var re = /[^=!<>]=[^=!<>]/;
          if(re.exec(code)) {
             // Forbidden keyword found
-            return '= (assignation de variable)'; // TODO :: i18n ?
+            if (window.json.language == "de"){
+               return '= (Variablen Zuweisung)'
+            } else{
+               return '= (assignation de variable)'; // TODO :: i18n ?
+            }
+
          }
       } else if(forbidden[i] == 'def_args') {
          var re = /def\s*\w+\([^\s]+\)/;
