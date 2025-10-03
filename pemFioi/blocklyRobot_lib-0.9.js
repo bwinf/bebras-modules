@@ -214,7 +214,7 @@ var getContext = function(display, infos, curLevel) {
             platformInFront: "vor Plattform",
             platformInFrontAndBelow: "vor und über Plattform",
             platformAbove: "unter Plattform",
-            gridEdgeInFront: "vor Rand des Gitters",
+            gridEdgeInFront: "vor Gitterrand",
             gridEdgeEast: "bord de la grille à droite",
             gridEdgeWest: "bord de la grille à gauche",
             gridEdgeAbove: "bord de la grille au dessus",
