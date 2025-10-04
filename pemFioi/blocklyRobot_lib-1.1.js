@@ -2993,6 +2993,7 @@ var getContext = function(display, infos, curLevel) {
                })[0].containerSize;
             }, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -15, offsetY: -14},
             obstacle: { num: 7, img: imgPath+"brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
+            reef: { num: 9, img: imgPath+"reef.png", side: 60, isObstacle: true, zOrder: 0 },
             net: { num: 8, img: imgPath+"net.png", side: 60, zOrder: 2 },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
