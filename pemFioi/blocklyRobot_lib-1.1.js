@@ -3388,12 +3388,12 @@ var getContext = function(display, infos, curLevel) {
                });
             }
             return blocks;
-         })(["Gelb", "Orange", "Tangerine", "weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "schwarz"], 
+         })(["Gelb", "Orange", "Tangerine", "Weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "Schwarz"], 
             ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"], 
             ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"], 
             ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"],
             {fr: ["rouge", "bleu", "jaune", "blanc", "vert", "orange", "rose", "violet", "marron", "gris", "noir"],
-             de: ["Gelb", "Orange", "Tangerine", "weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "schwarz"]}),
+             de: ["Gelb", "Orange", "Tangerine", "Weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "Schwarz"]}),
          backgroundColor: "#ece4ce",
          ignoreBag: true,
          blockingFilter: false,
