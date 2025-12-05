@@ -36,6 +36,7 @@
 
 question {
   display: block;
+  padding: 24px 0px;
 }
 question > * {
   padding: 0 60px;
@@ -93,7 +94,8 @@ answer .alert-message {
   margin-right: 0;
 }
 
-question::after {
+/* WHY!? */
+/*question::after {
   content: '';
   position: relative;
   display: block;
@@ -103,7 +105,7 @@ question::after {
   background-color: #4a90e2;
   margin: 24px 0px;
   clear: both;
-}
+}*/
 
 statement {
   color: #4a90e2;
@@ -216,15 +218,12 @@ question.horizontal .answers {
   display: flex;
   justify-content: space-between;
   margin: 0 -20px;
+  gap: 10px;
 }
 question.horizontal answer {
   border-top: none;
   flex: 1 0 0;
   padding: 0 20px;
-  border-left: 1px solid;
-}
-question.horizontal answer:first-child {
-  border-left: none;
 }
 question.horizontal answer .answer-block {
   display: flex;
@@ -245,6 +244,25 @@ question.horizontal answer .answer-code {
   align-self: stretch;
   margin: 0 -1px -1px;
   padding: 2px 10px;
+}
+
+
+@media (max-width: 768px) {
+  /* Container mit den Antworten auf Spalte stellen */
+  question.horizontal .answers {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+
+    /* Jedes <answer> untereinander */
+    question.horizontal .answers>answer {
+      display: block !important;
+      width: 100% !important;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+
 }
 
 /*
@@ -418,7 +436,7 @@ solution {
   border-bottom: 1px solid #e1e1e1;
   margin-top: 2em;
   font-size: 26px;
-  padding: 14px 0;
+  padding: 14px 30px;
   color: #4a90e2;
   display: flex;
 }
