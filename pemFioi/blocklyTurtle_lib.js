@@ -130,7 +130,9 @@ var getContext = function (display, infos) {
             turnleftamountvalue: "tourner de %1 vers la gauche ↺",
             turnrightamountvalue: "tourner de %1 vers la droite ↻",
             turnleftamountvalue_noround: "drehe um %1 Grad nach links ↺",
+            turnleftamountvalue_noround_noshadow: "drehe um %1 Grad nach links ↺",
             turnrightamountvalue_noround: "drehe um %1 Grad nach rechts ↻",
+            turnrightamountvalue_noround_noshadow: "drehe um %1 Grad nach rechts ↻",
             turnleftamountvalue_options: "drehe um %1 nach links ↺",
             turnrightamountvalue_options: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_moreoptions: "drehe um %1 nach links ↺",
@@ -166,7 +168,9 @@ var getContext = function (display, infos) {
             turnleftamountvalue: "gauche",
             turnrightamountvalue: "droite",
             turnleftamountvalue_noround: "dreheLinksGrad",
+            turnleftamountvalue_noround_noshadow: "dreheLinksGrad",
             turnrightamountvalue_noround: "dreheRechtsGrad",
+            turnrightamountvalue_noround_noshadow: "dreheRechtsGrad",
             turnleftamountvalue_options: "dreheLinksGrad",
             turnrightamountvalue_options: "dreheRechtsGrad",
             turnleftamountvalue_moreoptions: "dreheLinksGrad",
@@ -235,7 +239,9 @@ var getContext = function (display, infos) {
             turnleftamountvalue: "drehe um %1 nach links ↺",
             turnrightamountvalue: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_noround: "drehe um %1 Grad nach links ↺",
+            turnleftamountvalue_noround_noshadow: "drehe um %1 Grad nach links ↺",
             turnrightamountvalue_noround: "drehe um %1 Grad nach rechts ↻",
+            turnrightamountvalue_noround_noshadow: "drehe um %1 Grad nach rechts ↻",
             turnleftamountvalue_options: "drehe um %1 nach links ↺",
             turnrightamountvalue_options: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_moreoptions: "drehe um %1 nach links ↺",
@@ -281,7 +287,9 @@ var getContext = function (display, infos) {
             turnleftamountvalue: "dreheLinksGrad",
             turnrightamountvalue: "dreheRechtsGrad",
             turnleftamountvalue_noround: "dreheLinksGrad",
+            turnleftamountvalue_noround_noshadow: "dreheLinksGrad",
             turnrightamountvalue_noround: "dreheRechtsGrad",
+            turnrightamountvalue_noround_noshadow: "dreheRechtsGrad",
             turnleftamountvalue_options: "dreheLinksGrad",
             turnrightamountvalue_options: "dreheRechtsGrad",
             turnleftamountvalue_moreoptions: "dreheLinksGrad",
@@ -343,7 +351,9 @@ var getContext = function (display, infos) {
             turnleftamountvalue: "turn to the left by %1 ↺",
             turnrightamountvalue: "turn to the right by %1 ↻",
             turnleftamountvalue_noround: "drehe um %1 Grad nach links ↺",
+            turnleftamountvalue_noround_noshadow: "drehe um %1 Grad nach links ↺",
             turnrightamountvalue_noround: "drehe um %1 Grad nach rechts ↻",
+            turnrightamountvalue_noround_noshadow: "drehe um %1 Grad nach rechts ↻",
             turnleftamountvalue_options: "drehe um %1 nach links ↺",
             turnrightamountvalue_options: "drehe um %1 nach rechts ↻",
             turnleftamountvalue_moreoptions: "drehe um %1 nach links ↺",
@@ -379,7 +389,9 @@ var getContext = function (display, infos) {
             turnleftamountvalue: "left",
             turnrightamountvalue: "right",
             turnleftamountvalue_noround: "dreheLinksGrad",
+            turnleftamountvalue_noround_noshadow: "dreheLinksGrad",
             turnrightamountvalue_noround: "dreheRechtsGrad",
+            turnrightamountvalue_noround_noshadow: "dreheRechtsGrad",
             turnleftamountvalue_options: "dreheLinksGrad",
             turnrightamountvalue_options: "dreheRechtsGrad",
             turnleftamountvalue_moreoptions: "dreheLinksGrad",
@@ -662,7 +674,9 @@ var getContext = function (display, infos) {
    context.turtle.turnrightamountvalue = context.turtle.turnrightamount;
    context.turtle.turneitheramountvalue = context.turtle.turneitheramount;
    context.turtle.turnleftamountvalue_noround = context.turtle.turnleftamount;
+   context.turtle.turnleftamountvalue_noround_noshadow = context.turtle.turnleftamount;
    context.turtle.turnrightamountvalue_noround = context.turtle.turnrightamount;
+   context.turtle.turnrightamountvalue_noround_noshadow = context.turtle.turnrightamount;
    context.turtle.turnleftamountvalue_options = context.turtle.turnleftamount;
    context.turtle.turnrightamountvalue_options = context.turtle.turnrightamount;
    context.turtle.turnleftamountvalue_moreoptions = context.turtle.turnleftamount;
@@ -806,6 +820,17 @@ var getContext = function (display, infos) {
                }
             },
             {
+               name: "turnleftamountvalue_noround_noshadow",
+               params: [null],
+               blocklyXml: "<block type='turnleftamountvalue_noround_noshadow'>" +
+                  "  <value name='PARAM_0'>" +
+                  "    <shadow type='math_number'>" +
+                  "      <field name='NUM'>0</field>" +
+                  "    </shadow>" +
+                  "  </value>" +
+                  "</block>"
+            },
+            {
                name: "turnrightamountvalue_noround",
                blocklyJson: {
                   "args0": [{
@@ -814,6 +839,17 @@ var getContext = function (display, infos) {
                      "value": 90
                   }]
                }
+            },
+                        {
+               name: "turnrightamountvalue_noround_noshadow",
+               params: [null],
+               blocklyXml: "<block type='turnrightamountvalue_noround_noshadow'>" +
+                  "  <value name='PARAM_0'>" +
+                  "    <shadow type='math_number'>" +
+                  "      <field name='NUM'>0</field>" +
+                  "    </shadow>" +
+                  "  </value>" +
+                  "</block>"
             },
             {
                name: "turnleftamountvalue_windrad",
