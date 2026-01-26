@@ -3508,12 +3508,12 @@ var getContext = function(display, infos, curLevel) {
                return context.getItemsOn(obj.row, obj.col, function(item) {
                   return item.isWithdrawable === true;
                }).length;
-            }, side: 60, isWritable: true, fontColor: "#01a665", fontBold: true, zOrder: 1, offsetX: 20, offsetY: 17},
+            }, side: 60, isWritable: true, fontColor: "#0B3D2E", fontBold: true, zOrder: 1, offsetX: 20, offsetY: 17},
             count_needs: { num: 7, value: function(obj) {
                return context.getItemsOn(obj.row, obj.col, function(item) {
                   return item.isContainer === true;
                })[0].containerSize;
-            }, side: 60, isWritable: true, fontColor: "#4a90e2", fontBold: true, zOrder: 1, offsetX: -20, offsetY: -17},
+            }, side: 60, isWritable: true, fontColor: "#4B0082", fontBold: true, zOrder: 1, offsetX: -20, offsetY: -17},
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
