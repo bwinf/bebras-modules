@@ -365,11 +365,7 @@ var conceptViewer = {
       var language = conceptViewer.selectedLanguage;
       var urlSplit = conceptUrl.split('#');
       if(urlSplit[1]) {
-        if( window.stringsLanguage != 'de'){
-           urlSplit[urlSplit.length-1] = language+'-'+urlSplit[urlSplit.length-1];
-        }
-      } else {
-        urlSplit[1] = language;
+        urlSplit[urlSplit.length-1] = language+'-'+urlSplit[urlSplit.length-1];
       }
       conceptUrl = urlSplit.join('#');
 

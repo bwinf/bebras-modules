@@ -107,7 +107,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.CONTROLS_IF_TOOLTIP_3 = "Führt die erste Anweisung aus, falls die erste Bedingung True ist.  Führt ansonsten die zweite Anweisung aus, falls die zweite Bedingung True ist.";
 /** @export */ Blockly.Msg.CONTROLS_IF_TOOLTIP_4 = "Führe die erste Anweisung aus, falls die erste Bedingung True ist.  Führt ansonsten die zweite Anweisung aus, falls die zweite Bedingung True ist.  Führt die dritte Anweisung aus, falls keine der beiden Bedingungen True ist";
 /** @export */ Blockly.Msg.CONTROLS_REPEAT_INPUT_DO = "mache";
-/** @export */ Blockly.Msg.CONTROLS_REPEAT_TITLE = "wiederhole %1 mal:";
+/** @export */ Blockly.Msg.CONTROLS_REPEAT_TITLE = "wiederhole %1 Mal:";
 /** @export */ Blockly.Msg.CONTROLS_REPEAT_TOOLTIP = "Eine Anweisung mehrfach ausführen.";
 /** @export */ Blockly.Msg.CONTROLS_WHILEUNTIL_OPERATOR_UNTIL = "wiederhole bis";
 /** @export */ Blockly.Msg.CONTROLS_WHILEUNTIL_OPERATOR_WHILE = "wiederhole solange";

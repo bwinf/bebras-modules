@@ -110,7 +110,7 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
          if(typeof msg != "string"){
             msg = msg[0]
             if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_repeat"){
-               msg = "Wiederhole _ mal"
+               msg = "Wiederhole _ Mal"
             }
             if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_if"){
                msg = "Fallunterscheidung (falls)"
