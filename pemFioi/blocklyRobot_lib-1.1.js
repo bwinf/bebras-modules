@@ -577,8 +577,8 @@ var getContext = function(display, infos, curLevel) {
                
             },
             code: {
-               row: "reiheRoboter",
-               col: "zeileRoboter",
+               row: "zeileRoboter",
+               col: "spalteRoboter",
                wait: "warte",
                north: "oben",
                south: "unten",
