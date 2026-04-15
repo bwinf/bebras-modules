@@ -115,6 +115,9 @@ function getBlocklyBlockFunctions(maxBlocks, nbTestCases) {
             if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "controls_if"){
                msg = "Fallunterscheidung (falls)"
             }
+            if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "math_arithmetic"){
+               msg = "Rechenbaustein ( 1 + 1 )"
+            }
             if(this.mainContext.infos.blocklyColourTheme == "bwinf" && msg == "logic_compare"){
                msg = "Vergleich"
             }
