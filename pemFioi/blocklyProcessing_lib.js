@@ -725,6 +725,7 @@ var getContext = function(display, infos) {
          },
          startingBlockName: "Programme",
          hideInitialDrawing: "Cacher le motif de départ",
+         exportAsSvg: "Exporter en SVG",
          messages: {
             redCoveredGreenNotCovered: "Vous avez bien recouvert tout le rouge sans toucher au vert.",
             redNotCovered: "Recouvrez bien toute la partie rouge.",
@@ -1141,6 +1142,7 @@ var getContext = function(display, infos) {
          },
          startingBlockName: "Program",
          hideInitialDrawing: "Hide initial drawing",
+         exportAsSvg: "Export to SVG",
          messages: {
              // google translate :)
             redCoveredGreenNotCovered: "You covered all the red without touching the green.",
@@ -1339,6 +1341,14 @@ var getContext = function(display, infos) {
          });
       }
 
+      if (infos.buttonExportAsSvg) {
+        var exportButton = $('<button id="exportAsSvg" style="margin-top: 10px">' + strings.exportAsSvg + '</button>');
+        $('#grid').append(exportButton);
+        $('#exportAsSvg').click(function(e) {
+          context.exportAsSvg();
+        });
+      }
+
       context.processing.previewInstance = new Processing(canvas.get(0), function(processing) {
          processing.setup = function() {
             processing.size(
@@ -1412,8 +1422,85 @@ var getContext = function(display, infos) {
       }
    };
 
+   context.exportAsSvg = function () {
+     if (!window.C2S) {
+       alert("The library canvas2svg is not loaded");
+       return;
+     }
 
+     // Canvas2SVG library is loaded, we create the SVG at the same time
+     var canvasContext = new window.C2S(
+       context.processing.getCanvasSize(constants.SCALED).width,
+       context.processing.getCanvasSize(constants.SCALED).height
+     );
 
+     var canvas = document.createElement('canvas');
+     canvas.getContext = function () {
+       return canvasContext;
+     };
+
+     // Override Canvas2SVG translate method in the processing context, because
+     // it creates a bug in which the stroke color of some shapes are overriden
+     // by other shapes, resulting in losing the colors in the final SVG
+     // because of Processing adding an unnecessary translation (x,y) for rectangles
+     canvasContext.translate = function (x, y) {
+     };
+
+     var processingInstance = new Processing(canvas, function(processing) {
+       processing.setup = function() {
+         processing.size(
+           context.processing.getCanvasSize(constants.SCALED).width,
+           context.processing.getCanvasSize(constants.SCALED).height,
+           infos['processing3D'] ? processing.P3D : processing.P2D
+         );
+         processing.background(constants.BACKGROUND);
+         processing.noLoop();
+       };
+       processing.draw = function() {
+         initGraphics(processing);
+         if (!infos['processing3D']) {
+           processing.pushStyle();
+         }
+         drawOps(processing);
+         if (!infos['processing3D']) {
+           processing.popStyle();
+         }
+       };
+     });
+
+     var svg = canvasContext.getSvg();
+
+      // Clean SVG and remove everything that is not inside a <g transform="scale(1,1)">: it's only backgrounds added by processing lib
+      // that are tricky to remove
+     function findRightSvgBranch(parentElement) {
+        for (var a = 0; a < parentElement.children.length; a++) {
+           var child = parentElement.children[a];
+           if ('scale(1,1)' === child.getAttribute('transform')) {
+              return child;
+           }
+           var childBranch = findRightSvgBranch(child);
+           if (childBranch) {
+              return childBranch;
+           }
+        }
+
+        return null;
+     }
+
+     var svgRealContent = findRightSvgBranch(svg);
+     svg.innerHTML = "";
+     svg.appendChild(svgRealContent);
+
+     var svgData = svg.outerHTML;
+     var svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"});
+     var svgUrl = URL.createObjectURL(svgBlob);
+     var downloadLink = document.createElement("a");
+     downloadLink.href = svgUrl;
+     downloadLink.download = "processing.svg";
+     document.body.appendChild(downloadLink);
+     downloadLink.click();
+     document.body.removeChild(downloadLink);
+   };
 
 
    function drawOnBuffer(mode) {
@@ -1449,9 +1536,7 @@ var getContext = function(display, infos) {
          if (context.display) {
             context.processing.previewInstance.redraw();
          }
-         //callback();
-         // why drawOnBuffer was here? ⇒ for the return value
-         context.waitDelay(callback, drawOnBuffer());
+         context.waitDelay(callback);
       }
    };
 
@@ -1460,7 +1545,6 @@ var getContext = function(display, infos) {
       buffer.loadPixels();
       context.waitDelay(callback, buffer.pixels().toArray());
    };
-
 
    context.customBlocks = {
       processing: {
@@ -2253,6 +2337,12 @@ var getContext = function(display, infos) {
       }
    };
 
+   if(context.infos.includeBlocks.customBlocks) {
+      for(var lib in context.infos.includeBlocks.customBlocks) {
+         context.customBlocks.processing[lib] = context.customBlocks.processing[lib].concat(context.infos.includeBlocks.customBlocks[lib]);
+      }
+   }
+
    var typeData = {
       'Number': { bType: 'input_value', vType: 'math_number', fName: 'NUM', defVal: 0 },
       'String': { bType: 'input_value', vType: 'text', fName: 'TEXT', defVal: '' },
@@ -2325,13 +2415,13 @@ var getContext = function(display, infos) {
          })();
       }
    }
-
+/*
    context.customConstants = { processing: [] };
    for (var constName in strings.constant) {
       context.customConstants.processing.push({ name: constName, value: context.processing.internalInstance[constName] });
    }
 
-
+*/
    context.docGenerator = {
 
       variants_cache: null,
@@ -2439,6 +2529,8 @@ var processingEndConditions = {
             options.checkBackgroundCovered
          );
       }
+
+      context.success = true;
 
       throw(window.languageStrings.messages.taskCompleted);
    },

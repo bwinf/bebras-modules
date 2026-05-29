@@ -63,6 +63,17 @@ var algoreaInstructionsStrings = {
          return text
       },
       rollOver: "Le robot peut passer sur les dominos qu'il ne ramasse pas.",
+      biscuits: function(imgs, nbTypes) {
+         var text = "<p>Programmez le robot pour qu'il ramasse les biscuits ";
+         if (nbTypes > 1) {
+            text += "<br/>de ces types : ";
+         } else {
+            text += "de ce type : ";            
+         }
+         text += imgs + "</p>";
+         text += "<p>Le robot ne doit ramasser aucun des autres biscuits.</p>";
+         return text
+      },
       fishing: function(nbIslands) {
          var text = "Programmez le robot-bouée pour qu'il apporte ";
          if(nbIslands > 1){
@@ -141,14 +152,11 @@ var algoreaInstructionsStrings = {
          }else{
             text += "toutes les cases ";
          }
-         text += "avec un point noir";
-         if(nbWhite > 0){
-            text += " et uniquement ";
-            if(nbBlack > 1){
-               text += "celles-là";
-            }else{
-               text += "celle-là";
-            }
+         text += "avec un point noir, et uniquement ";
+         if(nbBlack > 1){
+            text += "celles-là";
+         }else{
+            text += "celle-là";
          }
          text += ".";
          return text
@@ -521,8 +529,11 @@ var algoreaInstructionsStrings = {
                   }
                   return "listes"
                case 'blockly_controls_whileUntil':
-                  if(lang != "python"){
+                  if(lang == "blockly"){
                      return "répéter tant que ou jusqu'à"
+                  }
+                  if(lang == "scratch"){
+                     return "répéter jusqu'à"
                   }
                   return "l'instruction while"
                case 'blockly_logic_operation':
@@ -577,16 +588,22 @@ var algoreaInstructionsStrings = {
                            return "déposer ... poissons"
                         }
                         return "deposer(nbPoissons)"
-                     case "paint":
-                        if(lang != "python"){
-                           return "peindre la case"
-                        }
-                        return "peindreCase()"
                      case "flowers":
                         if(lang != "python"){
                            return "semer une graine"
                         }
                         return "semerGraine()"
+                     case "marbles":
+                        if(lang != "python"){
+                           return "déposer la bille"
+                        }
+                        return "deposerBille()"
+                     case "paint":
+                        if(lang != "python"){
+                           return "peindre la case"
+                        }
+                        return "peindreCase()"
+                     
                   }
                case "forward":
                   if(lang != "python"){
@@ -724,6 +741,8 @@ var algoreaInstructionsStrings = {
                      return "écrire le nombre"
                   }
                   return "ecrireNombre()"
+               case "obstacleInFront":
+                  return "astéroïde devant"
                default: 
                   return "undefined"
             }

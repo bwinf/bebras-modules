@@ -28,6 +28,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
       trashInToolbox: false,
       languageStrings: window.LanguageStrings,
       startingBlock: true,
+      startingExampleIds: [],
       mediaUrl: (
          (window.location.protocol == 'file:' && modulesPath)
             ? modulesPath+'/img/blockly/'
@@ -130,6 +131,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
             wsConfig.readOnly = !!options.readOnly || this.readOnly;
             if(options.zoom) {
                wsConfig.zoom.controls = !!options.zoom.controls;
+               wsConfig.zoom.wheel = !!options.zoom.wheel;
                wsConfig.zoom.startScale = options.zoom.scale ? options.zoom.scale : 1;
             }
             if (this.scratchMode) {
@@ -142,6 +144,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
             if(this.trashInToolbox) {
                Blockly.Trashcan.prototype.MARGIN_SIDE_ = $('#blocklyDiv').width() - 110;
             }
+            if(options.disable !== undefined) { wsConfig.disable = options.disable; }
 
             // Clean events if the previous unload wasn't done properly
             Blockly.removeEvents();
@@ -195,6 +198,11 @@ function getBlocklyInterface(maxBlocks, subTask) {
             }
             this.savePrograms();
          }
+
+         var that = this;
+         Blockly.BlockSvg.terminateDragCallback = function () {
+             that.dragJustTerminated = true;
+         };
 
          if(window.quickAlgoInterface) { quickAlgoInterface.updateControlsDisplay(); }
       },
@@ -269,8 +277,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
          Blockly.svgResize(this.workspace);
 
          // Reload Blockly if the flyout is not properly rendered
-         // TODO :: find why it's not properly rendered in the first place
-         if(!this.scratchMode && this.workspace.flyout_ && this.reloadForFlyout < 5) {
+         if (this.workspace.flyout_ && this.reloadForFlyout < 5) {
             var flyoutWidthDiff = Math.abs(this.workspace.flyout_.svgGroup_.getBoundingClientRect().width -
                this.workspace.flyout_.svgBackground_.getBoundingClientRect().width);
             if(flyoutWidthDiff > 5) {
@@ -282,7 +289,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
 
       onResize: function() {
          // This function will replace itself with the debounced onResizeFct
-         this.onResize = debounce(this.onResizeFct.bind(this), 500, false);
+         this.onResize = debounce(this.onResizeFct.bind(this), 500, true);
          this.onResizeFct();
       },
 
@@ -382,20 +389,28 @@ function getBlocklyInterface(maxBlocks, subTask) {
                }
             }
             this.onChangeResetDisplay();
-            this.subTask.onChange();
-         } else {
+            if(this.subTask) {
+               this.subTask.onChange();
+            }
+            if (this.mainContext.onChange) {
+               this.mainContext.onChange();
+            }
+         } else if(event.element != 'category' && event.element != 'selected') {
             Blockly.svgResize(this.workspace);
          }
 
          // Refresh the toolbox for new procedures (same with variables
          // but it's already handled correctly there)
-         if(this.scratchMode && this.includeBlocks.groupByCategory && this.workspace.toolbox_) {
+         if(this.scratchMode && this.includeBlocks.groupByCategory && this.workspace.toolbox_
+           && (eventType === Blockly.Events.Change || this.dragJustTerminated)
+         ) {
+            this.dragJustTerminated = false;
             this.workspace.toolbox_.refreshSelection();
          }
       },
 
       setIncludeBlocks: function(includeBlocks) {
-         this.includeBlocks = includeBlocks;
+         this.includeBlocks  = includeBlocks;
       },
 
       getEmptyContent: function() {
@@ -412,9 +427,10 @@ function getBlocklyInterface(maxBlocks, subTask) {
       },
 
       getDefaultContent: function() {
-         if(this.options.startingExample) {
-            var xml = this.options.startingExample[this.language];
-            if(xml) { return xml; }
+         var xml = this.options.startingExample && this.options.startingExample[this.language];
+         if(xml) {
+            this.getStartingExampleIds(xml);
+            return xml;
          }
          return this.getEmptyContent();
       },
@@ -495,7 +511,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
             // subject title when edition is enabled...
             var additional = {};
 
-            if (this.quickAlgoInterface.saveAdditional)
+            if (this.quickAlgoInterface && this.quickAlgoInterface.saveAdditional)
                this.quickAlgoInterface.saveAdditional(additional);
 
             var additionalNode = document.createElement("additional");
@@ -746,7 +762,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
             }
             if(!robotStartHasChildren) {
                this.displayError('<span class="testError">' + window.languageStrings.errorEmptyProgram + '</span>');
-               SrlLogger.validation(0, 'code');
+               SrlLogger.validation('', 0, 'code');
                return;
             }
          }
@@ -756,7 +772,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
          this.highlightPause = false;
          if(this.getRemainingCapacity(that.workspace) < 0) {
             this.displayError('<span class="testError">'+this.strings.tooManyBlocks+'</span>');
-            SrlLogger.validation(0, 'code');
+            SrlLogger.validation(this.programs[0].blockly, 0, 'code');
             return;
          }
          var limited = this.findLimited(this.workspace);
@@ -766,7 +782,7 @@ function getBlocklyInterface(maxBlocks, subTask) {
             errorMsg += this.getBlockLabel(limited, true);
             errorMsg += '.';
             this.displayError('<span class="testError">'+errorMsg+'</span>');
-            SrlLogger.validation(0, 'code');
+            SrlLogger.validation(this.programs[0].blockly, 0, 'code');
             return;
          }
          if(!this.scratchMode) {

@@ -175,6 +175,171 @@ Blockly.Block.prototype.getVariableField = function () {
   return null;
 };
 
+// Do not throw when the connection lists do not match in length
+Blockly.Block.prototype.getMatchingConnection = function(otherBlock, conn) {
+  var connections = this.getConnections_(true);
+  var otherConnections = otherBlock.getConnections_(true);
+  if (connections.length != otherConnections.length) {
+    console.error("Connection lists did not match in length.");
+    return null;
+  }
+  for (var i = 0; i < otherConnections.length; i++) {
+    if (otherConnections[i] == conn) {
+      return connections[i];
+    }
+  }
+  return null;
+};
+
+// Do not crash if no matching connection was found
+Blockly.BlockSvg.prototype.connectInsertionMarker_ = function(localConnection,
+  closestConnection) {
+var insertingBlock = Blockly.localConnection_.sourceBlock_;
+if (!Blockly.insertionMarker_) {
+  Blockly.insertionMarker_ =
+      this.workspace.newBlock(insertingBlock.type);
+  if (insertingBlock.mutationToDom) {
+    var oldMutationDom = insertingBlock.mutationToDom();
+    Blockly.insertionMarker_.domToMutation(oldMutationDom);
+  }
+  Blockly.insertionMarker_.setInsertionMarker(true, insertingBlock.width);
+  Blockly.insertionMarker_.initSvg();
+}
+
+var insertionMarker = Blockly.insertionMarker_;
+var insertionMarkerConnection = insertionMarker.getMatchingConnection(
+    localConnection.sourceBlock_, localConnection);
+// If null then just keep as is
+if (insertionMarkerConnection && insertionMarkerConnection != Blockly.insertionMarkerConnection_) {
+  insertionMarker.rendered = true;
+  // Render disconnected from everything else so that we have a valid
+  // connection location.
+  insertionMarker.render();
+  insertionMarker.getSvgRoot().setAttribute('visibility', 'visible');
+
+  this.positionNewBlock(insertionMarker,
+      insertionMarkerConnection, closestConnection);
+
+  if (insertionMarkerConnection.type == Blockly.PREVIOUS_STATEMENT &&
+      !insertionMarker.nextConnection) {
+    Blockly.bumpedConnection_ = closestConnection.targetConnection;
+  }
+  // Renders insertion marker.
+  insertionMarkerConnection.connect(closestConnection);
+  Blockly.insertionMarkerConnection_ = insertionMarkerConnection;
+}
+};
+
+// Make sure the events are always reenabled even if an error is thrown
+Blockly.BlockSvg.prototype.updatePreviews = function(closestConnection,
+  localConnection, radiusConnection, e, dx, dy, candidateIsLast) {
+// Don't fire events for insertion marker creation or movement.
+Blockly.Events.disable();
+try {
+  // Remove an insertion marker if needed.  For Scratch-Blockly we are using
+  // grayed-out blocks instead of highlighting the connection; for compatibility
+  // with Web Blockly the name "highlightedConnection" will still be used.
+  if (Blockly.highlightedConnection_ &&
+      Blockly.highlightedConnection_ != closestConnection) {
+    if (Blockly.replacementMarker_) {
+      Blockly.BlockSvg.removeReplacementMarker();
+    } else if (Blockly.insertionMarker_ && Blockly.insertionMarkerConnection_) {
+      Blockly.BlockSvg.disconnectInsertionMarker();
+    }
+    // If there's already an insertion marker but it's representing the wrong
+    // block, delete it so we can create the correct one.
+    if (Blockly.insertionMarker_ &&
+        ((candidateIsLast && Blockly.localConnection_.sourceBlock_ == this) ||
+        (!candidateIsLast && Blockly.localConnection_.sourceBlock_ != this))) {
+      Blockly.insertionMarker_.dispose();
+      Blockly.insertionMarker_ = null;
+    }
+    Blockly.highlightedConnection_ = null;
+    Blockly.localConnection_ = null;
+  }
+
+  // Add an insertion marker or replacement marker if needed.
+  if (closestConnection &&
+      closestConnection != Blockly.highlightedConnection_ &&
+      !closestConnection.sourceBlock_.isInsertionMarker()) {
+    Blockly.highlightedConnection_ = closestConnection;
+    Blockly.localConnection_ = localConnection;
+
+    // Dragging a block over a nexisting block in an input should replace the
+    // existing block and bump it out.  Similarly, dragging a terminal block
+    // over another (connected) terminal block will replace, not insert.
+    var shouldReplace = (localConnection.type == Blockly.OUTPUT_VALUE ||
+        (localConnection.type == Blockly.PREVIOUS_STATEMENT &&
+        closestConnection.isConnected() &&
+        !this.nextConnection));
+
+    if (shouldReplace) {
+      this.addReplacementMarker_(localConnection, closestConnection);
+    } else {  // Should insert
+      this.connectInsertionMarker_(localConnection, closestConnection);
+    }
+  }
+} finally {}
+// Reenable events.
+Blockly.Events.enable();
+
+// Provide visual indication of whether the block will be deleted if
+// dropped here.
+if (this.isDeletable()) {
+  this.workspace.isDeleteArea(e);
+}
+};
+
+// Make sure the events are always reenabled even if an error is thrown
+Blockly.BlockSvg.terminateDrag = function () {
+  Blockly.BlockSvg.onMouseUpWrapper_ && (Blockly.unbindEvent_(Blockly.BlockSvg.onMouseUpWrapper_), Blockly.BlockSvg.onMouseUpWrapper_ = null);
+  Blockly.BlockSvg.onMouseMoveWrapper_ && (Blockly.unbindEvent_(Blockly.BlockSvg.onMouseMoveWrapper_), Blockly.BlockSvg.onMouseMoveWrapper_ = null);
+  var a = Blockly.selected;
+  if (Blockly.dragMode_ == Blockly.DRAG_FREE && a) {
+    if (Blockly.replacementMarker_) {
+      Blockly.BlockSvg.removeReplacementMarker();
+    } else if (Blockly.insertionMarker_) {
+      Blockly.Events.disable();
+      try {
+        if (Blockly.insertionMarkerConnection_) {
+          Blockly.BlockSvg.disconnectInsertionMarker();
+        }
+        Blockly.insertionMarker_.dispose();
+        Blockly.insertionMarker_ = null;
+      } finally {
+        Blockly.Events.enable();
+      }
+    }
+
+    var b = a.getRelativeToSurfaceXY(), b = goog.math.Coordinate.difference(b, a.dragStartXY_),
+      c = new Blockly.Events.Move(a);
+    c.oldCoordinate = a.dragStartXY_;
+    c.recordNew();
+    Blockly.Events.fire(c);
+    a.moveConnections_(b.x, b.y);
+    delete a.draggedBubbles_;
+    a.setDragging_(!1);
+    a.moveOffDragSurface_();
+    a.render();
+    a.workspace.setResizesEnabled(!0);
+    var d = Blockly.Events.getGroup();
+    setTimeout(function () {
+      Blockly.Events.setGroup(d);
+      a.snapToGrid();
+      Blockly.Events.setGroup(!1)
+    }, Blockly.BUMP_DELAY / 2);
+    setTimeout(function () {
+      Blockly.Events.setGroup(d);
+      a.bumpNeighbours_();
+      Blockly.Events.setGroup(!1)
+    }, Blockly.BUMP_DELAY)
+  }
+  Blockly.dragMode_ = Blockly.DRAG_NONE;
+  Blockly.Css.setCursor(Blockly.Css.Cursor.OPEN)
+};
+
+
+
 // Modify updateColour to leave placeholders alone
 Blockly.BlockSvg.prototype.updateColour = function() {
   var strokeColour = this.getColourTertiary();
@@ -1283,7 +1448,7 @@ Blockly.JavaScript['data_listrepeat'] = function(block) {
   var assignCode = 'var ' + varName + ' = ' + code + ';\n';
 
   // Report value if available
-  var reportCode = "reportBlockValue('" + block.id + "', '" + varName + " = ' + " + varName + ");\n";
+  var reportCode = "reportBlockValue('" + block.id + "', " + varName + ", '" + varName + "');\n";
 
   return assignCode + reportCode;
 };
@@ -1347,7 +1512,7 @@ Blockly.JavaScript['data_setvariableto'] = function(block) {
   var assignCode = 'var ' + varName + ' = ' + argument0 + ';\n';
 
   // Report value if available
-  var reportCode = "reportBlockValue('" + block.id + "', '" + varName + " = ' + " + varName + ");\n";
+  var reportCode = "reportBlockValue('" + block.id + "', " + varName + ", '" + varName + "');\n";
 
   return assignCode + reportCode;
 };
@@ -1365,7 +1530,7 @@ Blockly.JavaScript['data_changevariableby'] = function(block) {
   var incrCode = varName + ' += ' + argument0 + ';\n';
 
   // Report value if available
-  var reportCode = "reportBlockValue('" + block.id + "', '" + varName + " = ' + " + varName + ");\n";
+  var reportCode = "reportBlockValue('" + block.id + "', " + varName + ", '" + varName + "');\n";
 
   return incrCode + reportCode;
 };
@@ -1508,7 +1673,7 @@ Blockly.Python['data_listrepeat'] = function(block) {
 
   var blockVarName = block.getFieldValue('LIST');
   if(blockVarName) {
-    var varName = Blockly.JavaScript.variableDB_.getName(blockVarName, Blockly.Variables.NAME_TYPE);
+    var varName = Blockly.Python.variableDB_.getName(blockVarName, Blockly.Variables.NAME_TYPE);
   } else {
     var varName = 'unnamed_variable'; // Block is still loading
   }

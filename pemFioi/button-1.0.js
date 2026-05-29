@@ -23,15 +23,15 @@ function drawButton(paper,xc,yc,w,h,params) {
    paper.rect(xRect,yRect,w,h).attr(attr.rect);
    
    if(params.text){
-      var xText = params.xText;
-      var yText = params.yText;
+      var xText = params.xText || xc;
+      var yText = params.yText || yc;
       paper.text(xText,yText,params.text).attr(attr.text);
    }
 
    if(params.shape) {
       var iconR = params.iconR;
-      var xIcon = params.xIcon;
-      var yIcon = params.yIcon;
+      var xIcon = params.xIcon || xRect + iconR;
+      var yIcon = params.yIcon || yc;
       var shape = params.shape;
       var icon = getShape(paper, shape,xIcon,yIcon,{ radius: iconR });
       icon.attr(attr.icon);
@@ -43,9 +43,9 @@ function drawButton(paper,xc,yc,w,h,params) {
    if(params.imgSrc) {
       var src = params.imgSrc;
       var xIcon = params.xIcon;
-      var yIcon = params.yIcon;
       var iconW = params.iconW;
       var iconH = params.iconH;
+      var yIcon = params.yIcon || yc - iconH/2;
       var icon = paper.image(src,xIcon,yIcon,iconW,iconW);
    }
 

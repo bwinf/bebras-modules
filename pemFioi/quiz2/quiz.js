@@ -45,15 +45,20 @@ Quiz.common = {
     },
 
 
-    toggleAlertMessage: function(parent, msg, type) {
+    toggleAlertMessage: function(parent, msg, type, whole_question) {
         var el = parent.find('.error-message');
         el.remove();
-        msg && parent.append(
-            '<div class="alert-message ' + type + '-message">' +
-            '<i class="fas fa-bell icon"></i>' + msg +
-            '</div>');
-    }
+        if(!msg) { return; }
 
+        var html = '<div class="alert-message ' + type + '-message">' +
+            '<i class="fas fa-bell icon"></i>' + msg +
+            '</div>';
+        if(!whole_question && parent.parents("question.horizontal").length) {
+            parent.find('.answer-code').before(html);
+        } else {
+            parent.append(html);
+        }
+    }
 }
 
 
@@ -107,6 +112,7 @@ Quiz.questionTypes = {
 
 
 Quiz.UI = function(params) {
+    Quiz.submittingSingle = null;
 
     var questions_order = [];
 
@@ -118,9 +124,20 @@ Quiz.UI = function(params) {
         feedback_on_wrong_choices: "first_under_question", // none | first_under_question | first_under_choice | selected_only | all
         feedback_on_correct_choices: "all", //  none | selected_only | all
         show_solutions: "all", // none | correct_only | all
-        alert_if_no_answer: true // bool
+        alert_if_no_answer: true, // bool
+        keypad_input_only: false, // bool, if true, only keypad input is allowed for number inputs
+        save_only_mode: false // bool, if true, behave as a task which only saves the answer and gives 100
     }
     var params = Object.assign(default_params, params);
+
+    // save only mode
+    if (params.save_only_mode) {
+        params.feedback_score = "saved";
+        params.feedback_on_wrong_choices = "none";
+        params.feedback_on_correct_choices = "none";
+        params.show_solutions = "none";
+    }
+
     Quiz.params = params;
     //console.log('Quiz.params', Quiz.params)
 
@@ -131,6 +148,9 @@ Quiz.UI = function(params) {
 
     // init versions
     Quiz.versions.init(params);
+
+    Quiz.sidecontent.init(params);
+
 
 
     // questions types
@@ -150,6 +170,18 @@ Quiz.UI = function(params) {
         questions[i] = Quiz.questionTypes.create(type, el, i, params);
     });
     questions_order = Quiz.common.shuffleElements(els, params.shuffle_questions);
+    if (params.submit_single) {
+        $('question').each(function (i, el) {
+            el = $(el);
+            el.append('<p style="text-align: center;"><button class="btn btn-success submit-single" type="button">Check this question</button></p>');
+            el.find('.submit-single').click(function () {
+                Quiz.submittingSingle = i;
+                task.getAnswer(function (answer) {
+                    task.gradeAnswer(answer, null, function () { });
+                });
+            });
+        });
+    }
 
 
     // toggle questions numeration
@@ -253,12 +285,105 @@ Quiz.UI = function(params) {
 
         displayFeedback: function(feedback) {
             for(var i=0; i<feedback.length; i++) {
+                if (Quiz.submittingSingle !== null && Quiz.submittingSingle !== i) {
+                    continue;
+                }
                 if(!questions[i].checkAnswered(lang.translate('wrong_answer_msg_not_answered'))) {
                     continue;
                 }
                 questions[i].displayFeedback(feedback[i]);
+                if (Quiz.submittingSingle !== null) {
+                    var questionEl = $($('question')[i]);
+                    questionEl.find('.error-message, .success-message').remove();
+                    if (feedback[i].score == 1) {
+                        Quiz.common.toggleAlertMessage(questionEl, "Correct answer!", 'success');
+                    } else {
+                        Quiz.common.toggleAlertMessage(questionEl, "Wrong answer.", 'error');
+                    }
+                }
             }
             this.toggleFeedback(true);
+            Quiz.submittingSingle = null;
+        },
+
+        displayOverallFeedback: function (feedback) {
+            function displayFeedbackMessage(msg) {
+                $('.quiz-toolbar').before('<div class="alert-message feedback-message"><i class="fas fa-clipboard-list icon"></i> ' + msg + '</div>');
+            }
+            if (!feedback) { return; }
+            if (typeof feedback === 'string') {
+                displayFeedbackMessage(feedback);
+                return;
+            }
+
+            if (feedback.message) {
+                displayFeedbackMessage(feedback.message);
+            }
+            if (feedback.buttons) {
+                if (feedback.message) {
+                    $('.feedback-message').append('<br><br>');
+                } else {
+                    displayFeedbackMessage('');
+                }
+
+                feedback.buttons.forEach(function (button) {
+                    var btn = $('<button class="btn btn-success feedback-btn">' + button.text + '</button>');
+                    $('.feedback-message').append(btn);
+                    btn.click(function () {
+                        if (button.target) {
+                            platform.openUrl(button.target);
+                        }
+                    });
+                });
+            }
+            if (feedback.popup) {
+                var popup = $(
+                    '<div class="quiz-popup-inner"><div class="content" style="max-width: 1200px;"></div></div>\
+                    <div class="quiz-popup">\
+                        <div class="opacity-overlay"></div>\
+                    </div>'
+                );
+                $(document.body).append(popup);
+                var content = "";
+                content += '<div class="score">' + $('#score').html() + '</div>';
+                if (feedback.message) {
+                    content += '<div class="alert-message feedback-message"><i class="fas fa-clipboard-list icon"></i> ' + feedback.message + '</div>';
+                }
+                if (feedback.buttons) {
+                    feedback.buttons.forEach(function (button, idx) {
+                        content += '<button class="btn btn-success feedback-btn popup-button-' + idx + '">' + button.text + '</button>';
+                    });
+                }
+                content += '<button class="btn btn-success close-popup">' + lang.translate('return_to_quiz') + '</button>';
+                popup.find('.content').html(content);
+                popup.find('.close-popup').click(function () {
+                    popup.remove();
+                });
+                if (feedback.buttons) {
+                    feedback.buttons.forEach(function (button, idx) {
+                        popup.find('.popup-button-' + idx).click(function () {
+                            if (button.target) {
+                                platform.openUrl(button.target);
+                            }
+                            popup.remove();
+                        });
+                    });
+                }
+                var inner = $(popup[0]);
+                inner.css('top', (Math.max(0, $('.quiz-toolbar').offset().top - 40 - inner.outerHeight())) + 'px');
+                $('html, body').animate({ scrollTop: inner.offset().top }, 300);
+                setTimeout(function () {
+                    platform.updateDisplay({ scrollTop: inner.offset().top });
+                }, 300);
+            }
+
+
+
+
+        },
+
+        getSubmittingSingle: function () {
+            return Quiz.submittingSingle;
         },
 
         reset: function(from_scratch) {
@@ -281,5 +406,106 @@ Quiz.UI = function(params) {
             return res;
         }
 
+    }
+}
+
+
+// manage the side content and its separator
+Quiz.sidecontent = {
+    current: 1,
+    isSmall: false,
+
+    init: function (params) {
+        if (!params.sideurl) {
+            return;
+        }
+
+        var that = this;
+
+        $('body').addClass('sidecontent');
+        $(window).on('resize', this.onResize.bind(this));
+
+        $(`<div id="sidecontent-buttons">
+            <div id="sidecontent-left" onclick="Quiz.sidecontent.moveLeft()"><span class="fas fa-chevron-left"></span></div>
+            <div id="sidecontent-right" onclick="Quiz.sidecontent.moveRight()"><span class="fas fa-chevron-right"></span></div>
+        </div>
+        <div id="sidecontent-separator"></div>
+        <div id="sidecontent-container">
+        <div id="sidecontent">
+            <iframe id="sidecontent-iframe" width="100%" height="100%" src="" frameborder="0" scrolling="yes"></iframe>
+        </div></div>`).appendTo('body');
+        $('#task').appendTo('#sidecontent-container');
+        var sideUrl = params.sideurl;
+        // add a ranhom parameter to the URL to prevent caching
+        if (sideUrl.indexOf('?') === -1) {
+            sideUrl += '?';
+        }
+        sideUrl += '&random=' + (new Date()).getTime();
+        $('#sidecontent-iframe').attr('src', sideUrl);
+
+        setTimeout(function () {
+            that.onResize();
+        }, 10);
+    },
+
+    onResize: function () {
+        this.updateHalves();
+        this.updateSeparator();
+    },
+
+    updateHalves: function () {
+        var widthAvailable = $('body').width() - 32;
+        $('#sidecontent').show();
+        $('#task').show();
+        if (this.current == 1 && !this.isSmall) {
+            $('#sidecontent').css('width', widthAvailable * this.current / 2);
+            $('#task').css('width', widthAvailable * (2 - this.current) / 2);
+            $('#sidecontent-container').css('justify-content', 'space-between');
+        } else if (this.current == 0) {
+            $('#sidecontent').hide();
+            $('#task').css('width', widthAvailable);
+            $('#sidecontent-container').css('justify-content', 'flex-end');
+        } else {
+            $('#sidecontent').css('width', widthAvailable);
+            $('#task').hide();
+            $('#sidecontent-container').css('justify-content', 'flex-start');
+        }
+    },
+
+    updateSeparator: function () {
+        var current = this.current;
+        if (current == 1 && this.isSmall) { current = 2; }
+        var widthAvailable = $('body').width() - 32;
+        var separatorPos = (widthAvailable * current / 2) + 8;
+        $('#sidecontent-separator').css('left', separatorPos);
+        $('#sidecontent-buttons').css('left', separatorPos - 16);
+    },
+
+    onResize: function () {
+        this.isSmall = $('body').width() < 700;
+        this.updateHalves();
+        this.updateSeparator();
+    },
+
+    moveLeft: function () {
+        if (this.current > 0) {
+            this.current--;
+            if (this.isSmall) {
+                this.current = 0;
+            }
+            this.updateHalves();
+            this.updateSeparator();
+        }
+    },
+
+    moveRight: function () {
+        if (this.current < 2) {
+            this.current++;
+            if (this.isSmall) {
+                this.current = 2;
+            }
+            this.updateHalves();
+            this.updateSeparator();
+        }
     }
 }

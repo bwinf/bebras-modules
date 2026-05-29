@@ -163,7 +163,7 @@ answer .answer-code {
   color: #4a90e2;
   font-weight: bold;
   cursor: pointer;
-  flex: 0 1 120px;
+  flex: 0 0 120px;
   align-self: center;
   transition: all linear 50ms;
 }
@@ -529,21 +529,21 @@ button,
   z-index: 1;
 }
 
-.quiz-popup .inner {
-  position: relative;
-  z-index: 2;
-  top: 50%;
+.quiz-popup-inner {
+  position: absolute;
+  z-index: 10002;
   text-align: center;
+  width: 100%;
 }
 
-.quiz-popup .content {
+.quiz-popup-inner .content {
   background: #fff;
   border-radius: 10px;
   padding: 40px;
   display: inline-block;
 }
 
-.quiz-popup .content .btn {
+.quiz-popup-inner .content .btn {
   margin: 0 10px;
 }
 
@@ -657,6 +657,7 @@ body.coursera #displayHelper_validate input[type=button],
 body.coursera #popupMessage button,
 body.coursera .btn {
   background-color: #0056D2;
+  color: #fff;
 }
 
 body.coursera answer.selected .answer-block,

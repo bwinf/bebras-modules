@@ -18,6 +18,26 @@ var importableFonts = function () {
              check: '12px "Source Sans Pro"',
              src: "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
              // TODO : local source
+        },
+        'inconsolata': {
+            check: '12px "Inconsolata"',
+            src: mp+"/fonts/inconsolata/inconsolata.css",
+            cdn: "https://static4.castor-informatique.fr/modules/fonts/inconsolata/inconsolata.css"
+        },
+        'open-sans': {
+            check: '12px "Open Sans"',
+            src: mp+"/fonts/open-sans/open-sans.css",
+            cdn: "https://static4.castor-informatique.fr/modules/fonts/open-sans/open-sans.css"
+        },
+        'blueprint-16': {
+            check: '12px "Icons16"',
+            src: mp+"/fonts/blueprint-16/blueprint-icons-16.css",
+            cdn: "https://static4.castor-informatique.fr/modules/fonts/blueprint-16/blueprint-icons-16.css"
+        },
+        'blueprint-16-new': {
+            check: '12px "blueprint-icons-16"',
+            src: mp+"/fonts/blueprint-16-new/blueprint-icons-16.css",
+            cdn: "https://static4.castor-informatique.fr/modules/fonts/blueprint-16-new/blueprint-icons-16.css"
         }
     };
 }
@@ -28,7 +48,7 @@ var fontsToLoad = [];
 var fontsLoaded = {};
 
 function appendFont(path) {
-    $('head').append('<link rel="stylesheet" href="' + path + '">');
+    $('head').append('<link rel="stylesheet" href="' + path + '" class="remove">');
 }
 
 function checkFontLoaded(fontName) {

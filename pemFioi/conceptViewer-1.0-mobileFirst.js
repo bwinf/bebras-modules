@@ -19,6 +19,7 @@ var conceptViewerStrings = {
       "extra_variable": 'Variables',
       "extra_list": 'Listes',
       "extra_function": 'Fonctions',
+      "extra_markers": 'Marqueurs',
       "robot_commands": 'Commandes du robot',
       "arguments": 'Fonctions avec arguments',
     }
@@ -43,8 +44,34 @@ var conceptViewerStrings = {
       "extra_variable": 'Variables',
       "extra_list": 'Lists',
       "extra_function": 'Functions',
+      "extra_markers": 'Markers',
       "robot_commands": 'Robot commands',
       "arguments": 'Functions with arguments',
+    }
+  },
+  nl: {
+    viewerTitle: "Aide",
+    selectLanguage: "Sélectionnez un langage…",
+    selectTopic: "Sélectionnez une rubrique…",
+    reloadFromTask: "Merci d'ouvrir cette documentation directement depuis l'exercice. Vous pouvez fermer cette fenêtre.",
+    concepts: {
+      "taskplatform": 'Het oplossen van de oefeningen',
+      "language": "Een programma maken",
+      "blockly_text_print": 'Toon tekst',
+      "blockly_text_print_noend": 'Toon tekst opeenvolgend',
+      "blockly_controls_repeat": 'Herhalingslus',
+      "blockly_controls_if": 'Het blok « als »',
+      "blockly_controls_if_else": 'Het blol « als / zoniet »',
+      "blockly_controls_whileUntil": 'Het blok «herhalen zolang als »',
+      "blockly_controls_infiniteloop": 'Oneindige lus',
+      "blockly_logic_operation": 'Boleaanse Operatoren',
+      "extra_nested_repeat": 'Geneste lussen',
+      "extra_variable": 'Variabelen',
+      "extra_list": 'Lijsten',
+      "extra_function": 'Eenvoudige functies',
+      "extra_markers": 'Markers',
+      "robot_commands": 'Robotbesturing',
+      "arguments": 'Functies met argumenten',
     }
   },
   es: {
@@ -67,6 +94,7 @@ var conceptViewerStrings = {
       "extra_variable": 'Variables',
       "extra_list": 'Listas',
       "extra_function": 'Funciones',
+      "extra_markers": 'Markers',
       "robot_commands": 'Comandos del robot',
       "arguments": 'Funciones con argumentos',
     }
@@ -91,6 +119,7 @@ var conceptViewerStrings = {
       "extra_variable": 'Variabili',
       "extra_list": 'Elenchi',
       "extra_function": 'Funzioni',
+      "extra_markers": 'Markers',
       "robot_commands": 'Robot commands',
       "arguments": 'Funzioni conargomenti',
     }
@@ -386,13 +415,15 @@ function getConceptViewerBaseUrl() {
 }
 
 
-function getConceptViewerBaseConcepts() {
+function getConceptViewerBaseConcepts(baseUrl) {
     // Get base concepts in the default help
-    var baseUrl = getConceptViewerBaseUrl();
-    if(window.stringsLanguage == 'es' || window.stringsLanguage == 'it') {
-        baseUrl += 'index_' + window.stringsLanguage + '.html';
-    } else {
-        baseUrl += 'index.html';
+    if(!baseUrl) {
+       var baseUrl = getConceptViewerBaseUrl();
+       if(window.stringsLanguage == 'es' || window.stringsLanguage == 'it') {
+          baseUrl += 'index_' + window.stringsLanguage + '.html';
+       } else {
+          baseUrl += 'index.html';
+       }
     }
     var baseConcepts = [
         {id: 'taskplatform', name: 'Résolution des exercices', url: baseUrl+'#taskplatform', language: 'all'},
@@ -407,6 +438,7 @@ function getConceptViewerBaseConcepts() {
         {id: 'extra_variable', name: 'Variables', url: baseUrl+'#extra_variable'},
         {id: 'extra_list', name: 'Listes', url: baseUrl+'#extra_list'},
         {id: 'extra_function', name: 'Fonctions', url: baseUrl+'#extra_function'},
+        {id: 'extra_markers', name: 'Marqueurs', url: baseUrl+'#extra_markers'},
         {id: 'robot_commands', name: 'Commandes du robot', url: baseUrl+'#robot_commands'},
         {id: 'arguments', name: 'Fonctions avec arguments', url: baseUrl+'#arguments'},
         {id: 'blockly_text_print', name: 'Afficher du texte', url: baseUrl+'#blockly_text_print'},
@@ -450,11 +482,19 @@ function conceptsFill(baseConcepts, allConcepts) {
       if(!curConcept.python) {
         curConcept.python = fullConcept.python;
       }
+      if(!curConcept.isCategory) {
+        curConcept.isCategory = fullConcept.isCategory;
+      }
+      if(!curConcept.categoryId) {
+        curConcept.categoryId = fullConcept.categoryId;
+      }
       if(!fullConcept.ignore) {
         concepts.push(curConcept);
       }
       delete baseConceptsById[fullConcept.id];
-    } else if(fullConcept.isBase && baseConceptsById['base']) {
+    } else if((fullConcept.isBase && baseConceptsById['base']) || fullConcept.isCategory) {
+      // Translate concept name if available
+      fullConcept.name = conceptNames[fullConcept.id] || fullConcept.name;
       concepts.push(fullConcept);
     }
   }

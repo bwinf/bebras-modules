@@ -64,7 +64,7 @@ var pythonForbiddenBlocks = {
       'dict_keys': ['dict_brackets']
     },
     'logic': {
-      'controls_if': ['if', 'else', 'elif'],
+      'controls_if': ['if'],
       'controls_if_else': ['if', 'else', 'elif'],
       'logic_negate': ['not'],
       'logic_operation': ['and', 'or']
@@ -73,7 +73,7 @@ var pythonForbiddenBlocks = {
       'controls_repeat': ['for'],
       'controls_repeat_ext': ['for'],
       "controls_repeat_ext_noShadow" : ['for'],
-      'controls_for': ['for'],
+      'controls_for': ['for', 'in'],
       'controls_forEach': ['for'],
       'controls_whileUntil': ['while'],
       'controls_untilWhile': ['while'],
@@ -110,7 +110,7 @@ var pythonForbiddenBlocks = {
 
 function pythonForbiddenLists(includeBlocks) {
    // Check for forbidden keywords in code
-   var forbidden = ['for', 'while', 'if', 'else', 'elif', 'and', 'or', 'list', 'set', 'dict_brackets', '__getitem__', '__setitem__', 'def', 'lambda', 'break', 'continue', 'setattr', 'map', 'split'];
+   var forbidden = ['for', 'while', 'if', 'else', 'elif', 'not', 'and', 'or', 'list', 'set', 'list_brackets', 'dict_brackets', '__getitem__', '__setitem__', 'var_assign', 'def', 'lambda', 'break', 'continue', 'setattr', 'map', 'split', 'in', 'max'];
    var allowed = []
 
    if(!includeBlocks) {
@@ -213,7 +213,7 @@ function pythonForbidden(code, includeBlocks) {
       /"(?:[^\\"]|\\.)*"/
       ];
 
-   code2 = removeFromPatterns(code, stringPatterns);
+   var code2 = removeFromPatterns(code, stringPatterns);
    if(window.arrayContains && arrayContains(forbidden, 'strings') && code != code2) {
       return 'chaînes de caractères';
    }
@@ -221,10 +221,10 @@ function pythonForbidden(code, includeBlocks) {
    code = code2;
 
    // exec and eval are forbidden anyway
-   if(/(^|\W)exec\((\W|$)/.exec(code)) {
+   if(/(^|\W)exec\(/.exec(code)) {
       return 'exec';
    }
-   if(/(^|\W)eval\((\W|$)/.exec(code)) {
+   if(/(^|\W)eval\(/.exec(code)) {
       return 'eval';
    }
 
@@ -243,14 +243,14 @@ function pythonForbidden(code, includeBlocks) {
             return window.languageStrings.braketSquare + ' [ ]'; // TODO :: i18n ?
          }
       } else if(forbidden[i] == 'dict_brackets') {
-         // Special pattern for lists
+         // Special pattern for dicts
          var re = /[\{\}]/;
          if(re.exec(code)) {
             // Forbidden keyword found
             return window.languageStrings.braketCurvy + ' { }'; // TODO :: i18n ?
          }
       } else if(forbidden[i] == 'var_assign') {
-         // Special pattern for lists
+         // Special pattern for var assignment
          var re = /[^=!<>]=[^=!<>]/;
          if(re.exec(code)) {
             // Forbidden keyword found
@@ -266,6 +266,12 @@ function pythonForbidden(code, includeBlocks) {
          if(re.exec(code)) {
             // Forbidden keyword found
             return 'fonction avec arguments'; // TODO :: i18n ?
+         }
+      } else if (forbidden[i] == 'in') {
+         var code2 = removeFromPatterns(code, [/(^|\W)for\s+\w+\s+in/]);
+         var re = /(^|\W)in(\W|$)/;
+         if (re.exec(code2)) {
+            return 'in';
          }
       } else if(forbidden[i] != 'strings') {
          var re = new RegExp('(^|\\W)'+forbidden[i]+'(\\W|$)');

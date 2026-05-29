@@ -13,6 +13,7 @@
          'jquery-ui.touch-punch.fixed': {src: modulesPath+"/ext/jquery-ui/jquery.ui.touch-punch.fixed.js", id: "jquery.ui.touch-punch.fixed.js"},
          'JSON-js': {src: modulesPath+"/ext/json/json2.min.js", id: "https://github.com/douglascrockford/JSON-js"},
          'raphael-2.2.1': {src: modulesPath+"/ext/raphael/2.2.1/raphael.min.js", id: "http://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.1/raphael.min.js"},
+         'raphael-2.2.1b': {src: modulesPath+"/ext/raphael/2.2.1b/raphael.min.js", id: "raphael-2.2.1b"},
          'beaver-task-2.0': {src: modulesPath+"/pemFioi/beaver-task-2.0.js", id: "http://www.france-ioi.org/modules/pemFioi/beaver-task-2.0.js"},
          'jschannel': {src: modulesPath+"/ext/jschannel/jschannel.js", id: "http://www.france-ioi.org/modules/ext/jschannel/jschannel.js"},
          'raphaelFactory-1.0': {src: modulesPath+"/pemFioi/raphaelFactory-1.0.js", id: "http://www.france-ioi.org/modules/pemFioi/raphaelFactory-1.0.js"},
@@ -39,11 +40,19 @@
          'graph-1.0': {src: modulesPath+"/pemFioi/graph-1.0.js", id: "http://www.france-ioi.org/modules/pemFioi/graph-1.0.js"},
          'randomGenerator-1.0': {src: modulesPath+"/pemFioi/randomGenerator-1.0.js", id: "http://www.france-ioi.org/modules/pemFioi/randomGenerator-1.0.js"},
          'shape-paths': {src: modulesPath+"/pemFioi/shape-paths.js", id: "shape-paths"},
+         'shape-paths-1.1': {src: modulesPath+"/pemFioi/shape-paths-1.1.js", id: "shape-paths-1.1"},
          'zen3d': { src: modulesPath + "/ext/zen3d/zen3d.min.js", id: "zen3d" },
+         'canvas2svg': { src: modulesPath + "/ext/canvas2svg/canvas2svg.js", id: "canvas2svg" },
+         'visual-graph-1.0': {src: modulesPath+"/pemFioi/visual-graph-1.0.js", id: "http://www.france-ioi.org/modules/pemFioi/visual-graph-1.0.js"},
+         'visual-graph-1.1': {src: modulesPath+"/pemFioi/visual-graph-1.1.js", id: "http://www.france-ioi.org/modules/pemFioi/visual-graph-1.1.js"},
+         'visual-graph-1.2': {src: modulesPath+"/pemFioi/visual-graph-1.2.js", id: "http://www.france-ioi.org/modules/pemFioi/visual-graph-1.2.js"},
+         'graph-mouse-1.1': {src: modulesPath+"/pemFioi/graph-mouse-1.1.js", id: "http://www.france-ioi.org/modules/pemFioi/graph-mouse-1.1.js"},
+         'graph-mouse-1.2': {src: modulesPath+"/pemFioi/graph-mouse-1.2.js", id: "http://www.france-ioi.org/modules/pemFioi/graph-mouse-1.2.js"},
 
          'showdown': {src: modulesPath+"/ext/showdown/showdown.min.js", id: "showdown"},
          'showdownConvert': {src: modulesPath+"/pemFioi/showdownConvert.js", id: "showdownConvert"},
          'mathjax': {src: modulesPath+"/ext/mathjax/MathJax.js?config=TeX-MML-AM_CHTML", id: "mathjax"},
+         'mathjax4': {src: modulesPath + "/ext/mathjax4/tex-mml-chtml.js", id: "mathjax4"},
          'post_processor': {src: modulesPath+"/pemFioi/post_processor.js", id: "post_processor"},
 
          'prismjs': {src: modulesPath+"/ext/prismjs/prism.js", id: "prismjs"},
@@ -70,12 +79,12 @@
          'blockly_sl': {src: modulesPath+"/ext/blockly/sl.js", id: "blockly_sl"},
          'blockly_fioi': {src: modulesPath+"/ext/blockly-fioi/fioi-blockly.min.js", id: "blockly_fioi"},
 
-         'blockly-robot-0.9': {src: modulesPath+"/pemFioi/blocklyRobot_lib-0.9.1.js", id: "blocklyRobot_lib"},
-         'blockly-robot-1.0': {src: modulesPath+"/pemFioi/blocklyRobot_lib-1.0.0.js", id: "blocklyRobot_lib"},
-         'blockly-robot-1.1': {src: modulesPath+"/pemFioi/blocklyRobot_lib-1.1.js", id: "blocklyRobot_lib"},
-         'blockly-robot-dev': {src: modulesPath+"/pemFioi/blocklyRobot_lib-1.0.1-dev.js", id: "blocklyRobot_lib"},
+         'blockly-robot-0.9': {src: modulesPath+"/pemFioi/blocklyRobot_lib-0.9.1.js", id: "blocklyRobot_lib-0.9.1"},
+         'blockly-robot-1.0': {src: modulesPath+"/pemFioi/blocklyRobot_lib-1.0.0.js", id: "blocklyRobot_lib-1.0.0"},
+         'blockly-robot-1.1': {src: modulesPath+"/pemFioi/blocklyRobot_lib-1.1.js", id: "blocklyRobot_lib-1.1"},
+         'blockly-robot-dev': {src: modulesPath+"/pemFioi/blocklyRobot_lib-1.0.1-dev.js", id: "blocklyRobot_lib-1.0.1-dev"},
          'blockly-printer': {src: modulesPath+"/pemFioi/blocklyPrinter_lib.js", id: "blocklyPrinter_lib"},
-         'blockly-printer-2.1': {src: modulesPath+"/pemFioi/blocklyPrinter_lib-2.1.js", id: "blocklyPrinter_lib"},
+         'blockly-printer-2.1': {src: modulesPath+"/pemFioi/blocklyPrinter_lib-2.1.js", id: "blocklyPrinter_lib-2.1"},
          'blockly-turtle': {src: modulesPath+"/pemFioi/blocklyTurtle_lib.js", id: "blocklyTurtle_lib"},
          'jwinf_css': {type: "stylesheet", src: modulesPath+"/pemFioi/jwinf.css", id: "jwinf_css"}, // for BWINF
 
@@ -125,6 +134,28 @@
          'codecast7.0_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.0/index.css", id: "codecast7.0_css"},
          'codecast7.0_js': {src: modulesPath+"/ext/codecast/7.0/index.js", id: "codecast7.0_js"},
          'codecast7.0_loader': {src: modulesPath+"/ext/codecast/7.0/codecast-loader.js", id: "codecast7.0_loader"},
+         'codecast7.1_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.1/index.css", id: "codecast7.1_css"},
+         'codecast7.1_js': {src: modulesPath+"/ext/codecast/7.1/index.js", id: "codecast7.1_js"},
+         'codecast7.1_loader': {src: modulesPath+"/ext/codecast/7.1/codecast-loader.js", id: "codecast7.1_loader"},
+         'codecast7.2_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.2/index.css", id: "codecast7.2_css"},
+         'codecast7.2_js': {src: modulesPath+"/ext/codecast/7.2/index.js", id: "codecast7.2_js"},
+         'codecast7.2_loader': {src: modulesPath+"/ext/codecast/7.2/codecast-loader.js", id: "codecast7.2_loader"},
+         'codecast7.3_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.3/index.css", id: "codecast7.3_css"},
+         'codecast7.3_js': {src: modulesPath+"/ext/codecast/7.3/index.js", id: "codecast7.3_js"},
+         'codecast7.3_loader': {src: modulesPath+"/ext/codecast/7.3/codecast-loader.js", id: "codecast7.3_loader"},
+         'codecast7.4_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.4/index.css", id: "codecast7.4_css"},
+         'codecast7.4_js': {src: modulesPath+"/ext/codecast/7.4/index.js", id: "codecast7.4_js"},
+         'codecast7.4_loader': {src: modulesPath+"/ext/codecast/7.4/codecast-loader.js", id: "codecast7.4_loader"},
+         'codecast7.5_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.5/index.css", id: "codecast7.5_css"},
+         'codecast7.5_js': {src: modulesPath+"/ext/codecast/7.5/index.js", id: "codecast7.5_js"},
+         'codecast7.5_loader': {src: modulesPath+"/ext/codecast/7.5/codecast-loader.js", id: "codecast7.5_loader"},
+         'codecast7.6_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.6/index.css", id: "codecast7.6_css"},
+         'codecast7.6_js': {src: modulesPath+"/ext/codecast/7.6/index.js", id: "codecast7.6_js"},
+         'codecast7.6_loader': {src: modulesPath+"/ext/codecast/7.6/codecast-loader.js", id: "codecast7.6_loader"},
+         'codecast7.7_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.7/index.css", id: "codecast7.7_css"},
+         'codecast7.7_js': {src: modulesPath+"/ext/codecast/7.7/index.js", id: "codecast7.7_js"},
+         'codecast7.7_js_modern': {src: modulesPath+"/ext/codecast/7.7/index.modern.js", id: "codecast7.7_js_modern", type: "module"},
+         'codecast7.7_loader': {src: modulesPath+"/ext/codecast/7.7/codecast-loader.js", id: "codecast7.7_loader"},
 
          'blockly_database': {src: modulesPath+"/pemFioi/database/blockly_database.js", id: "blockly_database"},
          'database': {src: modulesPath+"/pemFioi/database/database.js", id: "database"},
@@ -132,6 +163,8 @@
 
          'files_repository': {src: modulesPath+"/pemFioi/shared/files_repository.js", id: "files_repository"},
          'blocks_helper': {src: modulesPath+"/pemFioi/shared/blocks_helper.js", id: "blocks_helper"},
+         'numeric_keypad': { src: modulesPath + "/pemFioi/shared/numeric_keypad/keypad.js", id: "numeric_keypad" },
+         'numeric_keypad_css': { type: "stylesheet", src: modulesPath + "/pemFioi/shared/numeric_keypad/keypad.css", id: "numeric_keypad_css" },
 
          // Quiz task
          'quiz_styles': {type: "stylesheet", src: modulesPath+"/pemFioi/quiz/quizStyles-0.1.css", id: "quiz_styles"},
@@ -150,6 +183,17 @@
          'quiz2_questions_choice': {src: modulesPath+"/pemFioi/quiz2/questions/choice.js", id: "quiz_questions_choice"},
          'quiz2_questions_fill_gaps': {src: modulesPath+"/pemFioi/quiz2/questions/fill_gaps.js", id: "quiz_questions_fill_gaps"},
          'quiz2_questions_input': {src: modulesPath+"/pemFioi/quiz2/questions/input.js", id: "quiz_questions_input"},
+
+         // Quiz task v3
+         'quiz3_styles': {type: "stylesheet", src: modulesPath+"/pemFioi/quiz3/quizStyles-0.1.css", id: "quiz_styles"},
+         'quiz3': {src: modulesPath+"/pemFioi/quiz3/quiz.js", id: "quiz"},
+         'quiz3_task': {src: modulesPath+"/pemFioi/quiz3/task.js", id: "quiz_task"},
+         'quiz3_grader': {src: modulesPath+"/pemFioi/quiz3/grader.js", id: "quiz_grader"},
+         'quiz3_questions_choice': {src: modulesPath+"/pemFioi/quiz3/questions/choice.js", id: "quiz_questions_choice"},
+         'quiz3_questions_fill_gaps': {src: modulesPath+"/pemFioi/quiz3/questions/fill_gaps.js", id: "quiz_questions_fill_gaps"},
+         'quiz3_questions_input': {src: modulesPath+"/pemFioi/quiz3/questions/input.js", id: "quiz_questions_input"},
+         'quiz3_questions_sort_list': {src: modulesPath+"/pemFioi/quiz3/questions/sort_list.js", id: "quiz_questions_sort_list"},
+         'quiz3_questions_sort_items': {src: modulesPath+"/pemFioi/quiz3/questions/sort_items.js", id: "quiz_questions_sort_items"},
 
          // Video task
          'taskVideo': {src: modulesPath+"/pemFioi/taskVideo/taskVideo.js", id: "taskVideo"},
@@ -171,6 +215,8 @@
          'quickpi-connection': { src: modulesPath + "/ext/quickpi/quickpi.js", id: "quickpi_connection" },
          'quickpi-screen': { src: modulesPath + "/pemFioi/quickpi/blocklyQuickPi_screen.js", id: "quickpi-screen" },
          'quickpi-store': { src: modulesPath + "/pemFioi/quickpi/blocklyQuickPi_store.js", id: "quickpi-store" },
+         'quickpi-outputgenerator': { src: modulesPath + "/pemFioi/quickpi/blocklyQuickPi_outputGenerator.js", id: "quickpi-outputgenerator" },
+         'interactjs': {src: modulesPath+"/ext/interactjs/interact.min.js", id: "interactjs"}
       };
    };
 
@@ -257,7 +303,14 @@
          {name: 'blockly-base', included: ['blockly', 'blockly_blocks', 'blockly_javascript', 'blockly_python']},
          {name: 'scratch-base', included: ['scratch', 'scratch_blocks_common', 'scratch_blocks', 'blockly_javascript', 'blockly_python']},
          {name: 'python-analysis', languages: ['python'], included: ['react', 'react_dom', 'immutable', 'codecast_analysis', 'codecast_python_stack_view_container', 'codecast_python_function_header', 'codecast_python_function_locals', 'codecast_python_function_view', 'codecast_python_stack_view', 'codecast_python_variable', 'codecast_python_variable_value', 'codecast_css']},
-         {name: 'codecast-7.0', included: ['codecast7.0_css', 'codecast7.0_js', 'codecast7.0_loader']}
+         {name: 'codecast-7.0', included: ['codecast7.0_css', 'codecast7.0_js', 'codecast7.0_loader'] },
+         {name: 'codecast-7.1', included: ['codecast7.1_css', 'codecast7.1_js', 'codecast7.1_loader']},
+         {name: 'codecast-7.2', included: ['codecast7.2_css', 'codecast7.2_js', 'codecast7.2_loader']},
+         {name: 'codecast-7.3', included: ['codecast7.3_css', 'codecast7.3_js', 'codecast7.3_loader']},
+         {name: 'codecast-7.4', included: ['codecast7.4_css', 'codecast7.4_js', 'codecast7.4_loader']},
+         {name: 'codecast-7.5', included: ['codecast7.5_css', 'codecast7.5_js', 'codecast7.5_loader']},
+         {name: 'codecast-7.6', included: ['codecast7.6_css', 'codecast7.6_js', 'codecast7.6_loader']},
+         {name: 'codecast-7.7', included: window.location.protocol !== 'file:' ? ['codecast7.7_css', 'codecast7.7_js_modern', 'codecast7.7_loader'] : ['codecast7.7_css', 'codecast7.7_js', 'codecast7.7_loader']}
 // TODO :: bundles with mobileFirst interface
 //      {name: 'quickAlgo-all-blockly', included: ['quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_blockly_blocks','quickAlgo_blockly_interface', 'quickAlgo_blockly_runner', 'quickAlgo_subtask', 'quickAlgo_context']},
 //      {name: 'quickAlgo-all-python', included: ['python_count', 'ace', 'ace_python', 'skulpt_quickAlgo', 'skulpt_stdlib', 'skulpt_debugger', 'quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_python_interface', 'quickAlgo_python_runner', 'quickAlgo_subtask', 'quickAlgo_context']}
@@ -441,6 +494,8 @@
       var modId = module.id ? module.id : name;
       if (module.type === 'stylesheet') {
          return '<link class="'+modClass+'" rel="stylesheet" type="text/css" href="'+modSrc+'" id="'+modId+'">';
+      } else if (module.type === 'module') {
+         return '<script class="'+modClass+'" type="module" src="'+modSrc+'" id="'+modId+'"></script>';
       } else {
          return '<script class="'+modClass+'" type="text/javascript" src="'+modSrc+'" id="'+modId+'"></script>';
       }

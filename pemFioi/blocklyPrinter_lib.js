@@ -163,6 +163,37 @@ var getContext = function(display, infos) {
             moreThan100Moves: "La sortie est correcte, mais vous l'avez produite en plus de 100 étapes…"
          }
       },
+      sl: {
+         label: {
+            print: "écrire",
+            read: "lire une ligne",
+            readInteger: "lire un entier sur une ligne",
+            readFloat: "lire un nombre à virgule sur une ligne",
+            eof: "fin de la saisie"
+         },
+         code: {
+            print: "print",
+            read: "input",
+            readInteger: "lireEntier",
+            readFloat: "lireDecimal",
+            eof: "finSaisie"
+         },
+         description: {
+         },
+         startingBlockName: "Programme",
+         messages: {
+            input: "Vhod:",
+            output: "Izhod:",
+            outputWrong: "Votre programme n'a pas traité correctement toutes les lignes.",
+            outputCorrect: "Bravo ! Votre programme a traité correctement toutes les lignes.",
+            tooFewChars: "Ligne trop courte : ligne ",
+            tooManyChars: "Ligne trop longue : ligne ",
+            tooFewLines: "Trop peu de lignes en sortie",
+            tooManyLines: "Trop de lignes en sortie",
+            correctOutput: "La sortie est correcte !",
+            moreThan100Moves: "La sortie est correcte, mais vous l'avez produite en plus de 100 étapes…"
+         }
+      },
       none: {
          comment: {
          }

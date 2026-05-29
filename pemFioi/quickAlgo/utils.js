@@ -3,7 +3,7 @@
         Various utility functions for all modes.
 */
 
-var getUrlParameter = function getUrlParameter(sParam) {
+var getUrlParameter = function (sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1));
     var sURLVariables = sPageURL.split('&');
 
@@ -315,9 +315,9 @@ SrlLogger.logMouseInit = function() {
 
    SrlLogger.mouseButtons = {'left': false, 'right': false};
 
-   window.addEventListener('mousedown', SrlLogger.logMouse);
-   window.addEventListener('mousemove', SrlLogger.logMouse);
-   window.addEventListener('mouseup', SrlLogger.logMouse);
+   window.addEventListener('mousedown', SrlLogger.logMouse, true);
+   window.addEventListener('mousemove', SrlLogger.logMouse, true);
+   window.addEventListener('mouseup', SrlLogger.logMouse, true);
 
    SrlLogger.logMouseInitialized = true;
 };
@@ -345,7 +345,7 @@ SrlLogger.logMouse = function(e) {
    if(e.type == 'mousemove') {
       // Throttle mousemove events
       SrlLogger.mouseMoveIgnore = true;
-      setTimeout(function() { SrlLogger.mouseMoveIgnore = false; }, 200);
+      setTimeout(function () { SrlLogger.mouseMoveIgnore = false; }, 100);
 
       if(SrlLogger.mouseButtons['left'] || SrlLogger.mouseButtons['right']) {
          state = 'drag';
@@ -403,7 +403,7 @@ SrlLogger.logMouse = function(e) {
 SrlLogger.logKeyboardInit = function() {
    if(SrlLogger.logKeyboardInitialized) { return; }
 
-   window.addEventListener('keydown', SrlLogger.logKeyboard);
+   window.addEventListener('keydown', SrlLogger.logKeyboard, true);
 
    SrlLogger.logKeyboardInitialized = true;
 };

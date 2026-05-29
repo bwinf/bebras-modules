@@ -5,6 +5,7 @@
         default_language: 'en',
         language: 'en',
         language_set: false,
+        sublanguage: null,
 
         strings: {
             en: {
@@ -14,12 +15,14 @@
                 'wrong_answer_msg_partial_feedback': 'You have at least one mistake. Here is a hint:',
                 'wrong_answer_msg_not_answered': 'You didn\'t answer this question',
                 'wrong_fill_gaps_msg': 'You have %% incorrect answers for this question, highlighted in red.',
+                'wrong_partial': 'You didn\'t answer this question completely.',
                 'validate': 'Submit',
                 'solution': 'Show answer',
                 'restart': 'Restart',
                 'restart_scratch': 'Restart from scratch',
                 'restart_current': 'Restart from current answer',
                 'return_to_top': 'Return to the list of questions',
+                'move_to_next': 'Next question',
                 'placeholder_text': 'Enter text',
                 'placeholder_number': 'Enter number',
                 'error_number': 'Must be a number',
@@ -28,8 +31,43 @@
                 'placeholder_regexp': 'Enter text',
                 'error_regexp': 'Invalid format',
                 'error_grading': 'There was an error while submitting this answer, please try again in a few minutes.',
-                'feedback_score_binary_correct': 'Congratulations, everything is correct',
-                'feedback_score_binary_mistake': 'There is at least one mistake'
+                'feedback_score_binary_correct': 'Congratulations, everything is correct.',
+                'feedback_score_binary_mistake': 'There is at least one mistake.',
+                'feedback_answer_saved': 'Your answer has been saved.',
+                'prompt_single': 'Select one answer',
+                'prompt_multiple': 'Select 0 to %% answers',
+                'return_to_quiz': 'Return to quiz'
+            },
+            fr: {
+                'score': 'Score',
+                'grader_msg': 'Votre score est ',
+                'wrong_answer_msg': 'Vous avez au moins une erreur.',
+                'wrong_answer_msg_partial_feedback': 'Vous avez au moins une erreur. Voici un indice :',
+                'wrong_answer_msg_not_answered': "Vous n'avez pas répondu à cette question.",
+                'wrong_fill_gaps_msg': 'Vous avez %% réponses incorrectes pour cette question, surlignées en rouge.',
+                'wrong_partial': "Vous n'avez pas répondu entièrement à cette question.",
+                'validate': 'Valider',
+                'solution': 'Voir la réponse',
+                'restart': 'Recommencer',
+                'restart_scratch': 'Recommencer au début',
+                'restart_current': 'Modifier ma réponse',
+                'return_to_top': 'Retour à la liste des questions',
+                'move_to_next': 'Question suivante',
+                'cancel' : 'Annuler',
+                'placeholder_text': 'Entrez du texte',
+                'placeholder_number': 'Entrez un nombre',
+                'error_number': 'Vous devez entrer un nombre.',
+                'placeholder_string': 'Entrez une chaîne de caractères',
+                'error_string': 'Vous devez entrer une chaïne de caractères',
+                'placeholder_regexp': 'Entrez du texte.',
+                'error_regexp': 'Format invalide',
+                'error_grading': 'Erreur lors de la soumission, veuillez réessayer dans quelques minutes.',
+                'feedback_score_binary_correct': 'Félicitations, tout est correct.',
+                'feedback_score_binary_mistake': 'Il y a au moins une erreur.',
+                'feedback_answer_saved': 'Votre réponse a été enregistrée.',
+                'prompt_single': 'Sélectionnez une réponse',
+                'prompt_multiple': 'Sélectionnez de 0 à %% réponses',
+                'return_to_quiz': 'Retour au quiz'
             },
             de: {
                 'score': 'Punkte',
@@ -55,31 +93,17 @@
                 'feedback_score_binary_correct': 'Herzlichen Glückwunsch!',
                 'feedback_score_binary_mistake': 'Es gibt leider noch einen Fehler.'
             },
-            fr: {
-                'score': 'Score',
-                'grader_msg': 'Votre score est ',
-                'wrong_answer_msg': 'Vous avez au moins une erreur.',
-                'wrong_answer_msg_partial_feedback': 'Vous avez au moins une erreur. Voici un indice :',
-                'wrong_answer_msg_not_answered': 'Vous n\'avez pas répondu à cette question',
-                'wrong_fill_gaps_msg': 'You have %% incorrect answers for this question, highlighted in red.',
-                'validate': 'Valider',
-                'solution': 'Voir la réponse',
-                'restart': 'Recommencer',
-                'restart_scratch': 'Recommencer au début',
-                'restart_current': 'Modifier ma réponse',
-                'return_to_top': 'Retour à la liste des questions',
-                'cancel' : 'Annuler',
-                'placeholder_text': 'Entrez du texte',
-                'placeholder_number': 'Entrez un nombre',
-                'error_number': 'Vous devez entrer un nombre.',
-                'placeholder_string': 'Entrez une chaîne de caractères',
-                'error_string': 'Vous devez entrer une chaïne de caractères',
-                'placeholder_regexp': 'Entrez du texte.',
-                'error_regexp': 'Format invalide',
-                'error_grading': 'Erreur lors de la soumission, veuillez réessayer dans quelques minutes.',
-                'feedback_score_binary_correct': 'Congratulations, everything is correct',
-                'feedback_score_binary_mistake': 'There is at least one mistake'
-            },
+        },
+
+        substrings: {
+            hint: {
+                en: {
+                    'solution': 'Show hint'
+                },
+                fr: {
+                    'solution': 'Afficher un indice'
+                }
+            }
         },
 
         set: function(lng) {
@@ -90,14 +114,22 @@
             this.language_set = true;
         },
 
+        setSublanguage: function (sublng) {
+            this.sublanguage = sublng;
+        },
+
         translate: function() {
             if(!this.language_set) {
                 this.set();
             }
             var str = '', key = arguments[0];
-            if(this.strings[this.language] && this.strings[this.language][key]) {
+            if (this.sublanguage && this.substrings[this.sublanguage] && this.substrings[this.sublanguage][this.language]) {
+                str = this.substrings[this.sublanguage][this.language][key];
+            }
+            if (!str && this.strings[this.language]) {
                 str = this.strings[this.language][key];
-            } else {
+            }
+            if (!str) {
                 str = this.strings[this.default_language][key] || key;
             }
             return str.replace('%%', arguments[1]);
@@ -110,6 +142,7 @@
         buttons: {},
         holder: false,
         popup: false,
+        validated: false,
 
         addButton: function(parent, name, callback) {
             var btn = $('<button class="btn btn-success">' + lang.translate(name) + '</button>');
@@ -123,6 +156,7 @@
             this.setValidated(false);
             this.popup.hide();
             this.unfreezeTask();
+            this.clearFeedback();
             window.quiz_ui.toggleFeedback(false);
             task.showViews({"task": true, "solution": false}, function(){});
             window.quiz_ui.reset(from_scratch);
@@ -131,9 +165,9 @@
         showPopup: function() {
             if(!this.popup) {
                 this.popup = $(
-                    '<div class="quiz-popup">\
+                    '<div class="quiz-popup-inner"><div class="content"></div></div>\
+                    <div class="quiz-popup">\
                         <div class="opacity-overlay"></div>\
-                        <div class="inner"><div class="content"></div></div>\
                     </div>'
                 );
                 $(document.body).append(this.popup);
@@ -149,6 +183,7 @@
                     self.popup.hide();
                 });
             }
+            $('.quiz-popup-inner').css('top', (Math.max(0, $('.quiz-toolbar').offset().top - 140)) + 'px')
             this.popup.show();
         },
 
@@ -167,12 +202,20 @@
         },
 
 
+        clearFeedback: function () {
+            $('.error-message, .success-message, .feedback-message').remove();
+        },
+
+
         setValidated: function(validated) {
+            this.validated = !!validated;
             if(validated) {
                 this.buttons.validate.hide();
+                this.buttons.move_to_next && this.buttons.move_to_next.show();
                 this.buttons.solution && this.buttons.solution.show();
             } else {
                 this.buttons.validate.show();
+                this.buttons.move_to_next && this.buttons.move_to_next.hide();
                 this.buttons.solution && this.buttons.solution.hide();
             }
         },
@@ -192,18 +235,29 @@
         init: function() {
             if(this.holder) return;
             $('#showSolutionButton').remove();
+            $('.quiz-toolbar').remove();
+            if (quiz_settings.sublanguage) {
+                lang.setSublanguage(quiz_settings.sublanguage);
+            }
             this.holder = $('<div class="quiz-toolbar"></div>');
             var self = this;
-            this.addButton(this.holder, 'validate', function() {
-                platform.validate('done');
+            this.addButton(this.holder, 'validate', function () {
                 self.freezeTask();
                 self.setValidated(true);
+                self.clearFeedback();
+                var cb = null;
+                if(Quiz.params.feedback_score == 'saved') {
+                    cb = function() {
+                        displayScore();
+                    }
+                }
+                platform.validate('done', cb);
             });
             var hasSolution = false;
             $('solution, .solution, #solution').each(function() {
                if($(this).text().trim() != '') { hasSolution = true; }
             });
-            if(hasSolution) {
+            if (hasSolution && window.miniPlatformShowSolution) {
                 this.addButton(this.holder, 'solution', function() {
                     miniPlatformShowSolution();
                 });
@@ -213,6 +267,12 @@
                 this.addButton(this.holder, 'restart', function() {
                     self.showPopup();
                 });
+            }
+            if(quiz_settings.display_move_to_next) {
+                this.addButton(this.holder, 'move_to_next', function() {
+                    platform.validate('next');
+                });
+                this.buttons.move_to_next.hide();
             }
             if(quiz_settings.display_return_to_top) {
                 this.holder.append('<br><br>');
@@ -232,7 +292,7 @@
 
         init: function() {
             var query = document.location.search.replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
-            this.token = query.sToken || '';
+            this.token = this.token || query.sToken;
         },
 
         get: function() {
@@ -271,12 +331,16 @@
     };
 
     task.getMetaData = function(success, error) {
+        var metadata = {
+            disablePlatformProgress: true,
+            minWidth: 'auto',
+            nbHints: 0,
+            usesTokens: true
+        };
         if (typeof json !== 'undefined') {
-            json.disablePlatformProgress = true;
-            success(json);
-        } else {
-            success({nbHints: 0, disablePlatformProgress: true});
+            Object.assign(metadata, json);
         }
+        success(metadata);
     };
 
     task.reloadState = function(state, success, error) { success() }
@@ -286,26 +350,54 @@
     task.getDefaultStateObject = function() { return {} }
 
 
+    function displayScore(score, max_score) {
+        if(Quiz.params.feedback_score == 'binary') {
+            var msg = '<span class="scoreLabel">';
+            if(score == max_score) {
+                msg += lang.translate('feedback_score_binary_correct');
+            } else {
+                msg += lang.translate('feedback_score_binary_mistake');
+            }
+            msg += '</span>';
+        } else if(Quiz.params.feedback_score == 'exact') {
+            var msg =
+                '<span class="scoreLabel">' + lang.translate('score') + '</span>' +
+                '<span class="value">' + score + '</span>' +
+                '<span class="max-value">/' + max_score + '</span>';
+        } else if(Quiz.params.feedback_score == 'saved') {
+            var msg = '<span class="scoreLabel">' + lang.translate('feedback_answer_saved') + '</span>';
+        } else {
+            return;
+        }
+        if($('#score').length == 0) {
+            var div = '<div id="score"></div>';
+            $('.taskContent').first().append(div);
+        }
+        $('#score').html(msg);
+    }
+
+
     $('.grader').hide();
 
 
     // grade
 
-    function useGraderData(answer, versions, score_settings, callback) {
+    function useGraderData(answer, versions, score_settings, callback, errorcb) {
         if(window.Quiz.grader.handler && window.Quiz.grader.data) {
             var res = window.Quiz.grader.handler(window.Quiz.grader.data, answer, versions, score_settings);
             return callback(res);
         }
-        console.error('Local Quiz grader not found');
+        console.error('Cannot evaluate : no local grader or data.');
         if(errorcb) { errorcb(); }
     }
 
 
-    function useGraderUrl(url, task_token, answer, versions, score_settings, callback, errorcb) {
+    function useGraderUrl(url, task_token, answer, answer_token, versions, score_settings, callback, errorcb) {
         var data = {
             action: 'grade2', //
             task: task_token,
             answer: answer,
+            answer_token: answer_token,
             versions: versions,
             score_settings: score_settings
         }
@@ -328,14 +420,30 @@
     }
 
 
+    function lazyLoadImgs() {
+        var lazyElements = document.querySelectorAll('[lazysrc]');
+        for (var i = 0; i < lazyElements.length; i++) {
+            const lazyElement = lazyElements[i];
+            lazyElement.src = lazyElement.getAttribute('lazysrc');
+            lazyElement.removeAttribute('lazysrc');
+        }
+    }
 
 
 
     task.load = function(views, success) {
         var lastViews = views;
+        var lastReloadedAnswer = null;
         task_token.init()
+        lazyLoadImgs();
 
         platform.getTaskParams(null, null, function(taskParams) {
+            if (typeof taskParams.minScore === 'undefined') {
+                taskParams.minScore = 0;
+            }
+            if (typeof taskParams.maxScore === 'undefined') {
+                taskParams.maxScore = 100;
+            }
             var params = Object.assign(quiz_settings, {
                 random: parseInt(taskParams.randomSeed, 10) || Math.floor(Math.random() * 100), //0
                 parent: $('#task')
@@ -366,9 +474,16 @@
             task.getAnswerObject = function() {
                 var answerObj = {
                     data: q.getAnswer(),
-                    versions: Quiz.versions.get()
+                    submittingSingle: q.getSubmittingSingle(),
+                    versions: Quiz.versions.get(),
+                    validated: task_toolbar.validated
                 }
-                //console.log('task.getAnswerObject', answerObj)
+                if(lastReloadedAnswer
+                        && JSON.stringify(lastReloadedAnswer.data) == JSON.stringify(answerObj.data)
+                        && JSON.stringify(lastReloadedAnswer.versions) == JSON.stringify(answerObj.versions)) {
+                    // Keep the validated attribute if the answer didn't change
+                    answerObj.validated = answerObj.validated || lastReloadedAnswer.validated;
+                }
                 return answerObj;
             };            
 
@@ -378,7 +493,8 @@
                     //console.log('task.reloadAnswer', answer)
                     var answerObject = JSON.parse(answer);
                     this.reloadAnswerObject(answerObject);
-                    if(lastViews.solution) {
+                    if (lastViews.solution || (quiz_settings.hide_restart && answerObject.validated)) {
+                        task_toolbar.setValidated(true);
                         task.gradeAnswer(answer, null, function () {});
                     }
                 } catch(e) {
@@ -391,33 +507,9 @@
             task.reloadAnswerObject = function(answerObj) {
                 var new_format = answerObj !== null && typeof answerObj === 'object' && 'data' in answerObj;
                 q.setAnswer(new_format ? answerObj.data : answerObj);
+                lastReloadedAnswer = answerObj;
             }
 
-
-
-            function displayScore(score, max_score) {
-                if(Quiz.params.feedback_score == 'binary') {
-                    var msg = '<span class="scoreLabel">';
-                    if(score == max_score) {
-                        msg += lang.translate('feedback_score_binary_correct');
-                    } else {
-                        msg += lang.translate('feedback_score_binary_mistake');
-                    }
-                    msg += '</span>';
-                } else if(Quiz.params.feedback_score == 'exact') {
-                    var msg =
-                        '<span class="scoreLabel">' + lang.translate('score') + '</span>' +
-                        '<span class="value">' + score + '</span>' +
-                        '<span class="max-value">/' + max_score + '</span>';
-                } else {
-                    return;
-                }
-                if($('#score').length == 0) {
-                    var div = '<div id="score"></div>';
-                    $('.taskContent').first().append(div);
-                }
-                $('#score').html(msg);
-            }
 
 
             function displayMessages(messages) {
@@ -434,26 +526,35 @@
                 var new_format = answer !== null && typeof answer === 'object' && 'data' in answer;
                 function onGrade(result) {
                     q.displayFeedback(result.feedback);
-                    displayScore(result.score, taskParams.maxScore);
+                    if(Quiz.params.save_only_mode) {
+                        result.score = taskParams.maxScore;
+                    }
+                    if (answer.submittingSingle === null) {
+                        displayScore(result.score, taskParams.maxScore);
+                        q.displayOverallFeedback(result.overall_feedback);
+                    }
                     //displayMessages(result.messages);
-                    callback(result.score, lang.translate('grader_msg') + result.score, null);
+                    callback(result.score, lang.translate('grader_msg') + result.score, result.token || null);
                 }
                 function onError(result) {
                     task_toolbar.displayError(lang.translate('error_grading'));
                 }
                 var scoreSettings = {
                     maxScore: taskParams.maxScore,
-                    minScore: taskParams.minScore,
+                    minScore: 0, // taskParams.minScore,
                     noScore: taskParams.noScore,
                     score_calculation: 'score_calculation' in quiz_settings ? quiz_settings.score_calculation : {},
+                    weights: quiz_settings.weights || null,
                     questions_info: q.getQuestionsInfo()
                 };
+
                 var token = task_token.get()
-                if(token) {
+                if(token && !window.Quiz.grader.data) {
                     useGraderUrl(
                         quiz_settings.graderUrl,
                         token,
                         new_format ? answer.data : answer,
+                        answer_token,
                         new_format ? answer.versions : Quiz.versions.get(),
                         scoreSettings,
                         onGrade,
@@ -499,30 +600,4 @@
             callback(res);
         }
     };
-
-
-
-
-// dev code for quiz2 testing, remove it later
-/*
-    $(document).ready(function() {
-
-        var answer = '[[1],[1,2],["test"],["ipsum","amet"]]';
-        task.reloadAnswer(answer, function() {
-            task.gradeAnswer(answer, '', function(res) {
-                //alert(res)
-            })
-        })
-
-        var btn = $('<button class="btn btn-success">test</button>')
-        btn.click(function() {
-            task.getAnswer(function(res) {
-                alert(res)
-            })
-        })
-        $(document.body).prepend(btn);
-    })
-*/
-
-
 })();

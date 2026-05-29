@@ -1,27 +1,30 @@
-var makeTurtle = function (coords) {
-   this.reset = function (stepsize, newcoords) {
-      this.x = 150;
-      this.y = 150;
+
+
+var makeTurtle = function(coords) {
+   this.reset = function(stepsize, newcoords) {
+      this.x = this.drawingContext && this.drawingContext.canvas.width ? this.drawingContext.canvas.width / 2 : 150;
+      this.y = this.drawingContext && this.drawingContext.canvas.height ? this.drawingContext.canvas.height / 2 : 150;
 
       this.directionDeg = 0;
       this.direction = 0;
 
       var initcoords = newcoords || coords;
-      if (initcoords) {
+      if(initcoords) {
          this.x = initcoords.x;
          this.y = initcoords.y;
 
          if (initcoords.dir) {
-            this.directionDeg = initcoords.dir,
-               this.direction = this.directionDeg * Math.PI / 180;
-         }
+           this.directionDeg = initcoords.dir;
+           this.direction = this.directionDeg*Math.PI/180;
+        }
       }
 
       this.paint = true;
       this.stepsize = 5;
 
-      if (this.drawingContext)
-         this.drawingContext.clearRect(0, 0, 300, 300);
+      if (this.drawingContext) {
+         this.drawingContext.clearRect(0, 0, this.drawingContext.canvas.width, this.drawingContext.canvas.height);
+      }
       if (this.turtle) {
          this.turtle.src = this.turtle.getAttribute("pendown");
          this.turtle.style.transform = "rotate(" + (-this.direction) + "rad)";
@@ -33,20 +36,41 @@ var makeTurtle = function (coords) {
    }
    this.reset(5);
 
-   this.turn = function (angle) {
-      this.direction += angle * Math.PI / 180;
+   this.turn = function(angle) {
+      angle = parseInt(angle);
+      this.directionDeg = (this.directionDeg + angle) % 360;
+
+      // Make sure we have a positive direction
+      this.directionDeg = (this.directionDeg + 360) % 360;
+
+      this.direction = this.directionDeg*Math.PI/180;
       if (this.turtle) {
          this.turtle.style.transform = "rotate(" + (-this.direction) + "rad)";
       }
    }
-   this.move = function (amount) {
+   this.trig = function() {
+      // Fix rounding issues
+      if(this.directionDeg == 0) {
+         return {sin: 0, cos: 1};
+      } else if(this.directionDeg == 90) {
+         return {sin: 1, cos: 0};
+      } else if(this.directionDeg == 180) {
+         return {sin: 0, cos: -1};
+      } else if(this.directionDeg == 270) {
+         return {sin: -1, cos: 0};
+      } else {
+         return {sin: Math.sin(this.direction), cos: Math.cos(this.direction)};
+      }
+   }
+   this.move = function(amount) {
       if (this.paint) {
          this.drawingContext.beginPath();
          this.drawingContext.moveTo(this.x, this.y);
       }
 
-      this.x -= amount * this.stepsize * 10 * Math.sin(this.direction);
-      this.y -= amount * this.stepsize * 10 * Math.cos(this.direction);
+      var trig = this.trig();
+      this.x -= amount * this.stepsize * 10 * trig.sin;
+      this.y -= amount * this.stepsize * 10 * trig.cos;
 
       if (this.paint) {
          this.drawingContext.lineTo(this.x, this.y);
@@ -55,20 +79,25 @@ var makeTurtle = function (coords) {
 
       this.placeTurtle();
    }
-   this.start_painting = function () {
+   this.jump = function(x, y) {
+	   this.x = x;
+	   this.y = y;
+      this.placeTurtle();
+   }
+   this.start_painting = function() {
       this.paint = true;
-      if (this.turtle) {
+      if(this.turtle) {
          this.turtle.src = this.turtle.getAttribute("pendown");
       }
    }
-   this.stop_painting = function () {
+   this.stop_painting = function() {
       this.paint = false;
-      if (this.turtle) {
+      if(this.turtle) {
          this.turtle.src = this.turtle.src = this.turtle.getAttribute("penup");
       }
    }
 
-   this.set_colour = function (colour) {
+   this.set_colour = function(colour) {
       this.drawingContext.strokeStyle = colour;
    }
    this.set_stepsize = function (stepsize) {
@@ -83,28 +112,30 @@ var makeTurtle = function (coords) {
       this.turtle = turtle;
       this.placeTurtle();
    }
-   this.placeTurtle = function () {
-      if (!this.turtle) {
-         return;
-      }
-      this.turtle.style.left = this.x - 12 + "px";
-      this.turtle.style.top = this.y - 15 + "px";
+   this.placeTurtle = function() {
+      if(!this.turtle) { return; }
+      this.turtle.style.left= this.x - 12 + "px";
+      this.turtle.style.top= this.y - 15 + "px";
    }
-   this.fixTurtle = function () {
+   this.fixTurtle = function() {
       // Add padding so the turtle styas centered
       this.turtle.style.paddingRight = '2px';
       this.turtle.style.paddingBottom = '3px';
    }
-   this.getCoords = function () {
-      return {
-         x: this.x,
-         y: this.y
-      };
+   this.getCoords = function() {
+      return {x: this.x, y: this.y};
    }
 };
 
 
-var getContext = function (display, infos) {
+var getContext = function(display, infos) {
+   var constants = {
+      DEFAULT_CANVAS_SIZE: {
+         width: 300, //px
+         height: 300 //px
+      },
+   };
+
    var localLanguageStrings = {
       fr: {
          turnleft: "droite ↺",
@@ -266,6 +297,8 @@ var getContext = function (display, infos) {
             pendown: "setze Stift auf",
             peneither: "%1",
             colour2: "setze Farbe",
+            colourRGB: "setze Farbe RGB ( %1, %2, %3 )",
+            colourRGBAmount: "setze Farbe RGB ( %1, %2, %3 )",
             colourvalue: "setze Farbe %1",
             turn: "drehe (Grad) ",
             alert: "messagebox",
@@ -314,6 +347,8 @@ var getContext = function (display, infos) {
             pendown: "stiftRunter",
             peneither: "stift",
             colour2: "setzeFarbe",
+            colourRGB: "setzeFarbeRGB",
+            colourRGBAmount: "setzeFarbeRGB",
             colourvalue: "setzeFarbe",
             turn: "drehe",
             alert: "alert",
@@ -430,10 +465,10 @@ var getContext = function (display, infos) {
    var context = quickAlgoContext(display, infos);
    var strings = context.setLocalLanguageStrings(localLanguageStrings);
 
-   if (infos.turtleInputValueLabel) {
+   if(infos.turtleInputValueLabel) {
       strings.label.inputvalue = infos.turtleInputValueLabel;
    }
-   if (infos.turtleInputValueDescription) {
+   if(infos.turtleInputValueDescription) {
       strings.description.inputvalue = infos.turtleInputValueDescription;
    }
 
@@ -446,22 +481,27 @@ var getContext = function (display, infos) {
       displayTurtle: new makeTurtle(infos.coords),
       displaySolutionTurtle: new makeTurtle(infos.coords),
       invisibleTurtle: new makeTurtle(infos.coords),
-      invisibleSolutionTurtle: new makeTurtle(infos.coords)
+      invisibleSolutionTurtle: new makeTurtle(infos.coords),
+      svgTurtle: null
    };
+
+   if (context.infos.allowInfiniteLoop)
+      context.allowInfiniteLoop = true;
 
    switch (infos.blocklyColourTheme) {
       case "bwinf":
          context.provideBlocklyColours = function () {
             return {
                categories: {
-                  logic: "#81b31d",
-                  loops: "#2fb5bd",
-                  math: "#3950a5",
-                  texts: "#6638a5",
-                  lists: "#d8892b",
-                  colour: 310,
-                  functions: "#9911a5",
-                  turtle: "#723ca5",
+                  logic: 100,
+                  loops: 180,
+                  math: 230,
+                  texts: 60,
+                  lists: 40,
+                  colour: 20,
+                  variables: 330,
+                  functions: 290,
+                  turtle: 260,
                   turtleInput: 200,
                   _default: 0
                },
@@ -485,12 +525,17 @@ var getContext = function (display, infos) {
       context.callCallback(callback);
    };
 
-   context.reset = function (gridInfos) {
-      if (gridInfos === undefined) {
+   context.reset = function(gridInfos) {
+      if(gridInfos === undefined) {
          gridInfos = context.defaultGridInfos;
-      } else {
+      }
+      else {
          context.defaultGridInfos = gridInfos;
       }
+
+      context.turtle.canvasSize = gridInfos.options && gridInfos.options['canvas_size'] ?
+        gridInfos.options['canvas_size'] :
+        (infos.options && infos.options['canvas_size'] ? infos.options['canvas_size'] : constants.DEFAULT_CANVAS_SIZE);
 
       if (context.display && gridInfos) {
          context.resetDisplay();
@@ -504,20 +549,20 @@ var getContext = function (display, infos) {
 
       function createMeACanvas() {
          var canvas = document.createElement('canvas');
-         canvas.width = 300;
-         canvas.height = 300;
-         canvas.style.width = "300px";
-         canvas.style.heigth = "300px";
+         canvas.width = context.turtle.canvasSize.width;
+         canvas.height = context.turtle.canvasSize.height;
+         canvas.style.width = context.turtle.canvasSize.width + "px";
+         canvas.style.height = context.turtle.canvasSize.height + "px";
          canvas.style.border = "1px solid black";
          canvas.style.display = "none";
 
          //document.body.appendChild(canvas); // for debug
-         return canvas;
+         return canvas.getContext('2d');
       }
 
       if (gridInfos) {
-         context.turtle.invisibleTurtle.setDrawingContext(createMeACanvas().getContext('2d'));
-         context.turtle.invisibleSolutionTurtle.setDrawingContext(createMeACanvas().getContext('2d'));
+         context.turtle.invisibleTurtle.setDrawingContext(createMeACanvas());
+         context.turtle.invisibleSolutionTurtle.setDrawingContext(createMeACanvas());
 
          context.turtle.invisibleTurtle.reset(context.infos.turtleStepSize, gridInfos.coords);
          context.turtle.invisibleSolutionTurtle.reset(context.infos.turtleStepSize, gridInfos.coords);
@@ -530,9 +575,16 @@ var getContext = function (display, infos) {
             context.drawSolution(context.turtle.displaySolutionTurtle);
          }
       }
+
+      if (window.C2S) {
+         // Canvas2SVG library is loaded, we create the SVG at the same time
+         context.turtle.svgTurtle = new makeTurtle(infos.coords);
+         context.turtle.svgTurtle.setDrawingContext(new window.C2S(context.turtle.canvasSize.width, context.turtle.canvasSize.height));
+         context.turtle.svgTurtle.reset(context.infos.turtleStepSize, gridInfos.coords);
+      }
    };
 
-   context.resetDisplay = function () {
+   context.resetDisplay = function() {
       var turtleFileName = "turtle.svg";
 
       if ($("#turtleImg").length > 0) {
@@ -542,7 +594,22 @@ var getContext = function (display, infos) {
       if ($("#turtleUpImg").length > 0) {
          turtleUpFileName = $("#turtleUpImg").attr("src");
       }
-      $("#grid").html("<div id='output'  style='height: 304px;width: 304px;border: solid 2px;margin: 12px auto;position:relative;background-color:white;'> <img id='drawinggrid' width='300' height='300' style='width:300px;height:300px;position:absolute;top:0;left:0;opacity: 0.4;filter: alpha(opacity=10);' src='" + context.infos.overlayFileName + "'><canvas id='solutionfield' width='300' height='300' style='width:300px;height:300px;position:absolute;top:0;left:0;opacity: 0.4;filter: alpha(opacity=20);'></canvas><canvas id='displayfield' width='300' height='300' style='width:300px;height:300px;position:absolute;top:0;left:0;'></canvas><canvas id='invisibledisplayfield' width='300' height='300' style='width:300px;height:300px;position:absolute;top:0;left:0;visibility:hidden;'></canvas><img id='turtle' pendown='" + turtleFileName + "' penup='" + turtleUpFileName + "' src='" + turtleFileName + "' style='width: 22px; height: 27px; position:absolute; left: 139px; top: 136px;'></img></div>")
+      $("#grid").html("<div id='output'  style='height: " + (context.turtle.canvasSize.height + 4) + "px;width: " + (context.turtle.canvasSize.width + 4) + "px;border: solid 2px;margin: 12px auto;position:relative;background-color:white;'> <img id='drawinggrid' width='" + context.turtle.canvasSize.width + "' height='" + context.turtle.canvasSize.height + "' style='width:" + context.turtle.canvasSize.width + "px;height:" + context.turtle.canvasSize.height + "px;position:absolute;top:0;left:0;opacity: 0.4;filter: alpha(opacity=10);' src='" + context.infos.overlayFileName + "'><canvas id='solutionfield' width='" + context.turtle.canvasSize.width + "' height='" + context.turtle.canvasSize.height + "' style='width:" + context.turtle.canvasSize.width + "px;height:" + context.turtle.canvasSize.height + "px;position:absolute;top:0;left:0;opacity: 0.4;filter: alpha(opacity=20);'></canvas><canvas id='displayfield' width='" + context.turtle.canvasSize.width + "' height='" + context.turtle.canvasSize.height + "' style='width:" + context.turtle.canvasSize.width + "px;height:" + context.turtle.canvasSize.height + "px;position:absolute;top:0;left:0;'></canvas><canvas id='invisibledisplayfield' width='" + context.turtle.canvasSize.width + "' height='" + context.turtle.canvasSize.height + "' style='width:" + context.turtle.canvasSize.width + "px;height:" + context.turtle.canvasSize.height + "px;position:absolute;top:0;left:0;visibility:hidden;'></canvas><img id='turtle' pendown='" + turtleFileName + "' penup='" + turtleUpFileName + "' src='" + turtleFileName + "' style='width: 22px; height: 27px; position:absolute; left: 139px; top: 136px;'></img></div>")
+
+      if (infos.buttonExportAsSvg) {
+         var exportButton = $('<div><button id="exportAsSvg" style="margin-top: 10px">' + strings.exportAsSvg + '</button></div>');
+         $('#grid').append(exportButton);
+         $('#exportAsSvg').click(function(e) {
+           context.exportAsSvg();
+         });
+      }
+      if (infos.buttonExportAsPng) {
+         var exportButton = $('<div><button id="exportAsPng" style="margin-top: 10px">' + strings.exportAsPng + '</button></div>');
+         $('#grid').append(exportButton);
+         $('#exportAsPng').click(function(e) {
+            context.exportAsPng();
+         });
+      }
 
       context.blocklyHelper.updateSize();
       context.turtle.displayTurtle.setTurtle(document.getElementById('turtle'));
@@ -560,10 +627,89 @@ var getContext = function (display, infos) {
 
    context.updateScale = function () {};
 
+   context.exportAsSvg = function () {
+     var svg = context.exportGridAsSvg();
+     if (!svg) {
+       return;
+     }
+
+     var svgData = svg.outerHTML;
+     var svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"});
+     var svgUrl = URL.createObjectURL(svgBlob);
+     var downloadLink = document.createElement("a");
+     downloadLink.href = svgUrl;
+     downloadLink.download = "turtle.svg";
+     document.body.appendChild(downloadLink);
+     downloadLink.click();
+     document.body.removeChild(downloadLink);
+   };
+
+   context.exportAsPng = function () {
+      var downloadLink = document.createElement('a');
+      var canvas = context.turtle.displayTurtle.drawingContext.canvas;
+      var dataURL = canvas.toDataURL('image/png');
+      var pngUrl = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
+      downloadLink.href = pngUrl;
+      downloadLink.download = "turtle.png";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+   };
+
+   context.exportGridAsSvg = function (option) {
+      if (!window.C2S) {
+         console.error("Unable to export as SVG, canvas2svg library is not loaded.");
+         return;
+      }
+
+      var svgTurtle = context.turtle.svgTurtle;
+      var svg = svgTurtle.drawingContext.getSvg();
+      // Remove leftover images from previous export
+      var svgImages = svg.getElementsByTagName('image');
+      for (var i = 0; i < svgImages.length; i++) {
+         svgImages[i].remove();
+      }
+
+      if (option == 'full') {
+         // Make an export with the background and the turtle
+         var bgimg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+         bgimg.setAttribute('x', 0);
+         bgimg.setAttribute('y', 0);
+         bgimg.setAttribute('width', context.turtle.canvasSize.width);
+         bgimg.setAttribute('height', context.turtle.canvasSize.height);
+         bgimg.setAttribute('style', 'opacity: 0.4; filter: alpha(opacity=10);');
+         bgimg.setAttribute('xlink:href', context.infos.overlayFileName);
+         svg.prepend(bgimg);
+
+         var turtleFileName = "turtle.svg";
+         if ($("#turtleImg").length > 0) {
+            turtleFileName = $("#turtleImg").attr("src");
+         }
+
+         var turtleimg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+         turtleimg.setAttribute('x', svgTurtle.x - 12);
+         turtleimg.setAttribute('y', svgTurtle.y - 15);
+         turtleimg.setAttribute('width', 22);
+         turtleimg.setAttribute('height', 27);
+         turtleimg.setAttribute('style', 'padding-right: 2px; padding-bottom: 3px;');
+         turtleimg.setAttribute('xlink:href', turtleFileName);
+         if (svgTurtle.direction) {
+            turtleimg.setAttribute('transform', "rotate(" + (-svgTurtle.directionDeg) + ", " + svgTurtle.x + ", " + svgTurtle.y + ")");
+         }
+         svg.append(turtleimg);
+      }
+
+      return svg;
+   }
+
+
    function callOnAllTurtles(fn) {
       fn(context.turtle.invisibleTurtle);
       if (context.display) {
          fn(context.turtle.displayTurtle);
+      }
+      if (context.turtle.svgTurtle) {
+         fn(context.turtle.svgTurtle);
       }
    }
 
@@ -573,20 +719,20 @@ var getContext = function (display, infos) {
          param = 0;
       }
 
-      callOnAllTurtles(function (turtle) {
+      callOnAllTurtles(function(turtle) {
          turtle.move(param);
       })
 
       context.waitDelay(callback);
    }
 
-   context.turtle.movebackamount = function (param, callback) {
+   context.turtle.movebackamount = function(param, callback) {
       if (typeof callback == "undefined") {
          callback = param;
          param = 0;
       }
 
-      callOnAllTurtles(function (turtle) {
+      callOnAllTurtles(function(turtle) {
          turtle.move(-param);
       });
 
@@ -612,7 +758,7 @@ var getContext = function (display, infos) {
          }
       }
 
-      callOnAllTurtles(function (turtle) {
+      callOnAllTurtles(function(turtle) {
          if (direction.search('l') != -1) {
             turtle.turn(degree);
          } else {
@@ -620,6 +766,13 @@ var getContext = function (display, infos) {
          }
       });
 
+      context.waitDelay(callback);
+   }
+
+   context.turtle.jump = function(x, y, callback) {
+      callOnAllTurtles(function(turtle) {
+		  turtle.jump(x, y);
+      });
       context.waitDelay(callback);
    }
 
@@ -635,13 +788,13 @@ var getContext = function (display, infos) {
       context.waitDelay(callback);
    }
 
-   context.turtle.row = function (callback) {
+   context.turtle.row = function(callback) {
       context.runner.noDelay(callback, context.turtle.invisibleTurtle.getCoords().y);
    }
-   context.turtle.col = function (callback) {
+   context.turtle.col = function(callback) {
       context.runner.noDelay(callback, context.turtle.invisibleTurtle.getCoords().x);
    }
-   context.turtle.move = function (callback) {
+   context.turtle.move = function(callback) {
       context.turtle.moveamount(1, callback);
    }
    context.turtle.turnleftamount = function (param, callback) {
@@ -653,7 +806,7 @@ var getContext = function (display, infos) {
    context.turtle.turnleft = function (callback) {
       context.turtle.turnleftamount(90, callback);
    }
-   context.turtle.turnright = function (callback) {
+   context.turtle.turnright = function(callback) {
       context.turtle.turnrightamount(90, callback);
    }
    context.turtle.penup = function (callback) {
@@ -708,8 +861,24 @@ var getContext = function (display, infos) {
    }
    context.turtle.colourvalue = context.turtle.colour2;
 
+   context.turtle.colourRGB = function(r, g, b, callback) {
+      colour = "rgb("+r+", "+g+", "+b+")";
+      if (typeof callback == "undefined") {
+         callback = colour;
+         colour = "#000000";
+      }
+
+      callOnAllTurtles(function(turtle) {
+         turtle.set_colour(colour);
+      })
+
+      context.waitDelay(callback);
+   }
+
+   context.turtle.colourRGBAmount = context.turtle.colourRGB;
+
    var defaultMoveAmount = 1;
-   if (context.infos.defaultMoveAmount != undefined)
+   if(context.infos.defaultMoveAmount != undefined)
       defaultMoveAmount = context.infos.defaultMoveAmount;
 
    context.customBlocks = {
@@ -1273,11 +1442,9 @@ var getContext = function (display, infos) {
    return context;
 }
 
-if (window.quickAlgoLibraries) {
+if(window.quickAlgoLibraries) {
    quickAlgoLibraries.register('turtle', getContext);
 } else {
-   if (!window.quickAlgoLibrariesList) {
-      window.quickAlgoLibrariesList = [];
-   }
+   if(!window.quickAlgoLibrariesList) { window.quickAlgoLibrariesList = []; }
    window.quickAlgoLibrariesList.push(['turtle', getContext]);
 }

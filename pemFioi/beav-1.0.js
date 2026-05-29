@@ -149,6 +149,32 @@ Beav.Array.shuffle = function(t, randomSeed) {
    }
 };
 
+Beav.Array.pickRandomNTimes = function (t, rng, n, diffN) {
+   // Pick a random index from t, n times, different from at least diffN previous indexes
+   // Useful to have a task which randomly cycles through the elements of t,
+   // without giving the same task instance as the previous diffN ones
+   var previousIndexes = [];
+   var index = 0;
+   if (n < 1) { n += 100; }
+   for (var i = 0; i < n; i++) {
+      index = rng.nextInt(0, Math.max(0, t.length - previousIndexes.length - 1));
+      var sortedPreviousIndexes = previousIndexes.slice();
+      sortedPreviousIndexes.sort();
+      for (var j = 0; j < sortedPreviousIndexes.length; j++) {
+         if (index >= sortedPreviousIndexes[j]) {
+            index++;
+         }
+      }
+      if (index > t.length - 1) {
+         // Happens if we ask for more different indexes than there are items in the list
+         index = t.length - 1;
+      }
+      previousIndexes.push(index);
+      previousIndexes = previousIndexes.slice(-diffN);
+   }
+   return t[index];
+}
+
 
 /**********************************************************************************/
 /* Matrix */
@@ -344,6 +370,21 @@ Beav.Navigator.getVersion = function(){
    return M
 }
 
+Beav.Navigator.isIE = function () {
+   // case for IE11 which has trident
+   var version = Beav.Navigator.getVersion();
+   if (typeof version == 'string' && version.substring(0, 2).toLowerCase() == 'ie') {
+      return true
+   }
+   return version[0].toLowerCase() == 'msie' || version[0].toLowerCase() == 'ie';
+}
+
+Beav.Navigator.isSafari = function () {
+   var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+   // console.log(isSafari)
+   return isSafari
+}
+
 Beav.Navigator.supportsResponsive = function() {
    if(Beav.Navigator.isIE8()){
       return false
@@ -352,7 +393,7 @@ Beav.Navigator.supportsResponsive = function() {
    if(navVersion[0].toLowerCase() == 'msie'){
       return false
    }
-   if(navVersion[0].toLowerCase() == 'firefox' && navVersion[1] < 5){
+   if(navVersion[0].toLowerCase() == 'firefox' && navVersion[1] < 68){
       return false
    }
    return true
@@ -487,12 +528,25 @@ Beav.Geometry.distance = function(x1,y1,x2,y2) {
    return Math.sqrt(Math.pow(x2 - x1,2) + Math.pow(y2 - y1,2));
 };
 
+Beav.Geometry.distance3D = function(x1,y1,z1,x2,y2,z2) {
+   return Math.sqrt(Math.pow(x2 - x1,2) + Math.pow(y2 - y1,2) + Math.pow(z2 - z1,2));
+};
+
+Beav.Geometry.distanceND = function(pos1,pos2) {
+   var nbDim = pos1.length;
+   var sum = 0;
+   for(var iD = 0; iD < nbDim; iD++){
+      sum += Math.pow(pos2[iD] - pos1[iD], 2);
+   }
+   return Math.sqrt(sum);
+};
+
 /*
    This is used to handle drag on devices that have both a touch screen and a mouse.
    Can be tested on chrome by loading a task in desktop mode, then switching to tablet mode.
    To call instead of element.drag(onMove, onStart, onEnd);
 */
-Beav.dragWithTouch = function(element, onMove, onStart, onEnd, displayHelper) {
+Beav.dragWithTouch = function (element, onMove, onStart, onEnd) {
    var touchingX = 0;
    var touchingY = 0;
    var disabled = false;
@@ -521,8 +575,8 @@ Beav.dragWithTouch = function(element, onMove, onStart, onEnd, displayHelper) {
       var touches = evt.changedTouches;
       var dx = touches[0].pageX - touchingX;
       var dy = touches[0].pageY - touchingY;
-      if(displayHelper){
-         var scale = displayHelper.scaleFactor || 1;
+      if (window.displayHelper) {
+         var scale = window.displayHelper.scaleFactor || 1;
       }else{
          var scale = 1;
       }
@@ -536,8 +590,8 @@ Beav.dragWithTouch = function(element, onMove, onStart, onEnd, displayHelper) {
    
    function callOnMove(dx,dy,x,y,event) {
       disabled = true;
-      if(displayHelper){
-         var scale = displayHelper.scaleFactor || 1;
+      if (window.displayHelper) {
+         var scale = window.displayHelper.scaleFactor || 1;
       }else{
          var scale = 1;
       }

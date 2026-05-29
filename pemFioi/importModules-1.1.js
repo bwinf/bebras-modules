@@ -9,6 +9,7 @@ var importableModules = function () {
       'jquery-ui.touch-punch': {src: modulesPath+"/ext/jquery-ui/jquery.ui.touch-punch.min.js", id: "jquery.ui.touch-punch.min.js"},
       'JSON-js': {src: modulesPath+"/ext/json/json2.min.js", id: "https://github.com/douglascrockford/JSON-js"},
       'raphael-2.2.1': {src: modulesPath+"/ext/raphael/2.2.1/raphael.min.js", id: "http://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.1/raphael.min.js"},
+      'raphael-2.2.1b': {src: modulesPath+"/ext/raphael/2.2.1b/raphael.min.js", id: "raphael-2.2.1b"},
       'beaver-task-2.0': {src: modulesPath+"/pemFioi/beaver-task-2.0.js", id: "http://www.france-ioi.org/modules/pemFioi/beaver-task-2.0.js"},
       'jschannel': {src: modulesPath+"/ext/jschannel/jschannel.js", id: "http://www.france-ioi.org/modules/ext/jschannel/jschannel.js"},
       'raphaelFactory-1.0': {src: modulesPath+"/pemFioi/raphaelFactory-1.0.js", id: "http://www.france-ioi.org/modules/pemFioi/raphaelFactory-1.0.js"},
@@ -34,6 +35,7 @@ var importableModules = function () {
       'miniPlatform': {classStr: "remove", src: modulesPath+"/integrationAPI.01/official/miniPlatform.js"},
       'static-task': {src: modulesPath+"/pemFioi/static-task.js"},
       'fonts-loader-1.0': {src: modulesPath+"/pemFioi/fontsLoader-1.0.js", id: "fonts-loader"},
+      'canvas2svg': { src: modulesPath + "/ext/canvas2svg/canvas2svg.js", id: "canvas2svg" },
 
       'acorn': {src: modulesPath+"/ext/js-interpreter/acorn.js", id: "acorn"},
       'acorn-walk': {src: modulesPath+"/ext/acorn/walk.js", id: "acorn-walk"},
@@ -100,6 +102,27 @@ var importableModules = function () {
       'skulpt_quickAlgo': {src: modulesPath+"ext/skulpt/skulpt.quickAlgo.min.js", id: "skulpt_quickAlgo"},
       'skulpt_stdlib': {src: modulesPath+"ext/skulpt/skulpt-stdlib.js", id: "skulpt_stdlib"},
       'skulpt_debugger': {src: modulesPath+"ext/skulpt/debugger.js", id: "skulpt_debugger"},
+
+      'codecast7.3_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.3/index.css", id: "codecast7.3_css"},
+      'codecast7.3_js': {src: modulesPath+"/ext/codecast/7.3/index.js", id: "codecast7.3_js"},
+      'codecast7.3_loader': {src: modulesPath+"/ext/codecast/7.3/codecast-loader.js", id: "codecast7.3_loader"},
+
+      'codecast7.4_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.4/index.css", id: "codecast7.4_css"},
+      'codecast7.4_js': {src: modulesPath+"/ext/codecast/7.4/index.js", id: "codecast7.4_js"},
+      'codecast7.4_loader': {src: modulesPath+"/ext/codecast/7.4/codecast-loader.js", id: "codecast7.4_loader"},
+
+      'codecast7.5_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.5/index.css", id: "codecast7.5_css"},
+      'codecast7.5_js': {src: modulesPath+"/ext/codecast/7.5/index.js", id: "codecast7.5_js"},
+      'codecast7.5_loader': {src: modulesPath+"/ext/codecast/7.5/codecast-loader.js", id: "codecast7.5_loader"},
+
+      'codecast7.6_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.6/index.css", id: "codecast7.6_css"},
+      'codecast7.6_js': {src: modulesPath+"/ext/codecast/7.6/index.js", id: "codecast7.6_js"},
+      'codecast7.6_loader': {src: modulesPath+"/ext/codecast/7.6/codecast-loader.js", id: "codecast7.6_loader"},
+
+      'codecast7.7_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.7/index.css", id: "codecast7.7_css"},
+      'codecast7.7_js': {src: modulesPath+"/ext/codecast/7.7/index.js", id: "codecast7.7_js"},
+      'codecast7.7_js_modern': {src: modulesPath+"/ext/codecast/7.7/index.modern.js", id: "codecast7.7_js_modern", type: "module"},
+      'codecast7.7_loader': {src: modulesPath+"/ext/codecast/7.7/codecast-loader.js", id: "codecast7.7_loader"},
 
       'simple_draw': {src: modulesPath+"/pemFioi/javascool/simple_draw.js", id: "simple_draw"},
       'blockly_simple_draw': {src: modulesPath+"/pemFioi/javascool/blockly_simple_draw.js", id: "blockly_simple_draw"},
@@ -222,7 +245,12 @@ var bundledModules = function () {
       {name: 'blockly-base', included: ['blockly', 'blockly_blocks', 'blockly_javascript', 'blockly_python']},
       {name: 'scratch-base', included: ['scratch', 'scratch_blocks_common', 'scratch_blocks', 'blockly_javascript', 'blockly_python']},
       {name: 'quickAlgo-all-blockly', included: ['quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_blockly_blocks','quickAlgo_blockly_interface', 'quickAlgo_blockly_runner', 'quickAlgo_subtask', 'quickAlgo_context']},
-      {name: 'quickAlgo-all-python', included: ['python_count', 'ace', 'ace_python', 'skulpt_quickAlgo', 'skulpt_stdlib', 'skulpt_debugger', 'quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_python_interface', 'quickAlgo_python_runner', 'quickAlgo_subtask', 'quickAlgo_context']}
+      {name: 'quickAlgo-all-python', included: ['python_count', 'ace', 'ace_python', 'skulpt_quickAlgo', 'skulpt_stdlib', 'skulpt_debugger', 'quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_python_interface', 'quickAlgo_python_runner', 'quickAlgo_subtask', 'quickAlgo_context']},
+      {name: 'codecast-7.3', included: ['codecast7.3_css', 'codecast7.3_js', 'codecast7.3_loader']},
+      {name: 'codecast-7.4', included: ['codecast7.4_css', 'codecast7.4_js', 'codecast7.4_loader']},
+      {name: 'codecast-7.5', included: ['codecast7.5_css', 'codecast7.5_js', 'codecast7.5_loader']},
+      {name: 'codecast-7.6', included: ['codecast7.6_css', 'codecast7.6_js', 'codecast7.6_loader']},
+      {name: 'codecast-7.7', included: window.location.protocol !== 'file:' ? ['codecast7.7_css', 'codecast7.7_js_modern', 'codecast7.7_loader'] : ['codecast7.7_css', 'codecast7.7_js', 'codecast7.7_loader']}
    ];
 };
 
@@ -251,11 +279,41 @@ var QueryString = function () {
 }();
 
 
-function getBundles(modulesList) {
-   // Check modulesList for modules which are already bundled together
+function bundlesToModules(modulesList) {
+   // Check modulesList for bundles, replace them with their modules
 
-   // For now, only do it if useBundles is true
-   if(!window.useBundles) { return modulesList; }
+   if(typeof bundledModules == 'function') {
+      bundledModules = bundledModules();
+   }
+
+   var bundlesByName = {};
+   for(var iBundle in bundledModules) {
+      var curBundle = bundledModules[iBundle];
+      bundlesByName[curBundle.name] = curBundle;
+   }
+
+   var newList = [];
+   var includedModules = {};
+   function addModule(module) {
+      if(includedModules[module]) { return; }
+      newList.push(module);
+      includedModules[module] = true;
+   }
+   for(var iModule in modulesList) {
+      var curModule = modulesList[iModule];
+      if(bundlesByName[curModule]) {
+         for(var iSub in bundlesByName[curModule].included) {
+            addModule(bundlesByName[curModule].included[iSub]);
+         }
+      } else {
+         addModule(curModule);
+      }
+   }
+   return newList;
+}
+
+function modulesToBundles(modulesList) {
+   // Check modulesList for modules that can be replaced with bundles
 
    if(typeof bundledModules == 'function') {
       bundledModules = bundledModules();
@@ -291,7 +349,16 @@ function importModules(modulesList) {
    if(typeof importableModules == 'function') {
       importableModules = importableModules();
    };
-   modulesList = getBundles(modulesList);
+
+   // If useBundles is True, we'll try to use bundles instead of the
+   // corresponding modules. Otherwise, we do the opposite and translate
+   // bundles into a list of modules.
+   if(window.useBundles) {
+      modulesList = modulesToBundles(modulesList);
+   } else {
+      modulesList = bundlesToModules(modulesList);
+   }
+
    var modulesStr = '';
    for(var iMod in modulesList) {
       var moduleName = modulesList[iMod];
@@ -313,6 +380,8 @@ function importModules(modulesList) {
          var modId = curModule.id ? curModule.id : moduleName;
          if(curModule.type == 'stylesheet') {
             modulesStr += '<link class="'+modClass+'" rel="stylesheet" type="text/css" href="'+modSrc+'" id="'+modId+'">';
+         } else if(curModule.type == 'module') {
+            modulesStr += '<script class="'+modClass+'" type="module" src="'+modSrc+'" id="'+modId+'"></script>';
          } else {
             modulesStr += '<script class="'+modClass+'" type="text/javascript" src="'+modSrc+'" id="'+modId+'"></script>';
          }

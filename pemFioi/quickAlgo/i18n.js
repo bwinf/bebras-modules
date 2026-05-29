@@ -2,6 +2,7 @@
     i18n:
         Translations for the various strings in quickAlgo
 */
+
 var quickAlgoLanguageStrings = {
    fr: {
       categories: {
@@ -28,6 +29,29 @@ var quickAlgoLanguageStrings = {
          internet: "Internet",
          display: "Afficher",
       },
+      description: {
+         if: "Mot clé pour exécuter un bloc d'instructions seulement si une condition est vérifiée",
+         else:"Mot clé pour exécuter un bloc d'instructions si la condition spécifiée après un if n'est pas vérifiée",
+         elif: "Mot clé pour ajouter une branche à une instruction conditionnelle",
+         for: "Mot clé pour répéter un bloc d'instructions un certain nombre de fois",
+         while: "Mot clé pour répéter un bloc d'instructions tant qu'une condition est vérifiée",
+         not: "Opérateur logique de négation",
+         and: "Opérateur logique ET",
+         or: "Opérateur logique OU",
+         def: "Mot clé pour définir une fonction",
+         len: "Fonction qui renvoie la longueur de l'élément passé en paramètre"
+         //list, set, _getitem_, _setitem_, lambda, break, continue, setattr, map, split
+      },
+      controls: {
+         backToFirst: 'Réinitialiser',
+         playPause: 'Lecture / Pause',
+         nextStep: 'Pas-à-pas',
+         goToEnd: 'Aller à la fin',
+         displaySpeedSlider: 'Modifier la vitesse',
+         hideSpeedSlider: 'Cacher le contrôle de vitesse',
+         speedSlower: 'Ralentir',
+         speedFaster: 'Accélérer'
+      },
       exerciseTypeAbout: {
          default: "Sujet propulsé par <a href='http://www.france-ioi.org/'>France-IOI</a>",
          "Quick-Pi": "<a href='https://quick-pi.org/'>Quick-Pi</a> " +
@@ -41,6 +65,7 @@ var quickAlgoLanguageStrings = {
       flagClicked: "Quand %1 cliqué",
       tooManyIterations: "Votre programme met trop de temps à se terminer !",
       tooManyIterationsWithoutAction: "Votre programme s'est exécuté trop longtemps sans effectuer d'action !",
+      tooLongExecution: "Votre programme s'exécute très lentement, il est possible qu'il contienne une boucle infinie.",
       submitProgram: "Valider le programme",
       runProgram: "Exécuter sur ce test",
       stopProgram: "|<",
@@ -90,6 +115,7 @@ var quickAlgoLanguageStrings = {
       blocklyToPythonTitle: "Code Python",
       blocklyToPythonIntro: "Le code ci-dessous est l'équivalent dans le langage Python de votre programme Blockly.",
       blocklyToPythonPassComment: '# Insérer des instructions ici',
+      svgExport: "Exporter l'affichage au format SVG",
       limitBlocks: "{remainingBlocks} blocs restants sur {maxBlocks} autorisés.",
       limitBlocksOver: "{remainingBlocks} blocs en trop utilisés pour {maxBlocks} autorisés.",
       limitElements: "{remainingBlocks} blocs restants sur {maxBlocks} autorisés.",
@@ -147,9 +173,7 @@ var quickAlgoLanguageStrings = {
       readDocumentation: "Vous êtes autorisé(e) à lire de la documentation sur Python et à utiliser un moteur de recherche pendant le concours.",
       autorizedKeyWords: "Mots-clés autorisés : ",
       constant: "constante",
-      variable: "variable",
-      braketSquare: "crochets", // TODO :: verify
-      braketCurvy: "accolades" // TODO :: verify
+      variable: "variable"
    },
    en: {
       categories: {
@@ -174,6 +198,16 @@ var quickAlgoLanguageStrings = {
          read: "Reading",
          print: "Writing",
       },
+      controls: {
+         backToFirst: 'Reset',
+         playPause: 'Play / Pause',
+         nextStep: 'Step-by-step',
+         goToEnd: 'Go to end',
+         displaySpeedSlider: 'Change speed',
+         hideSpeedSlider: 'Hide speed controls',
+         speedSlower: 'Slow down',
+         speedFaster: 'Speed up'
+      },
       exerciseTypeAbout: {
          default: "Task powered by <a href='http://www.france-ioi.org/'>France-IOI</a>",
          "Quick-Pi": "<a href='https://quick-pi.org/'>Quick-Pi</a> is a project by " +
@@ -187,6 +221,7 @@ var quickAlgoLanguageStrings = {
       flagClicked: "When %1 clicked",
       tooManyIterations: "Too many iterations!",
       tooManyIterationsWithoutAction: "Too many iterations without action!",
+      tooLongExecution: "Your program is running very slowly, it may contain an infinite loop.",
       submitProgram: "Validate this program",
       runProgram: "Run this program",
       stopProgram: "|<",
@@ -236,6 +271,7 @@ var quickAlgoLanguageStrings = {
       blocklyToPythonTitle: "Python code",
       blocklyToPythonIntro: "",
       blocklyToPythonPassComment: '# Insert instructions here',
+      svgExport: "Export display as SVG",
       limitBlocks: "{remainingBlocks} blocks remaining out of {maxBlocks} available.",
       limitBlocksOver: "{remainingBlocks} blocks over the limit of {maxBlocks} available.",
       limitElements: "{remainingBlocks} elements remaining out of {maxBlocks} available.",
@@ -293,9 +329,7 @@ var quickAlgoLanguageStrings = {
       readDocumentation: "Vous êtes autorisé(e) à lire de la documentation sur Python et à utiliser un moteur de recherche pendant le concours.", // TODO :: translate
       autorizedKeyWords: "Mots-clés autorisés : ", // TODO :: translate,
       constant: "constant", // TODO :: verify
-      variable: "variable",
-      braketSquare: "square brackets", // TODO :: verify
-      braketCurvy: "curly brackets" // TODO :: verify
+      variable: "variable"
    },
    de: {
       categories: {
@@ -334,6 +368,7 @@ var quickAlgoLanguageStrings = {
       flagClicked: "Sobald %1 geklickt", // (scratch start flag, %1 is the flag icon)
       tooManyIterations: "Zu viele Anweisungen wurden ausgeführt!",
       tooManyIterationsWithoutAction: "Zu viele Anweisungen ohne eine Aktion wurden ausgeführt!",
+      tooLongExecution: "Ihr Programm läuft sehr langsam, es könnte eine Endlosschleife enthalten.",
       submitProgram: "Speichern, ausführen und bewerten",
       runProgram: "Testen",
       stopProgram: "|<",
@@ -383,6 +418,7 @@ var quickAlgoLanguageStrings = {
       blocklyToPythonTitle: "Python-Code",
       blocklyToPythonIntro: "",
       blocklyToPythonPassComment: '# Befehle hier eingeben',
+      svgExport: "Export display as SVG", // TODO :: translate
       limitBlocks: "Noch {remainingBlocks} von {maxBlocks} Bausteinen verfügbar.",
       limitBlocksOver: "{remainingBlocks} Bausteine zusätzlich zum Limit von {maxBlocks} verbraucht.",
       limitElements: "Noch {remainingBlocks} von {maxBlocks} Befehle verfügbar.",
@@ -417,8 +453,8 @@ var quickAlgoLanguageStrings = {
       loopDo: "mache",
       loopIteration: "Wiederholung",
       displayVideo: "Zeige Video",
-      showDetails: `Weitere Hinweise`,
-      hideDetails: `Verstecke Hinweise`,
+      showDetails: "Weitere Hinweise",
+      hideDetails: "Verstecke Hinweise",
       editor: "Editor",
       instructions: "Anweisungen",
       testLabel: "Test",
@@ -428,7 +464,7 @@ var quickAlgoLanguageStrings = {
       infiniteLoop: "Endlosschleife", 
       availableFunctions: "Verfügbare Funktionen:",
       availableFunctionsVerbose: "Die verfügbaren Funktionen sind:",
-      startingLine: "Dein Programm muss mit folgender Zeile beginnen",
+      startingLine: "Dein Programm muss mit folgender Zeile beginnen:",
       startingLines: "Dein Programm muss mit folgenden Zeilen beginnen",
       keyword: "Schlüsselwort",
       keywordAllowed: "Erlaubtes Schlüsselwort:",
@@ -436,7 +472,7 @@ var quickAlgoLanguageStrings = {
       keywordsAllowed: "Erlaubte Schlüsselwörter:",
       keywordsForbidden: "Nicht erlaubte Schlüsselwörter:",
       variablesAllowed: "Du darfst Variable verwenden.",
-      variablesForbidden: "Du darfst keine Variablen verwenden.",
+      variablesForbidden: "Du darfst keine Variablen verwenden",
       readDocumentation: "Du darfst die Python-Dokumentation lesen.",
       autorizedKeyWords: "Erlaubte Schlüsselwörter:",
       constant: "Konstante",
@@ -482,6 +518,7 @@ var quickAlgoLanguageStrings = {
       flagClicked: "Cuando se hace click en %1",
       tooManyIterations: "¡Su programa se tomó demasiado tiempo para terminar!",
       tooManyIterationsWithoutAction: "¡Su programa se tomó demasiado tiempo para terminar!", // TODO :: change translation
+      tooLongExecution: "Su programa se ejecuta muy lentamente, puede contener un bucle infinito.",
       submitProgram: "Validar el programa",
       runProgram: "Ejecutar el programa",
       speedSliderSlower: "Más lento",
@@ -531,6 +568,7 @@ var quickAlgoLanguageStrings = {
       blocklyToPythonTitle: "Python código",
       blocklyToPythonIntro: "",
       blocklyToPythonPassComment: '# Insertar instrucciones aquí',
+      svgExport: "Export display as SVG", // TODO: translate
       limitBlocks: "{remainingBlocks} bloques disponibles de {maxBlocks} autorizados.",
       limitBlocksOver: "{remainingBlocks} bloques sobre el límite de {maxBlocks} autorizados.",
       limitElements: "{remainingBlocks} elementos disponibles de {maxBlocks} autorizados.",
@@ -588,9 +626,7 @@ var quickAlgoLanguageStrings = {
       readDocumentation: "Se le permite leer la documentación de Python y utilizar un motor de búsqueda durante el concurso.",
       autorizedKeyWords: "Palabras clave autorizadas: ",
       constant: "constante", // TODO :: verify
-      variable: "variable", // TODO :: verify
-      braketSquare: "corchetes", // TODO :: verify
-      braketCurvy: "llaves" // TODO :: verify
+      variable: "variable" // TODO :: verify
    },
    sl: {
       categories: {
@@ -601,8 +637,8 @@ var quickAlgoLanguageStrings = {
          colour: "Barve",
          dicts: "Slovarji",
          input: "Vnos",
-         lists: "Tabele",
-         tables: "2D Tabele",
+         lists: "Seznami",
+         tables: "Tabele",
          logic: "Logika",
          loops: "Zanke",
          control: "Nadzor",
@@ -616,9 +652,9 @@ var quickAlgoLanguageStrings = {
          turtle: "Grafika"
       },
       exerciseTypeAbout: {
-         default: "Task powered by <a href='http://www.france-ioi.org/'>France-IOI</a>", // TODO: translate
-         "Quick-Pi": "<a href='https://quick-pi.org/'>Quick-Pi</a> is a project by " +
-             "<a href='http://www.france-ioi.org/'>France-IOI</a>" // TODO: translate
+         default: "Naloga podprta s pomočjo <a href='http://www.france-ioi.org/'>France-IOI</a>", // TODO: verify
+         "Quick-Pi": "<a href='https://quick-pi.org/'>Quick-Pi</a> projekt od " +
+             "<a href='http://www.france-ioi.org/'>France-IOI</a>" // TODO: verify
       },
       invalidContent: "Neveljavna vsebina",
       unknownFileType: "Neznana vrsta datoteke",
@@ -628,11 +664,12 @@ var quickAlgoLanguageStrings = {
       flagClicked: "Ko je kliknjena %1",
       tooManyIterations: "Preveč ponovitev!",
       tooManyIterationsWithoutAction: "Preveč ponovitev brez dejanja!",
+      tooLongExecution: "Vaš program se izvaja zelo počasi, morda vsebuje neskončno zanko.",
       submitProgram: "Oddaj program",
       runProgram: "Poženi program",
       stopProgram: "|<",
-      speedSliderSlower: "Slower",
-      speedSliderFaster: "Faster",
+      speedSliderSlower: "Počasneje",
+      speedSliderFaster: "Hitreje",
       speed: "Hitrost:",
       stepProgram: "|>",
       slowSpeed: ">",
@@ -656,41 +693,42 @@ var quickAlgoLanguageStrings = {
       editWindowTitle: "Izdaja vaje", // TODO: verify
       titleEdition: "Naslov:", // TODO: verify
       descriptionEdition: "Opis:", // TODO: verify
-      saveAndQuit: "Sauvegarder & Quitter", // TODO: translate
-      quitWithoutSavingConfirmation: "Quitter sans sauvegarder vos modifications ?", // TODO: translate
-      about: "À propos", // TODO: Translate
-      license: "Licenca:", // TODO: tanslate
+      saveAndQuit: "Shrani in izstopi", // TODO: verify
+      quitWithoutSavingConfirmation: "Izstopi brez shranjevanja?", // TODO: verify
+      about: "O nas", // TODO: verify
+      license: "Licenca:", // TODO: verify
       licenseReserved: "Vse pravice pridržane.",
-      authors: "Avtorji:", // TODO: translate
+      authors: "Avtorji:", // TODO: verify
       other: "drugo", // TODO: verify
-      otherLicense: "Other license", // TODO: translate
-      pleaseSpecifyLicense: "Merci de spécifier une license", // TODO: translate
+      otherLicense: "Druge licence", // TODO: verify
+      pleaseSpecifyLicense: "Prosim navedite licenco", // TODO: verify
       avoidReloadingOtherTask: "Opozorilo: Za drugo nalogo ne naloži kode znova!",
       files: "Datoteke",
       reloadProgram: "Znova naloži",
       restart: "Ponastavi",
       loadBestAnswer: "Naloži najboljši odgovor",
       saveProgram: "Shrani",
-      copy: "Copy", // TODO :: translate
-      paste: "Paste",
-      blocklyToPython: "Convert to Python",
-      blocklyToPythonTitle: "Python code",
-      blocklyToPythonIntro: "",
-      blocklyToPythonPassComment: '# Insert instructions here',
+      copy: "Kopiraj", // TODO: verify
+      paste: "Prilepi",
+      blocklyToPython: "Pretvori v Python",
+      blocklyToPythonTitle: "Python koda",
+      blocklyToPythonIntro: "Spodnji koda je ekvivalent vašega Blockly programa v jeziku Python.",  // TODO: verify
+      blocklyToPythonPassComment: '# Vnesi navodila semkaj',
+      svgExport: "Izvozi kot SVG", // TODO: verify
       limitBlocks: "Delčkov na voljo: {remainingBlocks}",
       limitBlocksOver: "{remainingBlocks} delčkov preko meje {maxBlocks}",
-      limitElements: "{remainingBlocks} elementov izmed {maxBlocks} imaš še na voljo.",
-      limitElementsOver: "{remainingBlocks} elementov preko meje {maxBlocks} elementov, ki so na voljo.",
+      limitElements: "{remainingBlocks} delčkov izmed {maxBlocks} imaš še na voljo.",
+      limitElementsOver: "{remainingBlocks} delčkov preko meje {maxBlocks} delčkov, ki so na voljo.",
       capacityWarning: "Opozorilo : program je rešen narobe, uporablja preveliko število delčkov. Bodi pozoren na število delčkov, ki jih lahko uporabiš, informacijo o tem imaš zgoraj.",
-      clipboardDisallowedBlocks: "You cannot paste this program, as it contains blocks which aren't allowed in this version.", // TODO :: translate
-      waitBetweenExecutions: "Think carefully before starting a different program!",
+      clipboardDisallowedBlocks: "Tega programa ni možno prilepiti, ker vsebuje delčke, ki niso na voljo v tej nalogi.", // TODO : verify
+      waitBetweenExecutions: "Dobro premisli preden začneš z novim programom!",
       previousTestcase: "Nazaj",
       nextTestcase: "Naprej",
       allTests: "Vsi testi: ",
       errorEmptyProgram: "Program je prazen! Poveži delčke.",
       tooManyBlocks: "Uporabljaš preveč delčkov!",
-      limitedBlock: "Uporabljaš preveliko število omejeneg števila blokov:",
-      limitedBlocks: "Uporabljaš preveliko število omejeneg števila blokov:",
+      limitedBlock: "Uporabljaš preveliko število omejeneg števila delčkov:",
+      limitedBlocks: "Uporabljaš preveliko število omejeneg števila delčkov:",
       uninitializedVar: "Spremenljivka ni določena:",
       undefinedMsg: "Do napake lahko pride, ker je indeks prevelik, ali pa spremenljivka ni definirana.",
       valueTrue: 'resnično',
@@ -707,8 +745,8 @@ var quickAlgoLanguageStrings = {
       textVariable: "besedilo",
       listVariable: "tabela",
       scaleDrawing: "Približaj ×2",
-      loopRepeat: "repeat",
-      loopDo: "do",
+      loopRepeat: "ponavljaj", // TODO: verify
+      loopDo: "izvedi",
       loopIteration: "ponovitev",
       displayVideo: "Prikaži video",
       showDetails: "Prikaži podrobnosti",
@@ -719,24 +757,22 @@ var quickAlgoLanguageStrings = {
       testError: "napaka",
       testSuccess: "pravilno",
       seeTest: "poglej test",
-      infiniteLoop: "répéter indéfiniment", // TODO :: translate
-      availableFunctions: "Fonctions disponibles : ", // TODO :: translate
-      availableFunctionsVerbose: "Les fonctions disponibles pour contrôler le robot sont :", // TODO :: translate
-      startingLine: "Votre programme doit commencer par la ligne", // TODO :: translate
-      startingLines: "Votre programme doit commencer par les lignes", // TODO :: translate
-      keyword: "ključna beseda", // TODO :: verify
-      keywordAllowed: "Le mot-clé suivant est autorisé : ", // TODO :: translate
-      keywordForbidden: "Le mot-clé suivant est interdit : ", // TODO :: translate
-      keywordsAllowed: "Les mots-clés suivants sont autorisés : ", // TODO :: translate
-      keywordsForbidden: "Les mots-clés suivants sont interdits : ", // TODO :: translate
-      variablesAllowed: "Les variables sont autorisées.", // TODO :: translate
-      variablesForbidden: "Les variables sont interdites.", // TODO :: translate
-      readDocumentation: "Vous êtes autorisé(e) à lire de la documentation sur Python et à utiliser un moteur de recherche pendant le concours.", // TODO :: translate
-      autorizedKeyWords: "Mots-clés autorisés : ", // TODO :: translate,
+      infiniteLoop: "neskončna zanka", // TODO : verify
+      availableFunctions: "Razpoložljive funkcije: ", // TODO : verify,
+      availableFunctionsVerbose: "Razpoložljive funkcije za nadzor junaka:", // TODO : verify,
+      startingLine: "Vaš program mora začeti z vrstico", // TODO : verify,
+      startingLines: "Vaš program mora začeti z vrsticami", // TODO : verify,
+      keyword: "ključna beseda", // TODO :: verify,
+      keywordAllowed: "Naslednja ključna beseda je dovoljena: ", // TODO : verify,
+      keywordForbidden: "Naslednja ključna beseda je prepovedana: ", // TODO : verify,
+      keywordsAllowed: "Naslednje ključne besede so dovoljene: ", // TODO : verify,
+      keywordsForbidden: "Naslednje ključne besede so prepovedene: ", // TODO : verify,
+      variablesAllowed: "Spremenljivke so dovoljene.", // TODO : verify,
+      variablesForbidden: "Spremenljivke niso dovoljene.", // TODO :: verify,
+      readDocumentation: "Med tekmovanjem je dovoljeno brati dokumentacijo o Pythonu in uporabljati spletni brskalnik.", // TODO : verify,
+      autorizedKeyWords: "Dovoljene ključne besede: ", // TODO : verify,
       constant: "konstanten", // TODO :: verify
-      variable: "spremenljivka", // TODO :: verify
-      braketSquare: "oglati oklepaji", // TODO :: verify
-      braketCurvy: "kodrasti oklepaji" // TODO :: verify
+      variable: "spremenljivka" // TODO :: verify
    },
    it: {
       categories: {
@@ -776,6 +812,7 @@ var quickAlgoLanguageStrings = {
       flagClicked: "Quando %1 cliccato",
       tooManyIterations: "Il tuo programma richiede troppo tempo per arrestarsi!",
       tooManyIterationsWithoutAction: "Il tuo programma è rimasto in funzione troppo a lungo senza intraprendere alcuna azione!",
+      tooLongExecution: "Il tuo programma è in esecuzione molto lentamente, potrebbe contenere un ciclo infinito.",
       submitProgram: "Convalida il programma",
       runProgram: "Esegui su questo test",
       stopProgram: "|<",
@@ -825,6 +862,7 @@ var quickAlgoLanguageStrings = {
       blocklyToPythonTitle: "Codice Python",
       blocklyToPythonIntro: "Il codice sottostante è l'equivalente in linguaggio Python del tuo programma Blockly.",
       blocklyToPythonPassComment: '# Inserisci delle istruzioni qui',
+      svgExport: "Export display as SVG", // TODO: translate
       limitBlocks: "{remainingBlocks} blocchi restati su {maxBlocks} autorizzati.",
       limitBlocksOver: "{remainingBlocks} blocchi utilizzati in eccesso per {maxBlocks} autorizzati.",
       limitElements: "{remainingBlocks} blocchi restanti su {maxBlocks} autorizzati.",
@@ -882,9 +920,175 @@ var quickAlgoLanguageStrings = {
       readDocumentation: "Sei autorizzato(a) a leggere la documentazione su Python e a utilizzare un motore di ricerca durante il concorso.",
       autorizedKeyWords: "Parole-chiave autorizzate: ",
       constant: "costante", // TODO :: verify
-      variable: "variabile", // TODO :: verify
-      braketSquare: "parentesi quadre", // TODO :: verify
-      braketCurvy: "parentesi graffe" // TODO :: verify
+      variable: "variabile" // TODO :: verify
+   },
+   nl: {
+      categories: {
+         actions: 'Acties',
+         actuator: 'Schakelaars',
+         sensors: 'Sensoren',
+         debug: 'Debuggen',
+         colour: 'Kleuren',
+         data: 'Gegevens',
+         dicts: 'Woordenboeken',
+         input: 'Invoer',
+         lists: 'Lijsten',
+         tables: 'Tabellen',
+         logic: 'Logica',
+         loops: 'Lussen',
+         control: 'Controles',
+         operator: 'Operatoren',
+         math: 'Wiskunde',
+         texts: 'Tekst',
+         variables: 'Variabelen ',
+         functions: 'Functies',
+         read: 'Lezen ',
+         print: 'Schrijven',
+         internet: 'Internet',
+         display: 'Weergeven'
+      },
+      description: {
+         if: 'Trefwoord om een blok instructies alleen uit te voeren als een voorwaarde is gecontroleerd',
+         else: 'Trefwoord voor het uitvoeren van een blok instructies als de voorwaarde opgegeven na een if niet gecontroleerd is',
+         elif: 'Trefwoord voor het toevoegen van een vertakking aan een voorwaardelijke instructie',
+         for: 'Trefwoord voor het een bepaald aantal keren herhalen van een blok instructies',
+         while: 'Trefwoord voor het herhalen van een blok instructies zolang een voorwaarde is gecontroleerd',
+         not: 'Logische ontkenningsoperator',
+         and: 'Logische operator EN',
+         or: 'Logische operator OF',
+         def: 'Trefwoord om een functie te definiëren'
+      },
+      controls: {
+         backToFirst: 'Heropstarten',
+         playPause: 'Lezen/Pauze',
+         nextStep: 'Stap voor stap',
+         goToEnd: 'Naar het einde gaan',
+         displaySpeedSlider: 'De snelheid wijzigen',
+         hideSpeedSlider: 'De snelheidscontrole verbergen',
+         speedSlower: 'Vertragen',
+         speedFaster: 'Versnellen'
+      },
+      exerciseTypeAbout: {
+         default: "Onderwerp aangedreven door  <a href='http://www.france-ioi.org/'>France-IOI</a>",
+         'Quick-Pi': "<a href='https://quick-pi.org/'>Quick-Pi</a> is een project van <a href='http://www.france-ioi.org/'>France-IOI</a>"
+      },
+      invalidContent: 'Ongeldige inhoud ',
+      unknownFileType: 'Bestandstype niet herkend',
+      download: 'downloaden',
+      smallestOfTwoNumbers: 'Kleinste van de twee getallen',
+      greatestOfTwoNumbers: 'Grootste van de twee getallen',
+      flagClicked: 'Wanneer %1 geklikt',
+      tooManyIterations: 'Het duurt te lang voordat uw programma klaar is!',
+      tooManyIterationsWithoutAction: 'Uw programma liep te lang zonder actie te ondernemen!',
+      tooLongExecution: 'Uw programma loopt erg langzaam, het kan een oneindige lus bevatten.',
+      submitProgram: 'Het programma bevestigen',
+      runProgram: 'Uitvoeren op deze test ',
+      stopProgram: '|<',
+      speedSliderSlower: 'Slower (Trager)',
+      speedSliderFaster: '(Sneller)',
+      speed: 'Snelheid :',
+      stepProgram: '|>',
+      slowSpeed: '>',
+      mediumSpeed: '>>',
+      fastSpeed: '>>>',
+      ludicrousSpeed: '>|',
+      stopProgramDesc: 'Beginnen bij het begin',
+      stepProgramDesc: 'Uitvoering stap voor stap',
+      slowSpeedDesc: 'Uitvoeren op deze test',
+      mediumSpeedDesc: 'Gemiddelde snelheid',
+      fastSpeedDesc: 'Hoge snelheid',
+      ludicrousSpeedDesc: 'Zeer hoge snelheid',
+      selectLanguage: 'Taal:',
+      blocklyLanguage: 'Blockly',
+      javascriptLanguage: 'Jacascript',
+      importFromBlockly: 'Vertrekken vanaf blockly',
+      loadExample: 'Het voorbeeld invoegen',
+      saveOrLoadButton: 'Laden/opslaan',
+      saveOrLoadProgram: 'Uw programma opslaan of herladen:',
+      editButton: 'Bewerken',
+      editWindowTitle: 'Bewerken van de oefening',
+      titleEdition: 'Titel:',
+      descriptionEdition: 'Omschrijving:',
+      saveAndQuit: 'Opslaan & afsluiten',
+      quitWithoutSavingConfirmation: 'Afsluiten zonder uw wijzigingen op te slaan ?',
+      about: 'Over',
+      license: 'Licentie:',
+      licenseReserved: 'Alle rechten voorbehouden.',
+      authors: 'Auteurs:',
+      other: 'Andere',
+      otherLicense: 'Andere licentie',
+      pleaseSpecifyLicense: 'Gelieve een licentie aan te geven',
+      avoidReloadingOtherTask: 'Opgelet: herlaad niet het programma van een ander onderwerp !',
+      files: 'Bestanden',
+      reloadProgram: 'Herladen',
+      restart: 'Herbeginnen',
+      loadBestAnswer: 'Mijn beste antwoord laden',
+      saveProgram: 'Opslaan ',
+      copy: 'Kopiëren',
+      paste: 'Plakken',
+      blocklyToPython: 'De vertaling weergeven in Python',
+      blocklyToPythonTitle: 'Code Python',
+      blocklyToPythonIntro: 'De onderstaande code is het Python-equivalent van uw Blockly-programma.',
+      blocklyToPythonPassComment: '# De instructies hier invoegen',
+      svgExport: 'De weergave exporteren naar het formaat SVG',
+      limitBlocks: '{remainingBlocks} resterende blokken op {maxBlocks} toegestaan.',
+      limitBlocksOver: '{remainingBlocks} te veel gebruikte  blokken voor {maxBlocks} toegestaan.',
+      limitElements: '{remainingBlocks} resterende blokken op {maxBlocks} toegestaan.',
+      limitElementsOver: '{remainingBlocks} te veel gebruikte blokken voor {maxBlocks} toegestaan.',
+      capacityWarning: 'Opgelet: uw programma is ongeldig omdat het te veel blokken gebruikt. Let op de bloklimiet die rechtsboven in de editor wordt weergegeven.',
+      clipboardDisallowedBlocks: 'U kan dit programma niet plakken, omdat het blokken bevat die niet zijn toegestaan in deze versie.',
+      waitBetweenExecutions: 'Ik rust. Denk goed na voordat je een ander programma uitvoert!',
+      previousTestcase: 'Vorige',
+      nextTestcase: 'Volgende',
+      allTests: 'Alle tests:',
+      errorEmptyProgram: 'Het programma is leeg! Verbind de blokken.',
+      tooManyBlocks: 'U gebruikt te veel blokken!',
+      limitedBlock: 'U gebruikt te vaak een blok met beperkt gebruik:',
+      limitedBlocks: 'U gebruikt te vaak blokken met beperkt gebruik:',
+      uninitializedVar: 'Niet-geïnitialiseerde variabele :',
+      undefinedMsg: 'Dit kan het gevolg zijn van toegang tot een index buiten een lijst of van een ongedefinieerde variabele.',
+      valueTrue: 'waar',
+      valueFalse: 'onwaar',
+      evaluatingAnswer: 'Evaluatie bezig',
+      correctAnswer: 'Correct antwoord',
+      partialAnswer: 'Verbeterbaar antwoord',
+      wrongAnswer: 'Fout antwoord',
+      resultsNoSuccess: 'U heeft geen enkele test gevalideerd.',
+      resultsPartialSuccess: 'U heeft enkel {nbSuccess} test(s) op {nbTests} gevalideerd.',
+      gradingInProgress: 'Evaluatie bezig',
+      introTitle: 'Uw missie',
+      introDetailsTitle: 'Details van de missie',
+      textVariable: 'tekst',
+      listVariable: 'lijst ',
+      scaleDrawing: 'Zoom x 2',
+      loopRepeat: 'repeat (herhaal)',
+      loopDo: 'do (doe)',
+      loopIteration: 'herhaling',
+      displayVideo: 'De video weergeven',
+      showDetails: 'Meer details',
+      hideDetails: 'De details verbergen',
+      editor: 'Uitgever',
+      instructions: 'Opgave',
+      testLabel: 'Test',
+      testError: 'fout  ',
+      testSuccess: 'gevalideerd',
+      seeTest: 'zien',
+      infiniteLoop: 'oneindig herhalen',
+      availableFunctions: 'Beschikbare functies:',
+      availableFunctionsVerbose: 'De beschikbare functies voor het besturen van de robot zijn:',
+      startingLine: 'Uw programma moet beginnen met de regel',
+      startingLines: 'Uw programma moet beginnen met de regels',
+      keyword: 'trefwoord',
+      keywordAllowed: 'Het volgende trefwoord is toegestaan:',
+      keywordForbidden: 'Het volgende trefwoord is niet toegestaan:',
+      keywordsAllowed: 'De volgende trefwoorden zijn toegestaan:',
+      keywordsForbidden: 'De volgende trefwoorden zijn niet toegestaan:',
+      variablesAllowed: 'De variabelen zijn toegestaan.',
+      variablesForbidden: 'De variabelen zijn niet toegestaan.',
+      readDocumentation: 'Het is toegestaan om de Python-documentatie te lezen en een zoekmachine te gebruiken tijdens het examen.',
+      autorizedKeyWords: 'Toegestane trefwoorden:',
+      constant: 'constante',
+      variable: 'variabele'
    }
 };
 

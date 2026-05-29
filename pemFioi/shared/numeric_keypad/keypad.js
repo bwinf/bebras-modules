@@ -2,6 +2,8 @@ var NumericKeypad = {
 
     bodyStyle: document.createElement('style'),
     bodyMinHeight: 0,
+    attachedInputs: [],
+    keypadInputOnly: false,
 
     data: {
         value: '',
@@ -10,11 +12,12 @@ var NumericKeypad = {
         callbackFinished: function() {},
     },
 
+
     renderKeypad: function() {
         if($('#numeric-keypad').length) { return; }
 
         // Type of the screen element
-        var screenType = window.touchDetected ? 'div' : 'input';
+        var screenType = (NumericKeypad.touchDetected || this.keypadInputOnly) ? 'div' : 'input';
 
         var html = '' +
             '<div id="numeric-keypad"><div class="keypad">' +
@@ -54,7 +57,7 @@ var NumericKeypad = {
 
     handleKeypadKey: function(e) {
         // Update if we detected a touch event
-        if($('input.keypad-value').length && window.touchDetected) {
+        if ($('input.keypad-value').length && NumericKeypad.touchDetected) {
             $('input.keypad-value').replaceWith('<div class="keypad-value"></div>');
         }
 
@@ -175,15 +178,26 @@ var NumericKeypad = {
     },
 
 
-    attach: function(input) {
+    attach: function (input, options) {
         var self = this;
+
+        this.keypadInputOnly = !!(options && options.keypadInputOnly);
 
         // Make sure the body has enough height for the keypad
         this.bodyMinHeight = Math.max(this.bodyMinHeight, (input.offset().top || 0) + 272);
         this.bodyStyle.innerText = 'body, #container { min-height: ' + this.bodyMinHeight + 'px; }';
         $('#container').css('padding-bottom', '110px');
 
+        if (self.touchDetected || this.keypadInputOnly) {
+            input.attr('inputmode', 'none');
+            input.attr('readonly', 'readonly');
+        }
+        self.attachedInputs.push(input);
+
         input.on('focus', function() {
+            if (self.touchDetected || this.keypadInputOnly) {
+                input.blur();
+            }   
             self.renderKeypad();
             $('#numeric-keypad').show();
             var position = input.offset();
@@ -201,6 +215,19 @@ var NumericKeypad = {
             };
             self.handleKeypadKey(null);
         });
-    }
+    },
 
+    detectTouchInit: function () {
+        var self = this;
+        var detectTouch = function () {
+            self.touchDetected = true;
+            window.removeEventListener('touchstart', detectTouch);
+            for (var i = 0; i < self.attachedInputs.length; i++) {
+                self.attachedInputs[i].attr('inputmode', 'none').attr('readonly', 'readonly');
+            }
+        }
+        window.addEventListener('touchstart', detectTouch);
+    }
 }
+
+NumericKeypad.detectTouchInit();

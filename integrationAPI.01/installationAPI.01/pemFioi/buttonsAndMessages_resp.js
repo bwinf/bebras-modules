@@ -11,6 +11,7 @@
  */
 
 window.displayHelper = {
+   loading: false,
    loaded: false,
    timeLoaded: 0,
    checkAnswerInterval: null,
@@ -39,11 +40,13 @@ window.displayHelper = {
    timeoutMinutes: 5,
    avatarType: "beaver",
    bUseFullWidth: false,
+   taskFullPage: false,
    responsive: false,
    mobileMode: false, 
    toggle_task: false,
    headerH: 71,   // in resp mode
-   versionHeaderH: [93,93,85,48],  // in resp mode
+   versionHeaderH: [93,93,85,48,93],  // in resp mode
+   altVersionHeaderH: [60,60,51,49,60],  // in resp mode when nbLevels = 1
    footerH: 50,  // in resp mode
    availableH: null, // height for zone_2 in responsive mode
    availableW: null, // width for zone_2 in responsive mode
@@ -90,6 +93,9 @@ window.displayHelper = {
          levelName_easy: "Facile",
          levelName_medium: "Moyen",
          levelName_hard: "Difficile",
+         switch_statement: "Énoncé",
+         switch_task: "Exercice",
+         switch_solution: "Solution",
          warningTimeout: "<p>Attention, cela fait plus de {0} minutes que vous êtes sur cette question.</p><p>Vous devriez sans doute changer de sujet, en cliquant sur le bouton tout en haut à droite.</p>",
          alright: "D'accord",
          moveOn: "Passer à la suite",
@@ -161,6 +167,9 @@ window.displayHelper = {
          levelName_easy: "Easy",
          levelName_medium: "Medium",
          levelName_hard: "Hard",
+         switch_statement: "Statement",
+         switch_task: "Task",
+         switch_solution: "Solution",
          warningTimeout: "<p>Warning, it has been more than {0} minutes since you started working on this task.</p><p>You should probably switch to a diffrent task, by clicking on the button on the top-right.</p>",
          alright: "Alright",
          moveOn: "Move on",
@@ -232,6 +241,9 @@ window.displayHelper = {
          levelName_easy: "Lätt",
          levelName_medium: "Medelsvår",
          levelName_hard: "Svår",
+         switch_statement: "Uppgift",
+         switch_task: "Övning",
+         switch_solution: "Lösning",
          warningTimeout: "<p>Varning: det har gått mer än {0} minuter sedan du började med den här uppgiften. </p><p>Du borde kanske byta till en annan uppgift, genom att klicka på knappen uppe till höger.</p>",
          alright: "Okej",
          moveOn: "Gå vidare",
@@ -303,6 +315,9 @@ window.displayHelper = {
          levelName_easy: "Helppo",
          levelName_medium: "Hieman vaikeampi",
          levelName_hard: "Vaikea",
+         switch_statement: "Tehtävä",
+         switch_task: "Harjoitus",
+         switch_solution: "Ratkaisu",
          warningTimeout: "<p>Huomio: on kulunut jo yli {0} minuuttia siitä, kun aloit tekemään tätä tehtävää.</p><p>Sinun mahdollisesti kannattaisi siirtyä yrittämään jotain toista tehtävää klikkaamalla oikean yläkulman nappia.</p>",
          alright: "Ok",
          moveOn: "Siirry eteenpäin",
@@ -374,6 +389,9 @@ window.displayHelper = {
          levelName_easy: "Leicht",
          levelName_medium: "Mittel",
          levelName_hard: "Schwer",
+         switch_statement: "Aufgabenstellung",
+         switch_task: "Aufgabe",
+         switch_solution: "Lösung",
          warningTimeout: "<p>Achtung, du bist schon seit {0} Minuten bei dieser Frage.</p><p>Du solltest jetzt zu einer anderen Aufgabe wechseln.</p>",
          alright: "OK",
          moveOn: "Fortfahren",
@@ -393,19 +411,19 @@ window.displayHelper = {
          tryToDoBetterOrChangeTask: "Versuche, dich zu verbessern oder wähle eine andere Frage.",
          tryToDoBetterOrMoveToNextLevel: "Versuche, dich zu verbessern oder wähle schwierigere Version.",
          bestPossibleScoreCongrats: "Das ist die bestmögliche Punktzahl für diese Aufgabe. Glückwunsch!",
-         forMorePointsMoveToNextLevel: "Wähle eine schwierigere Version aus, um noch mehr Punkte zu bekommen.",
+         forMorePointsMoveToNextLevel: "Wähle eine schwerere Version aus, um noch mehr Punkte zu bekommen.",
          youDidBetterBefore: "Du hast dich verbessern.",
          scoreStays2: "Dein Punktestand bleibt gleich.",
          reloadBestAnswer: "Deine beste Antwort wieder laden.",
          noAnswerSaved: "Bisher noch keine Antwort für diese Version gespeichert.",
          validate: "Erstellen",
          restart: "Neustarten",
-         harderLevelSolved: "Achtung: Du hast schon eine schwierigere Version gelöst. Du kannst mit dieser Version keine zusätzlichen Punkte bekommen.",
+         harderLevelSolved: "Achtung: Du hast schon eine schwerere Version gelöst. Du kannst mit dieser Version keine zusätzlichen Punkte bekommen.",
          showLevelAnyway: "Trotzdem anzeigen",
          scoreObtained: "Erhaltene Punkte:",
          hardVersionTakesTime: "Eine {0} zu lösen kann dich viel Zeit kosten; Denke zunächst daran, die Fragen in {1} zu beantworten, um schnell Punkte zu bekommen.",
          illKeepThatInMind: "Ich hab das verstanden",
-         harderLevelAvailable: "Beachte, dass du bei dieser Frage direkt zu einer schwierigeren Version gehen kannst.",
+         harderLevelAvailable: "Beachte, dass du bei dieser Frage direkt zu einer schwereren Version gehen kannst.",
          lockedLevel: "Diese Version ist noch gesperrt. Löse die vorherige um diese freizuschalten.",
          lockedLevelDev: "This version is normally locked, and the previous version must be solved before displaying this. As you opened this task locally, you can however display this version for testing purposes.",
          gradeThisAnswer: "Diese Antwort auswerten",
@@ -445,6 +463,9 @@ window.displayHelper = {
          levelName_easy: "سهل",
          levelName_medium: "متوسط",
          levelName_hard: "صعب",
+         switch_statement: "البيان",
+         switch_task: "التمرين",
+         switch_solution: "الحل",
          warningTimeout: "<p>لقد مر وقت طويل منذ أن بدأت في هذه المسألة, من الأفضل أن تبدأ في مسألة أخرى حتى لا يضيع الوقت</p>",
          alright: "حسناً",
          moveOn: "استمر",
@@ -516,6 +537,9 @@ window.displayHelper = {
          levelName_easy: "Fácil",
          levelName_medium: "Moderado",
          levelName_hard: "Difícil",
+         switch_statement: "Enunciado",
+         switch_task: "Ejercicio",
+         switch_solution: "Solución",
          warningTimeout: "<p>Atención, ya llevas {0} minutos en esta pregunta.</p><p>Te recomendamos cambiar de tema haciendo click sobre el botón de arriba a la derecha.</p>",
          alright: "De acuerdo",
          moveOn: "Pasar a la siguiente",
@@ -587,6 +611,9 @@ window.displayHelper = {
          levelName_easy: "Facile",
          levelName_medium: "Medio",
          levelName_hard: "Difficile",
+         switch_statement: "Enunciato",
+         switch_task: "Esercizio",
+         switch_solution: "Soluzione",
          warningTimeout: "<p>Attenzione, sono più di {0} minuti che sei su questa domanda.</p><p>Dovresti cambiare argomento, cliccando sul pulsante in alto a destra.</p>",
          alright: "Va bene",
          moveOn: "Vai avanti",
@@ -658,6 +685,9 @@ window.displayHelper = {
          levelName_easy: "Enostavno",
          levelName_medium: "Srednje",
          levelName_hard: "Težko",
+         switch_statement: "Naloga",
+         switch_task: "Vaja",
+         switch_solution: "Rešitev",
          warningTimeout: "<p>Opozorilo: Odkar rešuješ to nalogo, je minilo že več kot {0} minut.</p><p>Najbolje, da izbereš drugo nalogo, tako da klikneš gumb v zgornjem desnem kotu.</p>",
          alright: "V redu",
          moveOn: "Nadaljuj",
@@ -725,66 +755,78 @@ window.displayHelper = {
       }
       this.strings = this.languageStrings[window.stringsLanguage];
    },
-   /***********************************************
-    * Initialization functions called by the task *
-    ***********************************************/
+   // *** Initialization functions called by the task ***
    load: function(views) {
+      this.loading = true;
       this.initLanguage();
       var self = this;
       this.showScore = (typeof views.grader !== 'undefined' && views.grader === true);
-      window.platform.getTaskParams(null, null, function(taskParams) {
+
+      function processTaskParams(taskParams) {
          self.taskParams = taskParams;
          self.readOnly = (self.taskParams.readonly === true || self.taskParams.readOnly == 'true');
          self.graderScore = +self.taskParams.noScore;
          self.savedAnswer = '';
+      }
 
-         $("#difficultyWarning").html(self.strings.difficultyWarning).addClass("warningHeader");
-         $("#enemyWarning").html(self.strings.enemyWarning).addClass("warningHeader");
-         if(!self.responsive){
-            var addTaskHTML = '<div id="displayHelperAnswering" class="contentCentered">';
-         }else{
-            var addTaskHTML = '<div id="displayHelperAnswering">';
+      if (!self.taskParams) {
+         self.taskParams = {};
+      }
+      if (window.task && window.task.displayedSubTask && window.task.displayedSubTask.taskParams) {
+         // Get the taskParams from the task if possible
+         // Avoids an async call in a function which isn't async
+         processTaskParams(window.task.displayedSubTask.taskParams);
+      } else {
+         window.platform.getTaskParams(null, null, processTaskParams);
+      }
+
+      $("#difficultyWarning").html(self.strings.difficultyWarning).addClass("warningHeader");
+      $("#enemyWarning").html(self.strings.enemyWarning).addClass("warningHeader");
+      if (!self.responsive) {
+         var addTaskHTML = '<div id="displayHelperAnswering" class="contentCentered">';
+      } else {
+         var addTaskHTML = '<div id="displayHelperAnswering">';
+      }
+      // Place button placements at the end of HTML if they don't already exist
+      if (!self.responsive) {
+         var placementNames = ['graderMessage', 'validate', 'cancel', 'saved'];
+      } else {
+         var placementNames = ['graderMessage', 'cancel', 'validate', 'saved'];
+      }
+      for (var iPlacement = 0; iPlacement < placementNames.length; iPlacement++) {
+         var placement = 'displayHelper_' + placementNames[iPlacement];
+         if ($('#' + placement).length === 0) {
+            addTaskHTML += '<div id="' + placement + '"></div>';
          }
-         // Place button placements at the end of HTML if they don't already exist
-         if(!self.responsive){
-            var placementNames = ['graderMessage', 'validate', 'cancel', 'saved'];
-         }else{
-            var placementNames = ['graderMessage', 'cancel', 'validate',  'saved'];
-         }
-         for (var iPlacement = 0; iPlacement < placementNames.length; iPlacement++) {
-            var placement = 'displayHelper_' + placementNames[iPlacement];
-            if ($('#' + placement).length === 0) {
-               addTaskHTML += '<div id="' + placement + '"></div>';
-            }
-         }
-         addTaskHTML += '</div>';
-         if (!document.getElementById('displayHelperAnswering')) {
-            $(self.taskSelector).append(addTaskHTML);
-         }
-         self.loaded = true;
-         self.timeLoaded = new Date().getTime();
+      }
+      addTaskHTML += '</div>';
+      if (!document.getElementById('displayHelperAnswering')) {
+         $(self.taskSelector).append(addTaskHTML);
+      }
+      self.loading = false;
+      self.loaded = true;
+      self.timeLoaded = new Date().getTime();
+      if (self.popupMessageShown) {
+         $('#displayHelperAnswering').hide();
+      }
+
+      var taskDelayWarning = function () {
          if (self.popupMessageShown) {
-            $('#displayHelperAnswering').hide();
+            self.taskDelayWarningTimeout = setTimeout(taskDelayWarning, 5000);
+         } else {
+            self.showPopupMessage(self.formatTranslation(self.strings.warningTimeout, [self.timeoutMinutes]), 'blanket', self.strings.alright, null, null, "warning");
+            self.taskDelayWarningTimeout = null;
          }
-
-         var taskDelayWarning = function() {
-            if (self.popupMessageShown) {
-               self.taskDelayWarningTimeout = setTimeout(taskDelayWarning, 5000);
-            } else {
-               self.showPopupMessage(self.formatTranslation(self.strings.warningTimeout, [self.timeoutMinutes]), 'blanket', self.strings.alright, null, null, "warning");
-               self.taskDelayWarningTimeout = null;
-            }
-         };
-         if (self.timeoutMinutes > 0) {
-            self.taskDelayWarningTimeout = setTimeout(taskDelayWarning, self.timeoutMinutes * 60 * 1000);
-         }
-      });
+      };
+      if (self.timeoutMinutes > 0) {
+         self.taskDelayWarningTimeout = setTimeout(taskDelayWarning, self.timeoutMinutes * 60 * 1000);
+      }
 
       if(this.responsive){
          $('#displayHelperAnswering').appendTo($('#zone_3'));
-         $('#zone_3').prepend($('<div id="resp_switch_1"><i class="far fa-file-alt"></i><span>ÉNONCÉ</span></div><div id="resp_switch_2"><i class="fas fa-pen"></i><span>EXERCICE</span></div>'));
-         $('#zone_3').append($('<div id="showExercice" class="selected"><i class="fas fa-pen"></i><span>EXERCICE</span></div>'));
-         $('#zone_3').append($('<div id="showSolution"><i class="fas fa-file-signature"></i><span>SOLUTION</span></div>'));
+         $('#zone_3').prepend($('<div id="resp_switch_1"><i class="far fa-file-alt"></i><span>' + this.strings.switch_statement.toUpperCase() + '</span></div><div id="resp_switch_2"><i class="fas fa-pen"></i><span>' + this.strings.switch_task.toUpperCase() + '</span></div>'));
+         $('#zone_3').append($('<div id="showExercice" class="selected"><i class="fas fa-pen"></i><span>' + this.strings.switch_task.toUpperCase() + '</span></div>'));
+         $('#zone_3').append($('<div id="showSolution"><i class="fas fa-file-signature"></i><span>' + this.strings.switch_solution.toUpperCase() + '</span></div>'));
 
          $('#zone_012').append($('<div id="scroll_arr_up"><i class="fas fa-chevron-up"></i></div>'));
          $('#zone_012').append($('<div id="scroll_arr_down"><i class="fas fa-chevron-down"></i></div>'));
@@ -867,7 +909,8 @@ window.displayHelper = {
          $('#taskCont > *').prependTo($('#zone_2'));
          $('#zone_012, #zone_12, #zone_3, #taskCont').remove();
       }      
-      $('#tabsContainer').after('<div id="popupMessage"></div>');
+      // $('#tabsContainer').after('<div id="popupMessage"></div>');
+      $('#task').append('<div id="popupMessage"></div>');
 
       // console.log(views)
    },
@@ -877,6 +920,7 @@ window.displayHelper = {
       }
       clearInterval(this.checkAnswerInterval);
       this.checkAnswerInterval = null;
+      this.loading = false;
       this.loaded = false;
       this.prevAnswer = '';
       this.readOnly = false;
@@ -899,6 +943,11 @@ window.displayHelper = {
       this.taskLevel = '';
       this.initLevelVars();
       return true;
+   },
+
+   isRtl: function () {
+      // needs to be checked each time as direction is generally changed by task.js
+      return $('body').css('direction') == 'rtl';
    },
 
    showSolution: function(show) {
@@ -954,10 +1003,15 @@ window.displayHelper = {
          self.doSetupLevels(initLevel);
       };
       if (!this.taskParams) {
-         window.platform.getTaskParams(null, null, function(taskParams) {
-            self.taskParams = taskParams;
+         if (window.task && window.task.displayedSubTask && window.task.displayedSubTask.taskParams) {
+            this.taskParams = window.task.displayedSubTask.taskParams;
             callSetupLevels();
-         });
+         } else {
+            window.platform.getTaskParams(null, null, function (taskParams) {
+               self.taskParams = taskParams;
+               callSetupLevels();
+            });
+         }
       } else {
          callSetupLevels();
       }
@@ -971,7 +1025,7 @@ window.displayHelper = {
       }
 
       this.setupParams();
-      if (!document.getElementById('popupMessage')) {
+      if (!document.getElementById('tabsMenu')) {
          this.setupLevelsTabs();
 
          if(!this.responsive){
@@ -981,13 +1035,12 @@ window.displayHelper = {
                displayHelper.setLevel(newLevel);
             });
          }else{
-            $('#zone_0 #tabsMenu .li').on('click', function(event) {
+            $('#tabsMenu .li').on('click', function(event) {
                // console.log("click compact",displayHelper.compactMode)
                if(displayHelper.layout == 3 && displayHelper.compactMode){
                   return
                }
                if(displayHelper.responsive && displayHelper.layout == 4){
-                  /* click version in resp layout4 */
                   $('.layout_4 #tabsMenuAlt').show();
                   return
                }
@@ -1091,7 +1144,10 @@ window.displayHelper = {
          }
          tabsInnerHTML += '</a></span>';
       }
-      if(nbLevels < 2) { tabsInnerHTML = ''; }
+      if(nbLevels < 2) { 
+         tabsInnerHTML = ''; 
+         this.versionHeaderH = this.altVersionHeaderH;
+      }
       var tabsHTML = '<div id="tabsMenu">' + tabsInnerHTML + '</div>';
       $('#tabsContainer').append(tabsHTML);
 
@@ -1158,8 +1214,8 @@ window.displayHelper = {
       }else{
          $('#resp_switch_2').addClass('selected');
          $('#resp_switch_1').removeClass('selected');
-         $('#zone_2').css("overflow","visible");
-         $('#zone_2').css("height","auto");
+         $('#zone_2').css("overflow-y","auto");
+         $('#zone_2').css("height","100%");
          $('#zone_2').css("min-height",this.availableH+'px');
          $('#zone_1').css("overflow","hidden");
          $('#zone_1').css("height",0);
@@ -1199,10 +1255,12 @@ window.displayHelper = {
          $('#valider').appendTo($('#displayHelper_validate'));
          if(window.innerWidth >= 1200) {
              $('#task').addClass('largeScreen');
+             $('#solution').addClass('largeScreen');
              $('#displayHelperAnswering').appendTo($('#zone_1'));
          }
          else {
             $('#task').removeClass('largeScreen');
+            $('#solution').removeClass('largeScreen');
             if ($('#showSolutionButton')) {
                $('#displayHelperAnswering').insertBefore($('#showSolutionButton'));
             }
@@ -1219,16 +1277,19 @@ window.displayHelper = {
          $('#task, #main_header').removeClass();
          $('#task').css("height",(h - headerH)+'px');
          $('#task').css("margin-top",headerH+'px');
+         $('#task').css("overflow", "hidden");
          $('#zone_1').css("overflow","visible");
          $('#zone_2').css("overflow","visible");
          $('#zone_0').css("max-height", this.versionHeaderH[this.layout - 1]);
+         $('#zone_12').css("overflow-x", "");
+         $('#zone_12').css("overflow-y", "");
          if(!$('#zone_0 #tabsContainer').length){
             $('#zone_0 h1').after($('#tabsContainer'));
          }
          if(w >= layout1Breakpoint) {
-            this.mobileMode = false;
-            this.layout = 1;
-            this.availableH = h - headerH - this.versionHeaderH[this.layout - 1] - this.footerH;
+            this.mobileMode = !!this.taskFullPage;
+            this.layout = this.taskFullPage ? 5 : 1;
+            this.availableH = h - headerH - this.versionHeaderH[0] - this.footerH;
             this.availableW = Math.floor(w*0.7);
             $('#zone_1').height(this.availableH);
             $('#zone_12').css("overflow-x","initial");
@@ -1236,8 +1297,9 @@ window.displayHelper = {
                $('#side_zone').addClass('show');
             }
          }else if(w >= 800){
-            this.mobileMode = false;
-            this.layout = 2;
+            this.mobileMode = !!this.taskFullPage;
+            this.layout = this.taskFullPage ? 5 : 2;
+            this.availableH = h - headerH - this.versionHeaderH[this.layout - 1] - this.footerH;
             this.availableW = w;
             $('#zone_1').height('auto');
          }else if(w/h < 1){
@@ -1268,15 +1330,23 @@ window.displayHelper = {
             $('#side_zone').removeClass('show');
          }
          if (this.layout !== 1) {
-            $('#zone_12').css("overflow-x","auto");
+            $('#zone_12').css("overflow-x", "auto");
+            if (displayHelper.verticalScroll && $(window).scrollTop() < displayHelper.newTaskH - displayHelper.availableH - 1) {
+               $('#zone_12').css("overflow-y", "auto");
+            } else {
+               $('#zone_12').css("overflow-y", "hidden");
+            }
          }
          $('#task, #main_header').addClass('layout_'+this.layout);
          if(this.layout == 2){   // bug fix
             var zone1H = $('#zone_1').height();
             this.availableH = h - headerH - this.versionHeaderH[this.layout - 1] - this.footerH - zone1H;
          }
+         $('#zone_12').css("height", "calc(100% - " + $('#zone_0').height() + "px)");
 
-         this.updateTaskDimensions();
+         if (!this.taskFullPage) {
+             this.updateTaskDimensions();
+         }
          this.toggleTask();
       }
       setTimeout(function() {
@@ -1288,7 +1358,7 @@ window.displayHelper = {
       setTimeout(function() {
          $('html').hide(0).show(0);
       }, 500);
-      $("html").css("overflow-y","auto");
+      // $("html").css("overflow-y","auto");
       if(this.scaleFactor != this.prevScaleFactor){
          this.prevScaleFactor = this.scaleFactor;
          // this.updateTaskDimensions();
@@ -1418,6 +1488,8 @@ window.displayHelper = {
    },
 
    updateTaskCSS: function(scaleFactor,limitingFactor) {
+      var rtl = this.isRtl();
+      var marginSide = rtl ? 'margin-right' : 'margin-left';
       $('#taskCont').width(this.taskW);
       // $('#taskCont').height(newTaskH);
       var fixingOffset = 0; // unnecessary?
@@ -1433,13 +1505,13 @@ window.displayHelper = {
             }
          }
          if(limitingFactor == 'W'){
-            $('#taskCont').css('margin-left','auto');
+            $('#taskCont').css(marginSide, 'auto');
          }else{
             if(this.verticalScroll){
-               $('#taskCont').css('margin-left','auto');
+               $('#taskCont').css(marginSide, 'auto');
             }else{
                // $('#taskCont').css('margin-left',(this.availableW - this.taskW)*scaleFactor/2);
-               $('#taskCont').css('margin-left','auto'); // cf. alkindi 2017 01
+               $('#taskCont').css(marginSide, 'auto'); // cf. alkindi 2017 01
             }
          }
       }else{
@@ -1463,13 +1535,13 @@ window.displayHelper = {
          if(this.availableW < this.taskW){
             // console.log("check",limitingFactor)*scaleFactor
             if(limitingFactor == "W"){
-               $('#taskCont').css('margin-left',-this.taskW*(1 - scaleFactor)/2 );
+               $('#taskCont').css(marginSide, -this.taskW * (1 - scaleFactor) / 2);
             }else{
                var marginLeft = (this.availableW - this.taskW)/2;
-               $('#taskCont').css('margin-left',marginLeft);
+               $('#taskCont').css(marginSide, marginLeft);
             }
          }else{
-            $('#taskCont').css('margin-left','auto');
+            $('#taskCont').css(marginSide, 'auto');
          }
       }
       $('#zone_2').height(Math.max(this.availableH,this.verticalScroll ? this.newTaskH + 60 : this.newTaskH));
@@ -1487,7 +1559,7 @@ window.displayHelper = {
                zone2Perc = 60;
                zone1Perc = 40;
             }
-            $('#taskCont').css('margin-left','auto');
+            $('#taskCont').css(marginSide, 'auto');
          }else{
             var zone2Perc = 70;
             var zone1Perc = 30;
@@ -1539,13 +1611,16 @@ window.displayHelper = {
       }
    },
 
-   useFullWidth: function() {
+   useFullWidth: function(options = {}) {
       // TODO: find a clean way to do this
       try {
          $('#question-iframe', window.parent.document).css('width', '100%');
       } catch(e) {
       }
       $('body').css('width', '100%');
+      if (options.taskFullPage) {
+          this.taskFullPage = true;
+      }
       // This try is probably not needed but avoid breaking just in case
       try {
          $(document).ready(function () {
@@ -1553,7 +1628,6 @@ window.displayHelper = {
          });
          $(window).resize(function () {
             displayHelper.updateLayout();
-            // console.log(task)
             // task.displayedSubTask.resetDisplay();
          });
          this.bUseFullWidth = true;
@@ -1700,7 +1774,7 @@ window.displayHelper = {
    },
 
 
-   showPopupDialog: function(message) {
+   showPopupDialog: function(message, callback) {
       if ($('#popupMessage').length == 0) {
          $('#task').after('<div id="popupMessage"></div>');
       }
@@ -1716,6 +1790,7 @@ window.displayHelper = {
       $('#popupMessage').html(popupHtml).show();
 
       this.popupMessageShown = true;
+      if (callback) callback();
       try {
          $(parent.document).scrollTop(0);
       } catch (e) {
@@ -1834,6 +1909,12 @@ window.displayHelper = {
 
       this.views = views;
       this.hasSolution = (typeof views.solution !== 'undefined');
+
+      if (!views.solution || this.hideSolutionButton) {
+         $('#showExercice, #showSolution').hide();
+         $('#zone_3').addClass('noSolution');
+      }
+
       if (this.hasSolution && this.graderScore) {
          this.prevSavedScore = this.graderScore;
       }
@@ -1877,6 +1958,9 @@ window.displayHelper = {
     * Internal functions *
     **********************/
    restartAll: function() {
+      if (this.customRestart != undefined) {
+         this.customRestart();
+      } else 
       if(this.confirmRestartAll) {
          this.showPopupMessage(this.strings.confirmRestart, 'blanket', this.strings.yes, this.restartAllNoConfirm, this.strings.no);
       }
@@ -2101,8 +2185,8 @@ window.displayHelper = {
                fullMessage += this.strings.tryNextTask;
             } else if(!threshold || (threshold && secondsSinceLoaded < threshold)) {
                actionNext = nextLevel;
-               if(gradedLevel == "easy") { fullMessage += this.strings.tryMediumLevel; }
-               if(gradedLevel == "medium") { fullMessage += this.strings.tryHardLevel; }
+               if(nextLevel == "medium") { fullMessage += this.strings.tryMediumLevel; }
+               if(nextLevel == "hard") { fullMessage += this.strings.tryHardLevel; }
             } else {
                actionNext = "nextTask";
                fullMessage += this.strings.tryNextTask;
@@ -2171,6 +2255,10 @@ window.displayHelper = {
    // Checks task.getAnswer() against previously recorded result, and calls
    // displayHelper.updateMessages() accordingly.
    checkAnswerChanged: function() {
+      if (this.loading) {
+         // Avoid cancelling the interval while the task is loading
+         return;
+      }
       if (!this.loaded) {
          this.checkAnswerInterval = clearInterval(this.checkAnswerInterval);
          return;
@@ -2214,7 +2302,10 @@ window.displayHelper = {
             }
          }
       }
-      scoreDiffMsg += " " + this.graderScore + this.strings.outOf + this.taskParams.maxScore + ".";
+      scoreDiffMsg += " " + this.graderScore;
+      if(this.taskParams && this.taskParams.maxScore) {
+         scoreDiffMsg += this.strings.outOf + this.taskParams.maxScore + ".";
+      }
       if ((this.hasSolution && this.savedAnswer != this.prevAnswer) ||
           (this.graderScore > 0 && (taskMode == 'saved_changed' || showRetrieveAnswer))) {
          scoreDiffMsg += ' <a href="#" onclick="displayHelper.retrieveAnswer(); return false;">' +  this.strings.reloadValidAnswer + '</a>';
@@ -2243,7 +2334,7 @@ window.displayHelper = {
          }
       } else {
          var strPoint = this.strings.point;
-         if (this.submittedScore > 0) {
+         if (this.submittedScore > 1) {
             strPoint = this.strings.points;
          }
          message = this.strings.scoreObtained + ' <span id="answerScore">' + this.submittedScore + " " + strPoint + " " + this.strings.outOf + " " + maxScoreLevel + ".</span><br/>";
@@ -2303,7 +2394,8 @@ window.displayHelper = {
    },
    // TODO: rename function below to getFullFeedbackValidate, assuming it is not called from outside this file
    getFullFeedbackValidateMessage: function(taskMode, disabledStr) {
-      var strValidate = ($('#task[alkindi]').length > 0) ? this.strings.validate : this.strings.validate.toUpperCase();
+      var strValidate = this.strings.validate;
+      // var strValidate = ($('#task[alkindi]').length > 0) ? this.strings.validate : this.strings.validate.toUpperCase();
       if (this.customValidateString != undefined) {
          strValidate = this.customValidateString;
       }
@@ -2378,7 +2470,8 @@ window.displayHelper = {
       var disabledStr = this.readOnly ? ' disabled' : '';
       if (this.showScore) {
          if (!this.hideRestartButton) {
-            var strRestart = ($('#task[alkindi]').length > 0) ? this.strings.restart : this.strings.restart.toUpperCase();
+            var strRestart = this.strings.restart;
+            // var strRestart = ($('#task[alkindi]').length > 0) ? this.strings.restart : this.strings.restart.toUpperCase();
             if(!this.responsive){
                messages.cancel = '<input type="button" value="' + this.strings.restart + '" onclick="displayHelper.restartAll();"' + disabledStr + '/></div>';
             }else{
@@ -2493,19 +2586,49 @@ window.displayHelper = {
    },
 
    displayError: function(msg) {
-      if(this.responsive){
-         $("#error").html('<i class="fas fa-exclamation-triangle"></i><span id="errorMsg">'+msg+'</span> <i class="fas fa-times"></i>');
-         if(msg){
-            $("#error").show();
-         }else{
-            $("#error").hide();
-         }
-         $('#error').click(function() {
-            $("#error").hide();
-         });
-      }else{
+      var that = this;
+      if (!this.responsive) {
          $("#displayHelper_graderMessage").html(msg);
       }
+
+      function showError() {
+         $("#error").html('<i class="fas fa-exclamation-triangle"></i><span id="errorMsg">'+msg+'</span> <i class="fas fa-times"></i>');
+         if (msg) {
+            $('#error').css('max-width', '');
+            // Check how much space the error banner takes and push buttons
+            var errorWidth = $("#error").outerWidth();
+            var dhaWidth = $("#displayHelperAnswering").outerWidth();
+            var wWidth = $(window).width();
+            if (errorWidth >= (wWidth - dhaWidth) / 2) {
+               // Need to move the buttons to the right
+               $('#displayHelperAnswering').addClass('forceRight');
+               // Avoid the error banner going over the buttons
+               $('#error').css('max-width', (wWidth - dhaWidth - 8) + 'px')
+            } else {
+               $('#displayHelperAnswering').removeClass('forceRight');
+            }
+            $("#error").fadeIn(400);
+         } else {
+            that.hideError();
+         }
+         $('#error').click(function() {
+            that.hideError();
+         });
+      }
+
+      if ($('#error').is(':visible') && $('#error').html() != '') {
+         $('#error').fadeOut(400, function () {
+            showError();
+         });
+      } else {
+         showError();
+      }
+   },
+
+   hideError: function () {
+      $("#error").stop(true, true);
+      $("#error").hide();
+      $('#displayHelperAnswering').removeClass('forceRight');
    }
 };
 
@@ -2635,5 +2758,16 @@ function drawStars(id, nbStars, starWidth, rate, mode,layout4) {
 
 
 window.platform.subscribe(displayHelper);
+
+// Add autoHeight to the metadata automatically
+if(window.task && window.task.getMetaData) {
+   var getMetaData = task.getMetaData;
+   task.getMetaData = function(callback) {
+      getMetaData(function(metadata) {
+         metadata.autoHeight = true;
+         callback(metadata);
+      });
+   }
+}
 
 })();

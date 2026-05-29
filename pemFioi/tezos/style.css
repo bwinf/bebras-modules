@@ -1,0 +1,509 @@
+html {
+   --light-grey: #eeeeee;
+   --grey: #bcc2ca;
+   --dark-grey: #627083;
+   --blue: #0f61ff;
+   --light-blue: #e7efff;
+   --grey-blue: #dae2f2;
+   --red: #ff3d39;
+   --light-red: #ffe7e7;
+   --rowH: 35px;
+}
+
+.consigne {
+   background-color: white;
+   color: var(--dark-grey);
+}
+
+#mainPage {
+/*   border: 1px solid black;*/
+/*   padding: 10px;*/
+/*   font-family: Arial, sans-serif;*/
+   display: flex;
+   justify-content: space-around;
+   overflow: hidden;
+   color: var(--dark-grey);
+}
+
+#mainPage h3 {
+   height: var(--rowH);
+   margin: 0;
+   padding-left: 10px;
+   font-weight: normal;
+   font-size: 1.3rem;
+   display: flex;
+   align-items: center;
+   color: black;
+}
+
+#mainPage .container {
+   border: 2px solid var(--light-grey);
+   border-radius: 10px;
+   padding: 10px 5px;
+}
+
+/*** TABLES ***/
+
+#mainPage table {
+   table-layout: fixed;
+   border-collapse: collapse;
+   width: 100%;
+}
+
+#mainPage th, td {
+   height: var(--rowH);
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+#mainPage th {
+   background: white;
+   font-weight: normal;
+   color: var(--grey);
+   text-align: left;
+   padding-left: 10px;
+}
+#transaction_table {
+   position: relative;
+}
+#transaction_table_cont {
+   overflow-y: auto;
+}
+#transaction_table_cont_clone {
+   position: absolute;
+   top: 42px;
+   display: none;
+}
+#transaction_table .block_header {
+   background: var(--light-grey);
+   border-radius: 5px;
+   outline: 1px solid white;
+}
+
+#accountsCont,
+#smartContractsCont {
+   margin-bottom: 20px;
+}
+#mem_pool_table {
+   margin-top: 20px;
+}
+
+#mem_pool_table td, 
+#transaction_table td,
+#sub_transaction_table td,
+#accounts_table td,
+#smart_contracts_table td {
+/*   background: white;*/
+   padding-left: 10px;
+}
+#transaction_table .separation_line {
+   border-top: 1px solid var(--light-grey);
+}
+#sub_transaction_table{
+   border: 1px solid var(--grey);
+}
+#mem_pool_table .col_3,
+#sub_transaction_table .col_3,
+#transaction_table .col_3 {
+   white-space: nowrap;
+}
+
+#accounts_table tr:nth-child(even),
+#smart_contracts_table tr:nth-child(even),
+#sub_transaction_table tr:nth-child(even) {
+   background: var(--light-grey);
+   border-radius: 5px;
+}
+
+#accounts_table .col_0 {
+   width: 20%;
+}
+
+#accounts_table .col_2 {
+   width: 40%;
+}
+
+#mainPage table#sub_transaction_table {
+/*   width: auto;*/
+   table-layout: auto;
+   margin-right: 20px;
+}
+#sub_transaction_table th,
+#sub_transaction_table td {
+   min-width: 100px;
+   max-width: 150px;
+}
+
+/*** BUTTONS ***/
+
+#buttons {
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+
+#mainPage button {
+   width: 100%;
+   background-color: var(--blue);
+   color: white;
+   border: none;
+   height: var(--rowH);
+   border-radius: var(--rowH);
+   cursor: pointer;
+}
+#mainPage button.button-style-2 {
+   background-color: white;
+   color: var(--blue);
+   border: 1px solid var(--blue);
+   height: var(--rowH);
+   border-radius: var(--rowH);
+}
+
+/*** VIEW ***/
+
+#view, #simView, #subView  {
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+#back, #simBack, #subBack, #custom_popup_back {
+   background: black;
+   opacity: 0.5;
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+
+.view {
+   background: white;
+   z-index: 2;
+   max-height: 100%;
+   max-width: 100%;
+   min-width: 50%;
+   width: fit-content;
+   overflow: auto;
+   white-space: nowrap;
+   padding: 10px 20px;
+   border-radius: 5px;
+}
+
+.view #header {
+   height: var(--rowH);
+   margin: 0;
+   font-weight: normal;
+   font-size: 1.2rem;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   color: black;
+}
+.view #header .icon {
+   width: var(--rowH);
+   height: var(--rowH);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--blue);
+}
+
+.view .error,
+.view .unsigned {
+   border: 1px solid var(--red);
+   color: red;
+   border-radius: 5px;
+   background-color: var(--light-red);
+   margin-top: 10px;
+   margin-bottom: 20px;
+   white-space: normal;
+   padding: 10px;
+}
+.view .line.error {
+   margin: 10px 0 20px 0;
+   padding: 10px;
+}
+.view #content .line .label {
+   margin-right: 5px;
+}
+.view #content .line .parameter {
+   margin-left: 20px;
+}
+.view #content #storage_change {
+   padding-left: 20px;
+}
+.view #content .ep_cont {
+   border: none;
+   border-radius: 5px;
+   background: var(--light-grey);
+   padding: 10px;
+   margin: 10px 0;
+}
+#simView #header .icon {
+   display: none;
+}
+
+.view .signature {
+   margin: 10px 0 20px 0;
+   padding: 10px;
+   display: flex;
+/*   justify-content: space-between;*/
+   justify-content: left;
+   gap: 5px;
+}
+.view .signature i {
+   margin-right: 5px;
+   color: var(--red);
+}
+.view .unsigned {
+   border: none;
+/*   justify-content: left;*/
+/*   gap: 5px;*/
+   color: var(--dark-grey);
+}
+.view .signed {
+   border: none;
+   border-radius: 5px;
+   background-color: rgb(120,255,120);
+}
+.view .signed i {
+   display: none;
+}
+#view button {
+   margin-top: 10px;
+}
+
+/*** SC ***/
+
+.view#view_contract {
+   max-width: 100%;
+   padding: 0;
+   overflow: hidden;
+}
+.view#view_contract #header {
+   margin: 10px;
+   padding-left: 10px;
+}
+.view#view_contract #content {
+   display: flex;
+   border-top: 1px solid var(--grey);
+}
+.view#view_contract #content > * {
+   padding: 10px;
+   overflow: auto;
+}
+.view#view_contract #content1 {
+   flex-shrink: 1;
+   padding-left: 20px;
+}
+.view#view_contract #content2 {
+   background: var(--light-grey);
+   flex-shrink: 2;
+}
+.view#view_contract .storage_line {
+   padding: 5px 0;
+   margin: 0;
+   white-space: nowrap;
+}
+.view#view_contract .level_1 {
+   padding: 5px 20px;
+}
+.view#view_contract .level_2 {
+   padding: 5px 40px;
+}
+.view#view_contract h4 {
+   margin-top: 0;
+}
+.view#view_contract #content2 h4 {
+   padding-left: 10px;
+}
+.view#view_contract .text {
+   margin: 0;
+   padding: 5px 0;
+   tab-size: 20px;
+/*   white-space: pre-wrap;*/
+   width: fit-content;
+}
+.view#view_contract .text ul {
+   margin-top: 5px;
+   padding-left: 20px;
+}
+.view#view_contract .entrypoint,
+.view#view_contract .sc_view {
+   font-family: monospace;
+   border-radius: 5px;
+   padding: 10px;
+}
+.view#view_contract .entrypoint.clickable:hover,
+.view#view_contract .sc_view:hover {
+   background: var(--grey-blue);
+}
+
+.view#sc_view {
+   min-width: 30%;
+   max-width: 100%;
+   padding: 10px;
+   padding-left: 20px;
+}
+#simView #sc_view #header .icon  {
+   display: flex;
+}
+.view#sc_view .content {
+   padding: 10px 0;
+}
+.view hr {
+   border-top: 1px solid var(--grey);
+   border-bottom: none;
+   border-left: none;
+   border-right: none;
+}
+
+
+/*** FORM ***/
+
+.form {
+   width: auto;
+}
+
+.form #content {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+}
+
+.form .field,
+.view .line {
+   margin: 0;
+   padding: 10px 0;
+   display: flex;
+   justify-content: space-between;
+   gap: 20px;
+   align-items: center;
+   position: relative;
+}
+.form #content button#sign {
+   margin-top: 0;
+   margin-bottom: 10px;
+   max-width: 150px;
+   align-self: center;
+}
+
+.view .input {
+   width: 150px;
+   height: var(--rowH);
+   border: none;
+   border-radius: 5px;
+   padding-left: 10px;
+   background-color: var(--light-grey);
+   color: var(--dark-grey);
+   flex-shrink: 0;
+}
+.form select {
+   appearance: none;
+}
+.view input.tez {
+   padding-right: 25px;
+}
+.form .select-arrow,
+.view .tez_unit {
+   position: absolute;
+   right: 10px;
+   color: var(--blue);
+}
+
+.form .ep_cont .input {
+   background: white;
+}
+
+.form .field.signature {
+   background-color: var(--light-blue);
+   padding: 10px;
+   border-radius: 5px;
+   display: inline;
+   margin: 10px 0;
+}
+.form .field.signature i {
+   margin-right: 10px;
+   color: var(--blue);
+}
+.view #buttons {
+   margin: 10px 0;
+   display: flex;
+   flex-direction: row-reverse;
+   justify-content: right;
+   gap: 10px;
+}
+.view #buttons button {
+   width: 100px;
+}
+#simView #buttons {
+   margin: 0;
+   margin-top: 10px;
+}
+
+.form .highlight,
+.view .highlight {
+   border: 2px solid red;
+   border-radius: 5px;
+   background: rgba(255,0,0,0.2);
+}
+
+/*** CUSTOM POPUP ***/
+
+#custom_popup_back {
+   z-index: 3;
+}
+#custom_popup {
+   padding: 20px;
+   width: 100%;
+   position: absolute;
+   top: 0;
+   left: 0;
+/*   border: 1px solid var(--grey);*/
+/*   border-radius: 5px;*/
+   background: var(--light-blue);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   align-items: center;
+   gap: 20px;
+   z-index: 4;
+}
+#custom_popup #custom_mode {
+   font-weight: bold;
+   flex-shrink: 0;
+}
+#custom_popup #cont {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   gap: 40px;
+}
+#custom_popup #ava_cred,
+#custom_popup #subs {
+   flex-shrink: 0;
+}
+#custom_popup #subs ol {
+   margin: 10px 0;
+   padding-left: 20px;
+}
+#custom_popup #quit_custom {
+/*   flex-shrink: 0;*/
+   min-width: 120px;
+}
+
+#custom_popup .buttons {
+   display: flex;
+   flex-direction: row-reverse;
+   gap: 20px;
+}
+#custom_popup button {
+   min-width: 100px;
+}

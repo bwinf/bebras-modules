@@ -5497,7 +5497,25 @@ var getContext = function(display, infos, curLevel) {
          this.last_connect = plugs[0];
       }
    };
-      
+
+   // France-ioi: Codecast-kompatibles Vorladen der Kontext-Bilder als Task-Ressourcen
+   window.taskGetResourcesPost = function (res, callback) {
+      var typeData = contextParams[infos.contextType];
+      if (typeData && typeData.itemTypes) {
+         for (var key in typeData.itemTypes) {
+            var params = typeData.itemTypes[key];
+            if (params.img) {
+               var imgPath = params.img;
+               if (window.modulesPath) {
+                  imgPath = window.modulesPath + "img/algorea/" + imgPath;
+               }
+               res.task.push({ type: 'image', url: imgPath });
+            }
+         }
+      }
+      callback(res);
+   }
+
    return context;
 };
 

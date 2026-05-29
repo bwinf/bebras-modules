@@ -10,6 +10,20 @@ var res = {};
 
 var taskResourcesLoaded = false;
 
+function getTextContent(node) {
+   if(!node) { return ''; }
+   var text = '';
+   node.childNodes.forEach(function (child) {
+      if (child.nodeType == 3) {
+         text += child.textContent ? ' ' + child.textContent.trim() : '';
+      } else if (child.nodeType == 1) {
+         var childText = getTextContent(child);
+         text += childText ? ' ' + childText : '';
+      }
+   });
+   return text.trim();
+}
+
 window.implementGetResources = function(task) {
    task.getResources = function(callback)
    {
@@ -38,9 +52,9 @@ window.implementGetResources = function(task) {
       res.sat_modules = [];
       res.files = [];
       if (!res.title) {
-         res.title = $('title').text();
+         res.title = $('title').text() || $('h1').text();
       }
-      
+
       // Resources
       var curDest = 'task';
       var curType = 'javascript';
@@ -109,17 +123,25 @@ window.implementGetResources = function(task) {
 
       // Images
       var images = [];
-      var image = '';
-      $('#task img').each(function() {
-         var src = $(this).attr('src');
-         if (src) {
-            image = src.toString();
-            if ($.inArray(image, images) === -1) {
-               res.task.push({ type: 'image', url: image });
-               images.push(image);
+      function addImageTo(imageList) {
+         return function () {
+            var src = $(this).attr('src');
+            var classes = $(this).attr('class');
+            classes = classes ? classes.split(/\s+/) : null;
+            if (src) {
+               var imageSrc = src.toString();
+               if ($.inArray(imageSrc, images) === -1) {
+                  var imgData = { type: 'image', url: imageSrc };
+                  if (classes && classes.length > 0) {
+                     imgData.classes = classes;
+                  }
+                  imageList.push(imgData);
+                  images.push(imageSrc);
+               }
             }
          }
-      });
+      }
+      $('#task img').each(addImageTo(res.task));
       fillImages($('#task').html(), images, res.task);
       $('script').each(function() {
          if ($(this).hasClass('remove') || $(this).attr('src') || $(this).attr('href')) {
@@ -127,23 +149,11 @@ window.implementGetResources = function(task) {
          }
          fillImages($(this).html(), images, res.task);
       });
-      $('#solution img').each(function() {
-         image = $(this).attr('src').toString();
-         if ($.inArray(image, images) === -1) {
-            res.solution.push({ type: 'image', url: image });
-            images.push(image);
-         }
-      });
+      $('#solution img').each(addImageTo(res.solution));
       fillImages($('#solution').html(), images, res.solution);
       $('.hint').each(function() {
          var hintnum = $(this).attr('hint-num');
-         $('[hint-num='+hintnum+'] img').each(function() {
-            image = $(this).attr('src').toString();
-            if ($.inArray(image, images) === -1) {
-               res.hints[hintnum].push({ type: 'image', url: image });
-               images.push(image);
-            }
-         });
+         $('[hint-num=' + hintnum + '] img').each(addImageTo(res.hints[hintnum]));
          fillImages($(this).html(), images, res.hints[hintnum]);
       });
 
@@ -173,12 +183,46 @@ window.implementGetResources = function(task) {
         }
       });
 
+      // Text for referencing
+      var content = {};
+      content.title = res.title;
+      content.summary = '';
+      content.level2 = [];
+      content.level3 = [];
+      $('h2').each(function () {
+         content.level2.push($(this).text().trim());
+      });
+      $('h3').each(function () {
+         content.level3.push($(this).text().trim());
+      });
+      content.text = getTextContent($('#task')[0]) || getTextContent($('body')[0]);
+      content.lang = 'default';
+      res.content = [content];
+
       taskResourcesLoaded = true;
 
-      if(window.taskGetResourcesPost) {
-        window.taskGetResourcesPost(res, callback);
+      if (window.taskGetResourcesPostListeners && window.taskGetResourcesPostListeners.length) {
+         var currentListener = 0;
+         function executeNextListener() {
+            if (currentListener > window.taskGetResourcesPostListeners.length - 1) {
+               if (window.taskGetResourcesPost) {
+                  window.taskGetResourcesPost(res, callback);
+               } else {
+                  callback(res);
+               }
+               return;
+            }
+
+            var listener = window.taskGetResourcesPostListeners[currentListener];
+            currentListener++;
+            listener(res, executeNextListener);
+         }
+
+         executeNextListener();
+      } else if(window.taskGetResourcesPost) {
+         window.taskGetResourcesPost(res, callback);
       } else {
-        callback(res);
+         callback(res);
       }
    };
 }
@@ -194,7 +238,7 @@ window.declareTaskResource = declareResource;
 
 var resourcesObjectForRegistration = {};
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
    if (typeof json !== 'undefined') {
       res = json;
    }
@@ -222,10 +266,10 @@ $(document).ready(function() {
 
 
 function fillImages(text, images, res) {
-   var extensions = ["png", "jpg", "gif", "ttf", "woff", "eot", "mp4", "zip", "mp3"];
+   var extensions = ["png", "jpg", "gif", "ttf", "woff", "eot", "mp4", "zip", "mp3", "pdf", "csv", "py"];
    for (var iExt = 0; iExt < extensions.length; iExt++) {
       var ext = extensions[iExt];
-      var regexp = new RegExp("[\'\"]([^;\"\']*." + ext + ")[\'\"]", "g");
+      var regexp = new RegExp("[\'\"]([^;\"\']*\\." + ext + ")[\'\"]", "g");
       while (true) {
          var match = regexp.exec(text);
          if (!match) {

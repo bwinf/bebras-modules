@@ -5,6 +5,7 @@
         default_language: 'en',
         language: 'en',
         language_set: false,
+        sublanguage: null,
 
         strings: {
             en: {
@@ -54,6 +55,17 @@
             },
         },
 
+        substrings: {
+            hint: {
+                en: {
+                    'solution': 'Show hint'
+                },
+                fr: {
+                    'solution': 'Afficher un indice'
+                }
+            }
+        },
+
         set: function(lng) {
             if(!lng) {
                 lng = window.stringsLanguage;
@@ -62,14 +74,22 @@
             this.language_set = true;
         },
 
+        setSublanguage: function (sublng) {
+            this.sublanguage = sublng;
+        },
+
         translate: function() {
             if(!this.language_set) {
                 this.set();
             }
             var str = '', key = arguments[0];
-            if(this.strings[this.language] && this.strings[this.language][key]) {
+            if (this.sublanguage && this.substrings[this.sublanguage] && this.substrings[this.sublanguage][this.language]) {
+                str = this.substrings[this.sublanguage][this.language][key];
+            }
+            if (!str && this.strings[this.language]) {
                 str = this.strings[this.language][key];
-            } else {
+            }
+            if (!str) {
                 str = this.strings[this.default_language][key] || key;
             }
             return str.replace('%%', arguments[1]);
@@ -105,9 +125,9 @@
         showPopup: function() {
             if(!this.popup) {
                 this.popup = $(
-                    '<div class="quiz-popup">\
+                    '<div class="quiz-popup-inner"><div class="content"></div></div>\
+                    <div class="quiz-popup">\
                         <div class="opacity-overlay"></div>\
-                        <div class="inner"><div class="content"></div></div>\
                     </div>'
                 );
                 $(document.body).append(this.popup);
@@ -123,6 +143,7 @@
                     self.popup.hide();
                 });
             }
+            $('.quiz-popup-inner').css('top', (Math.max(0, $('.quiz-toolbar').offset().top - 140)) + 'px')
             this.popup.show();
         },
 
@@ -166,12 +187,15 @@
         init: function() {
             if(this.holder) return;
             $('#showSolutionButton').remove();
+            if (quiz_settings.sublanguage) {
+                lang.setSublanguage(quiz_settings.sublanguage);
+            }
             this.holder = $('<div class="quiz-toolbar"></div>');
             var self = this;
-            this.addButton(this.holder, 'validate', function() {
-                platform.validate('done');
+            this.addButton(this.holder, 'validate', function () {
                 self.freezeTask();
                 self.setValidated(true);
+                platform.validate('done');
             });
             var hasSolution = false;
             $('solution, .solution, #solution').each(function() {
@@ -206,7 +230,7 @@
 
         init: function() {
             var query = document.location.search.replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
-            this.token = query.sToken || '';
+            this.token = this.token || query.sToken;
         },
 
         get: function() {
@@ -247,6 +271,7 @@
     task.getMetaData = function(success, error) {
         if (typeof json !== 'undefined') {
             json.disablePlatformProgress = true;
+            json.usesTokens = true;
             success(json);
         } else {
             success({nbHints: 0, disablePlatformProgress: true});
@@ -265,21 +290,22 @@
 
     // grade
 
-    function useGraderData(answer, versions, score_settings, callback) {
+    function useGraderData(answer, versions, score_settings, callback, errorcb) {
         if(window.Quiz.grader.handler && window.Quiz.grader.data) {
             var res = window.Quiz.grader.handler(window.Quiz.grader.data, answer, versions, score_settings);
             return callback(res);
         }
-        console.error('Local Quiz grader not found');
+        console.error('Cannot evaluate : no local grader or data.');
         if(errorcb) { errorcb(); }
     }
 
 
-    function useGraderUrl(url, task_token, answer, versions, score_settings, callback, errorcb) {
+    function useGraderUrl(url, task_token, answer, answer_token, versions, score_settings, callback, errorcb) {
         var data = {
             action: 'grade',
             task: task_token,
             answer: answer,
+            answer_token: answer_token,
             versions: versions,
             score_settings: score_settings
         }
@@ -368,7 +394,7 @@
                     q.showResult(result);
                     displayScore(result.score, taskParams.maxScore);
                     displayMessages(result.messages);
-                    callback(result.score, lang.translate('grader_msg') + result.score, null);
+                    callback(result.score, lang.translate('grader_msg') + result.score, result.token || null);
                 }
                 function onError(result) {
                     task_toolbar.displayError(lang.translate('error_grading'));
@@ -384,6 +410,7 @@
                         quiz_settings.graderUrl,
                         token,
                         answer,
+                        answer_token,
                         Quiz.versions.get(),
                         scoreSettings,
                         onGrade,

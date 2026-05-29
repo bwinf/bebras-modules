@@ -123,7 +123,6 @@ var quickAlgoInterface = {
     },
 
     loadInterface: function(context, level) {
-        var link = "https://creativecommons.org/licenses/by-sa/4.0/legalcode";
         ////TODO: function is called twice
         // Load quickAlgo interface into the DOM
         this.context = context;
@@ -139,7 +138,7 @@ var quickAlgoInterface = {
                 subject: $(".exerciseText").first().text(),
                 about: {
                     authors: "BWINF, France-IOI",
-                    license: "BWINF, France-IOI; Lizenz: "+"<a target=\"_blank\" href=" + link + ">CC-BY-SA 4.0</a>",
+                    license: "BWINF, France-IOI; Lizenz: " + "<a target=\"_blank\" href=https://creativecommons.org/licenses/by-sa/4.0/legalcode>CC-BY-SA 4.0</a>"
                 }
             };
         } else {
@@ -248,6 +247,7 @@ var quickAlgoInterface = {
                     "<div rel='edit' class='item' onclick='quickAlgoInterface.editorBtn(\"edit\");'><span class='fas fa-pencil-alt'></span>" + this.strings.editButton + "</div>" +
                     "<div rel='best-answer' class='item' onclick='quickAlgoInterface.editorBtn(\"best-answer\");'><span class='fas fa-trophy'></span> " + this.strings.loadBestAnswer + "</div>" +
                     "<div rel='blockly-python' class='item' onclick='quickAlgoInterface.editorBtn(\"blockly-python\");'><span class='fas fa-file-code'></span> " + this.strings.blocklyToPython + "</div>" +
+            "<div rel='svg-export' class='item' onclick='quickAlgoInterface.editorBtn(\"svg-export\");'><span class='fas fa-image'></span> " + this.strings.svgExport + "</div>" +
                     "<div rel='about' class='item' onclick='quickAlgoInterface.editorBtn(\"about\");'><span class='fas fa-question-circle'></span>" + this.strings.about + "</div>" +
                 "</div>" +
                 "<span id='saveUrl'></span>" +
@@ -296,6 +296,8 @@ var quickAlgoInterface = {
             displayHelper.retrieveAnswer();
         } else if (btn == 'blockly-python') {
             this.displayBlocklyPython();
+        } else if (btn == 'svg-export') {
+            task.displayedSubTask.exportGridAsSvg();
         } else if (btn == 'about') {
             this.openAbout();
         }
@@ -513,9 +515,9 @@ var quickAlgoInterface = {
             var licenseTxt = this.strings.license;
             // if the license is not inside of our predefined licenses then we write it without "more details" button
             if (!this.licenses[license])
-                licenseTxt += license;
+                licenseTxt += " " + license;
             else
-                licenseTxt += license + " " + this._getAboutLicenseButton(false, license);
+                licenseTxt += " " + license + " " + this._getAboutLicenseButton(false, license);
         } else {
             var licenseTxt = this.strings.licenseReserved;
         }
@@ -538,7 +540,7 @@ var quickAlgoInterface = {
             "    </div>" +
             "    <div class=\"panel-body\" id='aboutPanel'>"+
             "       <div id='aboutAuthorsLicense'>" +
-                        aboutAuthorsLicenseSection + 
+                        aboutAuthorsLicenseSection +
             "       </div>" +
             "       <div id='aboutFranceIOI'>" +
             "           <br/>" +
@@ -620,6 +622,7 @@ var quickAlgoInterface = {
         $('#editorMenu div[rel=load]').toggleClass('interfaceToggled', !!hideControls.saveOrLoad);
         $('#editorMenu div[rel=best-answer]').toggleClass('interfaceToggled', !!hideControls.loadBestAnswer);
         $('#editorMenu div[rel=blockly-python]').toggleClass('interfaceToggled', hideControls.blocklyToPython !== false || !this.blocklyHelper || !this.blocklyHelper.isBlockly);
+        $('#editorMenu div[rel=svg-export]').toggleClass('interfaceToggled', !this.options.allowSvgExport);
         $('#editorMenu div[rel=edit]').toggleClass('interfaceToggled', !this.options.canEditSubject);
 
         var menuHidden = !this.options.hasExample && hideControls.restart && hideControls.saveOrLoad && hideControls.loadBestAnswer;
@@ -726,6 +729,9 @@ var quickAlgoInterface = {
     },
 
     initPlaybackControls: function() {
+        if ($('#task .speedControls').length) {
+            return;
+        }
         var speedControls =
             '<div class="speedControls">' +
                 '<div class="playerControls">' +
@@ -744,9 +750,6 @@ var quickAlgoInterface = {
                     '<span class="icon speedFaster" onclick="quickAlgoInterface.playerControls(\'speedFaster\');"><span class="fas fa-running"></span></span>' +
                 '</div>' +
             '</div>';
-        if($('#task .speedControls').length) {
-            return;
-        }
         // place speed controls depending on layout
         // speed controls in taskToolbar on mobiles
         // in intro on portrait tablets
@@ -754,6 +757,14 @@ var quickAlgoInterface = {
 
         $('#mode-player').append(speedControls);
         $('#introGrid').append(speedControls);
+        if (quickAlgoInterface.strings.controls) {
+            $('.speedControls .icon').each(function (el) {
+                var title = quickAlgoInterface.strings.controls[$(this).attr('class').split(' ')[1]];
+                if (title) {
+                    $(this).attr('title', title);
+                }
+            });
+        }
         this.updateControlsDisplay();
     },
 
@@ -1066,7 +1077,6 @@ var quickAlgoInterface = {
            this.selectMode('mode-instructions');
         }
     },
-
 
     onResize: function(e) {
         // 100% and 100vh work erratically on some mobile browsers (Safari on
