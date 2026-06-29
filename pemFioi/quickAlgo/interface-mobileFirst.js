@@ -572,7 +572,7 @@ var quickAlgoInterface = {
             additional.userTaskData = this.userTaskData;
         }
         // save additional from context too
-        if (this.context.saveAdditional) {
+        if (this.context && this.context.saveAdditional) {
             this.context.saveAdditional(additional);
         }
     },

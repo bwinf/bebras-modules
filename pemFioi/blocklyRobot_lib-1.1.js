@@ -5498,7 +5498,6 @@ var getContext = function(display, infos, curLevel) {
       }
    };
 
-   // France-ioi: Codecast-kompatibles Vorladen der Kontext-Bilder als Task-Ressourcen
    window.taskGetResourcesPost = function (res, callback) {
       var typeData = contextParams[infos.contextType];
       if (typeData && typeData.itemTypes) {
