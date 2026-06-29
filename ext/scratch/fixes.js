@@ -416,9 +416,13 @@ Blockly.BlockSvg.prototype.handleDragFree_ = function(oldXY, newXY, e) {
         $(this.workspace.getParentSvg())
         .closest('.blocklyBubbleCanvas').children()
         .attr('transform').match(/translate\(([.0-9-]+),([.0-9-]+)\)/));
-     var transformStr = 'translate3d(' + transformData[1] + 'px, ' + transformData[2] + 'px, 0px)';
-     Blockly.dragMutatorStyle.innerText = (
-        '.blocklyDraggable.blocklyDragging.blocklySelected { transform: '+transformStr+'; }');
+     if(transformData) {
+        var transformStr = 'translate3d(' + transformData[1] + 'px, ' + transformData[2] + 'px, 0px)';
+        Blockly.dragMutatorStyle.innerText = (
+           '.blocklyDraggable.blocklyDragging.blocklySelected { transform: '+transformStr+'; }');
+     } else {
+        Blockly.dragMutatorStyle.innerText = '';
+     }
   } else {
      Blockly.dragMutatorStyle.innerText = '';
   }
@@ -776,6 +780,8 @@ Blockly.Colours['texts'] = {
     'primary': '#18BC85',
     'secondary': '#0DA572',
     'tertiary': '#128E65'};
+
+Blockly.Blocks.procedures.HUE = "#aa00ff";
 
 Blockly.Blocks['control_repeat'] = {
   /**

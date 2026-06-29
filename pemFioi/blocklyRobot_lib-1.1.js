@@ -1013,13 +1013,17 @@ var getContext = function(display, infos, curLevel) {
             },
             messages: {
                successContainersFilled: "Bravo, le château est bien chauffé !",
+               successContainersFilledSingular: "Bravo, il y a un bon feu dans la cheminée !",
                failureContainersFilled: "Votre robot n'a pas mis du bois dans toutes les cheminées.",
+               failureContainersFilledSingular: "Votre robot n'a pas mis le bois dans la cheminée.",
                failureContainersFilledLess: "Votre robot n'a pas mis du bois dans toutes les cheminées..",
+               failureContainersFilledLessSingular: "Votre robot n'a pas mis le bois dans la cheminée.",
                failureContainersFilledBag: "Votre robot doit déposer le bois dans la cheminée.",
                failureDropOutside: "Votre robot essaie de construire une plateforme hors de la grille.",
-               failureDropObject: "Il y a déjà du bois dans cette cheminée.",
+               failureDropObject: "Le robot essaie de déploser du bois alors qu'il y en a déjà dans cette cheminée !",
                failureDropPlatform: "Il y a déjà une plateforme ici !",
-               emptyBag: "Le robot essaie de déposer du bois alors qu'il n'en transporte pas !"
+               emptyBag: "Le robot essaie de déposer du bois alors qu'il n'en transporte pas !",
+               tooManyObjects: "Le robot essaie de transporter trop de bois à la fois !"
             }
          },
 
@@ -1333,24 +1337,24 @@ var getContext = function(display, infos, curLevel) {
       course: {
          fr: {
             messages: {
-               successReachExit: "Bravo, le robot a atteint la case verte !",
-               failureReachExit: "Le robot n'est pas arrivé sur la case verte.",
-               obstacle: "Le robot tente de foncer dans un mur !"
+               successReachExit: "Bravo, le robot a atteint le drapeau !",
+               failureReachExit: "Le robot n'est pas arrivé sur la case du drapeau.",
+               obstacle: "Le robot tente de foncer dans un buisson !"
             }
          },
          en: {
             messages: {
-               successReachExit: "Congratulations, the robot reached the green cell!",
-               failureReachExit: "The robot didn't reach the green cell.",
-               obstacle: "The robot is attempting to run into a wall!"
+               successReachExit: "Congratulations, the robot reached the flag!",
+               failureReachExit: "The robot didn't reach the flag.",
+               obstacle: "The robot is attemting to run into a bush!"
             }
          },
 
          es: {
             messages: {
-               successReachExit: "Bravo, ¡El robot llegó a la casilla verde!",
-               failureReachExit: "El robot no llegó a la casilla verde.",
-               obstacle: "¡El robot intenta traspasar un muro!"
+               successReachExit: "Bravo, ¡El robot llegó a la bandera!",
+               failureReachExit: "El robot no llegó a la bandera.",
+               obstacle: "¡El robot intenta traspasar un arbusto!"
             }
          },
          de: {
@@ -1377,7 +1381,10 @@ var getContext = function(display, infos, curLevel) {
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, le robot a ramassé tous les dominos demandés !",
-               "failurePickedAllWithdrawables": "Le robot n'a pas ramassé les dominos demandés."
+               "successPickedAllWithdrawablesSingular": "Bravo, le robot a ramassé le domino demandé !",
+               "failurePickedAllWithdrawables": "Le robot n'a pas ramassé les dominos demandés.",
+               "failurePickedAllWithdrawablesSingular": "Le robot n'a pas ramassé le domino demandé.",
+               failureUnfilteredObject: "Le robot a ramassé un domino non demandé."
             }
          },
          en: {
@@ -1556,7 +1563,9 @@ var getContext = function(display, infos, curLevel) {
                emptyBag: "Le robot ne porte pas de bille !",
                tooManyObjects: "Le robot porte déjà une bille !",
                successContainersFilled: "Bravo, vous avez rangé les billes !",
+               successContainersFilledSingular: "Bravo, vous avez rangé la bille !",
                failureContainersFilled: "Les billes ne sont pas toutes bien rangées.",
+               failureContainersFilledSingular: "La bille n'est pas rangée dans le trou.",
                failureContainersFilledLess: "Il reste une bille à ranger.",
                failureContainersFilledBag: "Il faut déposer la bille dans le trou !",
             }
@@ -1772,8 +1781,10 @@ var getContext = function(display, infos, curLevel) {
              },
              messages: {
                successContainersFilled: "Bravo, votre robot a peint le motif !",
+               failureContainersFilledSingular: "Votre robot n'a pas peint la bonne case.",
                failureContainersFilled: "Votre robot n'a pas peint les bonnes cases.",
                failureContainersFilledLess: "Votre robot n'a pas peint toutes les cases marquées.",
+               failureContainersFilledLessSingular: "Votre robot n'a pas peint la case.",
                failureContainersFilledBag: "Votre robot n'a pas posé tous les objets",
              }
          },
@@ -1898,7 +1909,9 @@ var getContext = function(display, infos, curLevel) {
             },
             messages: {
                successContainersFilled: "Bravo, les caisses sont bien rangées !",
+               successContainersFilledSingular: "Bravo, la caisse est bien rangée !",
                failureContainersFilled: "Il y a encore des caisses qui ne sont pas à leur place.",
+               failureContainersFilledSingular: "La caisse n'est pas à sa place !",
                failureNothingToPush: "Il n'y a pas de caisse à pousser ici !",
                failureWhilePushing: "Le robot ne peut pas pousser ici !",
                obstacle: "Le robot essaie de foncer dans un mur ou dans une caisse !"
@@ -3565,6 +3578,13 @@ var getContext = function(display, infos, curLevel) {
          if(infos[param] === undefined || param == "newBlocks") {
             infos[param] = contextParams[name][param];
          }
+         if (param === 'itemTypes') {
+            for (var itemType in contextParams[name].itemTypes) {
+               if (infos.itemTypes[itemType] === undefined) {
+                  infos.itemTypes[itemType] = contextParams[name].itemTypes[itemType];
+               }
+            }
+         }
       }
    };
    
@@ -4281,7 +4301,11 @@ var getContext = function(display, infos, curLevel) {
          sensors: []
       }
    };
-   
+
+   // Export context params and strings so that they are available for migration purposes
+   context.contextParams = contextParams;
+   context.contextStrings = contextStrings;
+
    for(var command in infos.newBlocks) {
       cmd = infos.newBlocks[command];
       context.customBlocks.robot[cmd.type].push(cmd.block);
@@ -4821,7 +4845,22 @@ var getContext = function(display, infos, curLevel) {
       }
       return selected;
    };
-   
+
+   context.countFilter = function (filter) {
+      var filterCount = 0;
+      for(var row = 0;row < context.nbRows;row++) {
+         for(var col = 0;col < context.nbCols;col++) {
+            filterCount += context.getItemsOn(row, col, function(obj) { return filter(obj); }).length;
+         }
+      }
+
+      for(var item in context.bag) {
+         filterCount += filter(context.bag[item]) ? 1 : 0;
+      }
+
+      return filterCount;
+   };
+
    context.isOn = function(filter) {
       var item = context.getRobot();
       return context.hasOn(item.row, item.col, filter);
@@ -5539,14 +5578,20 @@ var robotEndConditions = {
             }
          }
       }
-      
+
+      var filterCount = context.countFilter(function(obj) { return obj.isWithdrawable === true; });
+
       if(solved) {
          context.success = true;
-         throw(window.languageStrings.messages.successPickedAllWithdrawables);
+         throw(filterCount <= 1 && window.languageStrings.messages.successPickedAllWithdrawablesSingular
+             ? window.languageStrings.messages.successPickedAllWithdrawablesSingular
+             : window.languageStrings.messages.successPickedAllWithdrawables);
       }
       if(lastTurn) {
          context.success = false;
-         throw(window.languageStrings.messages.failurePickedAllWithdrawables);
+         throw(filterCount <= 1 && window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+             ? window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+             : window.languageStrings.messages.failurePickedAllWithdrawables);
       }
    },
    checkPlugsWired: function(context, lastTurn) {
@@ -5573,9 +5618,9 @@ var robotEndConditions = {
       var solved = true;
       
       var messages = [
-         window.languageStrings.messages.failureContainersFilled,
-         window.languageStrings.messages.failureContainersFilledLess,
-         window.languageStrings.messages.failureContainersFilledBag
+         'failureContainersFilled',
+         'failureContainersFilledLess',
+         'failureContainersFilledBag'
       ];
       var message = 2;
       if (context.infos.maxMoves != undefined) {
@@ -5584,11 +5629,15 @@ var robotEndConditions = {
             throw(window.languageStrings.messages.failureTooManyMoves + " : " + context.nbMoves);
          }
       }
+      var containersCount = 0;
+      var notFilledCount = 0;
+      var filledLessCount = 0;
       for(var row = 0;row < context.nbRows;row++) {
          for(var col = 0;col < context.nbCols;col++) {
             var containers = context.getItemsOn(row, col, function(obj) { return (obj.isContainer === true) && (!obj.isFake) });
             if(containers.length != 0) {
                var container = containers[0];
+               containersCount++;
                if(container.containerSize == undefined && container.containerFilter == undefined) {
                   container.containerSize = 1;
                }
@@ -5601,6 +5650,7 @@ var robotEndConditions = {
                if(container.containerSize != undefined && context.getItemsOn(row, col, filter).length != container.containerSize) {
                   solved = false;
                   message = Math.min(message, 1);
+                  filledLessCount++;
                }
                else if(context.getItemsOn(row, col, filter).length == 0) {
                   solved = false;
@@ -5624,36 +5674,90 @@ var robotEndConditions = {
                if(context.getItemsOn(row, col, function(obj) { return obj.isWithdrawable === true && obj.canBeOutside !== true; }).length > 0) {
                   solved = false;
                   message = Math.min(message, 0);
+                  notFilledCount++;
                }
             }
          }
       }
-      
+
       if(solved) {
          context.success = true;
-         throw(window.languageStrings.messages.successContainersFilled);
+         throw(window.languageStrings.messages.successContainersFilledSingular && containersCount <= 1
+             ? window.languageStrings.messages.successContainersFilledSingular
+             : window.languageStrings.messages.successContainersFilled);
       }
       if(lastTurn) {
          context.success = false;
-         throw(messages[message]);
+
+         var singular = (0 === message && notFilledCount <= 1) || (1 === message && filledLessCount <= 1);
+
+         throw(window.languageStrings.messages[messages[message] + 'Singular'] && singular
+             ? window.languageStrings.messages[messages[message] + 'Singular']
+             : window.languageStrings.messages[messages[message]]);
+      }
+   },
+   checkSpecificCollection: function(context, lastTurn) {
+      // Look for a custom filter in the task infos, otherwise accept everything (legacy behavior)
+      var filter = context.infos.checkFilter || function(obj) { return true; };
+      var filterCount = context.countFilter(filter);
+
+      var solved = true;
+
+      // 1. Check if there are valid items left on the grid (Failure if yes)
+      for(var row = 0;row < context.nbRows;row++) {
+         for(var col = 0;col < context.nbCols;col++) {
+            // We look for items that are withdrawable AND match the criteria
+            var remainingTargets = context.getItemsOn(row, col, function(obj) { 
+               return obj.isWithdrawable === true && filter(obj); 
+            });
+            if(remainingTargets.length > 0) {
+               solved = false;
+            }
+         }
+      }
+      
+      // 2. Check if the robot picked up something it shouldn't have
+      for(var i = 0; i < context.bag.length; i++) {
+         var item = context.bag[i];
+         if(!filter(item)) {
+            context.success = false;
+            throw(window.languageStrings.messages.failureUnfilteredObject); 
+         }
+      }
+
+      if(solved) {
+         context.success = true;
+         throw(filterCount <= 1 && window.languageStrings.messages.successPickedAllWithdrawablesSingular
+             ? window.languageStrings.messages.successPickedAllWithdrawablesSingular
+             : window.languageStrings.messages.successPickedAllWithdrawables);
+      }
+      if(lastTurn) {
+         context.success = false;
+         throw(filterCount <= 1 && window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+             ? window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+             : window.languageStrings.messages.failurePickedAllWithdrawables);
       }
    },
    checkBothReachAndCollect: function(context, lastTurn) {
-      var robot = context.getRobot();
+      var filterCount = context.countFilter(function(obj) { return obj.isWithdrawable === true; });
       if(context.isOn(function(obj) { return obj.isExit === true; })) {
          var solved = true;
          for(var row = 0;row < context.nbRows;row++) {
             for(var col = 0;col < context.nbCols;col++) {
                if(context.hasOn(row, col, function(obj) { return obj.isWithdrawable === true; })) {
                   solved = false;
-                  throw(window.languageStrings.messages.failurePickedAllWithdrawables);
+                  throw(filterCount <= 1 && window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+                     ? window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+                     : window.languageStrings.messages.failurePickedAllWithdrawables);
                }
             }
          }
          
          if(solved) {
             context.success = true;
-            throw(window.languageStrings.messages.successPickedAllWithdrawables);
+            throw(filterCount <= 1 && window.languageStrings.messages.successPickedAllWithdrawablesSingular
+                ? window.languageStrings.messages.successPickedAllWithdrawablesSingular
+                : window.languageStrings.messages.successPickedAllWithdrawables);
          }
       }
       if(lastTurn) {
@@ -5695,21 +5799,27 @@ var robotEndFunctionGenerator = {
                }
             }
          }
-         
+
          for(var item in context.bag) {
             if(!filter(context.bag[item])) {
                context.success = false;
                throw(window.languageStrings.messages.failureUnfilteredObject);
             }
          }
-         
+
+         var filterCount = context.countFilter(filter);
+
          if(solved) {
             context.success = true;
-            throw(window.languageStrings.messages.successPickedAllWithdrawables);
+            throw(filterCount <= 1 && window.languageStrings.messages.successPickedAllWithdrawablesSingular
+                ? window.languageStrings.messages.successPickedAllWithdrawablesSingular
+                : window.languageStrings.messages.successPickedAllWithdrawables);
          }
          if(lastTurn) {
             context.success = false;
-            throw(window.languageStrings.messages.failurePickedAllWithdrawables);
+            throw(filterCount <= 1 && window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+               ? window.languageStrings.messages.failurePickedAllWithdrawablesSingular
+                : window.languageStrings.messages.failurePickedAllWithdrawables);
          }
       };
    },

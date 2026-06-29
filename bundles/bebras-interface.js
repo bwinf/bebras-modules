@@ -172,6 +172,7 @@ if (!isCrossDomain()) {
       chan.bind('task.showViews', function(trans, views) {task.showViews(views, callAndTrigger(trans.complete, 'showViews', trans.error, [views]), trans.error);trans.delayReturn(true);});
       chan.bind('task.updateToken', function(trans, token) {task.updateToken(token, trans.complete, trans.error);trans.delayReturn(true);});
       chan.bind('task.reloadAnswer', function(trans, answer) {task.reloadAnswer(answer, callAndTrigger(trans.complete, 'reloadAnswer', trans.error, [answer]), trans.error);trans.delayReturn(true);});
+      chan.bind('task.reloadAnswerWithOptions', function(trans, params) {task.reloadAnswerWithOptions(params[0], params[1], callAndTrigger(trans.complete, 'reloadAnswerWithOptions', trans.error, params), trans.error);trans.delayReturn(true);});
       chan.bind('task.getAnswer', function(trans) {task.getAnswer(trans.complete, trans.error);trans.delayReturn(true);});
       chan.bind('task.getState', function(trans) {task.getState(trans.complete, trans.error);trans.delayReturn(true);});
       chan.bind('task.getResources', function(trans) {task.getResources(trans.complete, trans.error);trans.delayReturn(true);});
@@ -3750,6 +3751,14 @@ $(document).ready(function() {
                chooseView.reinit(data.views, taskMetaData.showViews);
             }
             if (success) {success();}
+         };
+         platform.showView = function(view, success, error) {
+            var shownViews = {[view]: true};
+             task.showViews(shownViews, function () {
+                 chooseView.update(shownViews);
+                 platform.trigger('showViews', [shownViews]);
+                 success();
+             });
          };
          platform.log = function(data, success, error) {
             if (success) {success();}
