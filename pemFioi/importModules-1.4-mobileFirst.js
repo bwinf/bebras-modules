@@ -99,6 +99,7 @@
          'blockly-turtle': {src: modulesPath+"/pemFioi/blocklyTurtle_lib.js", id: "blocklyTurtle_lib"},
          'blockly-processing': {src: modulesPath+"/pemFioi/blocklyProcessing_lib.js", id: "blocklyProcessing_lib"},
          'jwinf_css': {type: "stylesheet", src: modulesPath+"/pemFioi/jwinf.css", id: "jwinf_css"}, // for BWINF
+         'jwinf-codecast_css': {type: "stylesheet", src: modulesPath + "/pemFioi/jwinf-codecast.css",id: "jwinf-codecast_css"}, // for BWINF
          'blockly-ia-1.0': {src: modulesPath+"/pemFioi/blocklyIA_lib-1.0.js", id: "blocklyIA_lib-1.0"},
 
          'quickAlgo_utils': {src: modulesPath+"/pemFioi/quickAlgo/utils.js", id: "quickAlgo_utils"},

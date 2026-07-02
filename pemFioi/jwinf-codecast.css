@@ -1,0 +1,276 @@
+/*
+ * JwInf-Anpassungen für Codecast 7.7
+ */
+
+:root {
+    --jwinf-green: #8ca405;
+    --jwinf-green-soft: rgba(155, 177, 27, 0.47);
+    --jwinf-background: #f5fbe8;
+    --jwinf-content-background: #fff;
+    --jwinf-text: #333;
+}
+
+
+/* ---------------------------------------------------------
+ * Grundfarben
+ * --------------------------------------------------------- */
+
+/*
+ * Codecast verwendet --primary-color für aktive
+ * Schaltflächen, Tabs, Slider und Bedienelemente.
+ */
+body#app,
+#react-container,
+.task {
+    --primary-color: var(--jwinf-green);
+    color: var(--jwinf-text);
+}
+
+
+/*
+ * Hintergrund außerhalb des eigentlichen Aufgabenbereichs.
+ */
+html,
+body#app,
+#react-container {
+    background-color: var(--jwinf-background) !important;
+}
+
+
+/*
+ * Aufgabenstellung, Simulation und Arbeitsbereich bleiben weiß.
+ */
+.task .task-section-container,
+.task .task-body,
+.task .task-zone-left,
+.task .task-zone-right,
+.task .task-visualization-container,
+.task .task-visualization,
+.task .mode-selector,
+.task-mission,
+.documentation-task-instructions-only {
+    background-color: var(--jwinf-content-background) !important;
+}
+
+
+/* ---------------------------------------------------------
+ * Aufgabenstellung
+ * --------------------------------------------------------- */
+
+/*
+ * #taskIntro ist unter Codecast nicht mehr sichtbar.
+ * Der sichtbare Inhalt wird als .task-mission gerendert.
+ */
+.task-mission,
+.documentation-task-instructions-only {
+    color: var(--jwinf-text);
+    font-weight: normal;
+}
+
+
+/* Überschriften in der Aufgabenstellung ebenfalls dunkel. */
+.task-mission h1,
+.task-mission h2,
+.task-mission h3,
+.task-mission h4,
+.task-mission h5,
+.task-mission h6 {
+    color: var(--jwinf-text);
+}
+
+
+/* ---------------------------------------------------------
+ * Level-Tabs
+ * --------------------------------------------------------- */
+
+.level-tabs .level-tab:not(.current) {
+    background-color: var(--jwinf-green-soft);
+    border-radius: 5px 5px 0 0;
+}
+
+.level-tabs .level-tab:not(.current) .level-tab-link {
+    color: var(--jwinf-text);
+}
+
+.level-tabs .level-tab.current {
+    background-color: var(--jwinf-background);
+}
+
+.level-tabs .level-tab.current .level-tab-link {
+    color: var(--jwinf-green);
+    font-weight: 700;
+}
+
+
+/*
+ * Abgerundete Übergänge am aktiven Desktop-Tab.
+ */
+@media screen and (min-width: 768px) {
+    .level-tabs .level-tab:not(:first-child).current::before {
+        box-shadow: 10px 0 var(--jwinf-background);
+    }
+
+    .level-tabs .level-tab.current::after {
+        box-shadow: -10px 0 var(--jwinf-background);
+    }
+}
+
+
+/* Hintergrund des mobilen Level-Umschalters. */
+@media screen and (max-width: 767px) {
+    .level-tabs {
+        background-color: var(--jwinf-background);
+    }
+}
+
+
+/* ---------------------------------------------------------
+ * Modus-Umschalter
+ * --------------------------------------------------------- */
+
+.task .mode-selector .mode:not(.is-active) {
+    color: var(--jwinf-text);
+    background-color: var(--jwinf-green-soft);
+}
+
+.task .mode-selector .mode.is-active {
+    color: white;
+    background-color: var(--jwinf-green);
+}
+
+
+/* ---------------------------------------------------------
+ * Ausführung und Player
+ * --------------------------------------------------------- */
+
+/*
+ * Zusätzliche Absicherung für Bedienelemente, die nicht
+ * ausschließlich auf --primary-color zurückgreifen.
+ */
+.task .controls-stepper .bp6-button,
+.task .controls-compile button,
+.task .execution-controls
+    .execution-controls-dropdown
+    .dropdown
+    .dropdown-toggle {
+    color: white;
+    background-color: var(--jwinf-green) !important;
+}
+
+
+/* Aktiver Teil des Geschwindigkeitsreglers. */
+.task .controls-stepper
+    .speed-slider
+    .bp6-slider-progress.bp6-intent-primary {
+    background-color: var(--jwinf-green);
+}
+
+.task .controls-stepper
+    .speed-slider
+    .bp6-slider-handle {
+    background-color: var(--jwinf-green);
+}
+
+
+/* ---------------------------------------------------------
+ * Rückmeldungen
+ * --------------------------------------------------------- */
+
+img.beaver,
+img.messageArrow {
+    display: none;
+}
+
+
+/*
+ * Die CSS-Datei und der Ordner img liegen beide unterhalb
+ * des Modulverzeichnisses.
+ */
+#popupMessage .message::before {
+    content: "";
+
+    display: inline-block;
+    width: 56px;
+    height: 56px;
+    margin-right: 12px;
+
+    vertical-align: middle;
+
+    background-image: url("../img/jwinf-fox.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+/* ---------------------------------------------------------
+ * Textauswahl
+ * --------------------------------------------------------- */
+
+/*
+ * Textauswahl nur innerhalb der Aufgabenstellung erlauben.
+ * Eine globale Regel könnte Blockly beeinträchtigen.
+ */
+.task-mission,
+.task-mission * {
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+
+/* ---------------------------------------------------------
+ * Inline-Code in Aufgabenstellungen
+ * --------------------------------------------------------- */
+
+.task-mission code {
+    border: 1px solid var(--jwinf-text);
+    white-space: nowrap;
+    padding: 0 2px;
+    margin: 0 2px;
+}
+
+
+/*
+ * Code innerhalb eines größeren Codeblocks soll nicht wie
+ * Inline-Code behandelt werden.
+ */
+.task-mission pre code {
+    border: 0;
+    white-space: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* ---------------------------------------------------------
+ * Deutsche Anführungszeichen für samp
+ * --------------------------------------------------------- */
+
+.task-mission samp::before {
+    content: "„";
+}
+
+.task-mission samp::after {
+    content: "“";
+}
+
+/* ---------------------------------------------------------
+ * Reihenfolge der Player-Schaltflächen
+ * --------------------------------------------------------- */
+
+/*
+ * Codecast:
+ * Zurücksetzen – Start – Einzelschritt – Geschwindigkeit – Ende
+ *
+ * Gewünschte Reihenfolge:
+ * Zurücksetzen – Start – Einzelschritt – Ende – Geschwindigkeit
+ */
+@media screen and (min-width: 768px) {
+    .task .controls-stepper > .speed-slider {
+        order: 10;
+        margin-right: 0;
+        margin-left: 20px;
+    }
+}
