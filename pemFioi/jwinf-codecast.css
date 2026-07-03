@@ -274,3 +274,224 @@ img.messageArrow {
         margin-left: 20px;
     }
 }
+
+/* ---------------------------------------------------------
+ * Variablen und Aufrufstapel
+ * --------------------------------------------------------- */
+
+#react-container .stack-view {
+    box-sizing: border-box;
+    padding: 16px;
+
+    color: var(--jwinf-text);
+    background-color: var(--jwinf-content-background, #fff);
+
+    line-height: 1.5;
+}
+
+
+/*
+ * Die Bezeichnung wird immer angezeigt: sowohl bei einem echten Aufrufstapel als auch im leeren Zustand.
+ */
+#react-container .stack-view::before {
+    content: "Variablen und Aufrufstapel";
+
+    display: block;
+    margin-bottom: 8px;
+
+    color: var(--jwinf-green);
+    font-size: 1.05em;
+    font-weight: 700;
+}
+
+
+/*
+ * Normale Meldung
+ */
+#react-container .stack-view > p {
+    margin: 0;
+}
+
+
+#react-container
+.stack-view
+> .stack-frame:only-child:has(
+    > .scope-function-blocks > .global-scope:empty
+) {
+    display: none;
+}
+
+
+/*
+ * Statt des leeren Stackframes eine verständliche Meldung anzeigen.
+ */
+#react-container
+.stack-view:has(
+    > .stack-frame:only-child
+    > .scope-function-blocks
+    > .global-scope:empty
+)::after {
+    content: "Das Programm ist angehalten.";
+
+    display: block;
+    margin: 0;
+}
+
+
+/*
+ * Zusätzliche Absicherung
+ */
+#react-container .stack-view:empty::after {
+    content: "Das Programm ist angehalten.";
+
+    display: block;
+    margin: 0;
+}
+
+/* ---------------------------------------------------------
+ * Zusätzliche Menüeinträge
+ * --------------------------------------------------------- */
+
+#react-container
+.task-menu
+.jwinf-codecast-menu-item
+.jwinf-codecast-menu-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.3em;
+    flex: none;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* ---------------------------------------------------------
+ * Kurze Rückmeldung nach Kopieren und Einfügen
+ * --------------------------------------------------------- */
+
+#jwinf-codecast-toast {
+    position: fixed;
+    z-index: 100000;
+    left: 50%;
+    bottom: 24px;
+
+    max-width: calc(100% - 32px);
+    padding: 9px 14px;
+
+    color: #fff;
+    background-color: #333;
+    border-radius: 4px;
+
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 12px);
+
+    transition:
+        opacity 150ms ease,
+        transform 150ms ease;
+}
+
+#jwinf-codecast-toast.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+#jwinf-codecast-toast.is-error {
+    background-color: #8b1a1a;
+}
+
+/* ---------------------------------------------------------
+ * Kompakte Testfallanzeige
+ * --------------------------------------------------------- */
+
+#react-container
+.tests-selector
+.test-title.too-many-tests {
+    display: flex;
+
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+
+    /*
+     * Kein eigener Font und keine eigene Schriftstärke:
+     * „Test #1“ behält dadurch das ursprüngliche
+     * Codecast-Erscheinungsbild.
+     */
+}
+
+
+/* Name des aktuellen Testfalls. */
+#react-container
+.tests-selector
+.test-title.too-many-tests
+.test-title-content {
+    order: 1;
+
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+
+/* Hinweis direkt hinter dem Testfallnamen. */
+#react-container
+.tests-selector
+.jwinf-tests-hint {
+    order: 2;
+
+    flex: 0 1 auto;
+
+    color: inherit;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: normal;
+    line-height: inherit;
+
+    white-space: nowrap;
+}
+
+#react-container
+.tests-selector
+.jwinf-tests-hint strong {
+    font-weight: 700;
+    font-size: smaller;
+}
+
+
+/* Deutlicher Zähler: „2 von 5“. */
+#react-container
+.tests-selector
+.test-title.too-many-tests
+.test-index {
+    order: 3;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+    min-width: 62px;
+    margin-left: auto;
+    padding: 3px 9px;
+
+    color: #fff;
+    background-color: var(--jwinf-green);
+
+    border-radius: 999px;
+
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.4;
+
+    white-space: nowrap;
+}

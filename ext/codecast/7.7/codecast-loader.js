@@ -31,6 +31,37 @@ $(document).ready(function() {
     if (!additionalOptions.language && window.stringsLanguage) {
       additionalOptions.language = window.stringsLanguage;
     }
+    /*
+    * JwInf: verständlicher leerer Zustand der Programmzustandsansicht.
+    */
+    var currentLanguage =
+        additionalOptions.language ||
+        window.stringsLanguage ||
+        "";
+
+    if (
+        window.taskData &&
+        /^de(?:-|$)/i.test(currentLanguage)
+    ) {
+        window.taskData.gridInfos =
+            window.taskData.gridInfos || {};
+
+        window.taskData.gridInfos.taskStrings =
+            window.taskData.gridInfos.taskStrings || {};
+
+        var taskStrings =
+            window.taskData.gridInfos.taskStrings;
+
+        if (
+            !Object.prototype.hasOwnProperty.call(
+                taskStrings,
+                "PROGRAM_STOPPED"
+            )
+        ) {
+            taskStrings.PROGRAM_STOPPED =
+                "Das Programm ist angehalten.";
+        }
+    }
 
     var codecastParameters = $.extend(true, {
       start: 'task',
