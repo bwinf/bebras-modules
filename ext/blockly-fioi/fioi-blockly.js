@@ -1842,6 +1842,116 @@ FioiBlockly.Msg.fr.VARIABLES_SET = "dans %1 mettre %2";
 FioiBlockly.Msg.fr.MATH_DIVISIONFLOOR_SYMBOL = ' // ';
 FioiBlockly.Msg.fr.MATH_ARITHMETIC_TOOLTIP_DIVIDEFLOOR = "Renvoie la partie entière de la division des deux nombres.";
 
+// Deutsche Übersetzung
+
+FioiBlockly.Msg.de = {};
+
+FioiBlockly.Msg.de.VARIABLES_DEFAULT_NAME = "Element";
+FioiBlockly.Msg.de.TEXT_APPEND_VARIABLE = Blockly.Msg.VARIABLES_DEFAULT_NAME;
+
+/* Wörterbücher */
+
+FioiBlockly.Msg.de.DICTS_CREATE_EMPTY_TITLE = "leeres Wörterbuch erstellen";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_CONTAINER_TITLE_ADD = "Wörterbuch erstellen";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_CONTAINER_TOOLTIP = "";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_INPUT_WITH = "Wörterbuch erstellen mit:";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_ITEM_KEY = "Schlüssel";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_ITEM_MAPPING = ":";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_ITEM_TITLE = "Schlüssel/Wert";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_ITEM_TOOLTIP = "";
+FioiBlockly.Msg.de.DICTS_CREATE_WITH_TOOLTIP = "";
+FioiBlockly.Msg.de.DICT_GET = "Schlüssel abrufen";
+FioiBlockly.Msg.de.DICT_GET_TO = "von";
+FioiBlockly.Msg.de.DICT_KEYS = "Schlüsselliste von";
+FioiBlockly.Msg.de.DICT_SET_TITLE = "setze den Schlüssel";
+FioiBlockly.Msg.de.DICT_SET_OF = "im Wörterbuch";
+FioiBlockly.Msg.de.DICT_SET_TO = "auf";
+
+/* Ausgabe und Zeichenketten */
+
+FioiBlockly.Msg.de.TEXT_PRINT_TITLE = "gib %1 mit Zeilenumbruch aus";
+FioiBlockly.Msg.de.TEXT_PRINT_TOOLTIP = "Gibt den Text, die Zahl oder einen anderen angegebenen Wert mit anschließendem Zeilenumbruch aus.";
+FioiBlockly.Msg.de.TEXT_PRINT_NOEND_TITLE = "gib %1 aus";
+FioiBlockly.Msg.de.TEXT_PRINT_NOEND_TOOLTIP = "Gibt den Text, die Zahl oder einen anderen angegebenen Wert ohne Zeilenumbruch aus.";
+FioiBlockly.Msg.de.TEXT_EVAL_TITLE = "auswerten";
+FioiBlockly.Msg.de.TEXT_EVAL_TOOLTIP = "Wertet den angegebenen arithmetischen Ausdruck aus.";
+FioiBlockly.Msg.de.TEXT_EVAL_INVALID = "Achtung: %1; dieser Baustein gibt „false“ zurück!";
+FioiBlockly.Msg.de.TEXT_STR_TITLE = "wandle %1 in Zeichenkette um";
+FioiBlockly.Msg.de.TEXT_STR_TOOLTIP = "Wandelt einen Wert in eine Zeichenkette um.";
+FioiBlockly.Msg.de.EVAL_ERROR_SEMICOLON = "Das Semikolon „;“ ist nicht erlaubt.";
+FioiBlockly.Msg.de.EVAL_ERROR_SYNTAX = "Der Ausdruck ist syntaktisch nicht gültig.";
+FioiBlockly.Msg.de.EVAL_ERROR_TYPE = "Diese Art von Ausdruck (%1) ist nicht erlaubt.";
+FioiBlockly.Msg.de.EVAL_ERROR_VAR = "Dieser Ausdruck verwendet die nicht definierte Variable „%1“.";
+
+/* Listen */
+
+FioiBlockly.Msg.de.LISTS_APPEND_MSG = "füge der Liste %1 das Element %2 hinzu";
+FioiBlockly.Msg.de.LISTS_APPEND_TOOLTIP = "Fügt der Liste „%1“ ein Element hinzu.";
+FioiBlockly.Msg.de.LISTS_CREATE_WITH_TOO_LARGE = "Die Liste ist zu groß: %1 > maximal erlaubte Größe %2.";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_FIRST = "erstes Element";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_FROM_END = "am Index von hinten";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_FROM_START = "am Index";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_GET = "nimm";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_GET_REMOVE = "nimm und entferne";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_LAST = "letztes Element";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_RANDOM = "zufälliges Element";
+FioiBlockly.Msg.de.LISTS_GET_INDEX_REMOVE = "entferne";
+FioiBlockly.Msg.de.LISTS_SET_INDEX_INSERT = "füge ein";
+FioiBlockly.Msg.de.LISTS_SORT_TITLE = "%1 %2 %3 sortieren";
+FioiBlockly.Msg.de.LISTS_SORT_PLACE_MSG = "die Liste %1 in-place sortieren";
+FioiBlockly.Msg.de.LISTS_SORT_PLACE_TOOLTIP = "Sortiert die Liste „%1“ in-place.";
+
+/* Eingabe */
+
+FioiBlockly.Msg.de.INPUT_NUM = "lies Zeile als Zahl";
+FioiBlockly.Msg.de.INPUT_NUM_TOOLTIP = "Liest eine einzelne Zahl aus einer Zeile der Programmeingabe.";
+FioiBlockly.Msg.de.INPUT_NUM_LIST = "lies Zeile als Liste von Zahlen";
+FioiBlockly.Msg.de.INPUT_NUM_LIST_TOOLTIP = "Liest eine Liste von Zahlen aus einer Zeile der Programmeingabe.";
+FioiBlockly.Msg.de.INPUT_NUM_NEXT = "lies nächste Zahl";
+FioiBlockly.Msg.de.INPUT_NUM_NEXT_TOOLTIP = "Liest die nächste Zahl aus der Programmeingabe.";
+FioiBlockly.Msg.de.INPUT_CHAR = "lies Zeichen";
+FioiBlockly.Msg.de.INPUT_CHAR_TOOLTIP = "Liest ein Zeichen aus der Programmeingabe.";
+FioiBlockly.Msg.de.INPUT_WORD = "lies Wort";
+FioiBlockly.Msg.de.INPUT_WORD_TOOLTIP = "Liest ein Wort aus der Programmeingabe.";
+FioiBlockly.Msg.de.INPUT_LINE = "lies Zeile";
+FioiBlockly.Msg.de.INPUT_LINE_TOOLTIP = "Liest eine Zeile aus der Programmeingabe.";
+
+/* Funktionen und Variablen */
+FioiBlockly.Msg.de.CANNOT_DELETE_VARIABLE_PROCEDURE = "Die Variable „%1“ kann nicht gelöscht werden, da sie von der Funktion „%2“ verwendet wird.";
+FioiBlockly.Msg.de.DATA_REPLACEITEMOFLIST_TITLE = "ersetze das Element %1 der Liste %2 durch %3";
+FioiBlockly.Msg.de.DATA_ITEMOFLIST_TITLE = "Element %1 in %2";
+FioiBlockly.Msg.de.DATA_LISTREPEAT_TITLE = "erzeuge Liste %1 mit %3 mal dem Element %2";
+FioiBlockly.Msg.de.INVALID_NAME = "Ungültiger Name. Erlaubt sind nur Buchstaben [a-z,A-Z], Ziffern [0-9] (außer als erstes Zeichen) und Unterstriche '_'.";
+
+/* Zweidimensionale Arrays */
+
+FioiBlockly.Msg.de.TABLES_2D_INIT = "erzeuge 2D-Array %1 mit %2 Zeilen und %3 Spalten und fülle mit %4";
+FioiBlockly.Msg.de.TABLES_2D_INIT_TOOLTIP = "Erstellt ein Array mit der angegebenen Anzahl an Zeilen und Spalten und initialisiert jedes Feld mit dem angegebenen Wert.";
+FioiBlockly.Msg.de.TABLES_2D_SET = "setze in %1[%2][%3] den Wert %4";
+FioiBlockly.Msg.de.TABLES_2D_SET_TOOLTIP = "Setzt den Wert im Feld [Zeile][Spalte] der Tabelle %1.";
+FioiBlockly.Msg.de.TABLES_2D_GET = "%1[%2][%3]";
+FioiBlockly.Msg.de.TABLES_2D_GET_TOOLTIP = "Gibt den Wert im Feld [Zeile][Spalte] der Tabelle %1 zurück.";
+
+/* Dreidimensionale Arrays */
+
+FioiBlockly.Msg.de.TABLES_3D_INIT = "erzeuge 3D-Array %1 mit %2 Ebenen, %3 Zeilen und %4 Spalten und fülle es mit %5";
+FioiBlockly.Msg.de.TABLES_3D_INIT_TOOLTIP = "Erstellt ein Array mit der angegebenen Anzahl an Ebenen, Zeilen und Spalten und initialisiert jedes Feld mit dem angegebenen Wert.";
+FioiBlockly.Msg.de.TABLES_3D_SET = "setze in %1[%2][%3][%4] den Wert %5";
+FioiBlockly.Msg.de.TABLES_3D_SET_TOOLTIP = "Setzt den Wert im Feld [Ebene][Zeile][Spalte] der Tabelle %1.";
+FioiBlockly.Msg.de.TABLES_3D_GET = "%1[%2][%3][%4]";
+FioiBlockly.Msg.de.TABLES_3D_GET_TOOLTIP = "Gibt den Wert im Feld [Ebene][Zeile][Spalte] der Tabelle %1 zurück.";
+FioiBlockly.Msg.de.TABLES_VAR_NAME = "Tabelle";
+FioiBlockly.Msg.de.TABLES_TOO_BIG = "Die Dimensionen der Tabelle sind zu groß!";
+FioiBlockly.Msg.de.TABLES_OUT_OF_BOUNDS = "Es wurde versucht, auf ein Feld außerhalb der Tabelle zuzugreifen!";
+
+/* Variablen und Mathematik */
+
+FioiBlockly.Msg.de.VARIABLES_SET = "setze %1 auf %2";
+FioiBlockly.Msg.de.MATH_DIVISIONFLOOR_SYMBOL = " // ";
+FioiBlockly.Msg.de.MATH_ARITHMETIC_TOOLTIP_DIVIDEFLOOR = "Gibt das Ergebnis der ganzzahligen Division der beiden Zahlen zurück.";
+
+// Deutsche Übersetzung Ende
+
 FioiBlockly.Msg.it = {};
 
 FioiBlockly.Msg.it.VARIABLES_DEFAULT_NAME = "element";
