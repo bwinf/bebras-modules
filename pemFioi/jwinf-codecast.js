@@ -1466,27 +1466,23 @@
             return;
         }
 
-        var hint = title.querySelector(
+        /*
+         * Frühere Varianten des Hinweises entfernen.
+         */
+        var oldHint = title.querySelector(
             ".jwinf-tests-hint"
         );
 
-        if (!hint) {
-            hint = document.createElement("span");
-            hint.className = "jwinf-tests-hint";
+        if (oldHint) {
+            oldHint.remove();
+        }
 
-            hint.appendChild(
-                document.createTextNode("• Dein Programm muss ")
-            );
+        var oldInfo = title.querySelector(
+            ".jwinf-tests-info"
+        );
 
-            var importantText = document.createElement("strong");
-            importantText.textContent = "alle";
-            hint.appendChild(importantText);
-
-            hint.appendChild(
-                document.createTextNode(" Testfälle bestehen.")
-            );
-
-            title.appendChild(hint);
+        if (oldInfo) {
+            oldInfo.remove();
         }
 
         var index = title.querySelector(".test-index");
@@ -1495,21 +1491,65 @@
             return;
         }
 
-        var match = index.textContent
-            .trim()
-            .match(/^(\d+)\s*\/\s*(\d+)$/);
+        /*
+         * Sowohl Codecasts ursprüngliches „1/5“ als auch
+         * unsere bereits umgewandelte Form unterstützen.
+         */
+        var countElement = index.querySelector(
+            ".jwinf-tests-count"
+        );
+
+        var text = countElement
+            ? countElement.textContent.trim()
+            : index.textContent.trim();
+
+        var match = text.match(
+            /^(\d+)\s*(?:\/|von)\s*(\d+)(?:\s+Tests?)?$/i
+        );
 
         if (!match) {
             return;
         }
 
-        index.textContent =
-            match[1] + " von " + match[2];
+        var current = match[1];
+        var total = match[2];
+
+        /*
+         * Nur neu aufbauen, wenn sich der Testfall geändert hat.
+         */
+        if (
+            index.dataset.jwinfCurrent === current &&
+            index.dataset.jwinfTotal === total &&
+            index.classList.contains("jwinf-tests-status")
+        ) {
+            return;
+        }
+
+        index.dataset.jwinfCurrent = current;
+        index.dataset.jwinfTotal = total;
+        index.classList.add("jwinf-tests-status");
+
+        index.textContent = "";
+
+        var count = document.createElement("span");
+        count.className = "jwinf-tests-count";
+        count.textContent =
+            current + " von " + total + " Tests";
+
+        var requirement = document.createElement("span");
+        requirement.className =
+            "jwinf-tests-requirement";
+        requirement.textContent =
+            "alle müssen bestehen";
+
+        index.appendChild(count);
+        index.appendChild(requirement);
 
         index.setAttribute(
             "aria-label",
-            "Testfall " + match[1] +
-            " von " + match[2]
+            "Testfall " + current +
+            " von " + total +
+            ". Alle Testfälle müssen bestehen."
         );
     }
 
