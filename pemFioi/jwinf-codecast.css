@@ -368,6 +368,57 @@ img.messageArrow {
     stroke-linejoin: round;
 }
 
+/* ---------------------------------------------------------
+ * Scrollbares Codecast-Menü
+ * --------------------------------------------------------- */
+
+#react-container
+.menu-container.position-right {
+    max-height: 100%;
+}
+
+#react-container
+.menu-container.position-right
+.task-menu {
+    box-sizing: border-box;
+
+    height: 100%;
+    max-height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+
+/*
+ * Ein etwas schmalerer Scrollbalken, ohne ihn zu verstecken.
+ */
+#react-container
+.menu-container.position-right
+.task-menu {
+    scrollbar-width: thin;
+}
+
+
+/*
+ * Falls Codecast auf schmalen Bildschirmen das Menü unten
+ * anordnet, horizontal scrollen.
+ */
+#react-container
+.menu-container.position-bottom
+.task-menu {
+    box-sizing: border-box;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    overscroll-behavior: contain;
+}
 
 /* ---------------------------------------------------------
  * Kurze Rückmeldung nach Kopieren und Einfügen
@@ -453,7 +504,7 @@ img.messageArrow {
     color: inherit;
 
     font-family: inherit;
-    font-size: inherit;
+    font-size: small;
     font-weight: normal;
     line-height: inherit;
 
@@ -464,7 +515,7 @@ img.messageArrow {
 .tests-selector
 .jwinf-tests-hint strong {
     font-weight: 700;
-    font-size: smaller;
+    font-size: normal;
 }
 
 

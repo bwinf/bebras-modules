@@ -6,6 +6,7 @@
  * - Einfügen
  * - Rückgängig
  * - Wiederherstellen
+ * - SVG-Esporte
  */
 
 (function () {
@@ -22,18 +23,28 @@
     function getSettings() {
         var parameters =
             window.taskData &&
-            window.taskData.codecastParameters
+                window.taskData.codecastParameters
                 ? window.taskData.codecastParameters
                 : {};
 
-        return parameters.jwinfMenu || {};
+        var settings = parameters.jwinfMenu || {};
+
+        return {
+            /*
+            * Kopieren sowie Rückgängig bleiben standardmäßig aktiv
+            */
+            copyPaste: settings.copyPaste !== false,
+            undoRedo: settings.undoRedo !== false,
+
+            svgExport: settings.svgExport === true
+        };
     }
 
 
     function usesBlockly() {
         var parameters =
             window.taskData &&
-            window.taskData.codecastParameters
+                window.taskData.codecastParameters
                 ? window.taskData.codecastParameters
                 : {};
 
@@ -60,6 +71,9 @@
 
     function getWorkspace() {
         var Blockly = getBlockly();
+        var workspace;
+        var workspaces;
+        var i;
 
         if (!Blockly) {
             return null;
@@ -69,7 +83,7 @@
          * Je nach Blockly-Version existiert eine dieser Varianten.
          */
         if (typeof Blockly.getMainWorkspace === "function") {
-            var workspace = Blockly.getMainWorkspace();
+            workspace = Blockly.getMainWorkspace();
 
             if (workspace) {
                 return workspace;
@@ -80,10 +94,22 @@
             return Blockly.mainWorkspace;
         }
 
-        /*
-         * Codecast setzt clipboardSource_ beim Wiederherstellen der
-         * Zwischenablage auf den aktuellen Workspace.
-         */
+        if (
+            Blockly.Workspace &&
+            typeof Blockly.Workspace.getAll === "function"
+        ) {
+            workspaces = Blockly.Workspace.getAll();
+
+            for (i = 0; i < workspaces.length; i++) {
+                if (
+                    workspaces[i] &&
+                    workspaces[i].isFlyout !== true
+                ) {
+                    return workspaces[i];
+                }
+            }
+        }
+
         if (Blockly.clipboardSource_) {
             return Blockly.clipboardSource_;
         }
@@ -400,7 +426,7 @@
         if (stack && stack.length === 0) {
             showMessage(
                 redo
-                    ? "Es gibt nichts zum wieder herstellen."
+                    ? "Es gibt nichts wiederherzustellen."
                     : "Es gibt nichts rückgängig zu machen.",
                 true
             );
@@ -434,38 +460,6 @@
 
     function redo() {
         changeHistory(true);
-    }
-
-
-    /* ---------------------------------------------------------
-     * Rückmeldung
-     * --------------------------------------------------------- */
-
-    function showMessage(message, isError) {
-        var toast = document.getElementById(
-            "jwinf-codecast-toast"
-        );
-
-        if (!toast) {
-            toast = document.createElement("div");
-            toast.id = "jwinf-codecast-toast";
-            toast.setAttribute("role", "status");
-            toast.setAttribute("aria-live", "polite");
-
-            document.body.appendChild(toast);
-        }
-
-        toast.textContent = message;
-        toast.className =
-            "is-visible" + (isError ? " is-error" : "");
-
-        if (toastTimer) {
-            window.clearTimeout(toastTimer);
-        }
-
-        toastTimer = window.setTimeout(function () {
-            toast.className = "";
-        }, 2200);
     }
 
 
@@ -513,6 +507,8 @@
 
 
     function runAction(action) {
+        var result = null;
+
         if (action === "copy") {
             copyBlocks();
         } else if (action === "paste") {
@@ -521,6 +517,27 @@
             undo();
         } else if (action === "redo") {
             redo();
+        } else if (action === "export-program-svg") {
+            result = exportProgramAsSvg();
+        } else if (action === "export-grid-svg") {
+            result = exportGridAsSvg();
+        }
+
+        if (
+            result &&
+            typeof result.catch === "function"
+        ) {
+            result.catch(function (error) {
+                console.error(
+                    "JwInf Codecast: SVG-Export fehlgeschlagen.",
+                    error
+                );
+
+                showMessage(
+                    "Das SVG konnte nicht erstellt werden.",
+                    true
+                );
+            });
         }
 
         closeCodecastMenu();
@@ -558,6 +575,27 @@
                 start +
                 '<path d="M9 7 4 12l5 5"></path>' +
                 '<path d="M5 12h9a6 6 0 0 1 6 6"></path>' +
+                end
+            );
+        }
+
+        if (action === "export-program-svg") {
+            return (
+                start +
+                '<path d="M12 3v11"></path>' +
+                '<path d="m7 10 5 5 5-5"></path>' +
+                '<path d="M5 19h14"></path>' +
+                '<rect x="4" y="4" width="16" height="3" rx="1"></rect>' +
+                end
+            );
+        }
+
+        if (action === "export-grid-svg") {
+            return (
+                start +
+                '<rect x="4" y="4" width="16" height="16" rx="2"></rect>' +
+                '<path d="M4 10h16"></path>' +
+                '<path d="M10 4v16"></path>' +
                 end
             );
         }
@@ -686,8 +724,8 @@
         ) {
             menu.appendChild(aboutItem);
         }
-    } 
-        function ensureMenuItems() {
+    }
+    function ensureMenuItems() {
         observerScheduled = false;
         enhanceTestSelector();
 
@@ -704,46 +742,66 @@
         }
 
         var settings = getSettings();
-        var definitions = [];
 
-        if (settings.copyPaste !== false) {
-            definitions.push({
+        var definitions = [
+            {
                 action: "copy",
-                label: "Kopieren"
-            });
-
-            definitions.push({
+                label: "Kopieren",
+                enabled: settings.copyPaste
+            },
+            {
                 action: "paste",
-                label: "Einfügen"
-            });
-        }
-
-        if (settings.undoRedo !== false) {
-            definitions.push({
+                label: "Einfügen",
+                enabled: settings.copyPaste
+            },
+            {
                 action: "undo",
-                label: "Rückgängig"
-            });
-
-            definitions.push({
+                label: "Rückgängig",
+                enabled: settings.undoRedo
+            },
+            {
                 action: "redo",
-                label: " Wiederherstellen"
-            });
-        }
+                label: "Wiederherstellen",
+                enabled: settings.undoRedo
+            },
+            {
+                action: "export-program-svg",
+                label: "Programm als SVG",
+                enabled: settings.svgExport
+            },
+            {
+                action: "export-grid-svg",
+                label: "Spielfeld als SVG",
+                enabled: settings.svgExport
+            }
+        ];
 
         var fragment = document.createDocumentFragment();
         var added = false;
         var i;
         var definition;
+        var existingItem;
 
         for (i = 0; i < definitions.length; i++) {
             definition = definitions[i];
 
-            if (
-                document.getElementById(
-                    "jwinf-codecast-menu-" +
-                    definition.action
-                )
-            ) {
+            existingItem = document.getElementById(
+                "jwinf-codecast-menu-" +
+                definition.action
+            );
+
+            /*
+            * Entferne deaktivierte Menüpunkte
+            */
+            if (!definition.enabled) {
+                if (existingItem) {
+                    existingItem.remove();
+                }
+
+                continue;
+            }
+
+            if (existingItem) {
                 continue;
             }
 
@@ -778,8 +836,7 @@
         }
 
         observerScheduled = true;
-
-        window.setTimeout(ensureMenuItems, 0);
+        window.setTimeout(ensureMenuItems, 100);
     }
 
 
@@ -800,6 +857,661 @@
         });
     }
 
+    /* ---------------------------------------------------------
+ * Rückmeldung
+ * --------------------------------------------------------- */
+
+    function showMessage(message, isError) {
+        var toast = document.getElementById(
+            "jwinf-codecast-toast"
+        );
+
+        if (!toast) {
+            toast = document.createElement("div");
+            toast.id = "jwinf-codecast-toast";
+            toast.setAttribute("role", "status");
+            toast.setAttribute("aria-live", "polite");
+
+            document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+        toast.className =
+            "is-visible" + (isError ? " is-error" : "");
+
+        if (toastTimer) {
+            window.clearTimeout(toastTimer);
+        }
+
+        toastTimer = window.setTimeout(function () {
+            toast.className = "";
+        }, 2200);
+    }
+
+    /* ---------------------------------------------------------
+     * SVG-Export
+     * --------------------------------------------------------- */
+
+    function sanitizeFilename(name) {
+        return (name || "jwinf")
+            .replace(/[\\\/:*?"<>|]+/g, "_")
+            .replace(/\s+/g, "_")
+            .replace(/_+/g, "_")
+            .replace(/^_+|_+$/g, "");
+    }
+
+    function getBaseFilename() {
+        return sanitizeFilename(document.title || "jwinf");
+    }
+
+    function downloadTextFile(filename, text, mimeType) {
+        var blob = new Blob([text], {
+            type: mimeType || "text/plain;charset=utf-8"
+        });
+
+        var url = window.URL.createObjectURL(blob);
+        var link = document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        window.setTimeout(function () {
+            window.URL.revokeObjectURL(url);
+        }, 1000);
+    }
+
+    function serializeSvg(svg) {
+        var serializer = new XMLSerializer();
+        return (
+            '<?xml version="1.0" encoding="UTF-8"?>\n' +
+            serializer.serializeToString(svg)
+        );
+    }
+
+    function inlineStylesRecursive(sourceNode, targetNode) {
+        if (
+            !sourceNode ||
+            !targetNode ||
+            sourceNode.nodeType !== 1 ||
+            targetNode.nodeType !== 1
+        ) {
+            return;
+        }
+
+        var computed = window.getComputedStyle(sourceNode);
+        var styleText = "";
+        var i;
+
+        for (i = 0; i < computed.length; i++) {
+            var prop = computed[i];
+            styleText +=
+                prop + ":" + computed.getPropertyValue(prop) + ";";
+        }
+
+        if (styleText) {
+            targetNode.setAttribute("style", styleText);
+        }
+
+        var sourceChildren = sourceNode.childNodes;
+        var targetChildren = targetNode.childNodes;
+
+        for (
+            i = 0;
+            i < sourceChildren.length && i < targetChildren.length;
+            i++
+        ) {
+            inlineStylesRecursive(
+                sourceChildren[i],
+                targetChildren[i]
+            );
+        }
+    }
+
+    function cloneWithInlineStyles(sourceNode) {
+        var clone = sourceNode.cloneNode(true);
+        inlineStylesRecursive(sourceNode, clone);
+        return clone;
+    }
+
+    function createSvgRoot(width, height, viewBox) {
+        var svg = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+        );
+
+        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        svg.setAttribute(
+            "xmlns:xlink",
+            "http://www.w3.org/1999/xlink"
+        );
+        svg.setAttribute("width", String(width));
+        svg.setAttribute("height", String(height));
+        svg.setAttribute("viewBox", viewBox);
+        svg.setAttribute("version", "1.1");
+
+        return svg;
+    }
+
+    function getBlocklyParentSvg(workspace) {
+        if (
+            workspace &&
+            typeof workspace.getParentSvg === "function"
+        ) {
+            return workspace.getParentSvg();
+        }
+
+        return document.querySelector(
+            "#react-container .blocklySvg, .blocklySvg"
+        );
+    }
+    async function exportProgramAsSvg() {
+        var workspace = getWorkspace();
+
+        if (!workspace) {
+            showMessage(
+                "Kein Blockly-Arbeitsbereich gefunden.",
+                true
+            );
+            return;
+        }
+
+        var parentSvg = getBlocklyParentSvg(workspace);
+
+        var blockCanvas =
+            typeof workspace.getCanvas === "function"
+                ? workspace.getCanvas()
+                : workspace.svgBlockCanvas_ ||
+                (
+                    parentSvg &&
+                    parentSvg.querySelector(
+                        ".blocklyBlockCanvas"
+                    )
+                );
+
+        if (!parentSvg || !blockCanvas) {
+            showMessage(
+                "Das Programm konnte nicht gefunden werden.",
+                true
+            );
+            return;
+        }
+
+        var bbox;
+
+        try {
+            /*
+             * Größe aller Blöcke im lokalen Koordinatensystem
+             * der Blockly-Zeichenfläche.
+             */
+            bbox = blockCanvas.getBBox();
+        } catch (error) {
+            console.error(
+                "JwInf Codecast: Die Größe des Programms " +
+                "konnte nicht ermittelt werden.",
+                error
+            );
+
+            showMessage(
+                "Das Programm konnte nicht als SVG exportiert werden.",
+                true
+            );
+            return;
+        }
+
+        if (
+            !bbox ||
+            !isFinite(bbox.width) ||
+            !isFinite(bbox.height) ||
+            bbox.width <= 0 ||
+            bbox.height <= 0
+        ) {
+            showMessage(
+                "Es gibt noch keine Bausteine zum Exportieren.",
+                true
+            );
+            return;
+        }
+
+        /*
+         * Etwas großzügiger Abstand, damit Schatten und rechts
+         * herausragende Blockly-Elemente nicht abgeschnitten werden.
+         */
+        var padding = 32;
+
+        var width = Math.ceil(
+            bbox.width + 2 * padding
+        );
+
+        var height = Math.ceil(
+            bbox.height + 2 * padding
+        );
+
+        /*
+         * Wichtig: Das neue SVG beginnt bei 0/0.
+         * Wir verschieben anschließend die Blöcke hinein.
+         */
+        var exportSvg = createSvgRoot(
+            width,
+            height,
+            "0 0 " + width + " " + height
+        );
+
+        exportSvg.setAttribute(
+            "overflow",
+            "visible"
+        );
+
+        exportSvg.style.overflow = "visible";
+
+        /*
+         * Filter, Muster und weitere Blockly-Definitionen übernehmen.
+         */
+        var defs = parentSvg.querySelector("defs");
+
+        if (defs) {
+            exportSvg.appendChild(
+                defs.cloneNode(true)
+            );
+        }
+
+        var canvasClone =
+            cloneWithInlineStyles(blockCanvas);
+
+        /*
+         * Die äußere Blockly-Gruppe enthält die aktuelle Zoom- und
+         * Scrollposition des Editors. Diese Transformation darf nicht
+         * ins Export-SVG übernommen werden.
+         */
+        canvasClone.removeAttribute("transform");
+
+        canvasClone.style.removeProperty(
+            "transform"
+        );
+
+        canvasClone.style.removeProperty(
+            "transform-origin"
+        );
+
+        canvasClone.style.overflow = "visible";
+
+        /*
+         * Das Programm anhand seiner tatsächlichen Bounding Box
+         * mit Abstand oben und links positionieren.
+         */
+        var wrapper = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+        );
+
+        wrapper.setAttribute(
+            "transform",
+            "translate(" +
+            (padding - bbox.x) +
+            " " +
+            (padding - bbox.y) +
+            ")"
+        );
+
+        wrapper.appendChild(canvasClone);
+        exportSvg.appendChild(wrapper);
+
+        await embedImagesInSvg(exportSvg);
+
+        downloadTextFile(
+            getBaseFilename() + "-programm.svg",
+            serializeSvg(exportSvg),
+            "image/svg+xml;charset=utf-8"
+        );
+
+        showMessage(
+            "Programm als SVG heruntergeladen."
+        );
+    }
+
+
+
+    function blobToDataUrl(blob) {
+        return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                resolve(reader.result);
+            };
+
+            reader.onerror = function () {
+                reject(reader.error);
+            };
+
+            reader.readAsDataURL(blob);
+        });
+    }
+
+
+    function getSvgImageHref(image) {
+        return (
+            image.getAttribute("href") ||
+            image.getAttribute("xlink:href") ||
+            image.getAttributeNS(
+                "http://www.w3.org/1999/xlink",
+                "href"
+            )
+        );
+    }
+
+
+    function setSvgImageHref(image, value) {
+        image.setAttribute("href", value);
+
+        image.setAttributeNS(
+            "http://www.w3.org/1999/xlink",
+            "xlink:href",
+            value
+        );
+    }
+
+
+    async function embedImagesInSvg(svg) {
+        var images = Array.prototype.slice.call(
+            svg.querySelectorAll("image")
+        );
+
+        /*
+         * Dieselbe PNG-Datei kommt im Spielfeld oft sehr häufig vor.
+         * Deshalb wird jede URL nur einmal geladen.
+         */
+        var requests = Object.create(null);
+        var failedUrls = [];
+
+        function loadImage(href) {
+            var url;
+            var absoluteUrl;
+
+            try {
+                url = new URL(href, document.baseURI);
+                absoluteUrl = url.href;
+            } catch (_) {
+                return Promise.resolve({
+                    absoluteUrl: href
+                });
+            }
+
+            if (!requests[absoluteUrl]) {
+                requests[absoluteUrl] = fetch(absoluteUrl, {
+                    credentials:
+                        url.origin === window.location.origin
+                            ? "same-origin"
+                            : "omit",
+
+                    cache: "force-cache"
+                })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error(
+                                "HTTP " + response.status
+                            );
+                        }
+
+                        return response.blob();
+                    })
+                    .then(blobToDataUrl)
+                    .then(function (dataUrl) {
+                        return {
+                            absoluteUrl: absoluteUrl,
+                            dataUrl: dataUrl
+                        };
+                    })
+                    .catch(function (error) {
+                        return {
+                            absoluteUrl: absoluteUrl,
+                        };
+                    });
+            }
+
+            return requests[absoluteUrl];
+        }
+
+
+        await Promise.all(
+            images.map(async function (image) {
+                var href = getSvgImageHref(image);
+
+                if (
+                    !href ||
+                    /^(data:|blob:|#)/i.test(href)
+                ) {
+                    return;
+                }
+
+                var result = await loadImage(href);
+
+                if (result.dataUrl) {
+                    setSvgImageHref(
+                        image,
+                        result.dataUrl
+                    );
+
+                    return;
+                }
+
+                /*
+                 * Falls das Einbetten nicht erlaubt ist, bleibt das Bild
+                 * als absolute Online-Adresse verlinkt. Deshalb kann das
+                 * SVG trotzdem korrekt aussehen.
+                 */
+                setSvgImageHref(
+                    image,
+                    result.absoluteUrl || href
+                );
+
+                if (
+                    failedUrls.indexOf(
+                        result.absoluteUrl || href
+                    ) === -1
+                ) {
+                    failedUrls.push(
+                        result.absoluteUrl || href
+                    );
+                }
+            })
+        );
+
+        /*
+         * Nur noch eine Meldung pro Export statt einer Meldung
+         * für jedes einzelne Wand- oder Markerbild.
+         */
+        if (failedUrls.length > 0) {
+            console.warn(
+                "JwInf Codecast: Diese Bilder konnten nicht " +
+                "eingebettet werden und bleiben online verlinkt:",
+                failedUrls
+            );
+        }
+
+        return failedUrls;
+    }
+
+    function findGridSvg() {
+        var selectors = [
+            "#grid svg",
+            "#gridContainer svg",
+            ".task-visualization-container svg",
+            ".task-visualization svg"
+        ];
+
+        var i;
+        var svg;
+
+        for (i = 0; i < selectors.length; i++) {
+            svg = document.querySelector(selectors[i]);
+
+            if (
+                svg &&
+                svg.querySelector("rect, path, image")
+            ) {
+                return svg;
+            }
+        }
+
+        return null;
+    }
+
+    async function exportGridAsSvg() {
+        var sourceSvg = findGridSvg();
+        var clone;
+        var width;
+        var height;
+        var rect;
+        var failedImages;
+
+        if (!sourceSvg) {
+            showMessage(
+                "Kein Spielfeld-SVG gefunden.",
+                true
+            );
+            return;
+        }
+
+        clone = cloneWithInlineStyles(sourceSvg);
+
+        clone.setAttribute(
+            "xmlns",
+            "http://www.w3.org/2000/svg"
+        );
+
+        clone.setAttribute(
+            "xmlns:xlink",
+            "http://www.w3.org/1999/xlink"
+        );
+
+        clone.setAttribute("version", "1.1");
+
+        width = parseFloat(
+            sourceSvg.getAttribute("width")
+        );
+
+        height = parseFloat(
+            sourceSvg.getAttribute("height")
+        );
+
+        if (!width || !height) {
+            rect = sourceSvg.getBoundingClientRect();
+
+            width = width || rect.width;
+            height = height || rect.height;
+        }
+
+        clone.setAttribute(
+            "width",
+            String(width)
+        );
+
+        clone.setAttribute(
+            "height",
+            String(height)
+        );
+
+        if (!clone.getAttribute("viewBox")) {
+            clone.setAttribute(
+                "viewBox",
+                "0 0 " + width + " " + height
+            );
+        }
+
+        /*
+         * Positionierung aus der Webseite nicht in die Datei
+         * übernehmen.
+         */
+        clone.style.position = "";
+        clone.style.left = "";
+        clone.style.top = "";
+        clone.style.overflow = "visible";
+
+        failedImages = await embedImagesInSvg(clone);
+
+        downloadTextFile(
+            getBaseFilename() + "-spielfeld.svg",
+            serializeSvg(clone),
+            "image/svg+xml;charset=utf-8"
+        );
+
+        if (failedImages.length > 0) {
+            showMessage(
+                "Spielfeld als SVG gespeichert; einige Bilder " +
+                "bleiben online verlinkt."
+            );
+        } else {
+            showMessage(
+                "Spielfeld als SVG heruntergeladen."
+            );
+        }
+    }
+
+
+    /* ---------------------------------------------------------
+     * Kompakte Testfallanzeige
+     * --------------------------------------------------------- */
+
+    function enhanceTestSelector() {
+        var title = document.querySelector(
+            "#react-container " +
+            ".tests-selector " +
+            ".test-title.too-many-tests"
+        );
+
+        if (!title) {
+            return;
+        }
+
+        var hint = title.querySelector(
+            ".jwinf-tests-hint"
+        );
+
+        if (!hint) {
+            hint = document.createElement("span");
+            hint.className = "jwinf-tests-hint";
+
+            hint.appendChild(
+                document.createTextNode("• Dein Programm muss ")
+            );
+
+            var importantText = document.createElement("strong");
+            importantText.textContent = "alle";
+            hint.appendChild(importantText);
+
+            hint.appendChild(
+                document.createTextNode(" Testfälle bestehen.")
+            );
+
+            title.appendChild(hint);
+        }
+
+        var index = title.querySelector(".test-index");
+
+        if (!index) {
+            return;
+        }
+
+        var match = index.textContent
+            .trim()
+            .match(/^(\d+)\s*\/\s*(\d+)$/);
+
+        if (!match) {
+            return;
+        }
+
+        index.textContent =
+            match[1] + " von " + match[2];
+
+        index.setAttribute(
+            "aria-label",
+            "Testfall " + match[1] +
+            " von " + match[2]
+        );
+    }
 
     if (document.readyState === "loading") {
         document.addEventListener(
@@ -809,66 +1521,5 @@
     } else {
         initialize();
     }
+
 })();
-
-/* ---------------------------------------------------------
- * Kompakte Testfallanzeige
- * --------------------------------------------------------- */
-
-function enhanceTestSelector() {
-    var title = document.querySelector(
-        "#react-container " +
-        ".tests-selector " +
-        ".test-title.too-many-tests"
-    );
-
-    if (!title) {
-        return;
-    }
-
-    var hint = title.querySelector(
-        ".jwinf-tests-hint"
-    );
-
-    if (!hint) {
-        hint = document.createElement("span");
-        hint.className = "jwinf-tests-hint";
-
-        hint.appendChild(
-            document.createTextNode("• Dein Programm muss ")
-        );
-
-        var importantText = document.createElement("strong");
-        importantText.textContent = "alle";
-        hint.appendChild(importantText);
-
-        hint.appendChild(
-            document.createTextNode(" Testfälle bestehen.")
-        );
-
-        title.appendChild(hint);
-    }
-
-    var index = title.querySelector(".test-index");
-
-    if (!index) {
-        return;
-    }
-
-    var match = index.textContent
-        .trim()
-        .match(/^(\d+)\s*\/\s*(\d+)$/);
-
-    if (!match) {
-        return;
-    }
-
-    index.textContent =
-        match[1] + " von " + match[2];
-
-    index.setAttribute(
-        "aria-label",
-        "Testfall " + match[1] +
-        " von " + match[2]
-    );
-}
