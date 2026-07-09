@@ -64,27 +64,27 @@ var getContext = function(display, infos) {
             eof: "Ende der Eingabe",
             charToNumber: "Zeichen zu Zahl",
             numberToChar: "Zahl zu Zeichen",
-            charToAscii: "ASCII-Zahl zu Zeichen",
-            asciiToChar: "Zeichen zu ASCII-Zahl",
+            charToAscii: "Zeichen zu Zahl (Unicode)",
+            asciiToChar: "Zahl (Unicode) zu Zeichen",
          },
          code: {
-            print: "schreibe",
-            print_end: "schreibe",
-            read: "lies",
+            print: "print",
+            print_end: "print",
+            read: "input",
             readInteger: "liesGanzzahl",
             readFloat: "liesKommazahl",
             eof: "eingabeEnde",
-            charToNumber: "zeichenZuZahl",
-            numberToChar: "zahlZuZeichen",
-            asciiToChar: "zeichenZuAscii",
-            charToAscii: "asciiZuZeichen",
+            charToNumber: "int",
+            numberToChar: "str",
+            asciiToChar: "ZeichenZuZahl",
+            charToAscii: "zahlZuZeichen",
          },
          description: {
          },
          startingBlockName: "Programm",
          messages: {
-            inputPrompt: "Please input a line for the program.", // TODO :: translate two lines
-            inputEmpty: "Your program tried to read the input while there is no line left to read!",
+            inputPrompt: "Bitte gib eine Eingabezeile für das Programm ein.",
+            inputEmpty: "Dein Programm hat versucht, eine Eingabezeile zu lesen, obwohl keine Eingabe mehr vorhanden ist!",
             outputWrong: "Das Programm hat nicht alle Zeilen richtig ausgegeben.",
             outputCorrect: "Bravo! Das Programm hat alle Zeilen richtig ausgegeben.",
             tooFewChars: "Zeile zu kurz: Zeile {0}",
@@ -144,18 +144,17 @@ var getContext = function(display, infos) {
          context.provideBlocklyColours = function() {
             return {
                categories: {
-                  logic: 100,
-                  loops: 180,
-                  math: 230,
-                  texts: 60,
-                  lists: 40,
-                  colour: 20,
-                  variables: 330,
-                  functions: 290,
-                  read: 260,
-                  print: 200,
-                  manipulate: 0,
-                  _default: 0
+                  logic: "#81b31d",
+                  loops: "#2fb5bd",
+                  math: "#3950a5",
+                  texts: "#6638a5",
+                  lists: "#d8892b",
+                  colour: 310,
+                  read: "#a50101",
+                  print: "#dac221",
+                  variables: "#a5416b",
+                  manipulate: "#26885f",
+                  _default: 280
                },
                blocks: {}
             };
@@ -335,10 +334,12 @@ var getContext = function(display, infos) {
 
    context.printer.eof = function(callback) {
       var index = context.printer.input_text.indexOf('\n');
-      
-      if (index < 0) {         
+
+      if (index < 0) {
          context.waitDelay(callback, true);
+         return;
       }
+
       context.waitDelay(callback, false);
    }
 
