@@ -135,6 +135,7 @@ var conceptViewer = {
   selectedLanguage: null,
   fullScreen: false,
   contextTitle: undefined,
+  taskHtml: '',
   allLangs: [
     {id: 'blockly', lbl: 'Blockly'},
     {id: 'scratch', lbl: 'Scratch'},
@@ -189,6 +190,14 @@ var conceptViewer = {
     this.introHtml = html;
   },
 
+  setTaskHtml: function(html) {
+    this.taskHtml = html || "";
+
+    if (this.loaded) {
+        this.loadNavigation();
+    }
+},
+
   setPythonIntro: function(html, callback) {
     this.pythonIntro = {html: html, callback: callback};
     this.loadNavigation();
@@ -199,20 +208,14 @@ var conceptViewer = {
     $('.conceptViewer-tab-' + id).addClass('current');
   },
 
-  loadNavigation: function () {
+loadNavigation: function () {
     $('.conceptViewer-tabs').empty();
-    this.addTab('toc', '<span class="fas fa-bars"></span>');
-    this.addTab('intro', window.languageStrings.introDetailsTitle);
-    if(this.pythonIntro.html) {
-      this.addTab('python', 'Python');
-    }
-    for(var i = 0; i < this.mainConcepts.length ; i++) {
-      this.addTab('mainConcept' + i, this.mainConcepts[i].name);
-    }
-    if(this.shownTab && this.shownTab != 'more') {
-      this.showTab(this.shownTab);
-    }
-  },
+
+    this.addTab('task', 'Aufgabenstellung');
+    this.addTab('intro', 'Weitere Hinweise');
+
+    this.showTab('intro');
+},
 
   loadConcepts: function (newConcepts, mainConcepts) {
     // Load new concept information
@@ -237,7 +240,7 @@ var conceptViewer = {
     this.shown = true;
     $('#conceptViewer').fadeIn(500);
     if(initConcept !== false) {
-      this.showTab(this.shownTab);
+        this.showTab('intro');
     }
   },
 
@@ -249,6 +252,8 @@ var conceptViewer = {
     this.selectTab(id);
     if(id == 'toc') {
       this.loadToc();
+    } else if(id == 'task') {
+        this.loadTask();
     } else if(id == 'intro') {
       this.loadIntro();
     } else if(id == 'python') {
@@ -280,12 +285,36 @@ var conceptViewer = {
     $('#conceptViewer .content').empty().html(html);
   },
 
+  loadTask: function() {
+      var html = '\
+          <div class="jwinf-conceptviewer-page">\
+              <h2>Aufgabenstellung</h2>\
+              <hr />';
+
+      html += this.taskHtml || '';
+
+      html += '\
+          </div>';
+
+      $('#conceptViewer .content').empty().html(html);
+  },
+
   loadIntro: function() {
-    var html = '<div>';
-    html += '<h2 class="sectionTitle"><i class="fas fa-book icon"></i> ' + window.languageStrings.introDetailsTitle + '</h2><hr>';
-    html += this.introHtml;
-    html += '</div>';
-    $('#conceptViewer .content').empty().html(html);
+      var html = '\
+          <div class="jwinf-conceptviewer-page">\
+              <h2>Weitere Hinweise</h2>\
+              <hr />';
+
+      if (this.introHtml) {
+          html += this.introHtml;
+      } else {
+          html += '<p>Für diese Aufgabe gibt es keine weiteren Hinweise.</p>';
+      }
+
+      html += '\
+          </div>';
+
+      $('#conceptViewer .content').empty().html(html);
   },
 
   loadPython: function() {

@@ -1089,6 +1089,8 @@
         enhanceTestSelector();
         enhancePythonAvailableBlocks();
         enhanceBlocklyToolboxCollapser();
+        enhanceCodecastDocumentation();
+        makeRobotStartBlocksMovable();
 
         if (!usesBlockly()) {
             return;
@@ -2061,6 +2063,483 @@
             ". Alle Testfälle müssen bestehen."
         );
     }
+
+    /* ---------------------------------------------------------
+ * Codecast-Dokumentation: Aufgabenstellung / Weitere Hinweise
+ * --------------------------------------------------------- */
+
+    var jwinfDocumentationNativeSwitch = false;
+    var jwinfBulbIconUrl = null;
+
+
+    function getJwinfModulesBaseUrl() {
+        var link = document.querySelector(
+            'link[href*="jwinf-codecast.css"]'
+        );
+
+        var script;
+        var match;
+
+        if (link && link.href) {
+            return new URL("../", link.href).href;
+        }
+
+        script = document.querySelector(
+            'script[src*="_common/modules/"]'
+        );
+
+        if (script && script.src) {
+            match = script.src.match(
+                /^(.*?_common\/modules\/)/
+            );
+
+            if (match) {
+                return match[1];
+            }
+        }
+
+        return null;
+    }
+
+
+    function getJwinfBulbIconUrl() {
+        var baseUrl;
+
+        if (jwinfBulbIconUrl) {
+            return jwinfBulbIconUrl;
+        }
+
+        baseUrl = getJwinfModulesBaseUrl();
+
+        if (baseUrl) {
+            jwinfBulbIconUrl =
+                new URL("img/bulb.svg", baseUrl).href;
+        } else {
+            jwinfBulbIconUrl =
+                "../../../_common/modules/img/bulb.svg";
+        }
+
+        return jwinfBulbIconUrl;
+    }
+
+
+    function enhanceDocumentationIcon() {
+        var icons = document.querySelectorAll(
+            "#react-container .documentation-header-icon " +
+            ".bp6-icon-zoom-in, " +
+            "#react-container .bp6-icon-help"
+        );
+
+        Array.prototype.forEach.call(
+            icons,
+            function (icon) {
+                var svg = icon.querySelector("svg");
+                var img = icon.querySelector(
+                    ".jwinf-bulb-icon"
+                );
+
+                if (svg) {
+                    svg.style.display = "none";
+                }
+
+                if (!img) {
+                    img = document.createElement("img");
+                    img.className = "jwinf-bulb-icon";
+                    img.alt = "";
+                    img.setAttribute("aria-hidden", "true");
+                    img.src = getJwinfBulbIconUrl();
+
+                    icon.appendChild(img);
+                }
+            }
+        );
+    }
+
+
+    function setDocumentationLabel(element, label) {
+        var spans;
+        var lastSpan;
+
+        if (!element) {
+            return;
+        }
+
+        spans = element.querySelectorAll("span");
+
+        if (spans.length > 0) {
+            lastSpan = spans[spans.length - 1];
+            lastSpan.textContent = label;
+            return;
+        }
+
+        element.textContent = label;
+    }
+
+
+    function getDocumentationElementText(element) {
+        return element
+            ? element.textContent
+                .replace(/\s+/g, " ")
+                .trim()
+            : "";
+    }
+
+
+    function markDocumentationTabs(documentation) {
+        var tabTitles = documentation.querySelectorAll(
+            ".documentation-tab-title"
+        );
+
+        Array.prototype.forEach.call(
+            tabTitles,
+            function (title) {
+                var text = getDocumentationElementText(title);
+                var tab =
+                    title.closest(".documentation-tab") ||
+                    title.closest(".documentation-tab-left");
+
+                if (!tab) {
+                    return;
+                }
+
+                if (
+                    text === "Aufgabenhinweise" ||
+                    text === "Aufgabenstellung"
+                ) {
+                    tab.dataset.jwinfDocKind = "task";
+                    setDocumentationLabel(
+                        title,
+                        "Aufgabenstellung"
+                    );
+                } else if (
+                    text === "Programmerstellung" ||
+                    text === "Weitere Hinweise" ||
+                    text === "Création d'un programme" ||
+                    text === "Program creation"
+                ) {
+                    tab.dataset.jwinfDocKind = "hints";
+                    setDocumentationLabel(
+                        title,
+                        "Weitere Hinweise"
+                    );
+                } else {
+                    tab.dataset.jwinfDocHidden = "true";
+                }
+            }
+        );
+
+        Array.prototype.forEach.call(
+            documentation.querySelectorAll(
+                ".documentation-category-selector option"
+            ),
+            function (option) {
+                var text = getDocumentationElementText(option);
+
+                if (option.value === "task-instructions") {
+                    option.dataset.jwinfDocKind = "task";
+                    option.textContent = "Aufgabenstellung";
+                } else if (
+                    option.value === "language" ||
+                    text === "Programmerstellung" ||
+                    text === "Weitere Hinweise"
+                ) {
+                    option.dataset.jwinfDocKind = "hints";
+                    option.textContent = "Weitere Hinweise";
+                } else {
+                    option.hidden = true;
+                    option.disabled = true;
+                }
+            }
+        );
+    }
+
+
+    function setDocumentationActiveKind(documentation, kind) {
+        var title = documentation.querySelector(
+            ".documentation-category-title h2"
+        );
+
+        documentation.classList.toggle(
+            "jwinf-doc-mode-task",
+            kind === "task"
+        );
+
+        documentation.classList.toggle(
+            "jwinf-doc-mode-hints",
+            kind === "hints"
+        );
+
+        Array.prototype.forEach.call(
+            documentation.querySelectorAll(
+                "[data-jwinf-doc-kind]"
+            ),
+            function (element) {
+                element.classList.toggle(
+                    "is-active",
+                    element.dataset.jwinfDocKind === kind
+                );
+            }
+        );
+
+        if (title) {
+            title.textContent =
+                kind === "hints"
+                    ? "Weitere Hinweise"
+                    : "Aufgabenstellung";
+        }
+
+        documentation.dataset.jwinfDocKind = kind;
+    }
+
+
+    function ensureDocumentationTaskContent(documentation, callback) {
+        var select;
+        var event;
+
+        if (
+            documentation.querySelector(
+                ".documentation-task-instructions"
+            )
+        ) {
+            callback();
+            return;
+        }
+
+        select = documentation.querySelector(
+            ".documentation-category-selector select"
+        );
+
+        if (!select) {
+            callback();
+            return;
+        }
+
+        jwinfDocumentationNativeSwitch = true;
+
+        select.value = "task-instructions";
+
+        if (typeof window.Event === "function") {
+            event = new window.Event("change", {
+                bubbles: true
+            });
+        } else {
+            event = document.createEvent("Event");
+            event.initEvent("change", true, true);
+        }
+
+        select.dispatchEvent(event);
+
+        window.setTimeout(function () {
+            jwinfDocumentationNativeSwitch = false;
+            callback();
+        }, 100);
+    }
+
+
+    function handleDocumentationTabClick(documentation, event) {
+        var tab = event.target.closest(
+            ".documentation-tab, .documentation-tab-left"
+        );
+
+        var kind;
+
+        if (
+            !tab ||
+            !tab.dataset ||
+            !tab.dataset.jwinfDocKind
+        ) {
+            return;
+        }
+
+        kind = tab.dataset.jwinfDocKind;
+
+        /*
+         * React soll hier nicht auf „Programmerstellung“ wechseln,
+         * weil dann wieder der iframe gerendert würde.
+         */
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (
+            typeof event.stopImmediatePropagation ===
+            "function"
+        ) {
+            event.stopImmediatePropagation();
+        }
+
+        ensureDocumentationTaskContent(
+            documentation,
+            function () {
+                markDocumentationTabs(documentation);
+                setDocumentationActiveKind(documentation, kind);
+            }
+        );
+    }
+
+
+    function handleDocumentationSelectChange(documentation, event) {
+        var select = event.target.closest(
+            ".documentation-category-selector select"
+        );
+
+        var option;
+        var kind;
+
+        if (!select || jwinfDocumentationNativeSwitch) {
+            return;
+        }
+
+        option = select.options[select.selectedIndex];
+
+        if (
+            !option ||
+            !option.dataset ||
+            !option.dataset.jwinfDocKind
+        ) {
+            return;
+        }
+
+        kind = option.dataset.jwinfDocKind;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (
+            typeof event.stopImmediatePropagation ===
+            "function"
+        ) {
+            event.stopImmediatePropagation();
+        }
+
+        ensureDocumentationTaskContent(
+            documentation,
+            function () {
+                markDocumentationTabs(documentation);
+                setDocumentationActiveKind(documentation, kind);
+            }
+        );
+    }
+
+
+    function enhanceCodecastDocumentation() {
+        var documentation = document.querySelector(
+            "#react-container .documentation"
+        );
+
+        if (!documentation) {
+            return;
+        }
+
+        enhanceDocumentationIcon();
+        markDocumentationTabs(documentation);
+
+        if (documentation.dataset.jwinfBound !== "true") {
+            documentation.dataset.jwinfBound = "true";
+
+            documentation.addEventListener(
+                "click",
+                function (event) {
+                    handleDocumentationTabClick(
+                        documentation,
+                        event
+                    );
+                },
+                true
+            );
+
+            documentation.addEventListener(
+                "change",
+                function (event) {
+                    handleDocumentationSelectChange(
+                        documentation,
+                        event
+                    );
+                },
+                true
+            );
+        }
+
+        /*
+         * Beim ersten Öffnen automatisch „Weitere Hinweise“
+         * anzeigen, aber React weiterhin auf der Aufgabenhinweis-
+         * Ansicht lassen.
+         */
+        if (documentation.dataset.jwinfOpenedHints !== "true") {
+            documentation.dataset.jwinfOpenedHints = "true";
+
+            ensureDocumentationTaskContent(
+                documentation,
+                function () {
+                    markDocumentationTabs(documentation);
+                    setDocumentationActiveKind(
+                        documentation,
+                        "hints"
+                    );
+                }
+            );
+
+            return;
+        }
+
+        setDocumentationActiveKind(
+            documentation,
+            documentation.dataset.jwinfDocKind || "hints"
+        );
+    }
+
+    function makeRobotStartBlocksMovable() {
+        var workspace;
+        var blocks;
+        var i;
+        var block;
+
+        if (!usesBlockly()) {
+            return;
+        }
+
+        workspace = getWorkspace();
+
+        if (
+            !workspace ||
+            typeof workspace.getAllBlocks !== "function"
+        ) {
+            return;
+        }
+
+        blocks = workspace.getAllBlocks(false);
+
+        for (i = 0; i < blocks.length; i++) {
+            block = blocks[i];
+
+            if (!block || block.type !== "robot_start") {
+                continue;
+            }
+
+            /*
+             * Der Startbaustein soll verschiebbar sein,
+             * aber nicht löschbar oder editierbar.
+             */
+            if (
+                typeof block.setMovable === "function" &&
+                (
+                    typeof block.isMovable !== "function" ||
+                    !block.isMovable()
+                )
+            ) {
+                block.setMovable(true);
+            }
+
+            if (typeof block.setDeletable === "function") {
+                block.setDeletable(false);
+            }
+
+            if (typeof block.setEditable === "function") {
+                block.setEditable(false);
+            }
+        }
+    }
+
+
 
     if (document.readyState === "loading") {
         document.addEventListener(
