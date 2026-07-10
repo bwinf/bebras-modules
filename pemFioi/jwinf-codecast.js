@@ -709,6 +709,365 @@
         return null;
     }
 
+    function resizeBlocklyWorkspace() {
+        var Blockly = getBlockly();
+        var workspace = getWorkspace();
+
+        if (
+            Blockly &&
+            workspace &&
+            typeof Blockly.svgResize === "function"
+        ) {
+            Blockly.svgResize(workspace);
+        }
+    }
+
+
+    function resizeBlocklyWorkspaceSoon() {
+        resizeBlocklyWorkspace();
+
+        window.setTimeout(resizeBlocklyWorkspace, 80);
+        window.setTimeout(resizeBlocklyWorkspace, 250);
+    }
+
+
+    function setBlocklyToolboxVisible(visible) {
+        var workspace = getWorkspace();
+        var toolbox = null;
+
+        if (!workspace) {
+            return false;
+        }
+
+        if (typeof workspace.getToolbox === "function") {
+            toolbox = workspace.getToolbox();
+        } else if (workspace.toolbox_) {
+            toolbox = workspace.toolbox_;
+        }
+
+        if (
+            toolbox &&
+            typeof toolbox.setVisible === "function"
+        ) {
+            toolbox.setVisible(visible);
+            resizeBlocklyWorkspace();
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    function getBlocklyToolboxElements() {
+        var root = document.querySelector(
+            "#react-container .platform-blockly"
+        );
+
+        var injectionDiv = document.querySelector(
+            "#react-container .platform-blockly .injectionDiv"
+        );
+
+        var flyout = injectionDiv
+            ? injectionDiv.querySelector(".blocklyFlyout")
+            : null;
+
+        var flyoutBackground = flyout
+            ? flyout.querySelector(".blocklyFlyoutBackground")
+            : null;
+
+        return {
+            root: root,
+            injectionDiv: injectionDiv,
+            flyout: flyout,
+            flyoutBackground: flyoutBackground
+        };
+    }
+
+
+    function getBlocklyFlyoutWidth(elements) {
+        var width = 0;
+        var rect;
+        var bbox;
+        var match;
+        var d;
+
+        if (!elements || !elements.root) {
+            return 220;
+        }
+
+        /*
+         * Normalfall: sichtbare Flyout-Gruppe messen.
+         */
+        if (elements.flyout) {
+            rect = elements.flyout.getBoundingClientRect();
+
+            if (
+                rect &&
+                isFinite(rect.width) &&
+                rect.width > 0
+            ) {
+                width = rect.width;
+            }
+        }
+
+        /*
+         * Fallback: Hintergrund-Pfad der Flyout-Leiste messen.
+         */
+        if (
+            (!width || width <= 0) &&
+            elements.flyoutBackground &&
+            typeof elements.flyoutBackground.getBBox === "function"
+        ) {
+            try {
+                bbox = elements.flyoutBackground.getBBox();
+
+                if (
+                    bbox &&
+                    isFinite(bbox.width) &&
+                    bbox.width > 0
+                ) {
+                    width = bbox.x + bbox.width;
+                }
+            } catch (_) {
+                width = 0;
+            }
+        }
+
+        /*
+         * Weiterer Fallback: Breite aus dem Pfad lesen.
+         */
+        if (
+            (!width || width <= 0) &&
+            elements.flyoutBackground
+        ) {
+            d = elements.flyoutBackground.getAttribute("d");
+
+            if (d) {
+                match = d.match(/h\s*([0-9.]+)/i);
+
+                if (match) {
+                    width = parseFloat(match[1]) + 8;
+                }
+            }
+        }
+
+        /*
+         * Wenn die Leiste eingeklappt ist, kann sie nicht gemessen
+         * werden. Dann nehmen wir die zuletzt gemessene Breite.
+         */
+        if (
+            (!width || width <= 0) &&
+            elements.root.dataset.jwinfBlocklyFlyoutWidth
+        ) {
+            width = parseFloat(
+                elements.root.dataset.jwinfBlocklyFlyoutWidth
+            );
+        }
+
+        /*
+         * Letzter Fallback.
+         */
+        if (!width || !isFinite(width) || width <= 0) {
+            width = 220;
+        }
+
+        elements.root.dataset.jwinfBlocklyFlyoutWidth =
+            String(width);
+
+        return width;
+    }
+
+
+    function positionBlocklyToolboxCollapser(button) {
+        var elements = getBlocklyToolboxElements();
+        var root = elements.root;
+        var injectionDiv = elements.injectionDiv;
+        var flyout = elements.flyout;
+        var left = 0;
+        var flyoutRect;
+        var injectionRect;
+
+        if (!root || !injectionDiv || !button) {
+            return;
+        }
+
+        if (
+            root.classList.contains(
+                "jwinf-blockly-toolbox-collapsed"
+            )
+        ) {
+            button.style.left = "0px";
+            return;
+        }
+
+        /*
+         * Wenn möglich: echte rechte Kante der Flyout-Leiste.
+         */
+        if (flyout) {
+            flyoutRect = flyout.getBoundingClientRect();
+            injectionRect = injectionDiv.getBoundingClientRect();
+
+            if (
+                flyoutRect &&
+                injectionRect &&
+                isFinite(flyoutRect.right) &&
+                isFinite(injectionRect.left) &&
+                flyoutRect.right > injectionRect.left
+            ) {
+                left = flyoutRect.right - injectionRect.left;
+            }
+        }
+
+        /*
+         * Falls die echte Position noch nicht messbar ist,
+         * über die Flyout-Breite gehen.
+         */
+        if (!left || !isFinite(left) || left <= 0) {
+            left = getBlocklyFlyoutWidth(elements);
+        }
+
+        button.style.left = Math.round(left) + "px";
+    }
+
+
+    function getBlocklyCollapserIcon() {
+        return (
+            '<svg data-prefix="fas" data-icon="chevron-left" ' +
+            'class="svg-inline--fa fa-chevron-left" role="img" ' +
+            'viewBox="0 0 320 512" aria-hidden="true">' +
+            '<path fill="currentColor" d="' +
+            'M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3' +
+            'l192 192c12.5 12.5 32.8 12.5 45.3 0' +
+            's12.5-32.8 0-45.3L77.3 256 246.6 86.6' +
+            'c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5' +
+            '-45.3 0l-192 192z' +
+            '"></path></svg>'
+        );
+    }
+
+
+    function enhanceBlocklyToolboxCollapser() {
+        var elements = getBlocklyToolboxElements();
+        var root = elements.root;
+        var injectionDiv = elements.injectionDiv;
+
+        if (!root || !injectionDiv) {
+            return;
+        }
+
+        var existingButton = injectionDiv.querySelector(
+            ".jwinf-blockly-toolbox-collapser"
+        );
+
+        if (
+            existingButton &&
+            existingButton.dataset.jwinfBound === "true"
+        ) {
+            positionBlocklyToolboxCollapser(existingButton);
+            return;
+        }
+
+        if (existingButton) {
+            existingButton.remove();
+        }
+
+        injectionDiv.classList.add(
+            "jwinf-blockly-toolbox-wrapper"
+        );
+
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className =
+            "task-available-blocks-collapser " +
+            "jwinf-blockly-toolbox-collapser";
+        button.dataset.jwinfBound = "true";
+        button.setAttribute("aria-expanded", "true");
+        button.setAttribute(
+            "aria-label",
+            "Bausteinleiste ausblenden"
+        );
+        button.setAttribute(
+            "title",
+            "Bausteinleiste ausblenden"
+        );
+        button.innerHTML = getBlocklyCollapserIcon();
+
+        button.addEventListener(
+            "click",
+            function (event) {
+                var collapsed;
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (
+                    typeof event.stopImmediatePropagation ===
+                    "function"
+                ) {
+                    event.stopImmediatePropagation();
+                }
+
+                collapsed = !root.classList.contains(
+                    "jwinf-blockly-toolbox-collapsed"
+                );
+
+                root.classList.toggle(
+                    "jwinf-blockly-toolbox-collapsed",
+                    collapsed
+                );
+
+                button.classList.toggle(
+                    "is-collapsed",
+                    collapsed
+                );
+
+                button.setAttribute(
+                    "aria-expanded",
+                    collapsed ? "false" : "true"
+                );
+
+                button.setAttribute(
+                    "aria-label",
+                    collapsed
+                        ? "Bausteinleiste einblenden"
+                        : "Bausteinleiste ausblenden"
+                );
+
+                button.setAttribute(
+                    "title",
+                    collapsed
+                        ? "Bausteinleiste einblenden"
+                        : "Bausteinleiste ausblenden"
+                );
+                setBlocklyToolboxVisible(!collapsed);
+
+                positionBlocklyToolboxCollapser(button);
+                resizeBlocklyWorkspaceSoon();
+
+                window.setTimeout(function () {
+                    positionBlocklyToolboxCollapser(button);
+                }, 80);
+
+                window.setTimeout(function () {
+                    positionBlocklyToolboxCollapser(button);
+                }, 250);
+            },
+            true
+        );
+
+        injectionDiv.appendChild(button);
+
+        positionBlocklyToolboxCollapser(button);
+
+        window.setTimeout(function () {
+            positionBlocklyToolboxCollapser(button);
+        }, 150);
+
+        window.addEventListener("resize", function () {
+            positionBlocklyToolboxCollapser(button);
+        });
+    }
 
     function arrangeNativeMenuItems(menu) {
         var aboutItem = findAboutMenuItem(menu);
@@ -728,6 +1087,8 @@
     function ensureMenuItems() {
         observerScheduled = false;
         enhanceTestSelector();
+        enhancePythonAvailableBlocks();
+        enhanceBlocklyToolboxCollapser();
 
         if (!usesBlockly()) {
             return;
@@ -851,7 +1212,11 @@
             scheduleEnsureMenuItems
         );
 
-        observer.observe(document.body, {
+        var observerTarget =
+            document.getElementById("react-container") ||
+            document.body;
+
+        observer.observe(observerTarget, {
             childList: true,
             subtree: true
         });
@@ -1450,6 +1815,150 @@
         }
     }
 
+    function resizeCodeEditorSoon() {
+        function dispatchResize() {
+            var event;
+
+            if (typeof window.Event === "function") {
+                event = new window.Event("resize");
+            } else {
+                event = document.createEvent("Event");
+                event.initEvent("resize", true, true);
+            }
+
+            window.dispatchEvent(event);
+        }
+
+        dispatchResize();
+
+        window.setTimeout(dispatchResize, 80);
+        window.setTimeout(dispatchResize, 250);
+    }
+
+
+    function enhancePythonAvailableBlocks() {
+        var container = document.querySelector(
+            "#react-container .platform-python #available-blocks"
+        );
+
+        if (!container) {
+            return;
+        }
+
+        var title = container.querySelector(
+            ".task-available-blocks-header .title"
+        );
+
+        if (title) {
+            title.textContent = "Verfügbare Funktionen";
+        }
+
+        var subtitle = container.querySelector(
+            ".task-available-blocks-header .subtitle"
+        );
+
+        if (subtitle) {
+            subtitle.textContent = "Zum Einfügen anklicken";
+        }
+
+        var section = container.closest(
+            ".layout-editor-section"
+        );
+
+        if (!section) {
+            return;
+        }
+
+        var editorContainer = section.querySelector(
+            ".task-layout-editor-container"
+        );
+
+        if (!editorContainer) {
+            return;
+        }
+
+        var collapser = editorContainer.querySelector(
+            ".task-available-blocks-collapser"
+        );
+
+        if (!collapser) {
+            return;
+        }
+
+        /*
+         * Nur einmal binden, auch wenn React/MutationObserver
+         * die Funktion mehrfach ausführt.
+         */
+        if (collapser.dataset.jwinfBound === "true") {
+            return;
+        }
+
+        collapser.dataset.jwinfBound = "true";
+        collapser.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+        collapser.setAttribute(
+            "aria-label",
+            "Funktionsliste ausblenden"
+        );
+        collapser.setAttribute(
+            "title",
+            "Funktionsliste ausblenden"
+        );
+
+        /*
+         * Codecasts eigenes Einklappen verhindern und stattdessen
+         * nur unsere Klasse auf dem gemeinsamen Layout-Container setzen.
+         */
+        collapser.addEventListener(
+            "click",
+            function (event) {
+                var collapsed;
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (
+                    typeof event.stopImmediatePropagation ===
+                    "function"
+                ) {
+                    event.stopImmediatePropagation();
+                }
+
+                collapsed = !section.classList.contains(
+                    "jwinf-python-functions-collapsed"
+                );
+
+                section.classList.toggle(
+                    "jwinf-python-functions-collapsed",
+                    collapsed
+                );
+
+                collapser.setAttribute(
+                    "aria-expanded",
+                    collapsed ? "false" : "true"
+                );
+
+                collapser.setAttribute(
+                    "aria-label",
+                    collapsed
+                        ? "Funktionsliste einblenden"
+                        : "Funktionsliste ausblenden"
+                );
+
+                collapser.setAttribute(
+                    "title",
+                    collapsed
+                        ? "Funktionsliste einblenden"
+                        : "Funktionsliste ausblenden"
+                );
+
+                resizeCodeEditorSoon();
+            },
+            true
+        );
+    }
 
     /* ---------------------------------------------------------
      * Kompakte Testfallanzeige
