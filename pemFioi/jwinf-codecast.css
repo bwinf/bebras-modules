@@ -1089,94 +1089,6 @@ svg {
 }
 
 /* ---------------------------------------------------------
- * Codecast-Dokumentation: Aufgabenstellung / Weitere Hinweise
- * --------------------------------------------------------- */
-
-#react-container
-.documentation
-[data-jwinf-doc-hidden="true"] {
-    display: none !important;
-}
-
-
-#react-container
-.documentation
-.documentation-tabs-arrow {
-    display: none !important;
-}
-
-
-#react-container
-.documentation
-.documentation-task-instructions
-.quickalgo-button {
-    display: none !important;
-}
-
-
-/*
- * Reiter „Aufgabenstellung“:
- * Normale Aufgabenstellung anzeigen, .long ausblenden.
- */
-#react-container
-.documentation.jwinf-doc-mode-task
-.documentation-task-instructions
-.long {
-    display: none !important;
-}
-
-
-/*
- * Reiter „Weitere Hinweise“:
- * Nur .long anzeigen.
- */
-#react-container
-.documentation.jwinf-doc-mode-hints
-.documentation-task-instructions
-.task-mission
-> div
-> :not(.long) {
-    display: none !important;
-}
-
-
-#react-container
-.documentation.jwinf-doc-mode-hints
-.documentation-task-instructions
-.long {
-    display: block !important;
-}
-
-
-/*
- * Die alte Überschrift im .long-Bereich ist doppelt,
- * weil der Dokumentationsbereich selbst schon den Titel zeigt.
- */
-#react-container
-.documentation.jwinf-doc-mode-hints
-.documentation-task-instructions
-.long
-> hr:first-child,
-#react-container
-.documentation.jwinf-doc-mode-hints
-.documentation-task-instructions
-.long
-> h1:first-child,
-#react-container
-.documentation.jwinf-doc-mode-hints
-.documentation-task-instructions
-.long
-> h2:first-child,
-#react-container
-.documentation.jwinf-doc-mode-hints
-.documentation-task-instructions
-.long
-> h3:first-child {
-    display: none !important;
-}
-
-
-/* ---------------------------------------------------------
  * Codecast-Dokumentation: Glühbirne
  * --------------------------------------------------------- */
 
@@ -1227,3 +1139,85 @@ svg {
     display: none !important;
 }
 
+/* ---------------------------------------------------------
+ * Codecast-Dokumentation: Aufgabenstellung / Weitere Hinweise
+ * --------------------------------------------------------- */
+
+#react-container
+.documentation
+[data-jwinf-doc-hidden="true"] {
+    display: none !important;
+}
+
+
+#react-container
+.documentation
+.documentation-tabs-arrow {
+    display: none !important;
+}
+
+
+#react-container
+.documentation-new-window {
+    display: none !important;
+}
+
+
+/*
+ * Aufgabenstellung:
+ * Originale Aufgabenstellung anzeigen, .long ausblenden.
+ */
+#react-container
+.documentation.jwinf-doc-mode-task
+.documentation-task-instructions
+.long {
+    display: none !important;
+}
+
+
+#react-container
+.documentation.jwinf-doc-mode-task
+.documentation-task-instructions
+.jwinf-doc-hints-content {
+    display: none !important;
+}
+
+
+/*
+ * Weitere Hinweise:
+ * Originale Aufgabenstellung ausblenden,
+ * nur unseren aus .long gebauten Container anzeigen.
+ */
+#react-container
+.documentation.jwinf-doc-mode-hints
+.documentation-task-instructions
+.task-mission
+> :not(.jwinf-doc-hints-content) {
+    display: none !important;
+}
+
+
+#react-container
+.documentation.jwinf-doc-mode-hints
+.documentation-task-instructions
+.jwinf-doc-hints-content {
+    display: block !important;
+
+    color: var(--jwinf-text);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+
+#react-container
+.documentation
+.jwinf-doc-hint-block {
+    margin-bottom: 1em;
+}
+
+
+#react-container
+.documentation
+.jwinf-doc-hint-block:last-child {
+    margin-bottom: 0;
+}

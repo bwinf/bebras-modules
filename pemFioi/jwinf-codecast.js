@@ -2259,6 +2259,10 @@
             ".documentation-category-title h2"
         );
 
+        if (kind === "hints") {
+            buildJwinfHintsContent(documentation);
+        }
+
         documentation.classList.toggle(
             "jwinf-doc-mode-task",
             kind === "task"
@@ -2291,6 +2295,250 @@
         documentation.dataset.jwinfDocKind = kind;
     }
 
+    function getCurrentTaskLevel() {
+        var parameters =
+            window.taskData &&
+                window.taskData.codecastParameters
+                ? window.taskData.codecastParameters
+                : {};
+
+        var tab;
+        var text;
+
+        if (
+            window.displayHelper &&
+            typeof window.displayHelper.taskLevel === "string"
+        ) {
+            return window.displayHelper.taskLevel;
+        }
+
+        if (typeof parameters.level === "string") {
+            return parameters.level;
+        }
+
+        if (
+            window.taskData &&
+            typeof window.taskData.level === "string"
+        ) {
+            return window.taskData.level;
+        }
+
+        tab = document.querySelector(
+            ".level-tabs .level-tab.current, " +
+            ".levelTabs .current"
+        );
+
+        if (tab) {
+            text = tab.textContent
+                .replace(/\s+/g, " ")
+                .trim()
+                .toLowerCase();
+
+            if (
+                text.indexOf("leicht") !== -1 ||
+                text.indexOf("easy") !== -1
+            ) {
+                return "easy";
+            }
+
+            if (
+                text.indexOf("mittel") !== -1 ||
+                text.indexOf("medium") !== -1
+            ) {
+                return "medium";
+            }
+
+            if (
+                text.indexOf("schwer") !== -1 ||
+                text.indexOf("hard") !== -1
+            ) {
+                return "hard";
+            }
+        }
+
+        return null;
+    }
+
+
+    function elementMatchesCurrentPlatformInMission(element, mission) {
+        var platform = getCurrentCodecastPlatform();
+        var current = element;
+        var lang;
+
+        while (current && current !== mission) {
+            if (
+                current.getAttribute &&
+                current.hasAttribute("data-lang")
+            ) {
+                lang = current.getAttribute("data-lang");
+
+                if (lang && lang !== platform) {
+                    return false;
+                }
+            }
+
+            current = current.parentElement;
+        }
+
+        return true;
+    }
+
+
+    function elementMatchesCurrentLevelInMission(element, mission) {
+        var level = getCurrentTaskLevel();
+        var current = element;
+        var levels = ["easy", "medium", "hard"];
+        var i;
+        var hasLevelClass = false;
+
+        /*
+         * Wenn wir das Level nicht sicher kennen, lassen wir die
+         * Level-Filterung lieber Codecast/der bestehenden Aufgabe.
+         */
+        if (!level) {
+            return true;
+        }
+
+        while (current && current !== mission) {
+            if (current.classList) {
+                hasLevelClass = false;
+
+                for (i = 0; i < levels.length; i++) {
+                    if (current.classList.contains(levels[i])) {
+                        hasLevelClass = true;
+                    }
+                }
+
+                if (
+                    hasLevelClass &&
+                    !current.classList.contains(level)
+                ) {
+                    return false;
+                }
+            }
+
+            current = current.parentElement;
+        }
+
+        return true;
+    }
+
+
+    function longMatchesCurrentContext(longElement, mission) {
+        return (
+            elementMatchesCurrentPlatformInMission(
+                longElement,
+                mission
+            ) &&
+            elementMatchesCurrentLevelInMission(
+                longElement,
+                mission
+            )
+        );
+    }
+
+
+    function cleanHintClone(clone) {
+        /*
+         * Alte Überschrift aus .long entfernen, weil die Doku
+         * selbst schon „Weitere Hinweise“ anzeigt.
+         */
+        Array.prototype.forEach.call(
+            clone.querySelectorAll("h1, h2, h3"),
+            function (heading) {
+                var text = heading.textContent
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .toLowerCase();
+
+                if (text.indexOf("weitere hinweise") !== -1) {
+                    heading.remove();
+                }
+            }
+        );
+
+        /*
+         * Führende Trennlinien entfernen.
+         */
+        Array.prototype.forEach.call(
+            clone.querySelectorAll("hr"),
+            function (hr) {
+                hr.remove();
+            }
+        );
+
+        /*
+         * Keine alten Codecast-Buttons in den Hinweisen.
+         */
+        Array.prototype.forEach.call(
+            clone.querySelectorAll(
+                "button, .quickalgo-button"
+            ),
+            function (button) {
+                button.remove();
+            }
+        );
+    }
+
+
+    function buildJwinfHintsContent(documentation) {
+        var mission = documentation.querySelector(
+            ".documentation-task-instructions .task-mission"
+        );
+
+        var container;
+        var longs;
+        var added = false;
+
+        if (!mission) {
+            return;
+        }
+
+        container = mission.querySelector(
+            ".jwinf-doc-hints-content"
+        );
+
+        if (!container) {
+            container = document.createElement("div");
+            container.className = "jwinf-doc-hints-content";
+            mission.appendChild(container);
+        }
+
+        /*
+         * Nur unseren eigenen Container leeren, nicht Reacts Inhalt.
+         */
+        container.innerHTML = "";
+
+        longs = Array.prototype.slice.call(
+            mission.querySelectorAll(".long")
+        ).filter(function (longElement) {
+            return (
+                !longElement.closest(".jwinf-doc-hints-content") &&
+                longMatchesCurrentContext(longElement, mission)
+            );
+        });
+
+        longs.forEach(function (longElement) {
+            var clone = longElement.cloneNode(true);
+            var block = document.createElement("div");
+
+            block.className = "jwinf-doc-hint-block";
+
+            cleanHintClone(clone);
+
+            while (clone.firstChild) {
+                block.appendChild(clone.firstChild);
+            }
+
+            container.appendChild(block);
+            added = true;
+        });
+
+        if (!added) {
+            container.innerHTML =
+                "<p>Für diese Aufgabe gibt es keine weiteren Hinweise.</p>";
+        }
+    }
 
     function ensureDocumentationTaskContent(documentation, callback) {
         var select;
@@ -2419,6 +2667,63 @@
             }
         );
     }
+
+    function getCurrentCodecastPlatform() {
+        var parameters =
+            window.taskData &&
+                window.taskData.codecastParameters
+                ? window.taskData.codecastParameters
+                : {};
+
+        if (parameters.platform) {
+            return parameters.platform;
+        }
+
+        if (
+            document.querySelector(
+                "#react-container .platform-python"
+            )
+        ) {
+            return "python";
+        }
+
+        return "blockly";
+    }
+
+
+    function longElementMatchesPlatform(element) {
+        var lang = element.getAttribute("data-lang");
+        var platform = getCurrentCodecastPlatform();
+
+        return !lang || lang === platform;
+    }
+
+
+    function markLongHeadings(longElement) {
+        Array.prototype.forEach.call(
+            longElement.querySelectorAll("h1, h2, h3"),
+            function (heading) {
+                var text = heading.textContent
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .toLowerCase();
+
+                if (text.indexOf("weitere hinweise") !== -1) {
+                    heading.classList.add(
+                        "jwinf-doc-hide-in-hints"
+                    );
+                }
+            }
+        );
+
+        Array.prototype.forEach.call(
+            longElement.querySelectorAll("hr"),
+            function (hr) {
+                hr.classList.add("jwinf-doc-hide-in-hints");
+            }
+        );
+    }
+
 
 
     function enhanceCodecastDocumentation() {
