@@ -148,42 +148,10 @@ if (!isCrossDomain()) {
             success(h);
          }, error);
       }
-      var isCodecastTask = function() {
-         return !!(
-            window.taskData &&
-            window.taskData.codecastParameters
-         );
-      };
-
-      var normalizeCodecastAnswer = function(answer) {
-         if (!isCodecastTask()) {
-            return answer;
-         }
-
-         if (
-            answer === null ||
-            typeof answer === "undefined"
-         ) {
-            return "{}";
-         }
-
-         if (
-            typeof answer === "string" &&
-            answer.replace(/\s+/g, "") === ""
-         ) {
-            return "{}";
-         }
-
-         return answer;
-      };
       var gradeAnswer = function(params, success, error) {
-         params = params || [];
-         params[0] = normalizeCodecastAnswer(params[0]);
-
          var newSuccess = function(score, message, scoreToken) {
             success([score, message, scoreToken]);
          };
-
          if (typeof task.gradeAnswer === 'function') {
             task.gradeAnswer(params[0], params[1], newSuccess, error);
          } else {
@@ -202,40 +170,8 @@ if (!isCrossDomain()) {
       chan.bind('task.getViews', function(trans) {task.getViews(trans.complete, trans.error);trans.delayReturn(true);});
       chan.bind('task.showViews', function(trans, views) {task.showViews(views, callAndTrigger(trans.complete, 'showViews', trans.error, [views]), trans.error);trans.delayReturn(true);});
       chan.bind('task.updateToken', function(trans, token) {task.updateToken(token, trans.complete, trans.error);trans.delayReturn(true);});
-      chan.bind('task.reloadAnswer', function(trans, answer) {
-         answer = normalizeCodecastAnswer(answer);
-
-         task.reloadAnswer(
-            answer,
-            callAndTrigger(
-               trans.complete,
-               'reloadAnswer',
-               trans.error,
-               [answer]
-            ),
-            trans.error
-         );
-
-         trans.delayReturn(true);
-      });
-      chan.bind('task.reloadAnswerWithOptions', function(trans, params) {
-         params = params || [];
-         params[0] = normalizeCodecastAnswer(params[0]);
-
-         task.reloadAnswerWithOptions(
-            params[0],
-            params[1],
-            callAndTrigger(
-               trans.complete,
-               'reloadAnswerWithOptions',
-               trans.error,
-               params
-            ),
-            trans.error
-         );
-
-         trans.delayReturn(true);
-      });
+      chan.bind('task.reloadAnswer', function(trans, answer) {task.reloadAnswer(answer, callAndTrigger(trans.complete, 'reloadAnswer', trans.error, [answer]), trans.error);trans.delayReturn(true);});
+      chan.bind('task.reloadAnswerWithOptions', function(trans, params) {task.reloadAnswerWithOptions(params[0], params[1], callAndTrigger(trans.complete, 'reloadAnswerWithOptions', trans.error, params), trans.error);trans.delayReturn(true);});
       chan.bind('task.getAnswer', function(trans) {task.getAnswer(trans.complete, trans.error);trans.delayReturn(true);});
       chan.bind('task.getState', function(trans) {task.getState(trans.complete, trans.error);trans.delayReturn(true);});
       chan.bind('task.getResources', function(trans) {task.getResources(trans.complete, trans.error);trans.delayReturn(true);});
@@ -324,17 +260,13 @@ if (!isCrossDomain()) {
       });
    };
    platform.log = function(data, success, error) {
-      /*
-      * Medal stellt platform.log nicht bereit.
-      * Für Codecast 7.7 darf dieser fehlende Logging-Endpunkt
-      * aber nicht als Promise-/Saga-Fehler zurücklaufen.
-      *
-      * Logging ist für die Ausführung und Bewertung der Aufgabe
-      * nicht notwendig, deshalb bestätigen wir den Aufruf einfach.
-      */
-      if (typeof success === "function") {
-         success();
-      }
+      if (!success) success = function(){};
+      if (!error) error = function() {console.error(arguments);};
+      platform.chan.call({method: "platform.log",
+         params: data,
+         error: error,
+         success: success
+      });
    };
 }
 
