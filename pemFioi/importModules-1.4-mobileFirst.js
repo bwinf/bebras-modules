@@ -384,7 +384,7 @@
          {name: 'codecast-7.4', included: ['codecast7.4_css', 'codecast7.4_js', 'codecast7.4_loader']},
          {name: 'codecast-7.5', included: ['codecast7.5_css', 'codecast7.5_js', 'codecast7.5_loader']},
          {name: 'codecast-7.6', included: ['codecast7.6_css', 'codecast7.6_js', 'codecast7.6_loader']},
-         {name: 'codecast-7.7', included: window.location.protocol !== 'file:' ? ['codecast7.7_css', 'codecast7.7_js_modern', 'codecast7.7_loader'] : ['codecast7.7_css', 'codecast7.7_js', 'codecast7.7_loader']},
+         {name: 'codecast-7.7', included: ['codecast7.7_css', 'codecast7.7_js', 'codecast7.7_loader']},
          {name: 'codecast-html', included: ['codecast_html_css', 'codecast_html_js', 'codecast_html_loader']},
          { name: 'smart-contract', included: ['jquery-1.7.1', 'JSON-js', 'raphael-2.2.1', 'codecast-7.4', 'jschannel', 'raphaelFactory-1.0', 'delayFactory-1.0', 'simulationFactory-1.0', 'platform-pr', 'beav-1.0', 'installationAPI.01', 'miniPlatform', 'conceptDisplay-1.0', 'conceptViewer-1.0', 'conceptViewer_css-1.0', 'taskStyles-mobileFirst'] },
          { name: 'server-task', included: ['jquery-1.7.1', 'JSON-js', 'raphael-2.2.1', 'codecast-7.5', 'jschannel', 'raphaelFactory-1.0', 'delayFactory-1.0', 'simulationFactory-1.0', 'platform-pr', 'beav-1.0', 'installationAPI.01', 'miniPlatform', 'conceptDisplay-1.0', 'conceptViewer-1.0', 'conceptViewer_css-1.0', 'taskStyles-mobileFirst'] },
