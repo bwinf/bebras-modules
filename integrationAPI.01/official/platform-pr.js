@@ -324,13 +324,17 @@ if (!isCrossDomain()) {
       });
    };
    platform.log = function(data, success, error) {
-      if (!success) success = function(){};
-      if (!error) error = function() {console.error(arguments);};
-      platform.chan.call({method: "platform.log",
-         params: data,
-         error: error,
-         success: success
-      });
+      /*
+      * Medal stellt platform.log nicht bereit.
+      * Für Codecast 7.7 darf dieser fehlende Logging-Endpunkt
+      * aber nicht als Promise-/Saga-Fehler zurücklaufen.
+      *
+      * Logging ist für die Ausführung und Bewertung der Aufgabe
+      * nicht notwendig, deshalb bestätigen wir den Aufruf einfach.
+      */
+      if (typeof success === "function") {
+         success();
+      }
    };
 }
 
