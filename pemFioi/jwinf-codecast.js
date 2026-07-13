@@ -15,114 +15,6 @@
     var toastTimer = null;
     var observerScheduled = false;
 
-    var answerPatchTimer = null;
-    var answerPatchTries = 0;
-
-
-    function normalizeEmptyCodecastAnswer(answer) {
-        if (
-            answer === null ||
-            typeof answer === "undefined"
-        ) {
-            return "{}";
-        }
-
-        if (
-            typeof answer === "string" &&
-            answer.replace(/\s+/g, "") === ""
-        ) {
-            return "{}";
-        }
-
-        return answer;
-    }
-
-
-    function patchTaskAnswerMethod(task, methodName) {
-        var originalMethod = task[methodName];
-
-        if (
-            typeof originalMethod !== "function" ||
-            originalMethod.__jwinfPatched === true
-        ) {
-            return;
-        }
-
-        task[methodName] = function () {
-            var args = Array.prototype.slice.call(arguments);
-
-            /*
-             * Codecast 7.7 erwartet als Antwort gültiges JSON.
-             * Medal übergibt bei leeren Antworten teilweise "".
-             * JSON.parse("") crasht Codecasts interne Saga-Kette.
-             */
-            args[0] = normalizeEmptyCodecastAnswer(args[0]);
-
-            return originalMethod.apply(this, args);
-        };
-
-        task[methodName].__jwinfPatched = true;
-    }
-
-
-    function patchCodecastEmptyAnswerHandling() {
-        var task =
-            window.task ||
-            (
-                window.platform &&
-                window.platform.task
-            );
-
-        if (
-            !task ||
-            task.__jwinfEmptyAnswerPatched === true
-        ) {
-            return !!(
-                task &&
-                task.__jwinfEmptyAnswerPatched === true
-            );
-        }
-
-        patchTaskAnswerMethod(task, "reloadAnswer");
-        patchTaskAnswerMethod(task, "reloadAnswerWithOptions");
-        patchTaskAnswerMethod(task, "gradeAnswer");
-
-        task.__jwinfEmptyAnswerPatched = true;
-
-        return true;
-    }
-
-
-    function patchCodecastEmptyAnswerHandlingSoon() {
-        if (patchCodecastEmptyAnswerHandling()) {
-            if (answerPatchTimer) {
-                window.clearInterval(answerPatchTimer);
-                answerPatchTimer = null;
-            }
-
-            return;
-        }
-
-        if (answerPatchTimer) {
-            return;
-        }
-
-        answerPatchTimer = window.setInterval(function () {
-            answerPatchTries++;
-
-            if (
-                patchCodecastEmptyAnswerHandling() ||
-                answerPatchTries > 300
-            ) {
-                window.clearInterval(answerPatchTimer);
-                answerPatchTimer = null;
-            }
-        }, 10);
-    }
-
-
-    patchCodecastEmptyAnswerHandlingSoon();
-
     /* ---------------------------------------------------------
      * Konfiguration
      * --------------------------------------------------------- */
@@ -1311,7 +1203,6 @@
 
 
     function initialize() {
-        patchCodecastEmptyAnswerHandlingSoon();
         ensureMenuItems();
 
         /*
