@@ -67,6 +67,37 @@
                 'prompt_single': 'Sélectionnez une réponse',
                 'prompt_multiple': 'Sélectionnez de 0 à %% réponses',
             },
+            de: {
+                'score': 'Punktzahl',
+                'grader_msg': 'Deine Punktzahl ist: ',
+                'wrong_answer_msg': 'Du hast mindestens einen Fehler.',
+                'wrong_answer_msg_partial_feedback': 'Du hast mindestens einen Fehler. Hier ist ein Hinweis: ',
+                'wrong_answer_msg_not_answered': "Du hast die Frage nicht beantwortet.",
+                'wrong_fill_gaps_msg': 'Du hast %% falsche Antworten bei dieser Frage, die rot markiert sind.',
+                'wrong_partial': "Du hast eine Frage nicht komplett beantwortet.",
+                'validate': 'Überprüfen',
+                'solution': 'Antwort anzeigen',
+                'restart': 'Neu starten',
+                'restart_scratch': 'Von vorne beginnen',
+                'restart_current': 'Meine Antwort bearbeiten',
+                'return_to_top': 'Zurück zur Fragenliste',
+                'move_to_next': 'Nächste Frage',
+                'cancel' : 'Abbrechen',
+                'placeholder_text': 'Text eingeben',
+                'placeholder_number': 'Zahl eingeben',
+                'error_number': 'Du musste eine Zahl eingeben.',
+                'placeholder_string': 'Gibt eine Zeichenfolge ein.',
+                'error_string': 'Du must eine Zeichenfolge eingeben.',
+                'placeholder_regexp': 'Gib einen text ein.',
+                'error_regexp': 'Ungültiges Format',
+                'error_grading': 'Fehler beim Absenden, bitte versuche es in einigen Minuten erneut.',
+                'feedback_score_binary_correct': 'Herzlichen Glückwunsch, alles ist korrekt.',
+                'feedback_score_binary_mistake': 'Es gibt mindestens einen Fehler.',
+                'feedback_answer_saved': 'Deine Antwort wurde gespeichert.',
+                'prompt_single': 'Wähle eine Antwort aus',
+                'prompt_multiple': 'Wähle 0 bis %% Antworten aus',
+            },
+            
         },
 
         substrings: {
@@ -76,6 +107,9 @@
                 },
                 fr: {
                     'solution': 'Afficher un indice'
+                },
+                de: {
+                    'solution': 'Gib einen Hinweis'
                 }
             }
         },
