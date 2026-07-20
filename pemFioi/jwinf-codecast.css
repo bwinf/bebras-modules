@@ -1221,3 +1221,11 @@ svg {
 .jwinf-doc-hint-block:last-child {
     margin-bottom: 0;
 }
+
+/*
+ * Autorenangabe im „Über Codecast“-Dialog ausblenden.
+ * Der erste Absatz ist die Beschriftung, der zweite enthält die Namen.
+ */
+.bp6-dialog .task-license > p:nth-of-type(-n + 2) {
+    display: none !important;
+}
