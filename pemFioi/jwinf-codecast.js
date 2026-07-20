@@ -58,6 +58,51 @@
         );
     }
 
+    function isBlocklyGroupedByCategory(injectionDiv) {
+        var parameters =
+            window.taskData &&
+                window.taskData.codecastParameters
+                ? window.taskData.codecastParameters
+                : {};
+
+        var groupByCategory = parameters.groupByCategory;
+        var level;
+
+        /*
+         * Bei einer nach Kategorien gruppierten Toolbox übernimmt
+         * Blockly selbst die Navigation. Der zusätzliche Einklapppfeil
+         * ist dort nicht sinnvoll.
+         *
+         * Falls beim Levelwechsel noch ein eingeklappter Zustand aktiv
+         * ist, wird dieser ebenfalls wieder aufgehoben.
+         */
+        if (
+            injectionDiv &&
+            injectionDiv.querySelector(
+                ".blocklyToolboxDiv, .blocklyTreeRoot"
+            )
+        ) {
+            return true;
+        }
+
+        if (groupByCategory === true) {
+            return true;
+        }
+
+        if (
+            !groupByCategory ||
+            typeof groupByCategory !== "object"
+        ) {
+            return false;
+        }
+
+        level = getCurrentTaskLevel();
+
+        return (
+            typeof level === "string" &&
+            groupByCategory[level] === true
+        );
+    }
 
     /* ---------------------------------------------------------
      * Blockly-Zugriff
@@ -950,14 +995,55 @@
         var elements = getBlocklyToolboxElements();
         var root = elements.root;
         var injectionDiv = elements.injectionDiv;
+        var existingButton;
+        var hadCustomState;
 
         if (!root || !injectionDiv) {
             return;
         }
 
-        var existingButton = injectionDiv.querySelector(
+        existingButton = injectionDiv.querySelector(
             ".jwinf-blockly-toolbox-collapser"
         );
+
+        /*
+         * Bei einer nach Kategorien gruppierten Toolbox übernimmt
+         * Blockly selbst die Navigation. Der zusätzliche Einklapppfeil
+         * ist dort nicht sinnvoll.
+         *
+         * Falls beim Levelwechsel noch ein eingeklappter Zustand aktiv
+         * ist, wird dieser ebenfalls wieder aufgehoben.
+         */
+        if (isBlocklyGroupedByCategory(injectionDiv)) {
+            hadCustomState = Boolean(
+                existingButton ||
+                injectionDiv.classList.contains(
+                    "jwinf-blockly-toolbox-wrapper"
+                ) ||
+                root.classList.contains(
+                    "jwinf-blockly-toolbox-collapsed"
+                )
+            );
+
+            if (existingButton) {
+                existingButton.remove();
+            }
+
+            injectionDiv.classList.remove(
+                "jwinf-blockly-toolbox-wrapper"
+            );
+
+            root.classList.remove(
+                "jwinf-blockly-toolbox-collapsed"
+            );
+
+            if (hadCustomState) {
+                setBlocklyToolboxVisible(true);
+                resizeBlocklyWorkspaceSoon();
+            }
+
+            return;
+        }
 
         if (
             existingButton &&
@@ -1055,12 +1141,43 @@
             true
         );
 
+        /*
+         * Den Button zunächst unsichtbar und ohne Animation an seine
+         * endgültige Position setzen. Dadurch fliegt er beim Laden
+         * nicht vom linken Rand zur Bausteinleiste.
+         */
+        button.style.visibility = "hidden";
+        button.style.transition = "none";
+
+        /*
+         * Die Position kann bereits vor dem Einfügen gesetzt werden.
+         * So besitzt der Button beim ersten Rendern direkt die
+         * richtige Ausgangsposition.
+         */
+        positionBlocklyToolboxCollapser(button);
         injectionDiv.appendChild(button);
 
-        positionBlocklyToolboxCollapser(button);
-
+        /*
+         * Blockly benötigt beim ersten Laden etwas Zeit, bis die
+         * endgültige Breite der Bausteinleiste feststeht.
+         */
         window.setTimeout(function () {
+            if (!document.documentElement.contains(button)) {
+                return;
+            }
+
             positionBlocklyToolboxCollapser(button);
+            button.style.visibility = "visible";
+
+            /*
+             * Den korrekt positionierten Zustand einmal berechnen lassen,
+             * bevor spätere Animationen wieder erlaubt werden.
+             */
+            button.getBoundingClientRect();
+
+            window.requestAnimationFrame(function () {
+                button.style.transition = "";
+            });
         }, 150);
 
         window.addEventListener("resize", function () {
@@ -1083,6 +1200,7 @@
             menu.appendChild(aboutItem);
         }
     }
+
     function ensureMenuItems() {
         observerScheduled = false;
         enhanceTestSelector();
