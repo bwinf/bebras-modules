@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     window.lang = {
 
@@ -52,7 +52,7 @@
                 'restart_current': 'Modifier ma réponse',
                 'return_to_top': 'Retour à la liste des questions',
                 'move_to_next': 'Question suivante',
-                'cancel' : 'Annuler',
+                'cancel': 'Annuler',
                 'placeholder_text': 'Entrez du texte',
                 'placeholder_number': 'Entrez un nombre',
                 'error_number': 'Vous devez entrer un nombre.',
@@ -82,7 +82,7 @@
                 'restart_current': 'Meine Antwort bearbeiten',
                 'return_to_top': 'Zurück zur Fragenliste',
                 'move_to_next': 'Nächste Frage',
-                'cancel' : 'Abbrechen',
+                'cancel': 'Abbrechen',
                 'placeholder_text': 'Text eingeben',
                 'placeholder_number': 'Zahl eingeben',
                 'error_number': 'Du musste eine Zahl eingeben.',
@@ -97,7 +97,7 @@
                 'prompt_single': 'Wähle eine Antwort aus',
                 'prompt_multiple': 'Wähle 0 bis %% Antworten aus',
             },
-            
+
         },
 
         substrings: {
@@ -114,8 +114,8 @@
             }
         },
 
-        set: function(lng) {
-            if(!lng) {
+        set: function (lng) {
+            if (!lng) {
                 lng = window.stringsLanguage;
             }
             this.language = lng;
@@ -126,8 +126,8 @@
             this.sublanguage = sublng;
         },
 
-        translate: function() {
-            if(!this.language_set) {
+        translate: function () {
+            if (!this.language_set) {
                 this.set();
             }
             var str = '', key = arguments[0];
@@ -151,8 +151,9 @@
         holder: false,
         popup: false,
         validated: false,
+        displayFeedbackOnNextGrade: false,
 
-        addButton: function(parent, name, callback) {
+        addButton: function (parent, name, callback) {
             var btn = $('<button class="btn btn-success">' + lang.translate(name) + '</button>');
             btn.on('click', callback);
             parent.append(btn);
@@ -160,18 +161,19 @@
         },
 
 
-        restartTask: function(from_scratch) {
+        restartTask: function (from_scratch) {
+            this.displayFeedbackOnNextGrade = false;
             this.setValidated(false);
             this.popup.hide();
             this.unfreezeTask();
             this.clearFeedback();
             window.quiz_ui.toggleFeedback(false);
-            task.showViews({"task": true, "solution": false}, function(){});
+            task.showViews({ "task": true, "solution": false }, function () { });
             window.quiz_ui.reset(from_scratch);
         },
 
-        showPopup: function() {
-            if(!this.popup) {
+        showPopup: function () {
+            if (!this.popup) {
                 this.popup = $(
                     '<div class="quiz-popup-inner"><div class="content"></div></div>\
                     <div class="quiz-popup">\
@@ -181,13 +183,13 @@
                 $(document.body).append(this.popup);
                 var el = this.popup.find('.content');
                 var self = this;
-                this.addButton(el, 'restart_scratch', function() {
+                this.addButton(el, 'restart_scratch', function () {
                     self.restartTask(true);
                 });
-                this.addButton(el, 'restart_current', function() {
+                this.addButton(el, 'restart_current', function () {
                     self.restartTask();
                 });
-                this.addButton(el, 'cancel', function() {
+                this.addButton(el, 'cancel', function () {
                     self.popup.hide();
                 });
             }
@@ -196,8 +198,8 @@
         },
 
 
-        freezeTask: function() {
-            if(!this.freezer) {
+        freezeTask: function () {
+            if (!this.freezer) {
                 this.freezer = $('<div class="freeze-overlay"></div>')
                 $('.taskContent').append(this.freezer);
             }
@@ -205,7 +207,7 @@
         },
 
 
-        unfreezeTask: function() {
+        unfreezeTask: function () {
             this.freezer && this.freezer.hide();
         },
 
@@ -215,9 +217,9 @@
         },
 
 
-        setValidated: function(validated) {
+        setValidated: function (validated) {
             this.validated = !!validated;
-            if(validated) {
+            if (validated) {
                 this.buttons.validate.hide();
                 this.buttons.move_to_next && this.buttons.move_to_next.show();
                 this.buttons.solution && this.buttons.solution.show();
@@ -229,8 +231,8 @@
         },
 
 
-        displayError: function(error) {
-            if(!this.errorHolder) {
+        displayError: function (error) {
+            if (!this.errorHolder) {
                 this.errorHolder = $('<div class="error-message"></div>');
                 this.holder.append('<br>');
                 this.holder.append(this.errorHolder);
@@ -240,8 +242,8 @@
         },
 
 
-        init: function() {
-            if(this.holder) return;
+        init: function () {
+            if (this.holder) return;
             $('#showSolutionButton').remove();
             $('.quiz-toolbar').remove();
             if (quiz_settings.sublanguage) {
@@ -252,39 +254,40 @@
             this.addButton(this.holder, 'validate', function () {
                 self.freezeTask();
                 self.setValidated(true);
+                self.displayFeedbackOnNextGrade = true;
                 self.clearFeedback();
                 var cb = null;
-                if(Quiz.params.feedback_score == 'saved') {
-                    cb = function() {
+                if (Quiz.params.feedback_score == 'saved') {
+                    cb = function () {
                         displayScore();
                     }
                 }
                 platform.validate('done', cb);
             });
             var hasSolution = false;
-            $('solution, .solution, #solution').each(function() {
-               if($(this).text().trim() != '') { hasSolution = true; }
+            $('solution, .solution, #solution').each(function () {
+                if ($(this).text().trim() != '') { hasSolution = true; }
             });
             if (hasSolution && window.miniPlatformShowSolution) {
-                this.addButton(this.holder, 'solution', function() {
+                this.addButton(this.holder, 'solution', function () {
                     miniPlatformShowSolution();
                 });
                 this.buttons.solution.hide();
             }
-            if(!quiz_settings.hide_restart) {
-                this.addButton(this.holder, 'restart', function() {
+            if (!quiz_settings.hide_restart) {
+                this.addButton(this.holder, 'restart', function () {
                     self.showPopup();
                 });
             }
-            if(quiz_settings.display_move_to_next) {
-                this.addButton(this.holder, 'move_to_next', function() {
+            if (quiz_settings.display_move_to_next) {
+                this.addButton(this.holder, 'move_to_next', function () {
                     platform.validate('next');
                 });
                 this.buttons.move_to_next.hide();
             }
-            if(quiz_settings.display_return_to_top) {
+            if (quiz_settings.display_return_to_top) {
                 this.holder.append('<br><br>');
-                this.addButton(this.holder, 'return_to_top', function() {
+                this.addButton(this.holder, 'return_to_top', function () {
                     platform.validate('top');
                 });
             }
@@ -298,20 +301,20 @@
 
         token: null,
 
-        init: function() {
-            var query = document.location.search.replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+        init: function () {
+            var query = document.location.search.replace(/(^\?)/, '').split("&").map(function (n) { return n = n.split("="), this[n[0]] = n[1], this }.bind({}))[0];
             this.token = this.token || query.sToken;
         },
 
-        get: function() {
+        get: function () {
             return this.token
         },
 
-        update: function(token) {
+        update: function (token) {
             this.token = token
         },
 
-        getAnswerToken: function(answer) {
+        getAnswerToken: function (answer) {
             return null;
         }
     }
@@ -320,25 +323,25 @@
 
     window.task = {}
 
-    task.getViews = function(success, error) {
+    task.getViews = function (success, error) {
         var views = {
             task: {}
         };
         success(views);
     };
 
-    task.updateToken = function(token, success, error) {
+    task.updateToken = function (token, success, error) {
         task_token.update(token)
         success();
     };
 
-    task.getHeight = function(success, error) {
+    task.getHeight = function (success, error) {
         var d = document;
         var h = Math.max(d.body.offsetHeight, d.documentElement.offsetHeight);
         success(h);
     };
 
-    task.getMetaData = function(success, error) {
+    task.getMetaData = function (success, error) {
         var metadata = {
             disablePlatformProgress: true,
             minWidth: 'auto',
@@ -352,33 +355,33 @@
         success(metadata);
     };
 
-    task.reloadState = function(state, success, error) { success() }
-    task.getState = function(success, error) { success("{}")  }
-    task.reloadStateObject = function(obj) { }
-    task.getStateObject = function() { return {} }
-    task.getDefaultStateObject = function() { return {} }
+    task.reloadState = function (state, success, error) { success() }
+    task.getState = function (success, error) { success("{}") }
+    task.reloadStateObject = function (obj) { }
+    task.getStateObject = function () { return {} }
+    task.getDefaultStateObject = function () { return {} }
 
 
     function displayScore(score, max_score) {
-        if(Quiz.params.feedback_score == 'binary') {
+        if (Quiz.params.feedback_score == 'binary') {
             var msg = '<span class="scoreLabel">';
-            if(score == max_score) {
+            if (score == max_score) {
                 msg += lang.translate('feedback_score_binary_correct');
             } else {
                 msg += lang.translate('feedback_score_binary_mistake');
             }
             msg += '</span>';
-        } else if(Quiz.params.feedback_score == 'exact') {
+        } else if (Quiz.params.feedback_score == 'exact') {
             var msg =
                 '<span class="scoreLabel">' + lang.translate('score') + '</span>' +
                 '<span class="value">' + score + '</span>' +
                 '<span class="max-value">/' + max_score + '</span>';
-        } else if(Quiz.params.feedback_score == 'saved') {
+        } else if (Quiz.params.feedback_score == 'saved') {
             var msg = '<span class="scoreLabel">' + lang.translate('feedback_answer_saved') + '</span>';
         } else {
             return;
         }
-        if($('#score').length == 0) {
+        if ($('#score').length == 0) {
             var div = '<div id="score"></div>';
             $('.taskContent').first().append(div);
         }
@@ -392,12 +395,12 @@
     // grade
 
     function useGraderData(answer, versions, score_settings, callback, errorcb) {
-        if(window.Quiz.grader.handler && window.Quiz.grader.data) {
+        if (window.Quiz.grader.handler && window.Quiz.grader.data) {
             var res = window.Quiz.grader.handler(window.Quiz.grader.data, answer, versions, score_settings);
             return callback(res);
         }
         console.error('Cannot evaluate : no local grader or data.');
-        if(errorcb) { errorcb(); }
+        if (errorcb) { errorcb(); }
     }
 
 
@@ -416,15 +419,15 @@
             data: JSON.stringify(data),
             crossDomain: true,
             contentType: 'application/json'
-        }).done(function(res) {
-            if(res.success) {
+        }).done(function (res) {
+            if (res.success) {
                 return callback(res.data);
             }
             console.error('Grader response error: ', res);
-            if(errorcb) { errorcb(); }
-        }).fail(function(jqxhr, settings, exception ) {
+            if (errorcb) { errorcb(); }
+        }).fail(function (jqxhr, settings, exception) {
             console.error('Grader url not responding: ' + url);
-            if(errorcb) { errorcb(); }
+            if (errorcb) { errorcb(); }
         });
     }
 
@@ -432,12 +435,12 @@
 
 
 
-    task.load = function(views, success) {
+    task.load = function (views, success) {
         var lastViews = views;
         var lastReloadedAnswer = null;
         task_token.init()
 
-        platform.getTaskParams(null, null, function(taskParams) {
+        platform.getTaskParams(null, null, function (taskParams) {
             taskParams.maxScore = 100;
             taskParams.minScore = 0;
             var params = Object.assign(quiz_settings, {
@@ -447,60 +450,93 @@
             var q = Quiz.UI(params);
             window.quiz_ui = q;
 
-            task.showViews = function(views, callback) {
+            task.showViews = function (views, callback) {
                 lastViews = views;
                 q.toggleSolutions(!!views.solution);
                 callback();
             }
 
-            task.getDefaultAnswerObject = function() {
+            task.getDefaultAnswerObject = function () {
                 return {
                     data: [],
                     versions: {}
                 }
-            }            
+            }
 
-            task.getAnswer = function(callback) {
+            task.getAnswer = function (callback) {
                 var answer = this.getAnswerObject();
                 answer = JSON.stringify(answer);
                 //console.log('task.getAnswer', answer)
                 callback(answer);
             };
 
-            task.getAnswerObject = function() {
+            task.getAnswerObject = function () {
                 var answerObj = {
                     data: q.getAnswer(),
                     submittingSingle: q.getSubmittingSingle(),
                     versions: Quiz.versions.get(),
                     validated: task_toolbar.validated
                 }
-                if(lastReloadedAnswer
-                        && JSON.stringify(lastReloadedAnswer.data) == JSON.stringify(answerObj.data)
-                        && JSON.stringify(lastReloadedAnswer.versions) == JSON.stringify(answerObj.versions)) {
+                if (lastReloadedAnswer
+                    && JSON.stringify(lastReloadedAnswer.data) == JSON.stringify(answerObj.data)
+                    && JSON.stringify(lastReloadedAnswer.versions) == JSON.stringify(answerObj.versions)) {
                     // Keep the validated attribute if the answer didn't change
                     answerObj.validated = answerObj.validated || lastReloadedAnswer.validated;
                 }
                 return answerObj;
-            };            
+            };
 
 
-            task.reloadAnswer = function(answer, callback) {
+            task.reloadAnswer = function (answer, callback) {
+                /*
+                 * Medal übergibt einen leeren String, wenn noch keine
+                 * gespeicherte Antwort vorhanden ist. Das ist kein JSON und
+                 * darf deshalb nicht an JSON.parse() übergeben werden.
+                 */
+                if (
+                    typeof answer !== 'string' ||
+                    answer.trim() === ''
+                ) {
+                    callback();
+                    return;
+                }
+
                 try {
                     //console.log('task.reloadAnswer', answer)
                     var answerObject = JSON.parse(answer);
+
                     this.reloadAnswerObject(answerObject);
-                    if (lastViews.solution || (quiz_settings.hide_restart && answerObject.validated)) {
+
+                    if (
+                        lastViews.solution ||
+                        (
+                            quiz_settings.hide_restart &&
+                            answerObject.validated
+                        )
+                    ) {
                         task_toolbar.setValidated(true);
-                        task.gradeAnswer(answer, null, function () {});
+
+                        /*
+                         * Hier wird gradeAnswer() ausdrücklich aufgerufen, um
+                         * bereits validiertes Feedback wiederherzustellen.
+                         */
+                        task_toolbar.displayFeedbackOnNextGrade = true;
+
+                        task.gradeAnswer(
+                            answer,
+                            null,
+                            function () { }
+                        );
                     }
-                } catch(e) {
+                } catch (e) {
                     console.error('Quiz: answer parsing error.')
                 }
+
                 callback();
             };
 
 
-            task.reloadAnswerObject = function(answerObj) {
+            task.reloadAnswerObject = function (answerObj) {
                 var new_format = answerObj !== null && typeof answerObj === 'object' && 'data' in answerObj;
                 q.setAnswer(new_format ? answerObj.data : answerObj);
                 lastReloadedAnswer = answerObj;
@@ -509,7 +545,7 @@
 
 
             function displayMessages(messages) {
-                if($('#grader-messages').length == 0) {
+                if ($('#grader-messages').length == 0) {
                     var div = '<div id="grader-messages"></div>';
                     $('.taskContent').first().append(div);
                 }
@@ -517,20 +553,83 @@
             }
 
 
-            task.gradeAnswer = function(answer, answer_token, callback) {
-                answer = JSON.parse(answer);
-                var new_format = answer !== null && typeof answer === 'object' && 'data' in answer;
+            task.gradeAnswer = function (answer, answer_token, callback) {
+                /*
+                 * Auch gradeAnswer() wird von der Plattform gelegentlich mit
+                 * einem leeren String aufgerufen. Dann bewerten wir den aktuell
+                 * im Quiz sichtbaren Antwortzustand.
+                 */
+                if (typeof answer === 'string') {
+                    answer = answer.trim() === ''
+                        ? task.getAnswerObject()
+                        : JSON.parse(answer);
+                } else if (
+                    !answer ||
+                    typeof answer !== 'object'
+                ) {
+                    answer = task.getAnswerObject();
+                }
+
+                var new_format =
+                    answer !== null &&
+                    typeof answer === 'object' &&
+                    'data' in answer;
+
+                /*
+                 * Bei submit_single enthält submittingSingle den Index der
+                 * ausdrücklich überprüften Frage. Ältere Antwortobjekte können
+                 * das Feld noch gar nicht enthalten.
+                 */
+                var isSingleSubmission =
+                    new_format &&
+                    answer.submittingSingle !== null &&
+                    typeof answer.submittingSingle !== 'undefined';
+
+                /*
+                 * Der Wert wird für genau diesen Bewertungsvorgang festgehalten.
+                 * Anschließend wird der einmalige Schalter sofort zurückgesetzt.
+                 */
+                var shouldDisplayFeedback =
+                    task_toolbar.displayFeedbackOnNextGrade ||
+                    isSingleSubmission;
+
+                task_toolbar.displayFeedbackOnNextGrade = false;
+
                 function onGrade(result) {
-                    q.displayFeedback(result.feedback);
-                    if(Quiz.params.save_only_mode) {
+                    /*
+                     * Die Punkteberechnung und der Callback finden immer statt.
+                     * Dadurch kann die Plattform die Antwort weiterhin automatisch
+                     * speichern.
+                     */
+                    if (Quiz.params.save_only_mode) {
                         result.score = taskParams.maxScore;
                     }
-                    if (answer.submittingSingle === null) {
-                        displayScore(result.score, taskParams.maxScore);
-                        q.displayOverallFeedback(result.overall_feedback);
+
+                    /*
+                     * Sichtbares Feedback gibt es nur nach einer ausdrücklichen
+                     * Prüfung – nicht beim automatischen Bewerten.
+                     */
+                    if (shouldDisplayFeedback) {
+                        q.displayFeedback(result.feedback);
+
+                        if (!isSingleSubmission) {
+                            displayScore(
+                                result.score,
+                                taskParams.maxScore
+                            );
+
+                            q.displayOverallFeedback(
+                                result.overall_feedback
+                            );
+                        }
                     }
+
                     //displayMessages(result.messages);
-                    callback(result.score, lang.translate('grader_msg') + result.score, result.token || null);
+                    callback(
+                        result.score,
+                        lang.translate('grader_msg') + result.score,
+                        result.token || null
+                    );
                 }
                 function onError(result) {
                     task_toolbar.displayError(lang.translate('error_grading'));
@@ -544,7 +643,7 @@
                 };
 
                 var token = task_token.get()
-                if(token && !window.Quiz.grader.data) {
+                if (token && !window.Quiz.grader.data) {
                     useGraderUrl(
                         quiz_settings.graderUrl,
                         token,
@@ -574,24 +673,24 @@
         gradeTask: task.gradeAnswer
     };
 
-    $(function() {
-        if(!window.quiz_settings) { window.quiz_settings = {}; }
-        if(window.platform) {
+    $(function () {
+        if (!window.quiz_settings) { window.quiz_settings = {}; }
+        if (window.platform) {
             platform.initWithTask(task);
             task_toolbar.init();
         }
     })
 
-    window.taskGetResourcesPost = function(res, callback) {
+    window.taskGetResourcesPost = function (res, callback) {
         // Add grader_data, if available, to the javascript
         try {
-            $.get('grader_data.js').success(function(data) {
-                res.task.push({type: 'javascript', id: 'grader_data', content: data});
+            $.get('grader_data.js').success(function (data) {
+                res.task.push({ type: 'javascript', id: 'grader_data', content: data });
                 callback(res);
-            }).error(function() {
+            }).error(function () {
                 callback(res);
             });
-        } catch(e) {
+        } catch (e) {
             callback(res);
         }
     };
