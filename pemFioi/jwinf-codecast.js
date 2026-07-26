@@ -58,6 +58,518 @@
         );
     }
 
+    /* ---------------------------------------------------------
+ * Variablen und Funktionsaufrufe
+ * --------------------------------------------------------- */
+
+    function getCodecastRunner() {
+        return (
+            window.Codecast &&
+                window.Codecast.runner
+                ? window.Codecast.runner
+                : null
+        );
+    }
+
+
+    function getRunnerInterpreter(runner) {
+        var node;
+
+        if (
+            !runner ||
+            !runner.interpreters ||
+            runner.interpreters.length === 0
+        ) {
+            return null;
+        }
+
+        node =
+            runner.context &&
+                typeof runner.context.curNode === "number"
+                ? runner.context.curNode
+                : 0;
+
+        return (
+            runner.interpreters[node] ||
+            runner.interpreters[0] ||
+            null
+        );
+    }
+
+
+    function getRunnerScope(runner) {
+        var interpreter = getRunnerInterpreter(runner);
+
+        if (
+            !interpreter ||
+            typeof interpreter.getScope !== "function"
+        ) {
+            return null;
+        }
+
+        try {
+            return interpreter.getScope();
+        } catch (error) {
+            return null;
+        }
+    }
+
+
+    function resetJwinfVariableFrames(runner) {
+        var interpreter = getRunnerInterpreter(runner);
+        var globalVariables = {};
+
+        if (
+            runner.localVariables &&
+            typeof runner.localVariables === "object"
+        ) {
+            Object.keys(runner.localVariables).forEach(
+                function (name) {
+                    globalVariables[name] =
+                        runner.localVariables[name];
+                }
+            );
+        }
+
+        runner.__jwinfVariableFrames = [
+            {
+                id: 1,
+                name: null,
+                args: [],
+                variables: globalVariables,
+                scope: interpreter
+                    ? interpreter.global
+                    : null,
+                generatedToOriginal: {}
+            }
+        ];
+
+        runner.__jwinfNextVariableFrameId = 2;
+    }
+
+
+    function ensureJwinfVariableFrames(runner) {
+        if (
+            !runner.__jwinfVariableFrames ||
+            runner.__jwinfVariableFrames.length === 0
+        ) {
+            resetJwinfVariableFrames(runner);
+        }
+
+        return runner.__jwinfVariableFrames;
+    }
+
+
+    function getOriginalVariableName(
+        runner,
+        generatedName
+    ) {
+        var frames = ensureJwinfVariableFrames(runner);
+        var Blockly = getBlockly();
+        var database;
+        var databaseName;
+        var originalName;
+        var variableList;
+        var i;
+
+        for (i = frames.length - 1; i >= 0; i--) {
+            originalName =
+                frames[i]
+                    .generatedToOriginal[generatedName];
+
+            if (originalName) {
+                return originalName;
+            }
+        }
+
+        database =
+            Blockly &&
+                Blockly.JavaScript &&
+                Blockly.JavaScript.variableDB_
+                ? Blockly.JavaScript.variableDB_.db_
+                : null;
+
+        if (database) {
+            for (databaseName in database) {
+                if (
+                    Object.prototype.hasOwnProperty.call(
+                        database,
+                        databaseName
+                    ) &&
+                    database[databaseName] === generatedName
+                ) {
+                    /*
+                     * Blockly hängt seinem Datenbankschlüssel den
+                     * Variablentyp an. Codecast entfernt dasselbe
+                     * neun Zeichen lange Suffix.
+                     */
+                    originalName = databaseName.substring(
+                        0,
+                        databaseName.length - 9
+                    );
+
+                    variableList =
+                        runner.context &&
+                            runner.context.blocklyHelper &&
+                            runner.context.blocklyHelper.workspace
+                            ? runner.context
+                                .blocklyHelper
+                                .workspace
+                                .variableList
+                            : [];
+
+                    for (
+                        i = 0;
+                        i < variableList.length;
+                        i++
+                    ) {
+                        if (
+                            originalName.toLowerCase() ===
+                            variableList[i].toLowerCase()
+                        ) {
+                            return variableList[i];
+                        }
+                    }
+
+                    return originalName;
+                }
+            }
+        }
+
+        return generatedName;
+    }
+
+
+    function findVariableFrame(
+        runner,
+        generatedName
+    ) {
+        var frames = ensureJwinfVariableFrames(runner);
+        var interpreter = getRunnerInterpreter(runner);
+        var scope = getRunnerScope(runner);
+        var i;
+
+        if (!interpreter) {
+            return frames[frames.length - 1];
+        }
+
+        while (
+            scope &&
+            scope !== interpreter.global
+        ) {
+            if (
+                scope.properties &&
+                generatedName in scope.properties
+            ) {
+                for (
+                    i = frames.length - 1;
+                    i >= 0;
+                    i--
+                ) {
+                    if (frames[i].scope === scope) {
+                        return frames[i];
+                    }
+                }
+
+                break;
+            }
+
+            scope = scope.parentScope;
+        }
+
+        return frames[0];
+    }
+
+
+    function flattenJwinfVariableFrames(runner) {
+        var variables = {};
+
+        ensureJwinfVariableFrames(runner).forEach(
+            function (frame) {
+                Object.keys(frame.variables).forEach(
+                    function (name) {
+                        variables[name] =
+                            frame.variables[name];
+                    }
+                );
+            }
+        );
+
+        return variables;
+    }
+
+
+    function ensureVariableManagerRunnerPatch() {
+        var runner = getCodecastRunner();
+        var originalReportBlockValue;
+        var originalFetchLatestBlocklyAnalysis;
+        var originalInitCodes;
+
+        if (
+            !runner ||
+            typeof runner.reportBlockValue !== "function" ||
+            typeof runner.fetchLatestBlocklyAnalysis !==
+            "function"
+        ) {
+            return null;
+        }
+
+        /*
+         * Falls eine spätere Codecast-Version die Funktion nativ
+         * unterstützt, wird dieser Adapter nicht angewendet.
+         */
+        if (
+            typeof runner.reportFunctionCall === "function" &&
+            typeof runner.getVariableFrames === "function"
+        ) {
+            return runner;
+        }
+
+        if (runner.__jwinfVariableManagerPatched) {
+            return runner;
+        }
+
+        runner.__jwinfVariableManagerPatched = true;
+
+        originalReportBlockValue =
+            runner.reportBlockValue;
+
+        originalFetchLatestBlocklyAnalysis =
+            runner.fetchLatestBlocklyAnalysis;
+
+        originalInitCodes = runner.initCodes;
+
+        runner.reportBlockValue = function (
+            id,
+            value,
+            variableName
+        ) {
+            var result =
+                originalReportBlockValue.apply(
+                    this,
+                    arguments
+                );
+
+            var generatedName;
+            var originalName;
+            var frame;
+
+            if (
+                !this.context ||
+                this.context.display === false ||
+                !variableName ||
+                variableName === "@@LOOP_ITERATION@@"
+            ) {
+                return result;
+            }
+
+            generatedName = variableName.toString();
+
+            originalName = getOriginalVariableName(
+                this,
+                generatedName
+            );
+
+            frame = findVariableFrame(
+                this,
+                generatedName
+            );
+
+            frame.generatedToOriginal[generatedName] =
+                originalName;
+
+            frame.variables[originalName] = value;
+
+            return result;
+        };
+
+        runner.getLocalVariables = function () {
+            return flattenJwinfVariableFrames(this);
+        };
+
+        runner.fetchLatestBlocklyAnalysis = function (
+            localVariables,
+            lastAnalysis,
+            newStepNum
+        ) {
+            var frames =
+                ensureJwinfVariableFrames(this);
+
+            var stackFrames = [];
+
+            var baseAnalysis =
+                lastAnalysis || {
+                    stackFrames: [],
+                    code: this._code,
+                    stepNum: 0
+                };
+
+            frames.forEach(function (frame) {
+                var frameAnalysis =
+                    originalFetchLatestBlocklyAnalysis.call(
+                        runner,
+                        frame.variables,
+                        baseAnalysis,
+                        newStepNum
+                    );
+
+                var stackFrame =
+                    frameAnalysis &&
+                        frameAnalysis.stackFrames
+                        ? frameAnalysis.stackFrames[0]
+                        : null;
+
+                if (!stackFrame) {
+                    return;
+                }
+
+                stackFrame.id = frame.id;
+                stackFrame.name = frame.name;
+                stackFrame.args = frame.args.slice();
+
+                stackFrames.push(stackFrame);
+            });
+
+            return Object.assign(
+                {},
+                baseAnalysis,
+                {
+                    stackFrames: stackFrames,
+                    stepNum: newStepNum
+                }
+            );
+        };
+
+        if (typeof originalInitCodes === "function") {
+            runner.initCodes = function () {
+                var result =
+                    originalInitCodes.apply(
+                        this,
+                        arguments
+                    );
+
+                resetJwinfVariableFrames(this);
+
+                return result;
+            };
+        }
+
+        resetJwinfVariableFrames(runner);
+
+        return runner;
+    }
+
+
+    function enterFunction(functionName) {
+        var runner =
+            ensureVariableManagerRunnerPatch();
+
+        var frames;
+        var parameters;
+        var variables = {};
+        var args = [];
+        var generatedToOriginal = {};
+        var i;
+        var originalName;
+        var generatedName;
+
+        if (
+            !runner ||
+            !runner.context ||
+            runner.context.display === false
+        ) {
+            return;
+        }
+
+        frames = ensureJwinfVariableFrames(runner);
+
+        parameters =
+            Array.prototype.slice.call(
+                arguments,
+                1
+            );
+
+        for (
+            i = 0;
+            i + 2 < parameters.length;
+            i += 3
+        ) {
+            originalName = parameters[i].toString();
+
+            generatedName =
+                parameters[i + 1].toString();
+
+            args.push(originalName);
+
+            variables[originalName] =
+                parameters[i + 2];
+
+            generatedToOriginal[generatedName] =
+                originalName;
+        }
+
+        frames.push({
+            id: runner.__jwinfNextVariableFrameId++,
+            name: functionName.toString(),
+            args: args,
+            variables: variables,
+            scope: getRunnerScope(runner),
+            generatedToOriginal:
+                generatedToOriginal
+        });
+    }
+
+
+    function leaveFunction() {
+        var runner =
+            ensureVariableManagerRunnerPatch();
+
+        var frames;
+        var scope;
+        var i;
+
+        if (
+            !runner ||
+            !runner.context ||
+            runner.context.display === false
+        ) {
+            return;
+        }
+
+        frames = ensureJwinfVariableFrames(runner);
+
+        if (frames.length <= 1) {
+            return;
+        }
+
+        scope = getRunnerScope(runner);
+
+        for (
+            i = frames.length - 1;
+            i > 0;
+            i--
+        ) {
+            if (frames[i].scope === scope) {
+                frames.splice(i);
+                return;
+            }
+        }
+
+        /*
+         * Falls der Interpreter den Scope im finally-Block nicht
+         * mehr liefert, nur den obersten Frame entfernen.
+         */
+        frames.pop();
+    }
+
+
+    window.jwinfCodecastVariableManager = {
+        enterFunction: enterFunction,
+        leaveFunction: leaveFunction,
+        ensureRunnerPatch:
+            ensureVariableManagerRunnerPatch
+    };
+
     function isBlocklyGroupedByCategory(injectionDiv) {
         var parameters =
             window.taskData &&
@@ -1203,6 +1715,7 @@
 
     function ensureMenuItems() {
         observerScheduled = false;
+        ensureVariableManagerRunnerPatch();
         enhanceTestSelector();
         enhancePythonAvailableBlocks();
         enhanceBlocklyToolboxCollapser();

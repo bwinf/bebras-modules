@@ -337,7 +337,7 @@ img.messageArrow {
     > .scope-function-blocks
     > .global-scope:empty
 )::after {
-    content: "Das Programm ist angehalten.";
+    content: "Keine Variablen anzuzeigen.";
 
     display: block;
     margin: 0;
@@ -348,7 +348,7 @@ img.messageArrow {
  * Zusätzliche Absicherung
  */
 #react-container .stack-view:empty::after {
-    content: "Das Programm ist angehalten.";
+    content: "Keine Variablen anzuzeigen.";
 
     display: block;
     margin: 0;

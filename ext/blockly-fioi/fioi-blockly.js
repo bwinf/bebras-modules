@@ -3396,6 +3396,10 @@ Blockly.JavaScript['controls_for'] = function(block) {
       Blockly.JavaScript.ORDER_ASSIGNMENT) || '1';
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
   branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
+  var reportCode =
+    Blockly.JavaScript.INDENT +
+    "reportBlockValue('" + block.id + "', " +
+    variable0 + ", '" + variable0 + "');\n";
   var code;
   if (Blockly.isNumber(argument0) && Blockly.isNumber(argument1) &&
       Blockly.isNumber(increment)) {
@@ -3410,7 +3414,7 @@ Blockly.JavaScript['controls_for'] = function(block) {
     } else {
       code += (up ? ' += ' : ' -= ') + step;
     }
-    code += ') {\n' + branch + '}\n';
+    code += ') {\n' + reportCode + branch + '}\n';
   } else {
     code = '';
     // Cache non-trivial values to variables to prevent repeated look-ups.
@@ -3444,7 +3448,8 @@ Blockly.JavaScript['controls_for'] = function(block) {
         variable0 + ' <= ' + endVar + ' : ' +
         variable0 + ' >= ' + endVar + '; ' +
         variable0 + ' += ' + incVar + ') {\n' +
-        branch + '}\n';
+            reportCode +
+            branch + '}\n';
   }
   return code;
 };
@@ -4590,3 +4595,435 @@ Blockly.Python['text_str'] = function (block) {
   var expr = Blockly.JavaScript.valueToCode(block, 'EXPR', Blockly.JavaScript.ORDER_NONE) || 'null';
   return 'str(' + expr + ')';
 }
+
+/*
+ * JwInf: Variablen-Manager für implizite Zuweisungen
+ * und Funktionsaufrufe ergänzen.
+ */
+FioiBlockly.registerJwinfFunctionReporting = function() {
+  Blockly.JavaScript.externalFunctions =
+      Blockly.JavaScript.externalFunctions || {};
+
+  Blockly.JavaScript.externalFunctions.reportFunctionCall = function() {
+    var manager = window.jwinfCodecastVariableManager;
+
+    if (
+        manager &&
+        typeof manager.enterFunction === 'function'
+    ) {
+      return manager.enterFunction.apply(manager, arguments);
+    }
+  };
+
+  Blockly.JavaScript.externalFunctions.reportFunctionReturn = function() {
+    var manager = window.jwinfCodecastVariableManager;
+
+    if (
+        manager &&
+        typeof manager.leaveFunction === 'function'
+    ) {
+      return manager.leaveFunction();
+    }
+  };
+};
+
+Blockly.JavaScript.addReservedWords(
+    'reportFunctionCall,reportFunctionReturn');
+
+Blockly.JavaScript['procedures_defreturn'] = function(block) {
+  FioiBlockly.registerJwinfFunctionReporting();
+
+  var originalFunctionName = block.getFieldValue('NAME');
+  var functionName = Blockly.JavaScript.variableDB_.getName(
+      originalFunctionName, Blockly.Procedures.NAME_TYPE);
+  var branch = Blockly.JavaScript.statementToCode(block, 'STACK');
+
+  if (Blockly.JavaScript.STATEMENT_PREFIX) {
+    branch = Blockly.JavaScript.prefixLines(
+        Blockly.JavaScript.STATEMENT_PREFIX.replace(
+            /%1/g,
+            "'" + block.id + "'"
+        ),
+        Blockly.JavaScript.INDENT
+    ) + branch;
+  }
+
+  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+    branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(
+        /%1/g,
+        "'" + block.id + "'"
+    ) + branch;
+  }
+
+  var returnValue = Blockly.JavaScript.valueToCode(
+      block,
+      'RETURN',
+      Blockly.JavaScript.ORDER_NONE
+  ) || '';
+
+  var returnCode = returnValue
+      ? Blockly.JavaScript.INDENT +
+          'return ' + returnValue + ';\n'
+      : '';
+
+  var parameterNames = [];
+  var reportedParameters = [];
+
+  for (var i = 0; i < block.arguments_.length; i++) {
+    var originalParameterName = block.arguments_[i];
+
+    var generatedParameterName =
+        Blockly.JavaScript.variableDB_.getName(
+            originalParameterName,
+            Blockly.Variables.NAME_TYPE
+        );
+
+    parameterNames.push(generatedParameterName);
+
+    reportedParameters.push(
+        Blockly.JavaScript.quote_(originalParameterName),
+        Blockly.JavaScript.quote_(generatedParameterName),
+        generatedParameterName
+    );
+  }
+
+  var enterCall =
+      Blockly.JavaScript.INDENT +
+      'reportFunctionCall(' +
+      [Blockly.JavaScript.quote_(originalFunctionName)]
+          .concat(reportedParameters)
+          .join(', ') +
+      ');\n';
+
+  var body = branch + returnCode;
+
+  var code =
+      'function ' +
+      functionName +
+      '(' +
+      parameterNames.join(', ') +
+      ') {\n' +
+      enterCall +
+      Blockly.JavaScript.INDENT +
+      'try {\n' +
+      Blockly.JavaScript.prefixLines(
+          body,
+          Blockly.JavaScript.INDENT
+      ) +
+      Blockly.JavaScript.INDENT +
+      '} finally {\n' +
+      Blockly.JavaScript.INDENT +
+      Blockly.JavaScript.INDENT +
+      'reportFunctionReturn();\n' +
+      Blockly.JavaScript.INDENT +
+      '}\n' +
+      '}';
+
+  code = Blockly.JavaScript.scrub_(block, code);
+  Blockly.JavaScript.definitions_['%' + functionName] = code;
+
+  return null;
+};
+
+Blockly.JavaScript['procedures_defnoreturn'] =
+    Blockly.JavaScript['procedures_defreturn'];
+
+
+/*
+ * Vollständiger controls_for-Override.
+ * Er darf zusätzlich zu deinem bisherigen Min-Patch vorhanden sein:
+ * Der zuletzt definierte Generator gewinnt.
+ */
+Blockly.JavaScript['controls_for'] = function(block) {
+  var variable0 = Blockly.JavaScript.variableDB_.getName(
+      block.getFieldValue('VAR'),
+      Blockly.Variables.NAME_TYPE
+  );
+
+  var argument0 = Blockly.JavaScript.valueToCode(
+      block,
+      'FROM',
+      Blockly.JavaScript.ORDER_ASSIGNMENT
+  ) || '0';
+
+  var argument1 = Blockly.JavaScript.valueToCode(
+      block,
+      'TO',
+      Blockly.JavaScript.ORDER_ASSIGNMENT
+  ) || '0';
+
+  var increment = Blockly.JavaScript.valueToCode(
+      block,
+      'BY',
+      Blockly.JavaScript.ORDER_ASSIGNMENT
+  ) || '1';
+
+  var branch = Blockly.JavaScript.statementToCode(
+      block,
+      'DO'
+  );
+
+  branch = Blockly.JavaScript.addLoopTrap(
+      branch,
+      block.id
+  );
+
+  var reportCode =
+      Blockly.JavaScript.INDENT +
+      "reportBlockValue('" +
+      block.id +
+      "', " +
+      variable0 +
+      ', ' +
+      Blockly.JavaScript.quote_(variable0) +
+      ');\n';
+
+  var code;
+
+  if (
+      Blockly.isNumber(argument0) &&
+      Blockly.isNumber(argument1) &&
+      Blockly.isNumber(increment)
+  ) {
+    var up =
+        parseFloat(argument0) <= parseFloat(argument1);
+
+    code =
+        'for (var ' +
+        variable0 +
+        ' = ' +
+        argument0 +
+        '; ' +
+        variable0 +
+        (up ? ' <= ' : ' >= ') +
+        argument1 +
+        '; ' +
+        variable0;
+
+    var step = Math.abs(parseFloat(increment));
+
+    if (step == 1) {
+      code += up ? '++' : '--';
+    } else {
+      code += (up ? ' += ' : ' -= ') + step;
+    }
+
+    code +=
+        ') {\n' +
+        reportCode +
+        branch +
+        '}\n';
+  } else {
+    code = '';
+
+    var startVar = argument0;
+
+    if (
+        !argument0.match(/^\w+$/) &&
+        !Blockly.isNumber(argument0)
+    ) {
+      startVar =
+          Blockly.JavaScript.variableDB_.getDistinctName(
+              variable0 + '_start',
+              Blockly.Variables.NAME_TYPE
+          );
+
+      code +=
+          'var ' +
+          startVar +
+          ' = ' +
+          argument0 +
+          ';\n';
+    }
+
+    var endVar = argument1;
+
+    if (
+        !argument1.match(/^\w+$/) &&
+        !Blockly.isNumber(argument1)
+    ) {
+      endVar =
+          Blockly.JavaScript.variableDB_.getDistinctName(
+              variable0 + '_end',
+              Blockly.Variables.NAME_TYPE
+          );
+
+      code +=
+          'var ' +
+          endVar +
+          ' = ' +
+          argument1 +
+          ';\n';
+    }
+
+    var incVar =
+        Blockly.JavaScript.variableDB_.getDistinctName(
+            variable0 + '_inc',
+            Blockly.Variables.NAME_TYPE
+        );
+
+    code += 'var ' + incVar + ' = ';
+
+    if (Blockly.isNumber(increment)) {
+      code += Math.abs(increment) + ';\n';
+    } else {
+      code +=
+          'Math.abs(' +
+          increment +
+          ');\n';
+    }
+
+    code +=
+        'if (' +
+        startVar +
+        ' > ' +
+        endVar +
+        ') {\n';
+
+    code +=
+        Blockly.JavaScript.INDENT +
+        incVar +
+        ' = -' +
+        incVar +
+        ';\n';
+
+    code += '}\n';
+
+    code +=
+        'for (' +
+        variable0 +
+        ' = ' +
+        startVar +
+        '; ' +
+        incVar +
+        ' >= 0 ? ' +
+        variable0 +
+        ' <= ' +
+        endVar +
+        ' : ' +
+        variable0 +
+        ' >= ' +
+        endVar +
+        '; ' +
+        variable0 +
+        ' += ' +
+        incVar +
+        ') {\n' +
+        reportCode +
+        branch +
+        '}\n';
+  }
+
+  return code;
+};
+
+
+Blockly.JavaScript['controls_forEach'] = function(block) {
+  var variable0 = Blockly.JavaScript.variableDB_.getName(
+      block.getFieldValue('VAR'),
+      Blockly.Variables.NAME_TYPE
+  );
+
+  var argument0 = Blockly.JavaScript.valueToCode(
+      block,
+      'LIST',
+      Blockly.JavaScript.ORDER_ASSIGNMENT
+  ) || '[]';
+
+  var branch = Blockly.JavaScript.statementToCode(
+      block,
+      'DO'
+  );
+
+  branch = Blockly.JavaScript.addLoopTrap(
+      branch,
+      block.id
+  );
+
+  var code = '';
+  var listVar = argument0;
+
+  if (!argument0.match(/^\w+$/)) {
+    listVar =
+        Blockly.JavaScript.variableDB_.getDistinctName(
+            variable0 + '_list',
+            Blockly.Variables.NAME_TYPE
+        );
+
+    code +=
+        'var ' +
+        listVar +
+        ' = ' +
+        argument0 +
+        ';\n';
+  }
+
+  var indexVar =
+      Blockly.JavaScript.variableDB_.getDistinctName(
+          variable0 + '_index',
+          Blockly.Variables.NAME_TYPE
+      );
+
+  branch =
+      Blockly.JavaScript.INDENT +
+      variable0 +
+      ' = ' +
+      listVar +
+      '[' +
+      indexVar +
+      '];\n' +
+      Blockly.JavaScript.INDENT +
+      "reportBlockValue('" +
+      block.id +
+      "', " +
+      variable0 +
+      ', ' +
+      Blockly.JavaScript.quote_(variable0) +
+      ');\n' +
+      branch;
+
+  return (
+      code +
+      'for (var ' +
+      indexVar +
+      ' in ' +
+      listVar +
+      ') {\n' +
+      branch +
+      '}\n'
+  );
+};
+
+
+Blockly.JavaScript['text_append'] = function(block) {
+  var variableName =
+      Blockly.JavaScript.variableDB_.getName(
+          block.getFieldValue('VAR'),
+          Blockly.Variables.NAME_TYPE
+      );
+
+  var text = Blockly.JavaScript.valueToCode(
+      block,
+      'TEXT',
+      Blockly.JavaScript.ORDER_NONE
+  ) || "''";
+
+  var appendCode =
+      variableName +
+      ' = String(' +
+      variableName +
+      ') + String(' +
+      text +
+      ');\n';
+
+  var reportCode =
+      "reportBlockValue('" +
+      block.id +
+      "', " +
+      variableName +
+      ', ' +
+      Blockly.JavaScript.quote_(variableName) +
+      ');\n';
+
+  return appendCode + reportCode;
+};
