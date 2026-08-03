@@ -7,6 +7,12 @@
  * - Rückgängig
  * - Wiederherstellen
  * - SVG-Esporte
+ *
+ * Korrigiert außerdem die Blockly-Farben der Codecast-Printer-Lib
+ * und kann deren Feld Erwartete Ausgabe ausblenden.
+ *
+ * Ergänzt außerdem den Variablen-Manager um Funktionsparameter
+ * und getrennte Aufruf-Frames.
  */
 
 (function () {
@@ -14,6 +20,9 @@
 
     var toastTimer = null;
     var observerScheduled = false;
+    var localizedAceInstance = null;
+    var blocklyResizeHandlerInstalled = false;
+    var blocklyEnhancementsDirty = true;
 
     /* ---------------------------------------------------------
      * Konfiguration
@@ -59,8 +68,1268 @@
     }
 
     /* ---------------------------------------------------------
- * Variablen und Funktionsaufrufe
- * --------------------------------------------------------- */
+     * Codecast-Printer: Farben und erwartete Ausgabe
+     * --------------------------------------------------------- */
+
+    var bwinfBlocklyColours = {
+        categories: {
+            logic: "#81b31d",
+            loops: "#2fb5bd",
+            math: "#3950a5",
+            texts: "#6638a5",
+            lists: "#d8892b",
+            colour: 310,
+            read: "#a50101",
+            print: "#dac221",
+            variables: "#a5416b",
+            manipulate: "#26885f",
+            _default: 280
+        },
+        blocks: {}
+    };
+
+
+    function getCodecastParameters() {
+        if (
+            window.taskData &&
+            window.taskData.codecastParameters
+        ) {
+            return window.taskData.codecastParameters;
+        }
+
+        if (
+            window.Codecast &&
+            window.Codecast.options
+        ) {
+            return window.Codecast.options;
+        }
+
+        return {};
+    }
+
+
+    function copyBwinfBlocklyColours() {
+        return {
+            categories: Object.assign(
+                {},
+                bwinfBlocklyColours.categories
+            ),
+            blocks: {}
+        };
+    }
+
+
+    function getMainQuickAlgoContext() {
+        var loadedLibraries =
+            window.quickAlgoLoadedLibraries;
+
+        var librariesByName;
+        var libraryNames;
+        var context;
+        var i;
+
+        if (
+            loadedLibraries &&
+            typeof loadedLibraries.getAllLibrariesByName ===
+            "function"
+        ) {
+            try {
+                librariesByName =
+                    loadedLibraries.getAllLibrariesByName(
+                        "main"
+                    );
+            } catch (error) {
+                librariesByName = null;
+            }
+
+            if (librariesByName) {
+                if (librariesByName.printer) {
+                    return librariesByName.printer;
+                }
+
+                libraryNames = Object.keys(
+                    librariesByName
+                );
+
+                for (i = 0; i < libraryNames.length; i++) {
+                    context =
+                        librariesByName[libraryNames[i]];
+
+                    if (isPrinterContext(context)) {
+                        return context;
+                    }
+                }
+            }
+        }
+
+        if (
+            loadedLibraries &&
+            typeof loadedLibraries.getContext === "function"
+        ) {
+            try {
+                context = loadedLibraries.getContext(
+                    null,
+                    "main"
+                );
+            } catch (error) {
+                context = null;
+            }
+
+            if (context) {
+                return context;
+            }
+        }
+
+        /*
+         * Fallback für Codecast-Stände, bei denen nur der Runner
+         * den aktuellen QuickAlgo-Kontext öffentlich erreichbar macht.
+         */
+        return (
+            window.Codecast &&
+                window.Codecast.runner &&
+                window.Codecast.runner.context
+                ? window.Codecast.runner.context
+                : null
+        );
+    }
+
+
+    function usesBwinfBlocklyColourTheme(context) {
+        var taskData = window.taskData || {};
+        var parameters = getCodecastParameters();
+        var theme =
+            context &&
+                context.infos
+                ? context.infos.blocklyColourTheme
+                : null;
+
+        if (!theme && taskData.gridInfos) {
+            theme = taskData.gridInfos.blocklyColourTheme;
+        }
+
+        if (!theme) {
+            theme = taskData.blocklyColourTheme;
+        }
+
+        if (!theme) {
+            theme = parameters.blocklyColourTheme;
+        }
+
+        return theme === "bwinf";
+    }
+
+
+    function isPrinterContext(context) {
+        var taskData = window.taskData || {};
+        var parameters = getCodecastParameters();
+        var contextName =
+            context && context.infos
+                ? context.infos.context
+                : null;
+
+        if (!contextName && taskData.gridInfos) {
+            contextName = taskData.gridInfos.context;
+        }
+
+        if (!contextName) {
+            contextName = taskData.context;
+        }
+
+        if (!contextName) {
+            contextName = parameters.context;
+        }
+
+        /*
+         * In manchen eingebetteten Aufgaben wird der Kontextname
+         * nicht bis taskData durchgereicht. Die Printer-Lib ist dann
+         * noch an ihrer eigenen Blockgruppe erkennbar.
+         */
+        return (
+            contextName === "printer" ||
+            (
+                !contextName &&
+                context &&
+                context.customBlocks &&
+                context.customBlocks.printer
+            )
+        );
+    }
+
+    function isPythonPlatform() {
+        var platform = window.currentPlatform;
+
+        if (
+            typeof platform === "string" &&
+            platform !== ""
+        ) {
+            return platform === "python";
+        }
+
+        return getCurrentCodecastPlatform() === "python";
+    }
+
+    var legacyPythonPrinterNames = {
+        print: "schreibe",
+        print_end: "schreibe",
+        read: "lies",
+        readInteger: "liesGanzzahl",
+        readFloat: "liesKommazahl",
+        eof: "eingabeEnde",
+        charToNumber: "zeichenZuZahl",
+        numberToChar: "zahlZuZeichen",
+        asciiToChar: "zeichenZuAscii",
+        charToAscii: "asciiZuZeichen"
+    };
+
+
+    function addLegacyPrinterNamesToIncludeBlocks(
+        includeBlocks
+    ) {
+        var generatedBlocks =
+            includeBlocks && includeBlocks.generatedBlocks;
+
+        var printerBlocks =
+            generatedBlocks &&
+                Array.isArray(generatedBlocks.printer)
+                ? generatedBlocks.printer
+                : null;
+
+        var changed = false;
+
+        if (!printerBlocks) {
+            return false;
+        }
+
+        Object.keys(legacyPythonPrinterNames).forEach(
+            function (blockName) {
+                var legacyName =
+                    legacyPythonPrinterNames[blockName];
+
+                if (
+                    printerBlocks.indexOf(blockName) !== -1 &&
+                    printerBlocks.indexOf(legacyName) === -1
+                ) {
+                    printerBlocks.push(legacyName);
+                    changed = true;
+                }
+            }
+        );
+
+        return changed;
+    }
+
+
+    function copyIncludeBlocksWithLegacyPrinterNames(
+        includeBlocks
+    ) {
+        var generatedBlocks =
+            includeBlocks && includeBlocks.generatedBlocks;
+
+        var printerBlocks =
+            generatedBlocks &&
+                Array.isArray(generatedBlocks.printer)
+                ? generatedBlocks.printer
+                : null;
+
+        var nextPrinterBlocks;
+        var nextGeneratedBlocks;
+        var nextIncludeBlocks;
+
+        /*
+         * Die alten Namen ausschließlich für Python ergänzen.
+         * Ohne Printer-Konfiguration gibt es nichts zu kopieren.
+         */
+        if (
+            !printerBlocks ||
+            !isPythonPlatform()
+        ) {
+            return null;
+        }
+
+        nextPrinterBlocks = printerBlocks.slice();
+
+        nextGeneratedBlocks = Object.assign(
+            {},
+            generatedBlocks,
+            {
+                printer: nextPrinterBlocks
+            }
+        );
+
+        nextIncludeBlocks = Object.assign(
+            {},
+            includeBlocks,
+            {
+                generatedBlocks: nextGeneratedBlocks
+            }
+        );
+
+        if (
+            !addLegacyPrinterNamesToIncludeBlocks(
+                nextIncludeBlocks
+            )
+        ) {
+            return null;
+        }
+
+        return nextIncludeBlocks;
+    }
+
+
+    function ensureLegacyPythonPrinterNames(context) {
+        var customPrinterBlocks =
+            context &&
+                context.customBlocks &&
+                context.customBlocks.printer
+                ? context.customBlocks.printer
+                : null;
+
+        var printer = context && context.printer;
+        var nextIncludeBlocks;
+        var includeBlocks =
+            context &&
+                context.infos &&
+                context.infos.includeBlocks
+                ? context.infos.includeBlocks
+                : null;
+
+        if (
+            !customPrinterBlocks ||
+            !printer ||
+            !isPythonPlatform()
+        ) {
+            return;
+        }
+
+        /*
+         * Verborgene Blockdefinitionen sorgen dafür, dass Codecast
+         * die alten Namen weiterhin in das Python-Modul "printer"
+         * aufnimmt. Wegen hidden erscheinen sie weder in der
+         * Funktionsliste noch in der Autovervollständigung.
+         */
+        Object.keys(customPrinterBlocks).forEach(
+            function (categoryName) {
+                var blocks =
+                    customPrinterBlocks[categoryName];
+
+                if (!Array.isArray(blocks)) {
+                    return;
+                }
+
+                blocks.slice().forEach(function (block) {
+                    var legacyName;
+                    var alreadyExists;
+
+                    if (!block || !block.name) {
+                        return;
+                    }
+
+                    legacyName =
+                        legacyPythonPrinterNames[block.name];
+
+                    if (!legacyName) {
+                        return;
+                    }
+
+                    alreadyExists =
+                        Object.keys(
+                            customPrinterBlocks
+                        ).some(function (otherCategory) {
+                            var otherBlocks =
+                                customPrinterBlocks[
+                                otherCategory
+                                ];
+
+                            return (
+                                Array.isArray(otherBlocks) &&
+                                otherBlocks.some(
+                                    function (otherBlock) {
+                                        return (
+                                            otherBlock &&
+                                            otherBlock.name ===
+                                            legacyName
+                                        );
+                                    }
+                                )
+                            );
+                        });
+
+                    if (alreadyExists) {
+                        return;
+                    }
+
+                    blocks.push(
+                        Object.assign(
+                            {},
+                            block,
+                            {
+                                name: legacyName,
+                                hidden: true
+                            }
+                        )
+                    );
+                });
+            }
+        );
+
+        /*
+         * Alte Aufgaben verwendeten für normales Schreiben und
+         * Schreiben mit Endzeichen denselben Namen. Ein Aufruf mit
+         * zwei Nutzargumenten wird deshalb weiterhin als print_end
+         * behandelt. Das vom Executor ergänzte Callback ist das
+         * jeweils letzte Argument.
+         */
+        if (
+            printer.__jwinfLegacyPrinterNames !== true
+        ) {
+            printer.__jwinfLegacyPrinterNames = true;
+
+            printer.schreibe = function () {
+                var userArgumentCount =
+                    Math.max(0, arguments.length - 1);
+
+                if (
+                    userArgumentCount === 2 &&
+                    typeof printer.print_end === "function"
+                ) {
+                    return printer.print_end.apply(
+                        this,
+                        arguments
+                    );
+                }
+
+                return printer.print.apply(
+                    this,
+                    arguments
+                );
+            };
+
+            Object.keys(
+                legacyPythonPrinterNames
+            ).forEach(function (blockName) {
+                var legacyName =
+                    legacyPythonPrinterNames[blockName];
+
+                if (
+                    legacyName !== "schreibe" &&
+                    typeof printer[blockName] ===
+                    "function"
+                ) {
+                    printer[legacyName] =
+                        printer[blockName];
+                }
+            });
+        }
+
+        nextIncludeBlocks =
+            copyIncludeBlocksWithLegacyPrinterNames(
+                includeBlocks
+            );
+
+        if (nextIncludeBlocks) {
+            /*
+             * Die ursprüngliche Aufgabenkonfiguration nicht verändern.
+             * Sonst könnten die Python-Aliasse bei einem späteren Wechsel
+             * zu Blockly dort ebenfalls auftauchen.
+             */
+            context.infos = Object.assign(
+                {},
+                context.infos,
+                {
+                    includeBlocks: nextIncludeBlocks
+                }
+            );
+        }
+    }
+
+
+    function installLegacyPrinterBuiltinsForRunner(runner) {
+        var originalInjectFunctions;
+
+        if (
+            !runner ||
+            runner.__jwinfLegacyPrinterBuiltins === true ||
+            typeof runner._injectFunctions !== "function" ||
+            typeof runner._createBuiltin !== "function"
+        ) {
+            return;
+        }
+
+        originalInjectFunctions = runner._injectFunctions;
+        runner.__jwinfLegacyPrinterBuiltins = true;
+
+        /*
+         * Jeder Haupt- und Hintergrundtest hat seinen eigenen Runner.
+         * Deshalb müssen die alten Namen fest an genau diesen Runner
+         * gebunden werden.
+         */
+        runner._injectFunctions = function () {
+            var result =
+                originalInjectFunctions.apply(this, arguments);
+
+            var Sk = window.Sk;
+            var builtins = Sk && Sk.builtins;
+
+            var blocks = Array.isArray(this.availableBlocks)
+                ? this.availableBlocks
+                : [];
+
+            var seenNames = {};
+            var currentRunner = this;
+
+            if (!builtins) {
+                return result;
+            }
+
+            blocks.forEach(function (block) {
+                var legacyName = block && block.name;
+
+                if (
+                    !legacyName ||
+                    seenNames[legacyName] ||
+                    block.generatorName !== "printer" ||
+                    Object.keys(
+                        legacyPythonPrinterNames
+                    ).every(function (blockName) {
+                        return (
+                            legacyPythonPrinterNames[
+                            blockName
+                            ] !== legacyName
+                        );
+                    })
+                ) {
+                    return;
+                }
+
+                seenNames[legacyName] = true;
+
+                /*
+                 * Fester Wert statt eines dynamischen Getters.
+                 * So greift ein Hintergrundtest nicht versehentlich
+                 * auf den Runner des sichtbaren Tests zu.
+                 */
+                try {
+                    Object.defineProperty(
+                        builtins,
+                        legacyName,
+                        {
+                            configurable: true,
+                            enumerable: true,
+                            writable: true,
+                            value:
+                                currentRunner._createBuiltin(
+                                    legacyName,
+                                    "printer",
+                                    legacyName,
+                                    block.paramsCount || null,
+                                    block.type || "function"
+                                )
+                        }
+                    );
+                } catch (_) {
+                    builtins[legacyName] =
+                        currentRunner._createBuiltin(
+                            legacyName,
+                            "printer",
+                            legacyName,
+                            block.paramsCount || null,
+                            block.type || "function"
+                        );
+                }
+            });
+
+            return result;
+        };
+    }
+
+
+    function installPrinterRunnerHook(context) {
+        var currentRunner;
+
+        if (
+            !context ||
+            context.__jwinfPrinterRunnerHook === true
+        ) {
+            return;
+        }
+
+        currentRunner = context.runner;
+
+        try {
+            Object.defineProperty(
+                context,
+                "runner",
+                {
+                    configurable: true,
+                    enumerable: true,
+
+                    get: function () {
+                        return currentRunner;
+                    },
+
+                    set: function (runner) {
+                        currentRunner = runner;
+
+                        installLegacyPrinterBuiltinsForRunner(
+                            runner
+                        );
+                    }
+                }
+            );
+
+            context.__jwinfPrinterRunnerHook = true;
+        } catch (_) {
+            /*
+             * Falls runner später nicht mehr konfigurierbar ist,
+             * bleiben zumindest die verborgenen Modulnamen aktiv.
+             */
+        }
+
+        installLegacyPrinterBuiltinsForRunner(
+            currentRunner
+        );
+    }
+
+
+    function ensurePythonicPrinterNames(context) {
+        var strings =
+            context && context.strings
+                ? context.strings
+                : null;
+
+        var code =
+            strings && strings.code
+                ? strings.code
+                : null;
+
+        if (!code || !isPrinterContext(context)) {
+            return;
+        }
+
+        ensureLegacyPythonPrinterNames(context);
+        installPrinterRunnerHook(context);
+
+        /*
+         * Die Blockly-Beschriftungen bleiben deutsch.
+         * Im Python-Code verwenden wir die echten Namen.
+         */
+        code.print = "print";
+        code.print_end = "print_end";
+        code.read = "input";
+    }
+
+    function localizePrinterMessages(context) {
+        var language = (
+            window.stringsLanguage || ""
+        ).toLowerCase();
+
+        var messages =
+            context &&
+            context.strings &&
+            context.strings.messages;
+
+        if (
+            language.indexOf("de") !== 0 ||
+            !messages
+        ) {
+            return;
+        }
+
+        messages.inputPrompt =
+            "Bitte gib eine Eingabezeile für das Programm ein.";
+
+        messages.inputEmpty =
+            "Dein Programm hat versucht, eine Eingabezeile " +
+            "zu lesen, obwohl keine Eingabe mehr vorhanden ist!";
+    }
+
+    function ensureGermanCodecastMessages() {
+        var language = (
+            window.stringsLanguage || ""
+        ).toLowerCase();
+
+        var loadedLibraries =
+            window.quickAlgoLoadedLibraries;
+
+        var contexts = [];
+        var context;
+
+        if (language.indexOf("de") !== 0) {
+            return;
+        }
+
+        /*
+         * Haupt- und Hintergrundkontext erfassen.
+         */
+        if (
+            loadedLibraries &&
+            typeof loadedLibraries.getAllLibraries ===
+            "function"
+        ) {
+            try {
+                contexts =
+                    loadedLibraries.getAllLibraries();
+            } catch (error) {
+                contexts = [];
+            }
+        }
+
+        if (contexts.length === 0) {
+            context = getMainQuickAlgoContext();
+
+            if (context) {
+                contexts.push(context);
+            }
+        }
+
+        contexts.forEach(function (currentContext) {
+            var messages;
+            var blocklyStrings;
+
+            if (!currentContext) {
+                return;
+            }
+
+            /*
+             * Fehlender Schlüssel im Codecast-Blockly-Runner.
+             */
+            blocklyStrings =
+                currentContext.blocklyHelper &&
+                currentContext.blocklyHelper.strings;
+
+            if (blocklyStrings) {
+                blocklyStrings.uninitializedlet =
+                    "Nicht initialisierte Variable:";
+            }
+
+            if (isPrinterContext(currentContext)) {
+                preparePrinterContext(currentContext);
+            }
+
+            messages =
+                currentContext.strings &&
+                currentContext.strings.messages;
+
+            if (!messages) {
+                return;
+            }
+
+            // /*
+            //  * Englische Texte der in Codecast 7.7 eingebauten
+            //  * Printer-Lib ersetzen.
+            //  */
+            // if (isPrinterContext(currentContext)) {
+            //     messages.inputPrompt =
+            //         "Bitte gib eine Eingabezeile für das Programm ein.";
+
+            //     messages.inputEmpty =
+            //         "Dein Programm hat versucht, eine Eingabezeile " +
+            //         "zu lesen, obwohl keine Eingabe mehr vorhanden ist!";
+            // }
+
+            /*
+             * Nebenfund in der Turtle-Lib.
+             */
+            if (
+                typeof messages.paintingFree === "string" &&
+                messages.paintingFree.indexOf(
+                    "La tortue"
+                ) === 0
+            ) {
+                messages.paintingFree =
+                    "Die Schildkröte hat die programmierte " +
+                    "Zeichnung erstellt. Wenn du sie behalten " +
+                    "möchtest, kannst du einen Screenshot machen.";
+            }
+        });
+        syncMainPrinterStore();
+    }
+
+
+    function getBwinfCategoryColour(category) {
+        var colours = bwinfBlocklyColours.categories;
+
+        if (
+            category &&
+            Object.prototype.hasOwnProperty.call(
+                colours,
+                category
+            )
+        ) {
+            return colours[category];
+        }
+
+        /*
+         * Codecast nennt die Blockly-Prozeduren in der Toolbox
+         * functions. Die bisherige Printer-Lib verwendet dafür
+         * ihre Standardfarbe.
+         */
+        if (
+            category === "functions" ||
+            category === "procedures"
+        ) {
+            return colours._default;
+        }
+
+        return null;
+    }
+
+
+    function getBlocklyCssColour(colour, Blockly) {
+        if (typeof colour !== "number") {
+            return colour;
+        }
+
+        if (
+            Blockly &&
+            typeof Blockly.hueToRgb === "function"
+        ) {
+            return Blockly.hueToRgb(colour);
+        }
+
+        if (
+            Blockly &&
+            Blockly.utils &&
+            Blockly.utils.colour &&
+            typeof Blockly.utils.colour.hueToHex ===
+            "function"
+        ) {
+            return Blockly.utils.colour.hueToHex(colour);
+        }
+
+        /*
+         * Ohne öffentliche Konvertierungsfunktion die vorhandene
+         * Toolbox-Farbe beibehalten. Die Blockfarbe selbst wird von
+         * Blockly weiterhin korrekt aus dem Farbton berechnet.
+         */
+        return "";
+    }
+
+
+    function getBlockCategory(context, blockType) {
+        var helper =
+            context && context.blocklyHelper
+                ? context.blocklyHelper
+                : null;
+
+        var availableBlocks =
+            helper && Array.isArray(helper.availableBlocks)
+                ? helper.availableBlocks
+                : [];
+
+        var i;
+        var block;
+
+        for (i = 0; i < availableBlocks.length; i++) {
+            block = availableBlocks[i];
+
+            if (
+                block &&
+                block.name === blockType &&
+                block.category
+            ) {
+                return block.category;
+            }
+        }
+
+        /*
+         * Schatten- und dynamische Blöcke stehen nicht immer in
+         * availableBlocks. Für sie reichen die stabilen Blockly-
+         * Typpräfixe.
+         */
+        if (
+            blockType === "controls_if" ||
+            blockType.indexOf("logic_") === 0
+        ) {
+            return "logic";
+        }
+
+        if (blockType.indexOf("controls_") === 0) {
+            return "loops";
+        }
+
+        if (blockType.indexOf("math_") === 0) {
+            return "math";
+        }
+
+        if (blockType.indexOf("text_") === 0 ||
+            blockType === "text") {
+            return "texts";
+        }
+
+        if (
+            blockType.indexOf("lists_") === 0 ||
+            blockType.indexOf("list_") === 0
+        ) {
+            return "lists";
+        }
+
+        if (blockType.indexOf("colour_") === 0) {
+            return "colour";
+        }
+
+        if (blockType.indexOf("variables_") === 0) {
+            return "variables";
+        }
+
+        if (blockType.indexOf("procedures_") === 0) {
+            return "functions";
+        }
+
+        return null;
+    }
+
+
+    function setBwinfBlocklyDefinitionColours(Blockly) {
+        var definitions = {
+            logic: "logic",
+            loops: "loops",
+            math: "math",
+            texts: "texts",
+            lists: "lists",
+            colour: "colour",
+            variables: "variables",
+            procedures: "_default"
+        };
+
+        Object.keys(definitions).forEach(
+            function (definitionName) {
+                var definition =
+                    Blockly.Blocks &&
+                    Blockly.Blocks[definitionName];
+
+                if (definition) {
+                    definition.HUE =
+                        bwinfBlocklyColours.categories[
+                        definitions[definitionName]
+                        ];
+                }
+            }
+        );
+    }
+
+
+    function recolourExistingBlocklyBlocks(context, Blockly) {
+        var workspaces = [];
+        var workspace;
+        var workspaceDatabase;
+        var workspaceIds;
+
+        if (
+            Blockly.Workspace &&
+            typeof Blockly.Workspace.getAll === "function"
+        ) {
+            workspaces = Blockly.Workspace.getAll();
+        } else if (
+            Blockly.Workspace &&
+            Blockly.Workspace.WorkspaceDB_
+        ) {
+            /*
+             * Die bei Codecast 7.7 verwendete Blockly-Version hat
+             * kein Workspace.getAll(). In WorkspaceDB_ stehen aber
+             * sowohl der Arbeitsbereich als auch das Bausteinlager.
+             */
+            workspaceDatabase =
+                Blockly.Workspace.WorkspaceDB_;
+
+            workspaceIds = Object.keys(
+                workspaceDatabase
+            );
+
+            workspaceIds.forEach(function (workspaceId) {
+                if (workspaceDatabase[workspaceId]) {
+                    workspaces.push(
+                        workspaceDatabase[workspaceId]
+                    );
+                }
+            });
+        }
+
+        /*
+         * Den Hauptarbeitsbereich sicherheitshalber ergänzen,
+         * falls er nicht in der Registry enthalten war.
+         */
+        workspace = getWorkspace();
+
+        if (
+            workspace &&
+            workspaces.indexOf(workspace) === -1
+        ) {
+            workspaces.push(workspace);
+        }
+
+        workspaces.forEach(function (currentWorkspace) {
+            var blocks;
+
+            if (
+                !currentWorkspace ||
+                typeof currentWorkspace.getAllBlocks !==
+                "function"
+            ) {
+                return;
+            }
+
+            blocks = currentWorkspace.getAllBlocks(false);
+
+            blocks.forEach(function (block) {
+                var category;
+                var colour;
+
+                if (
+                    !block ||
+                    typeof block.setColour !== "function"
+                ) {
+                    return;
+                }
+
+                category = getBlockCategory(
+                    context,
+                    block.type || ""
+                );
+
+                colour = getBwinfCategoryColour(category);
+
+                if (
+                    colour === null ||
+                    block.__jwinfBwinfColour === colour
+                ) {
+                    return;
+                }
+
+                block.setColour(colour);
+                block.__jwinfBwinfColour = colour;
+            });
+        });
+    }
+
+
+    function recolourExistingBlocklyToolbox(context) {
+        var helper =
+            context && context.blocklyHelper
+                ? context.blocklyHelper
+                : null;
+
+        var categoryStrings =
+            helper &&
+                helper.strings &&
+                helper.strings.categories
+                ? helper.strings.categories
+                : {};
+
+        var labels = document.querySelectorAll(
+            "#react-container .blocklyToolboxDiv " +
+            ".blocklyTreeLabel"
+        );
+
+        Array.prototype.forEach.call(
+            labels,
+            function (label) {
+                var labelText = label.textContent
+                    .replace(/\s+/g, " ")
+                    .trim();
+
+                var category;
+                var colour;
+                var cssColour;
+                var row;
+
+                Object.keys(categoryStrings).some(
+                    function (categoryName) {
+                        if (
+                            categoryStrings[categoryName] ===
+                            labelText
+                        ) {
+                            category = categoryName;
+                            return true;
+                        }
+
+                        return false;
+                    }
+                );
+
+                colour = getBwinfCategoryColour(category);
+
+                if (colour === null) {
+                    return;
+                }
+
+                row = label.closest
+                    ? label.closest(".blocklyTreeRow")
+                    : label.parentElement;
+
+                if (row) {
+                    cssColour = getBlocklyCssColour(
+                        colour,
+                        getBlockly()
+                    );
+
+                    if (cssColour) {
+                        row.style.borderLeftColor =
+                            cssColour;
+                    }
+                }
+            }
+        );
+    }
+
+
+    function ensureBwinfBlocklyColours() {
+        var context = getMainQuickAlgoContext();
+        var Blockly = getBlockly();
+
+        if (
+            !context ||
+            !Blockly ||
+            !isPrinterContext(context) ||
+            !usesBwinfBlocklyColourTheme(context)
+        ) {
+            return;
+        }
+
+        if (
+            context.__jwinfBwinfColoursPatched !== true
+        ) {
+            context.__jwinfBwinfColoursPatched = true;
+
+            /*
+             * Codecast 7.7 bringt für "bwinf" eine eigene, von der
+             * bisherigen Printer-Lib abweichende Farbpalette mit.
+             * Die lokale Variante entspricht blocklyPrinter_lib-2.1.
+             */
+            context.provideBlocklyColours =
+                copyBwinfBlocklyColours;
+        }
+
+        setBwinfBlocklyDefinitionColours(Blockly);
+        recolourExistingBlocklyBlocks(context, Blockly);
+        recolourExistingBlocklyToolbox(context);
+    }
+
+
+    function shouldShowExpectedOutput() {
+        return (
+            getCodecastParameters().showExpectedOutput !==
+            false
+        );
+    }
+
+
+    function findExpectedOutputCards() {
+        var view = document.querySelector(
+            "#react-container .input-output-view"
+        );
+
+        var cards = [];
+        var editors;
+
+        if (!view) {
+            return cards;
+        }
+
+        /*
+         * Je nach Testart verwendet Codecast für das Feld einen
+         * normalen Editor oder den bearbeitbaren Test-Ausgabepuffer.
+         */
+        editors = view.querySelectorAll(
+            "[data-cursor-zone='editor:test_output'], " +
+            "[data-cursor-zone='editor:printerLibTestOutput']"
+        );
+
+        Array.prototype.forEach.call(
+            editors,
+            function (editor) {
+                var card = editor.closest
+                    ? editor.closest(".card")
+                    : null;
+
+                if (card && cards.indexOf(card) === -1) {
+                    cards.push(card);
+                }
+            }
+        );
+
+        if (cards.length > 0) {
+            return cards;
+        }
+
+        /*
+         * Fallback, solange der Ace-Editor noch nicht initialisiert
+         * ist. Die Texte decken die von Codecast 7.7 mitgelieferten
+         * Sprachen ab.
+         */
+        Array.prototype.forEach.call(
+            view.querySelectorAll(
+                ".card > .terminal-view-header"
+            ),
+            function (header) {
+                var text = header.textContent
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .toLowerCase();
+
+                var expectedLabels = [
+                    "erwartete ausgabe",
+                    "expected output",
+                    "sortie attendue",
+                    "verwachte uitvoer"
+                ];
+
+                var card;
+
+                if (expectedLabels.indexOf(text) === -1) {
+                    return;
+                }
+
+                card = header.closest
+                    ? header.closest(".card")
+                    : header.parentElement;
+
+                if (card && cards.indexOf(card) === -1) {
+                    cards.push(card);
+                }
+            }
+        );
+
+        return cards;
+    }
+
+
+    function updateExpectedOutputVisibility() {
+        var showExpectedOutput =
+            shouldShowExpectedOutput();
+
+        var hiddenCards = document.querySelectorAll(
+            "[data-jwinf-expected-output-hidden='true']"
+        );
+
+        Array.prototype.forEach.call(
+            hiddenCards,
+            function (card) {
+                if (showExpectedOutput) {
+                    card.style.removeProperty("display");
+                    delete card.dataset
+                        .jwinfExpectedOutputHidden;
+                }
+            }
+        );
+
+        if (showExpectedOutput) {
+            return;
+        }
+
+        findExpectedOutputCards().forEach(function (card) {
+            card.dataset.jwinfExpectedOutputHidden = "true";
+            card.style.setProperty(
+                "display",
+                "none",
+                "important"
+            );
+        });
+    }
+
+    /* ---------------------------------------------------------
+    * Variablen und Funktionsaufrufe
+    * --------------------------------------------------------- */
 
     function getCodecastRunner() {
         return (
@@ -119,6 +1388,10 @@
         var interpreter = getRunnerInterpreter(runner);
         var globalVariables = {};
 
+        /*
+         * Wird der Adapter erst während eines laufenden Programms
+         * installiert, bereits gemeldete globale Werte übernehmen.
+         */
         if (
             runner.localVariables &&
             typeof runner.localVariables === "object"
@@ -277,6 +1550,10 @@
             scope = scope.parentScope;
         }
 
+        /*
+         * Variablen, die nicht im aktuellen Funktions-Scope liegen,
+         * gehören in den globalen Frame.
+         */
         return frames[0];
     }
 
@@ -1503,6 +2780,159 @@
     }
 
 
+    function ensureBlocklyResizeHandler() {
+        if (blocklyResizeHandlerInstalled) {
+            return;
+        }
+
+        blocklyResizeHandlerInstalled = true;
+
+        /*
+         * Der Handler sucht bei jedem Resize den aktuell von React
+         * gerenderten Button. Dadurch bleibt genau ein globaler
+         * Listener aktiv, auch wenn React die Blockly-Ansicht ersetzt.
+         */
+        window.addEventListener("resize", function () {
+            var button = document.querySelector(
+                "#react-container " +
+                ".jwinf-blockly-toolbox-collapser"
+            );
+
+            if (button) {
+                positionBlocklyToolboxCollapser(button);
+            }
+        });
+    }
+
+    function syncMainPrinterStore() {
+        var environment =
+            window.Codecast &&
+                window.Codecast.environments
+                ? window.Codecast.environments.main
+                : null;
+
+        var store = environment && environment.store;
+        var state;
+        var taskStrings;
+        var taskCode;
+        var taskMessages;
+        var nextStrings;
+        var nextIncludeBlocks;
+        var stringsChanged;
+
+        if (
+            !store ||
+            typeof store.getState !== "function" ||
+            typeof store.dispatch !== "function"
+        ) {
+            return;
+        }
+
+        try {
+            state = store.getState();
+        } catch (_) {
+            return;
+        }
+
+        taskStrings =
+            state &&
+                state.task &&
+                state.task.contextStrings
+                ? state.task.contextStrings
+                : null;
+
+        taskCode =
+            taskStrings && taskStrings.code
+                ? taskStrings.code
+                : null;
+
+        if (
+            !taskCode ||
+            (
+                !Object.prototype.hasOwnProperty.call(
+                    taskCode,
+                    "print"
+                ) &&
+                !Object.prototype.hasOwnProperty.call(
+                    taskCode,
+                    "read"
+                )
+            )
+        ) {
+            return;
+        }
+
+        taskMessages = taskStrings.messages || {};
+
+        stringsChanged =
+            taskCode.print !== "print" ||
+            taskCode.print_end !== "print_end" ||
+            taskCode.read !== "input" ||
+            taskMessages.inputPrompt !==
+            "Bitte gib eine Eingabezeile für das Programm ein." ||
+            taskMessages.inputEmpty !==
+            (
+                "Dein Programm hat versucht, eine Eingabezeile " +
+                "zu lesen, obwohl keine Eingabe mehr vorhanden ist!"
+            );
+
+        if (stringsChanged) {
+            nextStrings = Object.assign(
+                {},
+                taskStrings,
+                {
+                    code: Object.assign(
+                        {},
+                        taskCode,
+                        {
+                            print: "print",
+                            print_end: "print_end",
+                            read: "input"
+                        }
+                    ),
+
+                    messages: Object.assign(
+                        {},
+                        taskMessages,
+                        {
+                            inputPrompt:
+                                "Bitte gib eine Eingabezeile " +
+                                "für das Programm ein.",
+
+                            inputEmpty:
+                                "Dein Programm hat versucht, " +
+                                "eine Eingabezeile zu lesen, " +
+                                "obwohl keine Eingabe mehr " +
+                                "vorhanden ist!"
+                        }
+                    )
+                }
+            );
+
+            store.dispatch({
+                type: "task/taskSetContextStrings",
+                payload: nextStrings
+            });
+        }
+
+        if (!isPythonPlatform()) {
+            return;
+        }
+        nextIncludeBlocks =
+            copyIncludeBlocksWithLegacyPrinterNames(
+                state && state.task
+                    ? state.task.contextIncludeBlocks
+                    : null
+            );
+
+        if (nextIncludeBlocks) {
+            store.dispatch({
+                type: "task/taskSetContextIncludeBlocks",
+                payload: nextIncludeBlocks
+            });
+        }
+    }
+
     function enhanceBlocklyToolboxCollapser() {
         var elements = getBlocklyToolboxElements();
         var root = elements.root;
@@ -1513,6 +2943,8 @@
         if (!root || !injectionDiv) {
             return;
         }
+
+        ensureBlocklyResizeHandler();
 
         existingButton = injectionDiv.querySelector(
             ".jwinf-blockly-toolbox-collapser"
@@ -1692,9 +3124,6 @@
             });
         }, 150);
 
-        window.addEventListener("resize", function () {
-            positionBlocklyToolboxCollapser(button);
-        });
     }
 
     function arrangeNativeMenuItems(menu) {
@@ -1713,14 +3142,163 @@
         }
     }
 
+    function preparePrinterContext(context) {
+        if (
+            !context ||
+            !context.customBlocks ||
+            !context.customBlocks.printer ||
+            !context.printer
+        ) {
+            return;
+        }
+
+        ensurePythonicPrinterNames(context);
+        localizePrinterMessages(context);
+    }
+
+
+    function ensureQuickAlgoLibraryRegistryPatch() {
+        var registry = window.quickAlgoLoadedLibraries;
+        var originalAddLibrary;
+        var libraries;
+
+        if (
+            !registry ||
+            typeof registry.addLibrary !== "function"
+        ) {
+            return;
+        }
+
+        if (
+            registry.addLibrary
+                .__jwinfPrinterContextPatch !== true
+        ) {
+            originalAddLibrary = registry.addLibrary;
+
+            registry.addLibrary = function (
+                library,
+                name,
+                environment
+            ) {
+                /*
+                 * Wichtig: vor addLibrary patchen.
+                 *
+                 * Danach kopiert Codecast die Strings und Blocklisten
+                 * in den jeweiligen Store. So erhalten auch Test 2,
+                 * Test 3 usw. rechtzeitig input() und print().
+                 */
+                if (name === "printer") {
+                    preparePrinterContext(library);
+                }
+
+                return originalAddLibrary.apply(
+                    this,
+                    arguments
+                );
+            };
+
+            registry.addLibrary
+                .__jwinfPrinterContextPatch = true;
+        }
+
+        /*
+         * Einen eventuell bereits vorhandenen Hauptkontext ebenfalls
+         * vorbereiten.
+         */
+        if (
+            typeof registry.getAllLibraries === "function"
+        ) {
+            try {
+                libraries = registry.getAllLibraries();
+            } catch (_) {
+                libraries = [];
+            }
+
+            libraries.forEach(preparePrinterContext);
+        }
+    }
+
+    function ensureGermanAceMessages() {
+        var ace = window.ace;
+        var aceRequire;
+        var messageModule;
+        var messages;
+
+        /*
+         * Ace wird möglicherweise erst nach jwinf-codecast.js geladen.
+         * In diesem Fall versucht es der MutationObserver später erneut.
+         */
+        if (
+            !ace ||
+            ace === localizedAceInstance ||
+            !ace.config ||
+            typeof ace.config.setMessages !== "function"
+        ) {
+            return;
+        }
+
+        aceRequire =
+            typeof ace.require === "function"
+                ? ace.require
+                : ace.acequire;
+
+        if (typeof aceRequire !== "function") {
+            return;
+        }
+
+        try {
+            messageModule = aceRequire(
+                "ace/lib/default_english_messages"
+            );
+        } catch (error) {
+            return;
+        }
+
+        if (
+            !messageModule ||
+            !messageModule.defaultEnglishMessages
+        ) {
+            return;
+        }
+
+        /*
+         * Alle vorhandenen Ace-Meldungen beibehalten und nur
+         * den sichtbaren Hinweis für gesperrte Felder ersetzen.
+         */
+        messages = Object.assign(
+            {},
+            messageModule.defaultEnglishMessages
+        );
+
+        messages["editor.tooltip.disable-editing"] =
+            "Dieses Feld kann nicht bearbeitet werden.";
+
+        ace.config.setMessages(messages);
+        localizedAceInstance = ace;
+    }
+
     function ensureMenuItems() {
         observerScheduled = false;
+        ensureQuickAlgoLibraryRegistryPatch();
+        ensureGermanAceMessages();
+        ensureGermanCodecastMessages();
+        updateExpectedOutputVisibility();
         ensureVariableManagerRunnerPatch();
         enhanceTestSelector();
         enhancePythonAvailableBlocks();
-        enhanceBlocklyToolboxCollapser();
         enhanceCodecastDocumentation();
-        makeRobotStartBlocksMovable();
+
+        /*
+         * Blockly durchsuchen wir nur nach Änderungen innerhalb der
+         * Blockly-Ansicht. Ausgaben, Tests oder die Dokumentation
+         * lösen keinen vollständigen Block-Scans aus.
+         */
+        if (blocklyEnhancementsDirty) {
+            blocklyEnhancementsDirty = false;
+            ensureBwinfBlocklyColours();
+            enhanceBlocklyToolboxCollapser();
+            makeRobotStartBlocksMovable();
+        }
 
         if (!usesBlockly()) {
             return;
@@ -1823,7 +3401,107 @@
     }
 
 
-    function scheduleEnsureMenuItems() {
+    function elementTouchesBlockly(
+        element,
+        includeDescendants
+    ) {
+        var selector =
+            "#blocklyDiv, " +
+            ".blockly-editor, " +
+            ".injectionDiv";
+
+        if (!element || element.nodeType !== 1) {
+            return false;
+        }
+
+        if (
+            typeof element.matches === "function" &&
+            element.matches(selector)
+        ) {
+            return true;
+        }
+
+        if (
+            typeof element.closest === "function" &&
+            element.closest(selector)
+        ) {
+            return true;
+        }
+
+        return Boolean(
+            includeDescendants &&
+            typeof element.querySelector === "function" &&
+            element.querySelector(selector)
+        );
+    }
+
+
+    function mutationsTouchBlockly(mutations) {
+        var i;
+        var j;
+        var mutation;
+
+        if (
+            !mutations ||
+            typeof mutations.length !== "number"
+        ) {
+            return false;
+        }
+
+        for (i = 0; i < mutations.length; i++) {
+            mutation = mutations[i];
+
+            if (
+                elementTouchesBlockly(
+                    mutation.target,
+                    false
+                )
+            ) {
+                return true;
+            }
+
+            for (
+                j = 0;
+                mutation.addedNodes &&
+                j < mutation.addedNodes.length;
+                j++
+            ) {
+                if (
+                    elementTouchesBlockly(
+                        mutation.addedNodes[j],
+                        true
+                    )
+                ) {
+                    return true;
+                }
+            }
+
+            for (
+                j = 0;
+                mutation.removedNodes &&
+                j < mutation.removedNodes.length;
+                j++
+            ) {
+                if (
+                    elementTouchesBlockly(
+                        mutation.removedNodes[j],
+                        true
+                    )
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    function scheduleEnsureMenuItems(mutations) {
+        if (mutationsTouchBlockly(mutations)) {
+            blocklyEnhancementsDirty = true;
+        }
+
         if (observerScheduled) {
             return;
         }
@@ -2481,7 +4159,10 @@
             ".task-available-blocks-header .title"
         );
 
-        if (title) {
+        if (
+            title &&
+            title.textContent !== "Verfügbare Funktionen"
+        ) {
             title.textContent = "Verfügbare Funktionen";
         }
 
@@ -2489,7 +4170,10 @@
             ".task-available-blocks-header .subtitle"
         );
 
-        if (subtitle) {
+        if (
+            subtitle &&
+            subtitle.textContent !== "Zum Einfügen anklicken"
+        ) {
             subtitle.textContent = "Zum Einfügen anklicken";
         }
 
@@ -2798,11 +4482,17 @@
 
         if (spans.length > 0) {
             lastSpan = spans[spans.length - 1];
-            lastSpan.textContent = label;
+
+            if (lastSpan.textContent !== label) {
+                lastSpan.textContent = label;
+            }
+
             return;
         }
 
-        element.textContent = label;
+        if (element.textContent !== label) {
+            element.textContent = label;
+        }
     }
 
 
@@ -2867,14 +4557,28 @@
 
                 if (option.value === "task-instructions") {
                     option.dataset.jwinfDocKind = "task";
-                    option.textContent = "Aufgabenstellung";
+
+                    if (
+                        option.textContent !==
+                        "Aufgabenstellung"
+                    ) {
+                        option.textContent =
+                            "Aufgabenstellung";
+                    }
                 } else if (
                     option.value === "language" ||
                     text === "Programmerstellung" ||
                     text === "Weitere Hinweise"
                 ) {
                     option.dataset.jwinfDocKind = "hints";
-                    option.textContent = "Weitere Hinweise";
+
+                    if (
+                        option.textContent !==
+                        "Weitere Hinweise"
+                    ) {
+                        option.textContent =
+                            "Weitere Hinweise";
+                    }
                 } else {
                     option.hidden = true;
                     option.disabled = true;
@@ -2916,10 +4620,14 @@
         );
 
         if (title) {
-            title.textContent =
+            var nextTitle =
                 kind === "hints"
                     ? "Weitere Hinweise"
                     : "Aufgabenstellung";
+
+            if (title.textContent !== nextTitle) {
+                title.textContent = nextTitle;
+            }
         }
 
         documentation.dataset.jwinfDocKind = kind;
@@ -3118,6 +4826,7 @@
 
         var container;
         var longs;
+        var signature;
         var added = false;
 
         if (!mission) {
@@ -3134,11 +4843,6 @@
             mission.appendChild(container);
         }
 
-        /*
-         * Nur unseren eigenen Container leeren, nicht Reacts Inhalt.
-         */
-        container.innerHTML = "";
-
         longs = Array.prototype.slice.call(
             mission.querySelectorAll(".long")
         ).filter(function (longElement) {
@@ -3147,6 +4851,25 @@
                 longMatchesCurrentContext(longElement, mission)
             );
         });
+
+        signature = [
+            getCurrentCodecastPlatform(),
+            getCurrentTaskLevel() || "",
+            longs.map(function (longElement) {
+                return longElement.outerHTML;
+            }).join("\u001f")
+        ].join("\u001e");
+
+        if (
+            container.__jwinfHintsSignature === signature
+        ) {
+            return;
+        }
+
+        /*
+         * Nur unseren eigenen Container leeren, nicht Reacts Inhalt.
+         */
+        container.innerHTML = "";
 
         longs.forEach(function (longElement) {
             var clone = longElement.cloneNode(true);
@@ -3168,6 +4891,8 @@
             container.innerHTML =
                 "<p>Für diese Aufgabe gibt es keine weiteren Hinweise.</p>";
         }
+
+        container.__jwinfHintsSignature = signature;
     }
 
     function ensureDocumentationTaskContent(documentation, callback) {
@@ -3321,41 +5046,6 @@
     }
 
 
-    function longElementMatchesPlatform(element) {
-        var lang = element.getAttribute("data-lang");
-        var platform = getCurrentCodecastPlatform();
-
-        return !lang || lang === platform;
-    }
-
-
-    function markLongHeadings(longElement) {
-        Array.prototype.forEach.call(
-            longElement.querySelectorAll("h1, h2, h3"),
-            function (heading) {
-                var text = heading.textContent
-                    .replace(/\s+/g, " ")
-                    .trim()
-                    .toLowerCase();
-
-                if (text.indexOf("weitere hinweise") !== -1) {
-                    heading.classList.add(
-                        "jwinf-doc-hide-in-hints"
-                    );
-                }
-            }
-        );
-
-        Array.prototype.forEach.call(
-            longElement.querySelectorAll("hr"),
-            function (hr) {
-                hr.classList.add("jwinf-doc-hide-in-hints");
-            }
-        );
-    }
-
-
-
     function enhanceCodecastDocumentation() {
         var documentation = document.querySelector(
             "#react-container .documentation"
@@ -3464,18 +5154,30 @@
                 block.setMovable(true);
             }
 
-            if (typeof block.setDeletable === "function") {
+            if (
+                typeof block.setDeletable === "function" &&
+                (
+                    typeof block.isDeletable !== "function" ||
+                    block.isDeletable()
+                )
+            ) {
                 block.setDeletable(false);
             }
 
-            if (typeof block.setEditable === "function") {
+            if (
+                typeof block.setEditable === "function" &&
+                (
+                    typeof block.isEditable !== "function" ||
+                    block.isEditable()
+                )
+            ) {
                 block.setEditable(false);
             }
         }
     }
 
 
-
+    ensureQuickAlgoLibraryRegistryPatch();
     if (document.readyState === "loading") {
         document.addEventListener(
             "DOMContentLoaded",
