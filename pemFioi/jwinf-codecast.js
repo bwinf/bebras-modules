@@ -920,6 +920,15 @@
         var i;
         var block;
 
+        /*
+ * Blockly führt „Variable erhöhen“ historisch unter
+ * math_change, der Baustein gehört optisch aber zu den
+ * Variablen.
+ */
+        if (blockType === "math_change") {
+            return "variables";
+        }
+
         for (i = 0; i < availableBlocks.length; i++) {
             block = availableBlocks[i];
 
@@ -4889,7 +4898,7 @@
 
         if (!added) {
             container.innerHTML =
-                "<p>Für diese Aufgabe gibt es keine weiteren Hinweise.</p>";
+                "<p>Für diese Aufgabenversion gibt es keine weiteren Hinweise.</p>";
         }
 
         container.__jwinfHintsSignature = signature;
