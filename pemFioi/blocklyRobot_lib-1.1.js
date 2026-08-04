@@ -1498,6 +1498,8 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "liefere Fisch ab",
                withdrawNum_noShadow: "nimm %1 Fische",
                dropNum_noShadow: "liefere %1 Fische ab",
+               withdrawNum: "nimm %1 Fische",
+               dropNum: "liefere %1 Fische ab",
                nbWithdrawables: "Anzahl der Fische",
                containerSize: "Anzahl der bestellten Fische",
                onObject: "auf Fisch",
