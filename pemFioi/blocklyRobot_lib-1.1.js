@@ -1747,7 +1747,7 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "legeBuchAb",
                onObject: "aufBuch",
                onContainer: "aufKiste",
-               nbWithdrawables: "anzahlDerBücher",
+               nbWithdrawables: "anzahlDerBuecher",
                containerSize: "groesseDerKiste",
             },
             // description: {
