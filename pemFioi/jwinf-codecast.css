@@ -596,7 +596,7 @@ img.messageArrow {
 .platform-blockly
 .jwinf-blockly-toolbox-collapser {
     position: absolute;
-    z-index: 10000;
+    z-index: 10;
 
     left: 0;
     top: var(--jwinf-collapser-offset-top);
@@ -697,7 +697,7 @@ svg {
     content: "";
 
     position: absolute;
-    z-index: 9999;
+    z-index: 10;
 
     top: 0;
     bottom: 0;
