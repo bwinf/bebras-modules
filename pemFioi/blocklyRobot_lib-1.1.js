@@ -4551,11 +4551,15 @@ var getContext = function(display, infos, curLevel) {
       }
    };
    
-   var resetItem = function(initItem, redisplay) {
+   var resetItem = function(initItem, redisplay, onTop) {
       if(redisplay === undefined)
          redisplay = true;
       var item = {};
-      context.items.push(item);
+      if (onTop === true) {
+         context.items.unshift(item);
+      } else {
+         context.items.push(item);
+      }
       for(var property in initItem) {
          item[property] = initItem[property];
       }
@@ -5194,7 +5198,7 @@ var getContext = function(display, infos, curLevel) {
          }
          
          object.zOrder = maxi + 0.000001;
-         resetItem(object, true);
+         resetItem(object, true, infos.dropOnTop === true);
          
          context.checkContainer(coords);
       }
