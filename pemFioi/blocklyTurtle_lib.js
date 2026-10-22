@@ -37,7 +37,7 @@ var makeTurtle = function(coords) {
    this.reset(5);
 
    this.turn = function(angle) {
-      angle = parseInt(angle);
+      angle = parseFloat(angle);
       this.directionDeg = (this.directionDeg + angle) % 360;
 
       // Make sure we have a positive direction
