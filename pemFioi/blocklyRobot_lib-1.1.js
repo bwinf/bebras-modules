@@ -667,7 +667,15 @@ var getContext = function(display, infos, curLevel) {
                failureLights: "Der Roboter hat nicht alles beleuchtet!",
                successLights: "Bravo! Der Roboter hat alles beleuchtet.",
                failureLaser: "Der Roboter muss auf einem Laser stehen, um den Laserstrahl zu aktivieren!",
-               failureDirection: "Der Laser kann nur in ganzzahlige Richtungen schießen."
+               failureDirection: "Der Laser kann nur in ganzzahlige Richtungen schießen.",
+               failureNoPlug: "Der Roboter muss an einem Anschluss stehen, um ein Kabel anschließen zu können!",
+               failureAlreadyWired: "Dieser Anschluss ist bereits mit einem Kabel verbunden!",
+               failureWrongPlugType: "Diese Anschlüsse können nicht miteinander verbunden werden!",
+               successPlugsWired: "Die Maschine ist repariert!",
+               failurePlugsWired: "Die Maschine funktioniert nicht, da Anschlüsse nicht verbunden wurden!",
+               failureWireCrossing: "Diese beiden Anschlüsse können nicht verbunden werden, da sich die Kabel kreuzen würden!",
+               failureWireTooLong: "Diese beiden Anschlüsse können nicht verbunden werden, da sie zu weit voneinander entfernt sind!",
+               failureTotalLengthExceeded: "Die Kabellänge reicht nicht aus, um diese beiden Anschlüsse zu verbinden!",
             },
             cardinals: {
                north: "Norden",
