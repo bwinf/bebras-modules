@@ -275,7 +275,17 @@
          'traceroute-context': { src: modulesPath + "/pemFioi/network/traceroute/context.js", id: "traceroute-context" },
          'scanip-context': { src: modulesPath + "/pemFioi/network/scanip/context.js", id: "scanip-context" },
 
-         'interactjs': {src: modulesPath+"/ext/interactjs/interact.min.js", id: "interactjs"}
+         'interactjs': {src: modulesPath+"/ext/interactjs/interact.min.js", id: "interactjs"},
+
+         'blockly-calliope': {
+            src: modulesPath + "/pemFioi/calliope/blocklyCalliope_lib.js",
+            id: "blocklyCalliope_lib"
+         },
+         'calliope_css': {
+            type: "stylesheet",
+            src: modulesPath + "/pemFioi/calliope/calliope.css",
+            id: "calliope_css"
+         },
       }
    }
 
