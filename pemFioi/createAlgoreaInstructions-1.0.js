@@ -167,46 +167,12 @@ function getAlgoreaInstructionsAsHtml(strings, gridInfos, data, level, lang) {
          html += "<p>"+strings.oneFirewood+"</p>";
       }
 
-      var canFall = false;
       var maxH = 2;
-      var tiles = data[level][0].tiles;
-      var nbRows = tiles.length;
-      var nbCol = tiles[0].length;
-      for(var row = 0; row < nbRows; row++){
-         for(var col = 0; col < nbCol; col++){
-            if(col < nbCol - 1 && tiles[row][col] == 2 && tiles[row][col + 1] == 1){
-               var fallH = getFallH(row,col + 1);
-               if(fallH >= maxH || fallH + row >= nbRows){
-                  canFall = true;
-                  break;
-               }
-            }
-            if(col > 0 && tiles[row][col] == 2 && tiles[row][col - 1] == 1){
-               var fallH = getFallH(row,col - 1);
-               if(fallH >= maxH || fallH + row >= nbRows){
-                  canFall = true;
-                  break;
-               }
-            }
-         }
-         if(canFall){
-            break;
-         }
-      }
-      if(canFall){
+      if(gridInfos.intro.canFall){
          html += "<p>"+strings.fall(maxH)+"</p>";
       }
 
       return html
-
-      function getFallH(r,c) {
-         for(var row = r + 1; row < nbRows; row++){
-            if(tiles[row][c] != 1){
-               return row - r
-            }
-         }
-         return nbRows - r
-      }
    };
 
    function createChticodeRelInstructions() {
@@ -259,7 +225,7 @@ function getAlgoreaInstructionsAsHtml(strings, gridInfos, data, level, lang) {
          return "<p>"+gridInfos.intro.text+"</p>"
       }
 
-      var nbTarget = countItem(11);
+      var nbTarget = countItem(11) + countInitItems('BB');
       var rollOver = (gridInfos.intro.rollOver === true || countItem([3,4,5,6,7,8,9,10]) > 0);
 
       var html = "<p>"+strings.dominoes(nbTarget);+"</p>";
@@ -418,24 +384,26 @@ function getAlgoreaInstructionsAsHtml(strings, gridInfos, data, level, lang) {
       var html = "";
 
       html += "<p>"+strings.laser1+"</br>"+strings.laser2+"</p>";
-      html +=  "<div style='float: left; vertical-align: top; padding: 5px; margin-right: 5px; border: 1px solid black; max-width: 33%;'>";
+
+      html +=  "<div><div style='display: inline-block; vertical-align: top; padding: 5px; margin-right: 10px; border: 1px solid black; max-width: 30%;'>";
       html += "<div style='width: 90%; max-width: 150px; margin: auto;'>";
-      html += "<img src='"+imgSrc+".png'/>";
+      html += "<img src='"+imgSrc+".png' style='max-width: 100%; height: auto'/>";
       html += "</div>";
       html += "<p style='text-align: center; margin: 0;'><strong>"+strings.launcher+"</strong></p>";
       html += "</div>";
       if(gridInfos.intro.overLaser === true || gridInfos.intro.laserDirection === true){
-         html += "<p>";
+         html += "<div style='display: inline-block; vertical-align: top; max-width: 65%;'>";
          if(gridInfos.intro.overLaser === true){
-            html += strings.overLaser+" ";
+            html += strings.overLaser+"<br>";
          }
          if(gridInfos.intro.laserDirection === true){
             html += strings.laserDirection;
          }
          html += "</p>";
       }
+      html += "</div>";
       if(nbMirrors > 0){
-         html += "<p>"+strings.mirrors+"</p>";
+         html += "<p style='margin-top: 10px'>"+strings.mirrors+"</p>";
       }
 
       return html
@@ -443,17 +411,19 @@ function getAlgoreaInstructionsAsHtml(strings, gridInfos, data, level, lang) {
 
    function createMarblesInstructions() {
       var nbHoles = countItem(3);
-      var nbMarbles = countItem(4);
+      var nbMarbles = countItem(4) + countInitItems('marble');
 
       var html = "<p>";
       html += strings.marbles(nbMarbles,nbHoles);
       html += "</p>";
 
       if(nbMarbles > 1){
-         html += "<p>";
-         html += strings.oneMarble;
-         html += "</p>";
-         if(nbHoles > 1){
+         if (!gridInfos.intro.hideRobotUniqueMarble) {
+            html += "<p>";
+            html += strings.oneMarble;
+            html += "</p>";
+         }
+         if(nbHoles > 1 && !gridInfos.intro.hideHoleUniqueMarble){
             html += "<p>";
             html += strings.onePerHole;
             html += "</p>";
@@ -478,7 +448,7 @@ function getAlgoreaInstructionsAsHtml(strings, gridInfos, data, level, lang) {
       var nbWhite = countItem(4);
 
       var html = "<p>";
-      html += strings.paint(nbBlack,nbWhite);
+      html += strings.paint(nbBlack, gridInfos.intro.hideUniquely);
       html += "</p>";
       if(gridInfos.intro.marked == true){
          html += "<p>"+strings.marked+"</p>";
@@ -502,10 +472,10 @@ function getAlgoreaInstructionsAsHtml(strings, gridInfos, data, level, lang) {
    };
 
    function createSpaceInstructions() {
-      var nbAsteroids = countItem(4);
-      var nbRockets = countItem(5);
-      var nbItem1 = countItem(7);
-      var nbItem2 = countItem(8);
+      var nbAsteroids = countItem(4) + countInitItems('rocket');
+      var nbRockets = countItem(5) + countInitItems('asteroide');
+      var nbItem1 = countItem(7) + countInitItems('objet1');
+      var nbItem2 = countItem(8) + countInitItems('objet2');
       var nbItems = nbItem1 + nbItem2;
 
       var html = "<p>";

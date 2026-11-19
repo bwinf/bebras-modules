@@ -64,6 +64,11 @@ window.displayHelper = {
    sideZoneEnabled: false,
    updateLayoutCallbackStart: null,
    compactMode: false,  // for tabs & footer in responsive layout 3
+   layoutTaskDims: null,  // taskW x taskH when the layout was last chosen
+   tabsWhenTooSmall: false,  // in layout 2, use layout 3 (tabs) rather than scrolling a task narrower than minTaskW
+   warnUnvalidatedLevelChange: false,  // when leaving a version whose answer would get full score but was not validated, warn first
+   unvalidatedLevelWarned: {},  // versions for which this warning was already shown
+   checkingLevelChange: false,
 
    hasLevels: false,
    pointsAsStars: true, // TODO: false as default
@@ -124,6 +129,10 @@ window.displayHelper = {
          restart: "Recommencer",
          harderLevelSolved: "Attention : vous avez déjà résolu une version plus difficile. Vous ne pourrez pas gagner de points supplémentaires avec cette version.",
          showLevelAnyway: "Voir quand même",
+         notValidatedYet: "Attention, tu n'as pas encore validé. Valide bien avant de changer de version.",
+         notValidatedYetOk: "Ok",
+         changeVersion: "Changer de version",
+         stayOnVersion: "Rester",
          scoreObtained: "Score obtenu :",
          hardVersionTakesTime: "Résoudre une {0} peut vous prendre beaucoup de temps ; songez en priorité à répondre aux questions en {1} pour gagner des points rapidement.",
          illKeepThatInMind: "J'y prendrai garde",
@@ -198,6 +207,10 @@ window.displayHelper = {
          restart: "Restart",
          harderLevelSolved: "Warning: you already solved a harder version of this task. You won't be able to obtain extra points with this version.",
          showLevelAnyway: "Show it to me anyways.",
+         notValidatedYet: "Warning: you have not validated yet. Make sure to validate before changing version.",
+         notValidatedYetOk: "OK",
+         changeVersion: "Change version",
+         stayOnVersion: "Stay",
          scoreObtained: "Obtained score:",
          hardVersionTakesTime: "Solving a {0} can take a lot of time. Consider working on the {1} to gain points quickly.",
          illKeepThatInMind: "I'll consider it.",
@@ -272,6 +285,10 @@ window.displayHelper = {
          restart: "Börja om",
          harderLevelSolved: "Varning: du har redan löst en svårare version av den här uppgiften. Du kommer inte kunna få mer poäng med den här versionen.",
          showLevelAnyway: "Visa den ändå.",
+         notValidatedYet: "Varning: du har inte kontrollerat svaret ännu. Kontrollera det innan du byter version.",
+         notValidatedYetOk: "Okej",
+         changeVersion: "Byt version",
+         stayOnVersion: "Stanna",
          scoreObtained: "Uppnådd poäng:",
          hardVersionTakesTime: "Att lösa en {0} kan ta lång tid. Fundera på om du ska jobba med en {1} för att tjäna poäng snabbare.",
          illKeepThatInMind: "Jag ska tänka på det.",
@@ -346,6 +363,10 @@ window.displayHelper = {
          restart: "Aloita alusta",
          harderLevelSolved: "Varoitus: olet jo ratkaissut vaikeamman version tästä tehtävästä. Tämän helpomman version ratkaiseminen ei voi korottaa pistemäärääsi.",
          showLevelAnyway: "Siirry joka tapauksessa.",
+         notValidatedYet: "Varoitus: et ole vielä tarkistanut vastaustasi. Tarkista se ennen kuin vaihdat versiota.",
+         notValidatedYetOk: "Ok",
+         changeVersion: "Vaihda versiota",
+         stayOnVersion: "Pysy",
          scoreObtained: "Saatu pistemäärä:",
          hardVersionTakesTime: "{0} voi viedä runsaasti aikaa. {1} voi tuottaa pisteitä nopeammin.",
          illKeepThatInMind: "Ymmärrän tämän.",
@@ -420,6 +441,10 @@ window.displayHelper = {
          restart: "Neustarten",
          harderLevelSolved: "Achtung: Du hast schon eine schwerere Version gelöst. Du kannst mit dieser Version keine zusätzlichen Punkte bekommen.",
          showLevelAnyway: "Trotzdem anzeigen",
+         notValidatedYet: "Achtung: Du hast deine Antwort noch nicht bestätigt. Bestätige sie, bevor du die Version wechselst.",
+         notValidatedYetOk: "OK",
+         changeVersion: "Version wechseln",
+         stayOnVersion: "Bleiben",
          scoreObtained: "Erhaltene Punkte:",
          hardVersionTakesTime: "Eine {0} zu lösen kann dich viel Zeit kosten; Denke zunächst daran, die Fragen in {1} zu beantworten, um schnell Punkte zu bekommen.",
          illKeepThatInMind: "Ich hab das verstanden",
@@ -450,7 +475,85 @@ window.displayHelper = {
          answerNotSavedContestOver: "Der Contest ist vorbei, deine Antwort wurde nicht eingereicht. Du kannst {0}.",
          reloadSubmittedAnswer: "Lade die Lösung, die du eingereicht hast",
          difficultyWarning: "<strong>Achtung:</strong> diese Version zu lösen kann einige Zeit in Anspruch nehmen.<br/>Die 2- und 3-Stern Version von anderen Aufgaben lassen sich schneller lösen.",
-         enemyWarning: "<strong>Attention :</strong> dans ce défi, l'ordinateur vous empêchera de trouver la solution par hasard."
+         enemyWarning: "<strong>Achtung:</strong> in dieser Herausforderung verhindert der Computer, dass du die Lösung zufällig findest."
+      },
+      nl: {
+         version: "Versie",
+         levelVersionName_easy: "gemakkelijke versie",
+         levelVersionName_medium: "gemiddelde versie",
+         levelVersionName_hard: "moeilijke versie",
+         levelVersionName_easy_stars: "versie met 2 sterren",
+         levelVersionName_medium_stars: "versie met 3 sterren",
+         levelVersionName_hard_stars: "versie met 4 sterren",
+         levelName_easy: "Gemakkelijk",
+         levelName_medium: "Gemiddeld",
+         levelName_hard: "Moeilijk",
+         switch_statement: "Opgave",
+         switch_task: "Oefening",
+         switch_solution: "Oplossing",
+         warningTimeout: "<p>Let op, je bent al meer dan {0} minuten bezig met deze vraag.</p><p>Misschien moet je van onderwerp veranderen, door te klikken op de knop rechtsboven.</p>",
+         alright: "Akkoord",
+         moveOn: "Ga naar de volgende",
+         solvedMoveOn: "Je hebt deze vraag helemaal opgelost, ga verder met een andere vraag.",
+         confirmRestart: "Ben je zeker dat je deze versie wilt herbeginnen?",
+         yes: "Ja",
+         no: "Nee",
+         tryHardLevel: "We stellen voor dat je de versie met 4 sterren probeert.",
+         tryMediumLevel: "We stellen voor dat je de versie met 3 sterren probeert.",
+         tryNextTask: "We stellen voor dat je met de volgende vraag begint. Als je tijd over hebt, kan je later terugkomen voor de volgende versie.",
+         yourScoreIsNow: "Jouw score is nu:",
+         worseScoreStays: "Dit is minder dan voordien; jouw score blijft:",
+         scoreStays: "Jouw score blijft hetzelfde:",
+         score: "Score:",
+         noPointsForLevel: "Je hebt nog geen punten behaald op deze vraag.",
+         outOf: " op ",
+         tryToDoBetterOrChangeTask: "Probeer om nog beter te doen, of ga verder met een andere vraag.",
+         tryToDoBetterOrMoveToNextLevel: "Probeer om nog beter te doen, of ga verder naar een moeilijkere versie.",
+         bestPossibleScoreCongrats: "Dit is de best mogelijke score op deze vraag; proficiat!",
+         forMorePointsMoveToNextLevel: "Ga verder naar een moeilijkere versie om meer punten te behalen.",
+         youDidBetterBefore: "Je hebt eerder al beter gedaan.",
+         scoreStays2: "Je score blijft hetzelfde.",
+         reloadBestAnswer: "Herlaad je beste antwoord.",
+         noAnswerSaved: "Nog geen antwoord opgeslagen voor deze versie.",
+         validate: "Valideren",
+         restart: "Herbeginnen",
+         harderLevelSolved: "Let op: je hebt al een moeilijkere versie opgelost. Je kan met deze versie geen extra punten halen.",
+         showLevelAnyway: "Toon het mij toch",
+         notValidatedYet: "Let op: je hebt nog niet gevalideerd. Valideer eerst voordat je van versie wisselt.",
+         notValidatedYetOk: "OK",
+         changeVersion: "Van versie wisselen",
+         stayOnVersion: "Blijven",
+         scoreObtained: "Behaalde score:",
+         hardVersionTakesTime: "Het oplossen van {0} kan je veel tijd kosten; overweeg om eerst de vragen in {1} op te lossen om snel punten te halen.",
+         illKeepThatInMind: "Ik zal er aan denken",
+         harderLevelAvailable: "Merk op dat je voor deze vraag nu al een moeilijkere versie dan deze mag oplossen.",
+         lockedLevel: "Deze versie is nog geblokkeerd. Los de vorige versie op om ze te ontsluiten!",
+         lockedLevelDev: "This version is normally locked, and the previous version must be solved before displaying this. As you opened this task locally, you can however display this version for testing purposes.",
+         gradeThisAnswer: "Evalueer dit antwoord",
+
+         // The following messages are used for tasks with no feedback
+         saveAnswer: "Bewaar jouw antwoord",
+         answerSavedModifyOrCancelIt: "Jouw antwoord is bewaard. Je kan het aanpassen, of {0} en herbeginnen.",
+         cancelIt: "het annuleren",
+         warningDifferentAnswerSaved: "Let op: er is een verschillend antwoord bewaard.",
+         youMay: "Je kan {0}.",
+         reloadIt: "het herladen",
+         saveThisNewAnswer: "Bewaar dit nieuwe antwoord",
+
+         gradingInProgress: "Bezig met evalueren",
+         scoreIs: "Jouw score is:",
+         point: "punt",
+         points: "punten",
+         // The following messages are used when viewing tasks after contest is over
+         contestOverScoreStays: "De wedstrijd is reeds afgelopen, jouw antwoord is dus niet bewaard en jouw score blijft:",
+         scoreWouldBecome: "Met dit antwoord zou dit jouw score zijn:",
+         reloadValidAnswer: "Herlaad het gevalideerde antwoord.",
+         contestOverAnswerNotSaved: "De wedstrijd is afgelopen: jouw antwoord is niet bewaard.",
+         scoreWouldStay: "Met dit antwoord, zou jouw score hetzelfde zijn gebleven:",
+         answerNotSavedContestOver: "De wedstrijd is reeds afgelopen, je antwoord werd niet bewaard. Je kan {0}.",
+         reloadSubmittedAnswer: "het antwoord herlanden dat je hebt ingediend",
+         difficultyWarning: "<strong>Let op</strong>: deze versie oplossen kan wat tijd kosten.<br/>Je kan waarschijnlijk sneller de 2 of 3 sterren-versies van andere vragen oplossen.",
+         enemyWarning: "<strong>Let op :</strong> in deze opdracht zorgt de computer ervoor dat je de oplossing niet per toeval kan vinden."
       },
       ar: {
          version: "المستوى",
@@ -494,6 +597,10 @@ window.displayHelper = {
          restart: "ابدأ من جديد",
          harderLevelSolved: "لقد قمت بحل المستوى الأصعب في هذا السؤال, لن تتمكن من الحصول على درجات أعلى في هذا السؤال",
          showLevelAnyway: "اظهرها لي على أي حال",
+         notValidatedYet: "تنبيه: لم تتحقق من إجابتك بعد. تحقق منها قبل تغيير المستوى.",
+         notValidatedYetOk: "حسناً",
+         changeVersion: "تغيير المستوى",
+         stayOnVersion: "البقاء",
          scoreObtained: "النقاط المكتسبة:",
          hardVersionTakesTime: "Solving a {0} can take a lot of time. Consider working on the {1} to gain points quickly.",
          illKeepThatInMind: "I'll consider it.",
@@ -568,6 +675,10 @@ window.displayHelper = {
          restart: "Reiniciar",
          harderLevelSolved: "Atención: ya has resuelto una versión más difícil. No puedes ganar puntos extra con esta versión.",
          showLevelAnyway: "Mostrar el nivel de igual manera",
+         notValidatedYet: "Atención: todavía no has validado. Valida antes de cambiar de versión.",
+         notValidatedYetOk: "OK",
+         changeVersion: "Cambiar de versión",
+         stayOnVersion: "Quedarse",
          scoreObtained: "Puntuación obtenida:",
          hardVersionTakesTime: "Resolver una {0} puede tomar mucho tiempo; te aconsejamos priorizar el resolver las preguntas en {1} para ganar puntos más rápidamente.",
          illKeepThatInMind: "Lo tendré en mente",
@@ -642,6 +753,10 @@ window.displayHelper = {
          restart: "Ricomincia",
          harderLevelSolved: "Attenzione : hai già risolto una versione più difficile. Non potrai più ottenere punti supplementari con questa versione.",
          showLevelAnyway: "Vedi lo stesso",
+         notValidatedYet: "Attenzione: non hai ancora convalidato. Convalida prima di cambiare versione.",
+         notValidatedYetOk: "OK",
+         changeVersion: "Cambia versione",
+         stayOnVersion: "Rimani",
          scoreObtained: "Score ottenuto :",
          hardVersionTakesTime: "Risolvere una {0} ti può prendere molto tempo ; dai priorità alle risposte alle domande in {1} per guadagnare rapidamente punti.",
          illKeepThatInMind: "Me lo ricorderò",
@@ -716,6 +831,10 @@ window.displayHelper = {
          restart: "Začni znova",
          harderLevelSolved: "Opozorilo: Rešil(-a) si že težjo stopnjo te naloge. S to stopnjo ne boš dobil(-a) dodatnih točk.",
          showLevelAnyway: "Vseeno mi pokaži stopnjo.",
+         notValidatedYet: "Opozorilo: odgovora še nisi preveril(-a). Preveri ga, preden zamenjaš stopnjo.",
+         notValidatedYetOk: "V redu",
+         changeVersion: "Zamenjaj stopnjo",
+         stayOnVersion: "Ostani",
          scoreObtained: "Dobljeni rezultat:",
          hardVersionTakesTime: "Reševanje {0} lahko traja veliko časa. Razmisli o reševanju {1}, da boš hitro dobil(-a) točke.",
          illKeepThatInMind: "Razmislil(-a) bom.",
@@ -1032,7 +1151,9 @@ window.displayHelper = {
             $('#tabsMenu .li').on('click', function(event) {
                event.preventDefault();
                var newLevel = $(this).children().attr('href').split('#')[1];
-               displayHelper.setLevel(newLevel);
+               displayHelper.requestLevelChange(newLevel, function() {
+                  displayHelper.setLevel(newLevel);
+               });
             });
          }else{
             $('#tabsMenu .li').on('click', function(event) {
@@ -1046,11 +1167,13 @@ window.displayHelper = {
                }
                event.preventDefault();
                var newLevel = $(this).children().attr('href').split('#')[1];
-               displayHelper.setLevel(newLevel);
-               if(displayHelper.layout == 3 && !displayHelper.compactMode){
-                  displayHelper.toggle_task = false;  // change level => display new instructions
-                  displayHelper.toggleTask();
-               }
+               displayHelper.requestLevelChange(newLevel, function() {
+                  displayHelper.setLevel(newLevel);
+                  if(displayHelper.layout == 3 && !displayHelper.compactMode){
+                     displayHelper.toggle_task = false;  // change level => display new instructions
+                     displayHelper.toggleTask();
+                  }
+               });
             });
             /* version arrows in mobile mode */
             $('#tabsMenu .resp_version_arr').on('click', function(event) {
@@ -1059,17 +1182,21 @@ window.displayHelper = {
                }
                event.preventDefault();
                var newLevel = $(this).attr('href').split('#')[1];
-               displayHelper.setLevel(newLevel);
-               displayHelper.toggle_task = false; // change level => display new instructions
-               displayHelper.toggleTask();
+               displayHelper.requestLevelChange(newLevel, function() {
+                  displayHelper.setLevel(newLevel);
+                  displayHelper.toggle_task = false; // change level => display new instructions
+                  displayHelper.toggleTask();
+               });
             });
             /* click version in resp layout4 */
             $('#tabsMenuAlt [id^=stars_menu_]').click(function() {
                var newLevel = $(this).attr('id').split('stars_menu_')[1];
                $('.layout_4 #tabsMenuAlt').hide();
-               displayHelper.setLevel(newLevel);
-               displayHelper.toggle_task = false; // change level => display new instructions
-               displayHelper.toggleTask();
+               displayHelper.requestLevelChange(newLevel, function() {
+                  displayHelper.setLevel(newLevel);
+                  displayHelper.toggle_task = false; // change level => display new instructions
+                  displayHelper.toggleTask();
+               });
             });
          }
       }
@@ -1251,6 +1378,12 @@ window.displayHelper = {
          return
       }
       var layout1Breakpoint = 1200;
+      // with the tabs fallback, landscape tablets get layout 1 when the task fits next to the instructions
+      // (from 1000px, so that the instructions column, 30% wide, keeps 300px)
+      var layout1FitBreakpoint = 1000;
+      var layout2Breakpoint = 800;
+      // the tabs fallback catches a task that doesn't fit: try layout 2 on portrait tablets too
+      var layout2PortraitBreakpoint = this.tabsWhenTooSmall ? 728 : layout2Breakpoint;
       if(!this.responsive){
          $('#valider').appendTo($('#displayHelper_validate'));
          if(window.innerWidth >= 1200) {
@@ -1286,7 +1419,13 @@ window.displayHelper = {
          if(!$('#zone_0 #tabsContainer').length){
             $('#zone_0 h1').after($('#tabsContainer'));
          }
-         if(w >= layout1Breakpoint) {
+         var useLayout1 = w >= layout1Breakpoint;
+         if(!useLayout1 && this.tabsWhenTooSmall && !this.sideZoneEnabled && !this.taskFullPage && w/h >= 1 && w >= layout1FitBreakpoint){
+            this.availableH = h - headerH - this.versionHeaderH[0] - this.footerH;
+            this.availableW = Math.floor(w*0.7);
+            useLayout1 = !this.isBelowMinTaskW();
+         }
+         if(useLayout1) {
             this.mobileMode = !!this.taskFullPage;
             this.layout = this.taskFullPage ? 5 : 1;
             this.availableH = h - headerH - this.versionHeaderH[0] - this.footerH;
@@ -1296,7 +1435,7 @@ window.displayHelper = {
             if(this.sideZoneEnabled){
                $('#side_zone').addClass('show');
             }
-         }else if(w >= 800){
+         }else if(w >= layout2Breakpoint || (w/h < 1 && w >= layout2PortraitBreakpoint)){
             this.mobileMode = !!this.taskFullPage;
             this.layout = this.taskFullPage ? 5 : 2;
             this.availableH = h - headerH - this.versionHeaderH[this.layout - 1] - this.footerH;
@@ -1339,11 +1478,42 @@ window.displayHelper = {
          }
          $('#task, #main_header').addClass('layout_'+this.layout);
          if(this.layout == 2){   // bug fix
+            if(this.tabsWhenTooSmall){
+               // drop the vertical centering of layout 3 before measuring the instructions
+               $('#zone_1 > .consigne').css('margin-top','20px');
+            }
             var zone1H = $('#zone_1').height();
             this.availableH = h - headerH - this.versionHeaderH[this.layout - 1] - this.footerH - zone1H;
          }
+         if(this.tabsWhenTooSmall && (this.layout == 1 || this.layout == 2) && this.isBelowMinTaskW()){
+            // the task would be shrunk below minTaskW, then scrolled: use tabs instead
+            $('#task, #main_header').removeClass('layout_' + this.layout).addClass('layout_3');
+            this.mobileMode = true;
+            this.layout = 3;
+            this.availableH = h - headerH - this.versionHeaderH[this.layout - 1] - this.footerH;
+            this.availableW = w;
+            // undo what layout 1 set above
+            $('#zone_1').height('auto');
+            $('#zone_12').css("overflow-x", "auto");
+            $('#zone_12').css("overflow-y", "hidden");
+            if(this.sideZoneEnabled){
+               $('#side_zone').removeClass('show');
+            }
+            this.compactMode = w <= 650;
+            $("#zone_3").toggleClass("compact", this.compactMode);
+            $("#tabsMenu").toggleClass("compact", this.compactMode);
+         }
+         if(this.tabsWhenTooSmall){
+            // set at the top of this function for the previous layout
+            $('#zone_0').css("max-height", this.versionHeaderH[this.layout - 1]);
+         }
+         if(this.layout != 4){
+            // the version menu of layout 4 may have been left open
+            $('#tabsMenuAlt').hide();
+         }
          $('#zone_12').css("height", "calc(100% - " + $('#zone_0').height() + "px)");
 
+         this.layoutTaskDims = this.taskW + 'x' + this.taskH;
          if (!this.taskFullPage) {
              this.updateTaskDimensions();
          }
@@ -1389,7 +1559,21 @@ window.displayHelper = {
       return scrollbarWidth;
    },
 
+   // same test as updateTaskDimensions: height-limited and scaled width below minTaskW
+   // (no height left at all when the instructions are taller than the window)
+   isBelowMinTaskW: function() {
+      var taskRatio = this.taskW/this.taskH;
+      return this.availableH <= 0 || (this.availableW/this.availableH > taskRatio && this.availableH*taskRatio < this.minTaskW);
+   },
+
    updateTaskDimensions: function() {
+      if(this.tabsWhenTooSmall && this.layoutTaskDims != this.taskW + 'x' + this.taskH){
+         // the layout was chosen for other task dimensions
+         this.updateLayout();
+         if(this.layoutTaskDims == this.taskW + 'x' + this.taskH){
+            return;
+         }
+      }
       $('#zone_2').css('min-height',this.availableH);
       var availableRatio = this.availableW/this.availableH;
       var taskRatio = this.taskW/this.taskH;
@@ -1420,13 +1604,18 @@ window.displayHelper = {
       }
       this.scaleFactor = this.newTaskW/this.taskW;
       this.newTaskH = this.taskH*this.scaleFactor;
+      if(this.tabsWhenTooSmall){
+         // updateTaskCSS sizes zone_2 from it: not the value left by the previous window size
+         this.verticalScroll = Math.floor(this.newTaskH) > Math.ceil(this.availableH);
+      }
       this.updateTaskCSS(this.scaleFactor,limitingFactor);
 
       if(Math.floor(this.newTaskH) > Math.ceil(this.availableH)){
          $('#zone_3').addClass('vertical_scroll');
          this.verticalScroll = true;
          // console.log(limitingFactor);
-         if(this.layout != 1 && limitingFactor == 'H' && this.newTaskW < this.maxTaskW){
+         // (not with tabsWhenTooSmall: the task, only just taller than the tab, would be enlarged to the full width and scrolled a lot)
+         if(this.layout != 1 && limitingFactor == 'H' && this.newTaskW < this.maxTaskW && !this.tabsWhenTooSmall){
             this.newTaskW = Math.min(this.availableW,this.maxTaskW);
             this.scaleFactor = this.newTaskW/this.taskW;
             this.newTaskH = this.taskH*this.scaleFactor;
@@ -1491,10 +1680,20 @@ window.displayHelper = {
       var rtl = this.isRtl();
       var marginSide = rtl ? 'margin-right' : 'margin-left';
       $('#taskCont').width(this.taskW);
+      if(this.tabsWhenTooSmall){
+         // not taller than the task: an inline svg leaves room for descenders below it
+         $('#taskCont').height(this.taskH);
+         $('#taskCont > * > svg').css('vertical-align','top');
+      }
       // $('#taskCont').height(newTaskH);
       var fixingOffset = 0; // unnecessary?
       $('#taskCont').css('transform','scale('+scaleFactor+')');
       if(scaleFactor >= 1){
+         if(this.tabsWhenTooSmall){
+            // set below when scaled down
+            $('#taskCont').css('margin-bottom',0);
+            $('#taskCont').css(rtl ? 'margin-left' : 'margin-right','');
+         }
          if(this.availableH > this.taskH){
             $('#taskCont').css('margin-top',(this.availableH - this.taskH)/2 - fixingOffset);
          }else{
@@ -1516,6 +1715,11 @@ window.displayHelper = {
          }
       }else{
          // console.log('scale < 1')
+         if(this.tabsWhenTooSmall){
+            // the scale shrinks the box around its centre, but its layout keeps the unscaled height:
+            // take the space freed at the bottom back, as margin-top below does at the top
+            $('#taskCont').css('margin-bottom',this.availableH > this.taskH ? 0 : -this.taskH*(1 - scaleFactor)/2);
+         }
          if(this.availableH > this.taskH){
             $('#taskCont').css('margin-top',(this.availableH - this.taskH/**scaleFactor*/)/2);
          }else{
@@ -1543,6 +1747,11 @@ window.displayHelper = {
          }else{
             $('#taskCont').css(marginSide, 'auto');
          }
+         if(this.tabsWhenTooSmall){
+            // same on the other side, or the unscaled width sticks out there and scrolls
+            var otherSide = rtl ? 'margin-left' : 'margin-right';
+            $('#taskCont').css(otherSide, this.availableW < this.taskW ? $('#taskCont').css(marginSide) : '');
+         }
       }
       $('#zone_2').height(Math.max(this.availableH,this.verticalScroll ? this.newTaskH + 60 : this.newTaskH));
       $('#zone_2').width(Math.max(this.availableW,this.newTaskW));
@@ -1566,6 +1775,13 @@ window.displayHelper = {
          }
          $('#zone_1').width(zone1Perc+'%');
          $('#zone_2').width(zone2Perc+'%');
+         if(this.tabsWhenTooSmall && scaleFactor < 1){
+            // zone_2 can be narrower than the unscaled task, and auto margins cannot go negative:
+            // centre the scaled task in zone_2, as auto margins do at scale 1
+            var sideMargin = ($('#zone_2').width() - this.taskW)/2;
+            $('#taskCont').css('margin-left', sideMargin);
+            $('#taskCont').css('margin-right', sideMargin);
+         }
       }
       if(this.layout == 4 && this.availableW < this.newTaskW){
          $('#zone_2').width(this.newTaskW + 50);
@@ -1611,7 +1827,8 @@ window.displayHelper = {
       }
    },
 
-   useFullWidth: function(options = {}) {
+   useFullWidth: function(options) {
+      options = options || {};
       // TODO: find a clean way to do this
       try {
          $('#question-iframe', window.parent.document).css('width', '100%');
@@ -1674,6 +1891,48 @@ window.displayHelper = {
       this.updateLayout();
    },
 
+   // Called when the user asks for another version. The answer of the version
+   // being left is graded silently: if it would get the full score but was not
+   // validated, the user is warned and stays; the next time, they can choose to
+   // leave anyway.
+   requestLevelChange: function(newLevel, changeLevel) {
+      var self = this;
+      var curLevel = this.taskLevel;
+      if (!this.warnUnvalidatedLevelChange || !this.hasLevels || this.hasSolution || !this.showScore ||
+          newLevel == curLevel || !this.levelsMaxScores || typeof task.getLevelGrade != 'function') {
+         changeLevel();
+         return;
+      }
+      var maxScore = this.levelsMaxScores[curLevel];
+      if (this.levelsScores[curLevel] >= maxScore - 0.001) {
+         changeLevel();
+         return;
+      }
+      if (this.checkingLevelChange) {
+         return;
+      }
+      this.checkingLevelChange = true;
+      task.getAnswer(function(strAnswer) {
+         task.getLevelGrade(strAnswer, null, function(score) {
+            self.checkingLevelChange = false;
+            if (self.taskLevel != curLevel) {
+               return;
+            }
+            if (!(+score >= maxScore - 0.001)) {
+               changeLevel();
+               return;
+            }
+            if (!self.unvalidatedLevelWarned[curLevel]) {
+               self.unvalidatedLevelWarned[curLevel] = true;
+               self.showPopupMessage(self.strings.notValidatedYet, 'blanket', self.strings.notValidatedYetOk, null, null, "warning");
+            } else {
+               self.showPopupMessage(self.strings.notValidatedYet, 'blanket', self.strings.changeVersion, changeLevel,
+                  self.strings.stayOnVersion, "warning");
+            }
+         }, curLevel);
+      });
+   },
+
    setLevel: function(newLevel, force) {
       // Always make sure we're displaying the level
       this.displayLevel(newLevel, true);
@@ -1689,7 +1948,10 @@ window.displayHelper = {
       var self = this;
 
       var afterReload = function() {
-         if(displayHelper.reponsive){
+         if(displayHelper.responsive && displayHelper.tabsWhenTooSmall){
+            // the new level's instructions and dimensions are only known now
+            displayHelper.updateLayout();
+         }else if(displayHelper.reponsive){
             displayHelper.updateTaskDimensions();
             displayHelper.toggleTask();
          }

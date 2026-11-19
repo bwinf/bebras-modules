@@ -42,6 +42,7 @@ var importableModules = function () {
       'blockly_fr': {src: modulesPath+"/ext/blockly/fr.js", id: "blockly_fr"},
       'blockly_en': {src: modulesPath+"/ext/blockly/en.js", id: "blockly_en"},
       'blockly_de': {src: modulesPath+"/ext/blockly/de.js", id: "blockly_de"},
+      'blockly_nl': {src: modulesPath+"/ext/blockly/nl.js", id: "blockly_nl"},
       'blockly_es': {src: modulesPath+"/ext/blockly/es.js", id: "blockly_es"},
       'blockly_sl': {src: modulesPath+"/ext/blockly/sl.js", id: "blockly_sl"},
       'blockly_fioi': {src: modulesPath+"/ext/blockly-fioi/fioi-blockly.min.js", id: "blockly_fioi"},
@@ -87,6 +88,11 @@ var importableModules = function () {
       'codecast7.7_js': {src: modulesPath+"/ext/codecast/7.7/index.js", id: "codecast7.7_js"},
       'codecast7.7_js_modern': {src: modulesPath+"/ext/codecast/7.7/index.modern.js", id: "codecast7.7_js_modern", type: "module"},
       'codecast7.7_loader': {src: modulesPath+"/ext/codecast/7.7/codecast-loader.js", id: "codecast7.7_loader"},
+
+      'codecast7.8_css': {type: "stylesheet", src: modulesPath+"/ext/codecast/7.8/index.css", id: "codecast7.8_css"},
+      'codecast7.8_js': {src: modulesPath+"/ext/codecast/7.8/index.js", id: "codecast7.8_js"},
+      'codecast7.8_js_modern': {src: modulesPath+"/ext/codecast/7.8/index.modern.js", id: "codecast7.8_js_modern", type: "module"},
+      'codecast7.8_loader': {src: modulesPath+"/ext/codecast/7.8/codecast-loader.js", id: "codecast7.8_loader"},
 
       // Bundles
       'bebras-base': {src: modulesPath+"bundles/bebras-base.js", id: "bundle-bebras-base"},
@@ -180,7 +186,8 @@ var bundledModules = function () {
       {name: 'quickAlgo-all-blockly', included: ['quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_blockly_blocks','quickAlgo_blockly_interface', 'quickAlgo_blockly_runner', 'quickAlgo_subtask', 'quickAlgo_context']},
       {name: 'quickAlgo-all-python', included: ['python_count', 'ace', 'ace_python', 'skulpt_quickAlgo', 'skulpt_stdlib', 'skulpt_debugger', 'quickAlgo_utils', 'quickAlgo_i18n', 'quickAlgo_interface', 'quickAlgo_python_interface', 'quickAlgo_python_runner', 'quickAlgo_subtask', 'quickAlgo_context']},
       {name: 'codecast-7.6', included: ['codecast7.6_css', 'codecast7.6_js', 'codecast7.6_loader']},
-      {name: 'codecast-7.7', included: window.location.protocol !== 'file:' ? ['codecast7.7_css', 'codecast7.7_js_modern', 'codecast7.7_loader'] : ['codecast7.7_css', 'codecast7.7_js', 'codecast7.7_loader']}
+      {name: 'codecast-7.7', included: window.location.protocol !== 'file:' ? ['codecast7.7_css', 'codecast7.7_js_modern', 'codecast7.7_loader'] : ['codecast7.7_css', 'codecast7.7_js', 'codecast7.7_loader']},
+      {name: 'codecast-7.8', included: window.location.protocol !== 'file:' ? ['codecast7.8_css', 'codecast7.8_js_modern', 'codecast7.8_loader'] : ['codecast7.8_css', 'codecast7.8_js', 'codecast7.8_loader']}
    ];
 };
 

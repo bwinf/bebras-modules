@@ -69,6 +69,37 @@
                 'prompt_multiple': 'Sélectionnez de 0 à %% réponses',
                 'return_to_quiz': 'Retour au quiz'
             },
+            nl: {
+                'score': 'Score',
+                'grader_msg': 'Jouw score is ',
+                'wrong_answer_msg': 'Je hebt minstens één fout.',
+                'wrong_answer_msg_partial_feedback': 'Je hebt minstens één fout. Hier is een hint:',
+                'wrong_answer_msg_not_answered': 'Je hebt deze vraag niet beantwoord.',
+                'wrong_fill_gaps_msg': 'Je hebt %% foute antwoorden voor deze vraag, aangeduid in het rood.',
+                'wrong_partial': 'Je hebt deze vraag niet volledig beantwoord.',
+                'validate': 'Valideren',
+                'solution': 'Toon het antwoord',
+                'restart': 'Herbeginnen',
+                'restart_scratch': 'Herbeginnen vanaf het begin',
+                'restart_current': 'Mijn antwoord wijzigen',
+                'return_to_top': 'Terug naar de lijst van vragen',
+                'move_to_next': 'Volgende vraag',
+                'cancel': 'Annuleren',
+                'placeholder_text': 'Voer tekst in',
+                'placeholder_number': 'Voer een getal in',
+                'error_number': 'Je moet een getal invoeren.',
+                'placeholder_string': 'Voer een tekenreeks in',
+                'error_string': 'Je moet een tekenreeks invoeren',
+                'placeholder_regexp': 'Voer tekst in',
+                'error_regexp': 'Ongeldig formaat',
+                'error_grading': 'Er is een fout opgetreden bij het indienen, probeer het over enkele minuten opnieuw.',
+                'feedback_score_binary_correct': 'Proficiat, alles is correct.',
+                'feedback_score_binary_mistake': 'Er is minstens één fout.',
+                'feedback_answer_saved': 'Jouw antwoord is opgeslagen.',
+                'prompt_single': 'Selecteer één antwoord',
+                'prompt_multiple': 'Selecteer 0 tot %% antwoorden',
+                'return_to_quiz': 'Terug naar de quiz'
+            },
             de: {
                 'score': 'Punkte',
                 'grader_msg': 'Du hast %1 Punkte.',
@@ -76,12 +107,15 @@
                 'wrong_answer_msg_partial_feedback': 'Leider falsch. Hier ist ein Hinweis:',
                 'wrong_answer_msg_not_answered': 'Du hast die Frage nicht beantwortet.',
                 'wrong_fill_gaps_msg': 'Du hast %% falsche Antworten (in rot markiert).',
+                'wrong_partial': 'Du hast diese Frage nicht vollständig beantwortet.',
                 'validate': 'Abschicken',
                 'solution': 'Lösung ansehen',
                 'restart': 'Neustarten',
                 'restart_scratch': 'Von vorne anfangen',
                 'restart_current': 'Von hier neu starten',
                 'return_to_top': 'Zurück zur Übersicht',
+                'move_to_next': 'Nächste Frage',
+                'cancel': 'Abbrechen',
                 'placeholder_text': 'Text eingeben',
                 'placeholder_number': 'Zahl eingeben',
                 'error_number': 'Keine Zahl.',
@@ -91,7 +125,11 @@
                 'error_regexp': 'Falsches Format',
                 'error_grading': 'Fehler mein übermitteln der Antwort. Bitte probier es noch einmal.',
                 'feedback_score_binary_correct': 'Herzlichen Glückwunsch!',
-                'feedback_score_binary_mistake': 'Es gibt leider noch einen Fehler.'
+                'feedback_score_binary_mistake': 'Es gibt leider noch einen Fehler.',
+                'feedback_answer_saved': 'Deine Antwort wurde gespeichert.',
+                'prompt_single': 'Wähle eine Antwort',
+                'prompt_multiple': 'Wähle 0 bis %% Antworten',
+                'return_to_quiz': 'Zurück zum Quiz'
             },
         },
 
@@ -102,6 +140,12 @@
                 },
                 fr: {
                     'solution': 'Afficher un indice'
+                },
+                nl: {
+                    'solution': 'Toon een hint'
+                },
+                de: {
+                    'solution': 'Hinweis anzeigen'
                 }
             }
         },
@@ -494,6 +538,7 @@
                     var answerObject = JSON.parse(answer);
                     this.reloadAnswerObject(answerObject);
                     if (lastViews.solution || (quiz_settings.hide_restart && answerObject.validated)) {
+                        task_toolbar.freezeTask();
                         task_toolbar.setValidated(true);
                         task.gradeAnswer(answer, null, function () {});
                     }

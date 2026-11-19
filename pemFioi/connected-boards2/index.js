@@ -1229,25 +1229,39 @@ elif program_exists:
                       blocklyInit () {
                           return function() {
                               this.setColour(context.blocklyHelper.getDefaultColours().categories["sensors"]);
-                              this.appendDummyInput("PARAM_0").appendField(strings.label.onButtonPressed).appendField(new window.Blockly.FieldDropdown(sensorHandler.getSensorNames("button")), 'PARAM_0').appendField(strings.label.onButtonPressedEnd);
-                              this.appendStatementInput("PARAM_1").setCheck(null).appendField(strings.label.onButtonPressedDo);
+                              this.jsonInit({
+                                  message0: "%1 %2 %3",
+                                  args0: [
+                                      {
+                                          type: "field_label",
+                                          text: strings.label.onButtonPressed
+                                      },
+                                      {
+                                          type: "field_dropdown",
+                                          name: "PARAM_0",
+                                          options: sensorHandler.getSensorNames("button")
+                                      },
+                                      {
+                                          type: "field_label",
+                                          text: strings.label.onButtonPressedEnd
+                                      }
+                                  ],
+                                  message1: "%1 %2",
+                                  args1: [
+                                      {
+                                          type: "field_label",
+                                          text: strings.label.onButtonPressedDo
+                                      },
+                                      {
+                                          type: "input_statement",
+                                          name: "PARAM_1"
+                                      }
+                                  ]
+                              });
                               this.setPreviousStatement(false);
                               this.setNextStatement(false);
                               this.setOutput(null);
                           };
-                      },
-                      blocklyJson: {
-                          "args0": [
-                              {
-                                  "type": "field_dropdown",
-                                  "name": "PARAM_0",
-                                  "options": sensorHandler.getSensorNames("button")
-                              },
-                              {
-                                  "type": "input_value",
-                                  "name": "PARAM_1"
-                              }
-                          ]
                       },
                       handler: onButtonPressed
                   }
@@ -1312,13 +1326,26 @@ elif program_exists:
       };
   }
 
+  // `ORDER_ATOMIC` in Blockly 10 and earlier, `Order.ATOMIC` since Blockly 11. Both are 0,
+  // but we only have a name for it when running on the old global Blockly.
+  const ORDER_ATOMIC = 0;
+  /**
+   * The code generator to emit with, whichever Blockly is hosting us.
+   *
+   * Blockly 11+ passes the running generator to each block generator, so we get it handed
+   * down from the caller. The old global Blockly passes nothing and keeps its generators on
+   * `window.Blockly`, indexed by language.
+   */ function getGenerator(language, generator) {
+      return generator != null ? generator : window.Blockly[language];
+  }
   function useGeneratorName(module, generatorName) {
       for (let feature of Object.values(module)){
           feature.generatorName = generatorName;
       }
       return module;
   }
-  function getBlockGeneratorParams(blockInfo, block, language) {
+  function getBlockGeneratorParams(blockInfo, block, language, generator) {
+      const codeGenerator = getGenerator(language, generator);
       let params = "";
       let args0 = blockInfo.blocklyJson.args0;
       let blockParams = blockInfo.params;
@@ -1333,9 +1360,10 @@ elif program_exists:
                   params += ", ";
               }
               if (blockParams && blockParams[iArgs0] == 'Statement') {
-                  params += "function () {\n  " + window.Blockly.JavaScript.statementToCode(block, 'PARAM_' + iParam) + "}";
+                  params += "function () {\n  " + codeGenerator.statementToCode(block, 'PARAM_' + iParam) + "}";
               } else {
-                  params += window.Blockly[language].valueToCode(block, 'PARAM_' + iParam, window.Blockly[language].ORDER_ATOMIC);
+                  var _codeGenerator_ORDER_ATOMIC;
+                  params += codeGenerator.valueToCode(block, 'PARAM_' + iParam, (_codeGenerator_ORDER_ATOMIC = codeGenerator.ORDER_ATOMIC) != null ? _codeGenerator_ORDER_ATOMIC : ORDER_ATOMIC);
               }
               iParam += 1;
           }
@@ -2825,7 +2853,7 @@ elif program_exists:
                       const axis = block.getFieldValue('PARAM_0');
                       return [
                           `accelerometer.get_${axis}()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -2838,7 +2866,7 @@ elif program_exists:
                       const method = 'touch' === button.substring(0, 5) ? 'is_touched' : 'is_pressed';
                       return [
                           `${button}.${method}()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -2851,7 +2879,7 @@ elif program_exists:
                   Python: ()=>{
                       return [
                           `display.read_light_level()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -2868,7 +2896,7 @@ elif program_exists:
                       const axis = block.getFieldValue('PARAM_0');
                       return [
                           `compass.get_${axis}()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -21586,18 +21614,18 @@ elif program_exists:
                       const axis = blocklyBlock.getFieldValue('PARAM_0');
                       return [
                           `accelerometer.get_${axis}()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
           });
           accelerometerModule.wasGesture.blocks.forEach((block)=>{
               block.codeGenerators = {
-                  Python: (blocklyBlock)=>{
-                      let blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python');
+                  Python: (blocklyBlock, generator)=>{
+                      let blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python', generator);
                       return [
                           `accelerometer.was_gesture(${blockParams})`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -21610,7 +21638,7 @@ elif program_exists:
                       const method = 'pin_logo' === button ? 'is_touched' : 'is_pressed';
                       return [
                           `${button}.${method}()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -21619,8 +21647,8 @@ elif program_exists:
           const ledMatrixModule = ledMatrixModuleDefinition(context);
           ledMatrixModule.ledMatrixShow.blocks.forEach((block)=>{
               block.codeGenerators = {
-                  Python: (blocklyBlock)=>{
-                      let blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python');
+                  Python: (blocklyBlock, generator)=>{
+                      let blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python', generator);
                       if ('ledMatrixShowImage' === block.name) {
                           blockParams = `Image(${blockParams})`;
                       }
@@ -21637,19 +21665,19 @@ elif program_exists:
           });
           ledMatrixModule.ledMatrixGetPixel.blocks.forEach((block)=>{
               block.codeGenerators = {
-                  Python: (blocklyBlock)=>{
-                      const blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python');
+                  Python: (blocklyBlock, generator)=>{
+                      const blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python', generator);
                       return [
                           `display.get_pixel(${blockParams})`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
           });
           ledMatrixModule.ledMatrixSetPixel.blocks.forEach((block)=>{
               block.codeGenerators = {
-                  Python: (blocklyBlock)=>{
-                      const blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python');
+                  Python: (blocklyBlock, generator)=>{
+                      const blockParams = getBlockGeneratorParams(block, blocklyBlock, 'Python', generator);
                       return `display.set_pixel(${blockParams});\n`;
                   }
               };
@@ -21660,7 +21688,7 @@ elif program_exists:
                   Python: ()=>{
                       return [
                           `display.read_light_level()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -21672,7 +21700,7 @@ elif program_exists:
                       const axis = block.getFieldValue('PARAM_0');
                       return [
                           `compass.get_${axis}()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -21682,7 +21710,7 @@ elif program_exists:
                   Python: ()=>{
                       return [
                           `compass.heading()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -21693,7 +21721,7 @@ elif program_exists:
                   Python: ()=>{
                       return [
                           `microphone.sound_level()`,
-                          window.Blockly.Python.ORDER_NONE
+                          99
                       ];
                   }
               };
@@ -131836,9 +131864,10 @@ void main() {
       console.log('context features', context.features);
       // Color indexes of block categories (as a hue in the range 0–420)
       context.provideBlocklyColours = function() {
-          window.Blockly.HSV_SATURATION = 0.65;
-          window.Blockly.HSV_VALUE = 0.80;
-          window.Blockly.Blocks.inputs.HUE = 50;
+          var _window_Blockly;
+          if ((_window_Blockly = window.Blockly) == null ? void 0 : _window_Blockly.Blocks) {
+              window.Blockly.Blocks.inputs.HUE = 50;
+          }
           return {
               categories: {
                   //actuator: 0,

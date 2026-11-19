@@ -457,6 +457,116 @@ var getContext = function(display, infos) {
             paintingFree: "The turtle painted according to your program. If you want to keep it, do a screenshot."
          }
       },
+      nl: {
+         turnleft: "rechts ↺",
+         turnright: "links ↻",
+         penup: "penseel omhoog",
+         pendown: "penseel omlaag",
+         categories: {
+            turtle: "Schildpad",
+            turtleInput: "Invoer"
+         },
+         label: {
+            move: "vooruit bewegen",
+            moveamount: "vooruit bewegen met %1 stappen",
+            movebackamount: "achteruit bewegen met %1 stappen",
+            moveamountvalue: "vooruit bewegen met %1 stappen",
+            movebackamountvalue: "achteruit bewegen met %1 stappen",
+            turnleft: "draai rechts ↺",
+            turnright: "draai links ↻",
+            turnleftamount: "draai %1° links ↺",
+            turnrightamount: "draai %1° rechts ↻",
+            turnleftamountvalue: "draai %1 links ↺",
+            turnrightamountvalue: "draai %1 rechts ↻",
+            turnleftamountvalue_noround: "draai %1 graden links ↺",
+            turnrightamountvalue_noround: "draai %1 graden rechts ↻",
+            turnleftamountvalue_options: "draai %1 links ↺",
+            turnrightamountvalue_options: "draai %1 rechts ↻",
+            turnleftamountvalue_moreoptions: "draai %1 links ↺",
+            turnrightamountvalue_moreoptions: "draai %1 rechts ↻",
+            turneitheramount: "draai %1° %2",
+            turneitheramountvalue: "draai %1 %2",
+            row: "rij van de schildpad",
+            col: "kolom van de schildpad",
+            penup: "penseel omhoog",
+            pendown: "penseel omlaag",
+            peneither: "%1",
+            colour2: "kleur instellen",
+            colourRGB: "kleur RGB instellen ( %1, %2, %3 )",
+            colourRGBAmount: "kleur RGB instellen ( %1, %2, %3 )",
+            colourvalue: "kleur instellen op %1",
+            turn: "draai (graden)",
+            alert: "berichtenvenster",
+            log: "log",
+            inputvalue: "een getal van de invoer lezen",
+            jump: "ga naar de positie (%1,%2)",
+            jumpAmount: "ga naar de positie (%1,%2)"
+         },
+         code: {
+            move: "vooruitBewegen",
+            moveamount: "vooruitBewegen",
+            movebackamount: "achteruitBewegen",
+            moveamountvalue: "vooruitBewegen",
+            movebackamountvalue: "achteruitBewegen",
+            turnleft: "draaiLinks",
+            turnright: "draaiRechts",
+            turnleftamount: "links",
+            turnrightamount: "rechts",
+            turnleftamountvalue: "links",
+            turnrightamountvalue: "rechts",
+            turnleftamountvalue_noround: "draaiLinksGraden",
+            turnrightamountvalue_noround: "draaiRechtsGraden",
+            turnleftamountvalue_options: "draaiLinksGraden",
+            turnrightamountvalue_options: "draaiRechtsGraden",
+            turnleftamountvalue_moreoptions: "draaiLinksGraden",
+            turnrightamountvalue_moreoptions: "draaiRechtsGraden",
+            turneitheramount: "draai",
+            turneitheramountvalue: "draai",
+            row: "rijSchildpad",
+            col: "kolomSchildpad",
+            penup: "penseelOmhoog",
+            pendown: "penseelOmlaag",
+            peneither: "penseel",
+            colour2: "kleurInstellen",
+            colourRGB: "kleurRGB",
+            colourRGBAmount: "kleurRGB",
+            colourvalue: "kleur",
+            turn: "draai",
+            alert: "alert",
+            log: "log",
+            inputvalue: "invoerwaarde",
+            jump: "jump",
+            jumpAmount: "jump"
+         },
+         description: {
+            moveamount: '@(steps) de schildpad beweegt vooruit met het aantal stappen in de parameter. Voorbeeld : @(50)',
+            moveamountvalue: '@(steps) de schildpad beweegt vooruit met het aantal stappen in de parameter. Voorbeeld : @(50)',
+            movebackamount: '@(steps) de schildpad beweegt achteruit met het aantal stappen in de parameter. Voorbeeld : @(50)',
+            movebackamountvalue: '@(steps) de schildpad beweegt achteruit met het aantal stappen in de parameter. Voorbeeld : @(50)',
+            turnleftamount: '@(angle) de schildpad draait naar links met het aantal graden in de parameter. Voorbeeld : @(90)',
+            turnleftamountvalue: '@(angle) de schildpad draait naar links met het aantal graden in de parameter. Voorbeeld : @(90)',
+            turnrightamount: '@(angle) de schildpad draait naar rechts met het aantal graden in de parameter. Voorbeeld : @(90)',
+            turnrightamountvalue: '@(angle) de schildpad draait naar rechts met het aantal graden in de parameter. Voorbeeld : @(90)',
+            row: '@() sensor die de rij teruggeeft waarop de schildpad staat',
+            col: '@() sensor die de kolom teruggeeft waarop de schildpad staat',
+            penup: '@() de schildpad tilt haar penseel op. In deze stand laat het penseel geen spoor na.',
+            pendown: '@() de schildpad zet haar penseel in de stand waarin het een spoor nalaat.',
+            colourvalue: '@(colorName) het spoor van het penseel krijgt de kleur in de parameter. Voorbeeld : @(\'red\')',
+            colourRGB: '@(red, green, blue) het spoor van het penseel krijgt de kleur met de rode, groene en blauwe componenten in de parameters. Voorbeeld : @(255, 255, 0)',
+            colourRGBAmount: '@(red, green, blue) het spoor van het penseel krijgt de kleur met de rode, groene en blauwe componenten in de parameters. Voorbeeld : @(255, 255, 0)',
+            inputvalue: '@() een getal van de invoer lezen.',
+            jump: '@(x, y) de schildpad wordt op de gegeven coördinaten geplaatst.',
+            jumpAmount: '@(x, y) de schildpad wordt op de gegeven coördinaten geplaatst.'
+         },
+         startingBlockName: "Programma van de schildpad",
+         exportAsSvg: "Exporteren als SVG",
+         exportAsPng: "Exporteren als PNG",
+         messages: {
+            paintingWrong: "De schildpad heeft niet alles correct getekend.",
+            paintingCorrect: "Gefeliciteerd! De schildpad heeft alles correct getekend.",
+            paintingFree: "De schildpad heeft de tekening gemaakt die je hebt geprogrammeerd. Als je ze wilt bewaren, klik dan op de knop \"Exporteren\"."
+         }
+      },
       none: {
          comment: {}
       }
@@ -883,9 +993,68 @@ var getContext = function(display, infos) {
 
    context.customBlocks = {
       turtle: {
-         turtle: [{
-               name: "move"
-            },
+         turtle: [
+            { name: "move" },
+            { name: "moveamount", params: [null]},
+            { name: "movebackamount", params: [null]},
+            { name: "jump", params: [null, null], blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 0},{"type": "field_number", "name": "PARAM_1", "value": 0}]}},
+            { name: "moveamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": defaultMoveAmount}]}},
+            { name: "movebackamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": defaultMoveAmount}]}},
+            { name: "turnleft" },
+            { name: "turnright" },
+            { name: "turn",      params: [null]},
+            { name: "turnleftamount", params: [null]},
+            { name: "turnrightamount", params: [null]},
+            { name: "turnleftamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_angle", "name": "PARAM_0", "angle": 90}]}},
+            { name: "turnrightamountvalue", params: [null], blocklyJson: {"args0": [{"type": "field_angle", "name": "PARAM_0", "angle": 90}]}},
+            { name: "turnleftamountvalue_noround", blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 90}]}},
+            { name: "turnrightamountvalue_noround", blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 90}]}},
+            { name: "turnleftamountvalue_options", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+                ["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_options", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+               ["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["180 °","180"]]}]}},
+            { name: "turnleftamountvalue_moreoptions", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+               ["15 °","15"],["18 °","18"],["30 °","30"],["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["150 °","150"],["162 °","162"],["165 °","165"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_moreoptions", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+               ["15 °","15"],["18 °","18"],["30 °","30"],["36 °","36"],["45 °","45"],["60 °","60"],["72 °","72"],["90 °","90"],["108 °","108"],["120 °","120"],["135 °","135"],["144 °","144"],["150 °","150"],["162 °","162"],["165 °","165"],["180 °","180"]]}]}},
+            { name: "turnleftamountvalue_europe", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["15 °","15"],["30 °","30"],["75 °","75"],["90 °","90"],["105 °","105"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_europe", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["15 °","15"],["30 °","30"],["75 °","75"],["90 °","90"],["105 °","105"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
+            { name: "turnleftamountvalue_nikolaus", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["36.9 °","36.86989"],["53.1 °","53.13010"],["73.7 °","73.73979"],["90 °","90"],["106.3 °","106.26020"],["126.9 °","126.86989"],["143.1 °","143.13010"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_nikolaus", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["36.9 °","36.86989"],["53.1 °","53.13010"],["73.7 °","73.73979"],["90 °","90"],["106.3 °","106.26020"],["126.9 °","126.86989"],["143.1 °","143.13010"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_penta", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["18 °","18"],["36 °","36"],["54 °","54"],["72 °","72"],["90 °","90"],["108 °","108"],["126 °","126"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
+            { name: "turnleftamountvalue_penta", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["18 °","18"],["36 °","36"],["54 °","54"],["72 °","72"],["90 °","90"],["108 °","108"],["126 °","126"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_pentasimple", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["18 °","18"],["72 °","72"],["90 °","90"],["108 °","108"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
+            { name: "turnleftamountvalue_pentasimple", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["18 °","18"],["72 °","72"],["90 °","90"],["108 °","108"],["144 °","144"],["162 °","162"],["180 °","180"]]}]}},
+            { name: "turnleftamountvalue_Ntimes30", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["180 °","180"]]}]}},
+            { name: "turnrightamountvalue_Ntimes30", blocklyJson: {"args0": [{"type": "field_dropdown", "name": "PARAM_0", "options": [
+              ["30 °","30"],["60 °","60"],["90 °","90"],["120 °","120"],["180 °","180"]]}]}},
+            { name: "turneitheramount", blocklyJson: {"args0": [
+               {"type": "input_value", "name": "PARAM_0"},
+               {"type": "field_dropdown", "name": "PARAM_1", "options":
+                 [[localLanguageStrings[window.stringsLanguage]["left"],"l"],[localLanguageStrings[window.stringsLanguage]["right"],"r"]]}]}},
+            { name: "turneitheramountvalue", blocklyJson: {"args0": [
+               {"type": "field_angle", "name": "PARAM_0", "angle": 90},
+               {"type": "field_dropdown", "name": "PARAM_1", "options":
+                 [[localLanguageStrings[window.stringsLanguage]["left"],"l"],[localLanguageStrings[window.stringsLanguage]["right"],"r"]]}]}},
+            { name: "row", yieldsValue: 'int' },
+            { name: "col", yieldsValue: 'int' },
+            { name: "penup" },
+            { name: "pendown" },
+            { name: "peneither", blocklyJson: {"args0": [
+               {"type": "field_dropdown", "name": "PARAM_0", "options":
+                 [[localLanguageStrings[window.stringsLanguage]["penup"],"up"],[localLanguageStrings[window.stringsLanguage]["pendown"],"down"]]}]}},
+            { name: "colour2", params: [null]},
+            { name: "colourvalue", params: [null], blocklyJson: {"args0": [{"type": "field_colour", "name": "PARAM_0", "colour": "#ff0000"}]}},
+            { name: "colourRGB", params: [null, null, null], blocklyJson: {"args0": [{"type": "field_number", "name": "PARAM_0", "value": 0},{"type": "field_number", "name": "PARAM_1", "value": 0},{"type": "field_number", "name": "PARAM_2", "value": 0}]}},
             {
                name: "moveamount",
                params: [null]
@@ -1417,10 +1586,9 @@ var getContext = function(display, infos) {
                }
             }
          ],
-         turtleInput: [{
-            name: "inputvalue",
-            yieldsValue: true
-         }]
+         turtleInput: [
+            { name: "inputvalue", yieldsValue: 'int' }
+          ]
       },
       debug: {
          debug: [{

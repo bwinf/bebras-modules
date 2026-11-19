@@ -14,7 +14,7 @@ var algoreaInstructionsStrings = {
       },
       oneFirewood: "Le robot ne peut transporter qu'un seul tas de bois à la fois.</br>Chaque cheminée ne peut contenir qu'un seul tas de bois.",
       fall: function(maxH) {
-         return "Le robot tombe s'il n'est pas sur une plateforme, et s'il tombe de plus de "+maxH+" cases, il se casse."
+         return "Le robot tombe s'il n'est pas sur une plateforme. Si le robot tombe de plus de "+maxH+" cases, il se casse."
       },
       chticodeRel: "Programmez le robot pour qu'il passe ramasser toutes les pierres précieuses puis rejoigne la case verte. ",
       course: function(nbExits,obstacles) {
@@ -25,7 +25,7 @@ var algoreaInstructionsStrings = {
             text += "un des "+nbExits+" drapeaux";
          }
          
-         text += " sans rentrer dans ";
+         text += " sans foncer dans ";
 
          var obsStr = { 
             2: "un buisson", 
@@ -52,14 +52,23 @@ var algoreaInstructionsStrings = {
 
          return text
       },
-      board: "Une des étendues d'eau a été recouverte d'une planche pour que votre robot puisse passer.",
+      board: "Une des étendues d'eau a été recouverte d'une planche pour que le robot puisse passer.",
       dominoes: function(nbTarget) {
          var text = "Programmez le robot pour qu'il ramasse ";
-         if(nbTarget == 1){
-            text += "le domino avec deux carrés bleus.";
-         }else{
-            text += "tous les dominos avec deux carrés bleus.";
+         if ('1.1' === BLOCKLY_ROBOT_VERSION) {
+            if(nbTarget == 1){
+               text += "le domino avec deux triangles.";
+            }else{
+               text += "tous les dominos avec deux triangles.";
+            }
+         } else {
+            if(nbTarget == 1){
+               text += "le domino avec deux carrés bleus.";
+            }else{
+               text += "tous les dominos avec deux carrés bleus.";
+            }
          }
+
          return text
       },
       rollOver: "Le robot peut passer sur les dominos qu'il ne ramasse pas.",
@@ -95,7 +104,7 @@ var algoreaInstructionsStrings = {
          }
          return text
       },
-      dontStepOnFlowers: "Le robot ne peut pas accéder à une case s'il y a déjà une fleur dessus.",
+      dontStepOnFlowers: "Le robot ne peut pas aller sur une case s'il y a déjà une fleur dessus.",
       gems: function(nbTarget) {
          var text = "Programmez le robot pour qu'il ramasse ";
          if(nbTarget == 1){
@@ -106,7 +115,7 @@ var algoreaInstructionsStrings = {
          return text
       },
       toPickAGem: "Pour ramasser une pierre, le robot doit juste passer sur la case qui la contient.",
-      laser1: "Programmez votre robot pour qu'il allume tous les spots à l'aide de rayons laser.",
+      laser1: "Programmez le robot pour qu'il allume tous les spots à l'aide de rayons laser.",
       laser2: "Un rayon laser allume tous les spots qui se trouvent sur sa trajectoire.",
       overLaser: "Pour utiliser un lanceur laser, le robot doit se placer sur sa case.",
       laserDirection: "Les directions possibles, de 0 à 7, sont indiquées sur le lanceur.",
@@ -145,18 +154,21 @@ var algoreaInstructionsStrings = {
          text += " carton avec le nombre de livres indiqué."
          return text
       },
-      paint: function(nbBlack,nbWhite) {
-         var text = "Programmez le robot pour qu'il peigne ";
+      paint: function(nbBlack, hideUniquely) {
+         var text = "Programmez le robot pour qu'il colorie ";
          if(nbBlack == 1){
             text += "la case ";
          }else{
             text += "toutes les cases ";
          }
-         text += "avec un point noir, et uniquement ";
-         if(nbBlack > 1){
-            text += "celles-là";
-         }else{
-            text += "celle-là";
+         text += "avec un point noir";
+         if (!hideUniquely) {
+            text += ", et uniquement ";
+            if (nbBlack > 1) {
+               text += "celles-là";
+            } else {
+               text += "celle-là";
+            }
          }
          text += ".";
          return text
@@ -171,7 +183,7 @@ var algoreaInstructionsStrings = {
          }
          return text
       },
-      pushBox: "Le robot peut pousser une caisse s'il se met juste devant et que l'espace derrière cette caisse est libre.",
+      pushBox: "Le robot ne peut pousser une caisse que si la caisse est devant lui et que l'espace derrière la caisse est libre.",
       space: function(nbRockets,nbItems) {
          var text = "Programmez le robot pour qu'il ";
          if(nbItems > 0){
@@ -310,22 +322,22 @@ var algoreaInstructionsStrings = {
          switch(type){
             case "fishing":
                var str0 = "sur le panneau"
-               var str1 = "de poissons que votre robot doit apporter sur l'île";
+               var str1 = "de poissons que le robot doit apporter sur l'île";
                var str2 = "de poissons";
                break;
             case "packages":
                var str0 = "sur le carton";
-               var str1 = "de livres que votre robot doit apporter dedans";
+               var str1 = "de livres que le robot doit apporter dedans";
                var str2 = "de livres";
                break;
             case "veterinary":
                var str0 = "au dessus du castor";
-               var str1 = "de bûches que votre robot doit lui apporter";
+               var str1 = "de bûches que le robot doit lui apporter";
                var str2 = "de bûches";
                break;
          }
          var text = "Le nombre "+str0+" indique le nombre "+str1+".<br/>";
-         text += "Il faut que votre robot dépose le nombre <b>exact</b> "+str2+" indiqué.";
+         text += "Il faut que le robot dépose le nombre <b>exact</b> "+str2+" indiqué.";
          return text
       },
       quantity_2: function(type) {
@@ -358,7 +370,7 @@ var algoreaInstructionsStrings = {
                var str2 = "bûches";
                break;
          }
-         var text = "La mission de votre robot est "+str1+". ";
+         var text = "La mission du robot est "+str1+". ";
          text += "Pour chaque test, le nombre de "+str2+" est différent, mais le même programme doit fonctionner pour les "+nbTests+" tests.";
          return text
       },
@@ -374,7 +386,7 @@ var algoreaInstructionsStrings = {
                var str = "du castor";
                break;
          }
-         var text = "Pour réussir sa mission, votre robot doit d'abord se rendre sur la case "+str+".";
+         var text = "Pour réussir sa mission, le robot doit d'abord se rendre sur la case "+str+".";
          return text
       },
       variable_3: "Une fois sur cette case, il doit capter le nombre écrit dessus, et stocker cette information dans sa mémoire pour la réutiliser plus tard.",
@@ -438,7 +450,7 @@ var algoreaInstructionsStrings = {
       operations_2: "Dans cette version, vous aurez besoin d'effectuer le calcul :",
       operations_3: "Si vous le souhaitez, vous pouvez créer une nouvelle variable pour y placer le résultat :",
       operations_4: "Mais ce n'est pas obligatoire.",
-      laser_1: "Votre robot doit d'abord avancer sur la case du lanceur laser :",
+      laser_1: "Le robot doit d'abord avancer sur la case du lanceur laser :",
       laser_2: "Lorsque le robot est placé sur la case du lanceur , il peut tirer un rayon laser. Utilisez le bloc :",
       laser_3: "Pour que le robot tire dans la bonne direction, entrez le nombre 3. Les directions sont indiquées sur le lanceur.",
 

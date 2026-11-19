@@ -109,17 +109,17 @@ var getContext = function(display, infos) {
                     params_names: ['longitude1', 'latitude1', 'longitude2', 'latitude2', 'opacity']
                 },
                 { name: 'geoDistance',
-                    yieldsValue: true,
+                    yieldsValue: 'int',
                     params: ['Number', 'Number', 'Number', 'Number'],
                     params_names: ['longitude1', 'latitude1', 'longitude2', 'latitude2']
                 },
                 { name: 'getLatitude',
-                    yieldsValue: true,
+                    yieldsValue: 'int',
                     params: ['String'],
                     params_names: ['cityName']
                 },
                 { name: 'getLongitude',
-                  yieldsValue: true,
+                  yieldsValue: 'int',
                     params: ['String'],
                     params_names: ['cityName']
                 },
@@ -155,7 +155,7 @@ var getContext = function(display, infos) {
             (function() {
                 var block = context.customBlocks.map[category][iBlock];
                 if (block.params) {
-                    block.blocklyJson = { inputsInline: true, args0: {} }
+                    block.blocklyJson = { inputsInline: true, args0: [] }
                     var blockArgs = block.blocklyJson.args0;
                     block.blocklyXml = '<block type="' + block.name + '">';
                     for (var iParam = 0; iParam < block.params.length; iParam++) {
