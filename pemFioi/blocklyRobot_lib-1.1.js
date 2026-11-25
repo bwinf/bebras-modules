@@ -3,8 +3,9 @@
 /*TODO : un changement de taille de la fenetre à la fin d'une execution duplique les items*/
 /*TODO : traduire le context wiring*/
 var robotCommands = [];
-// var imgPath = modulesPath+"img/algorea/";
+
 var BLOCKLY_ROBOT_VERSION = '1.1';
+var imgPath = modulesPath+"img/algorea/";
 
 var initArray = function(n, elem) {
    var res = [];
@@ -1081,13 +1082,6 @@ var getContext = function(display, infos, curLevel) {
                failureReachExit: "Je robot is onderweg verdwaald."
             }
          },
-         de: {
-            messages: {
-               obstacle: "Der Roboter wird die markierte Strecke verlassen!",
-               successReachExit: "Bravo, dein Roboter hat die Truhe geholt!",
-               failureReachExit: "Dein Roboter hat sich verlaufen."
-            }
-         },
 
          es: {
             messages: {
@@ -1201,21 +1195,6 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilledBag: "Je robot moet zijn kaart neerleggen."
             }
          },
-         de: {
-            label: {
-               withdrawObject: "die Karte aufheben",
-               dropObject: "die Karte ablegen",
-               onObject: "auf einer Karte",
-               onContainer: "auf einem Ablageplatz",
-            },
-             messages: {
-               successContainersFilled: "Bravo, dein Roboter hat die Karten am richtigen Ort abgelegt!",
-               successContainersFilledSingular: "Bravo, dein Roboter hat die Karte am richtigen Ort abgelegt!",
-               failureContainersFilled: "Einige Karten liegen falsch",
-               failureContainersFilledLess: "Es sind noch Karten einzusortieren.",
-               failureContainersFilledBag: "Dein Roboter muss seine Karte ablegen."
-            }
-         },
 
          es: {
             label: {
@@ -1246,6 +1225,7 @@ var getContext = function(display, infos, curLevel) {
             },
              messages: {
                successContainersFilled: "Bravo, der Roboter hat alle Karten an ihre Plätze sortiert!",
+               successContainersFilledSingular: "Bravo, dein Roboter hat die Karte am richtigen Ort abgelegt!",
                failureContainersFilled: "Einige Karten sind nicht richtig einsortiert.",
                failureContainersFilledLess: "Es gibt noch falsch einsortierte Karten.",
                failureContainersFilledBag: "Der Roboter muss seine Karten ablegen."
@@ -1334,34 +1314,6 @@ var getContext = function(display, infos, curLevel) {
                tooManyObjects: "De robot probeert te veel hout tegelijk te dragen!"
             }
          },
-         de: {
-            label: {
-               withdrawObject: "das Holz aufheben",
-               dropObject: "das Holz ablegen",
-               onObject: "auf Holz",
-               onContainer: "auf einem Kamin"
-            },
-            code: {
-               withdrawObject: "holzAufheben",
-               dropObject: "holzAblegen",
-               onObject: "aufHolz",
-               onContainer: "aufKamin"
-            },
-            messages: {
-               successContainersFilled: "Bravo, das Schloss ist gut geheizt!",
-               successContainersFilledSingular: "Bravo, im Kamin brennt ein gutes Feuer!",
-               failureContainersFilled: "Dein Roboter hat nicht in alle Kamine Holz gelegt.",
-               failureContainersFilledSingular: "Dein Roboter hat das Holz nicht in den Kamin gelegt.",
-               failureContainersFilledLess: "Dein Roboter hat nicht in alle Kamine Holz gelegt.",
-               failureContainersFilledLessSingular: "Dein Roboter hat das Holz nicht in den Kamin gelegt.",
-               failureContainersFilledBag: "Dein Roboter muss das Holz in den Kamin legen.",
-               failureDropOutside: "Dein Roboter versucht, eine Plattform außerhalb des Gitters zu bauen.",
-               failureDropObject: "Der Roboter versucht Holz abzulegen, obwohl in diesem Kamin bereits Holz liegt!",
-               failureDropPlatform: "Hier ist bereits eine Plattform!",
-               emptyBag: "Der Roboter versucht Holz abzulegen, ohne welches zu tragen!",
-               tooManyObjects: "Der Roboter versucht, zu viel Holz auf einmal zu tragen!"
-            }
-         },
 
          es: {
             label: {
@@ -1405,12 +1357,15 @@ var getContext = function(display, infos, curLevel) {
             // },
             messages: {
                successContainersFilled: "Bravo, das Schloss wird gut beheizt!",
+               successContainersFilledSingular: "Bravo, im Kamin brennt ein gutes Feuer!",
                failureContainersFilled: "Der Roboter hat nicht alle Kamine mit Holz gefüllt.",
+               failureContainersFilledSingular: "Dein Roboter hat das Holz nicht in den Kamin gelegt.",
                failureContainersFilledLess: "Der Roboter hat nicht alle Kamine mit Holz gefüllt.",
+               failureContainersFilledLessSingular: "Dein Roboter hat das Holz nicht in den Kamin gelegt.",
                failureContainersFilledBag: "Der Roboter soll das Holz in die Kamine legen.",
                failureDropOutside: "Der Roboter versucht eine Plattform außerhalb des Gitters zu bauen.",
                failureDropObject: "In diesem Kamin ist bereits Holz.",
-               emptyBag: "Der Roboter trägt kein Holz, das er hier ablegen könnte."
+               emptyBag: "Der Roboter trägt kein Holz, das er hier ablegen könnte.",
             }
          },
       },
@@ -1440,15 +1395,6 @@ var getContext = function(display, infos, curLevel) {
              messages: {
                successPickedAllWithdrawables: "Bravo, je robot heeft de opdracht volbracht!",
                failureReachExit: "Je robot heeft het groene vakje niet bereikt."
-            }
-         },
-         de: {
-            label: {
-               
-            },
-             messages: {
-               successPickedAllWithdrawables: "Bravo, dein Roboter hat die Mission geschafft!",
-               failureReachExit: "Dein Roboter hat das grüne Feld nicht erreicht."
             }
          },
 
@@ -1498,15 +1444,6 @@ var getContext = function(display, infos, curLevel) {
              messages: {
                successReachExit: "Bravo, je robot heeft het groene vakje bereikt!",
                failureReachExit: "Je robot heeft het groene vakje niet bereikt."
-            }
-         },
-         de: {
-            label: {
-               
-            },
-             messages: {
-               successReachExit: "Bravo, dein Roboter hat das grüne Feld erreicht!",
-               failureReachExit: "Dein Roboter hat das grüne Feld nicht erreicht."
             }
          },
 
@@ -1578,22 +1515,6 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                successContainersFilled: "Bravo, je robot heeft pionnen op de juiste vakjes gezet!",
                failureContainersFilled: "Er ontbreken pionnen of ze staan niet op de juiste plaats."
-            }
-         },
-         de: {
-            label: {
-               dropObject: "einen Kegel ablegen",
-               onContainer: "auf einem markierten Feld",
-               obstacleInFront: "Kegel davor"
-            },
-            code: {
-               dropObject: "kegelAblegen",
-               onContainer: "aufMarkiertemFeld",
-               obstacleInFront: "kegelDavor"
-            },
-            messages: {
-               successContainersFilled: "Bravo, dein Roboter hat Kegel auf die richtigen Felder gelegt!",
-               failureContainersFilled: "Es fehlen Kegel oder sie stehen falsch."
             }
          },
 
@@ -1698,30 +1619,6 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "Let op de bloem!",
             }
          },
-         de: {
-            label: {
-               dropObject: "einen Samen säen",
-               onContainer: "Erde auf dem Feld",
-               obstacleInFront: "Blume davor"
-            },
-            code: {
-               dropObject: "samenSaeen",
-               onContainer: "erdeAufFeld",
-               obstacleInFront: "blumeDavor"
-            },
-            description: {
-               dropObject: "samenSaeen() sät einen Samen auf das Feld des Roboters",
-               onContainer: "erdeAufFeld() prüft, ob sich Erde auf dem Feld des Roboters befindet",
-               obstacleInFront: "blumeDavor() prüft, ob sich eine Blume auf dem Feld vor dem Roboter befindet"
-            },
-            messages: {
-               successContainersFilled: "Bravo, dein Roboter ist ein guter Gärtner!",
-               failureContainersFilled: "Dein Roboter hat außerhalb der Erde gesät.",
-               failureContainersFilledLess: "Es ist noch Erde ohne Blume übrig!",
-               failureDropObject: "Hier ist bereits eine Blume!",
-               obstacle: "Vorsicht, eine Blume!",
-            }
-         },
 
          es: {
             label: {
@@ -1751,6 +1648,8 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "pflanzeBlume",
                onContainer: "aufErdhaufen",
                obstacleInFront: "vorBlume"
+            },
+            description: {
             },
             messages: {
                successContainersFilled: "Großartig, der Roboter hat alle Blumen gepflanzt!",
@@ -1783,13 +1682,6 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "De robot probeert in een struik te rijden!"
             }
          },
-         de: {
-            messages: {
-               successReachExit: "Bravo, der Roboter hat die Flagge erreicht!",
-               failureReachExit: "Der Roboter ist nicht auf dem Flaggenfeld angekommen.",
-               obstacle: "Der Roboter versucht, in einen Busch zu fahren!"
-            }
-         },
 
          es: {
             messages: {
@@ -1818,12 +1710,7 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "ramasser le domino",
             },
             code: {
-               withdrawObject: "ramasserDomino",
-               onObject: "surDomino"
-            },
-            description: {
-               withdrawObject: "ramasserDomino() ramasse le domino sur la case du robot",
-               onObject: "surDomino() teste si le robot est sur la case d'un domino"
+               withdrawObject: "ramasserDomino"
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, le robot a ramassé tous les dominos demandés !",
@@ -1863,24 +1750,6 @@ var getContext = function(display, infos, curLevel) {
                "failurePickedAllWithdrawables": "De robot heeft de gevraagde domino's niet opgeraapt."
             }
          },
-         de: {
-            label: {
-               withdrawObject: "den Domino aufheben",
-               onObject: "auf einem Domino"
-            },
-            code: {
-               withdrawObject: "dominoAufheben",
-               onObject: "aufDomino"
-            },
-            description: {
-               withdrawObject: "dominoAufheben() hebt den Domino auf dem Feld des Roboters auf",
-               onObject: "aufDomino() prüft, ob der Roboter auf einem Dominofeld steht"
-            },
-            messages: {
-               "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Dominos aufgehoben!",
-               "failurePickedAllWithdrawables": "Der Roboter hat die geforderten Dominos nicht aufgehoben."
-            }
-         },
          es: {
             label: {
                withdrawObject: "recoger el dominó",
@@ -1891,6 +1760,40 @@ var getContext = function(display, infos, curLevel) {
             messages: {
                "successPickedAllWithdrawables": "Bravo, ¡el robot recogió todos los dominó requeridos!",
                "failurePickedAllWithdrawables": "El robot no recogió todos los dominó requeridos."
+            }
+         },
+         de: {
+            label: {
+               withdrawObject: "hebe Dominostein auf",
+            },
+            code: {
+               withdrawObject: "hebeDominosteinAuf",
+            },
+            description: {
+            },
+            messages: {
+               "successPickedAllWithdrawables": "Super, der Roboter hat alle geforderten Dominosteine aufgehoben!",
+               "failurePickedAllWithdrawables": "Der Roboter hat nicht alle geforderten Dominosteine aufgehoben."
+            }
+         },
+      },
+      biscuits: {
+         fr: {
+            label: {
+               withdrawObject: "ramasser le biscuit",
+               dropObject: "déposer le biscuit"
+            },
+            code: {
+               withdrawObject: "ramasserBiscuit",
+               dropObject: "deposerBiscuit"
+            },
+            description: {
+               withdrawObject: "ramasserBiscuit() ramasse le biscuit sur la case du robot",
+               dropObject: "deposerBiscuit() dépose le dernier biscuit ramassé, sur la case du robot"
+            },
+            messages: {
+               "successPickedAllWithdrawables": "Bravo, le robot a ramassé tous les biscuits demandés !",
+               "failurePickedAllWithdrawables": "Le robot n'a pas ramassé les biscuits demandés."
             }
          },
          en: {
@@ -1939,8 +1842,6 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "keksAblegen"
             },
             description: {
-               withdrawObject: "keksAufheben() hebt den Keks auf dem Feld des Roboters auf",
-               dropObject: "keksAblegen() legt den zuletzt aufgehobenen Keks auf dem Feld des Roboters ab"
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Kekse aufgehoben!",
@@ -2002,7 +1903,6 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "karteAufheben"
             },
             description: {
-               withdrawObject: "karteAufheben() hebt die Karte auf dem Feld des Roboters auf"
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Karten aufgehoben!",
@@ -2013,14 +1913,17 @@ var getContext = function(display, infos, curLevel) {
       pearls: {
          fr: {
             label: {
-               withdrawObject: "hebe Dominostein auf",
+               withdrawObject: "ramasser la perle",
             },
             code: {
-               withdrawObject: "hebeDominosteinAuf"
+               withdrawObject: "ramasserPerle"
+            },
+            description: {
+               withdrawObject: "ramasserPerle() ramasse la perle sur la case du robot"
             },
             messages: {
-               "successPickedAllWithdrawables": "Super, der Roboter hat alle geforderten Dominosteine aufgehoben!",
-               "failurePickedAllWithdrawables": "Der Roboter hat nicht alle geforderten Dominosteine aufgehoben."
+               "successPickedAllWithdrawables": "Bravo, le robot a ramassé toutes les perles demandées !",
+               "failurePickedAllWithdrawables": "Le robot n'a pas ramassé les perles demandées."
             }
          },
          en: {
@@ -2061,7 +1964,6 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "perleAufheben"
             },
             description: {
-               withdrawObject: "perleAufheben() hebt die Perle auf dem Feld des Roboters auf"
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Perlen aufgehoben!",
@@ -2202,50 +2104,7 @@ var getContext = function(display, infos, curLevel) {
                nothingToPickUp: "Geen vis hier!",
             }
          },
-         de: {
-            label: {
-               withdrawObject: "den Fisch nehmen",
-               dropObject: "den Fisch ablegen",
-               withdrawNum: "%1 Fische nehmen",
-               withdrawNum_noShadow: "%1 Fische nehmen",
-               dropNum: "%1 Fische ablegen",
-               dropNum_noShadow: "%1 Fische ablegen",
-               nbWithdrawables: "Anzahl der Fische auf dem Feld",
-               containerSize: "Anzahl der bestellten Fische",
-               onObject: "Fisch auf dem Feld",
-               onContainer: "auf einer Insel",
-            },
-            code: {
-               withdrawObject: "fischNehmen",
-               dropObject: "fischAblegen",
-               onObject: "aufFisch",
-               onContainer: "aufInsel",
-               nbWithdrawables: "nbFischeAuf",
-               containerSize: "nbFischeBestellt",
-               withdrawNum: "nehmen",
-               withdrawNum_noShadow: "nehmen"
-            },
-            description: {
-               withdrawObject: "fischNehmen() nimmt den Fisch auf dem Feld",
-               dropObject: "fischAblegen() legt einen getragenen Fisch auf dem Feld ab",
-               onObject: "aufFisch() gibt an, ob ein oder mehrere Fische auf dem Feld liegen",
-               onContainer: "aufInsel() gibt an, ob eine Insel auf dem Feld ist",
-               nbWithdrawables: "nbFischeAuf() gibt an, wie viele Fische auf dem Feld liegen",
-               containerSize: "nbFischeBestellt() gibt an, wie viele Fische auf die Insel geliefert werden müssen",
-               dropNum: "ablegen(nbFische) legt nbFische Fische auf dem Feld ab",
-               withdrawNum: "nehmen(nbFische) nimmt nbFische Fische vom Feld",
-            },
-            messages: {
-               emptyBag: "Der Roboter trägt keinen Fisch!",
-               tooManyObjects: "Der Roboter trägt bereits einen Fisch!",
-               successContainersFilled: "Bravo, dein Roboter hat Fisch auf alle Inseln gebracht!",
-               failureContainersFilled: "Dein Roboter hat Fisch zurück ins Wasser gelegt!",
-               failureContainersFilledLess: "Es muss noch mindestens ein Fisch auf eine Insel gebracht werden.",
-               failureContainersFilledBag: "Dein Roboter hat zu viele Fische genommen.",
-               failureDropObject: "Dein Roboter versucht, zu viele Fische auf dieser Insel abzulegen.",
-               nothingToPickUp: "Kein Fisch hier!",
-            }
-         },
+
          es: {
             label: {
                withdrawObject: "recoger la bola",
@@ -2291,6 +2150,8 @@ var getContext = function(display, infos, curLevel) {
                containerSize: "anzahlBestellteFische",
                dropNum: "legeFischeAb",
                withdrawNum: "fangeFische",
+            },
+            description: {
             },
             // description: {
             //    withdrawObject: "fangeFisch() nimmt einen Fisch vom Platz",
@@ -2408,36 +2269,7 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilledBag: "Je moet de knikker in het gat leggen!",
             }
          },
-         de: {
-            label: {
-               withdrawObject: "die Murmel aufheben",
-               dropObject: "die Murmel ablegen",
-               onObject: "auf einer Murmel",
-               onContainer: "auf einem Loch",
-            },
-            code: {
-               withdrawObject: "murmelAufheben",
-               dropObject: "murmelAblegen",
-               onObject: "aufMurmel",
-               onContainer: "aufLoch",
-            },
-            description: {
-               withdrawObject: "murmelAufheben() hebt die Murmel auf dem Feld des Roboters auf",
-               dropObject: "murmelAblegen() legt die getragene Murmel auf dem Feld des Roboters ab",
-               onObject: "aufMurmel() gibt an, ob eine Murmel auf dem Feld des Roboters liegt",
-               onContainer: "aufLoch() gibt an, ob ein Loch auf dem Feld des Roboters ist",
-            },
-            messages: {
-               emptyBag: "Der Roboter trägt keine Murmel!",
-               tooManyObjects: "Der Roboter trägt bereits eine Murmel!",
-               successContainersFilled: "Bravo, du hast die Murmeln weggeräumt!",
-               successContainersFilledSingular: "Bravo, du hast die Murmel weggeräumt!",
-               failureContainersFilled: "Nicht alle Murmeln sind richtig platziert.",
-               failureContainersFilledSingular: "Die Murmel liegt nicht im Loch.",
-               failureContainersFilledLess: "Es muss noch eine Murmel weggeräumt werden.",
-               failureContainersFilledBag: "Du musst die Murmel in das Loch legen!",
-            }
-         },
+
          es: {
             label: {
                withdrawObject: "recoger la bola",
@@ -2472,6 +2304,8 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "legeMurmelAb",
                onObject: "aufMurmel",
                onContainer: "aufLoch",
+            },
+            description: {
             },   
             // description: {
             //    withdrawObject: "hebeMurmelAuf() hebt die Murmel auf",
@@ -2483,7 +2317,9 @@ var getContext = function(display, infos, curLevel) {
                emptyBag: "Der Roboter trägt keine Murmel!",
                tooManyObjects: "Der Roboter kann nur eine Murmel tragen.",
                successContainersFilled: "Bravo, der Roboter hat alle Murmeln in Löcher gelegt.",
+               successContainersFilledSingular: "Bravo, du hast die Murmel weggeräumt!",
                failureContainersFilled: "Nicht alle Murmeln sind wie gefordert abgelegt.",
+               failureContainersFilledSingular: "Die Murmel liegt nicht im Loch.",
                failureContainersFilledLess: "Es müssen noch Murmeln abgelegt werden.",
                failureContainersFilledBag: "Die Murmeln müssen in die Löcher gelegt werden!",
             }
@@ -2523,17 +2359,7 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "Opgepast voor de asteroïde !"
             }
          },
-         de: {
-            label: {
-               obstacleInFront: "Asteroid voraus"
-            },
-            code: {
-               obstacleInFront: "asteroidVoraus"
-            },
-            messages: {
-               obstacle: "Achtung, Asteroid!"
-            }
-         },
+
          es: {
             label: {
                obstacleInFront: "asteroide adelante"
@@ -2687,48 +2513,7 @@ var getContext = function(display, infos, curLevel) {
                nothingToPickUp: "Er ligt hier geen boek meer!"
             }
          },
-         de: {
-            label: {
-               withdrawObject: "das Buch aufheben",
-               dropObject: "das Buch ablegen",
-               withdrawNum: "%1 Bücher aufheben",
-               withdrawNum_noShadow: "%1 Bücher aufheben",
-               dropNum: "%1 Bücher ablegen",
-               dropNum_noShadow: "%1 Bücher ablegen",
-               nbWithdrawables: "Anzahl der Bücher auf dem Feld",
-               containerSize: "Anzahl der bestellten Bücher",
-               onObject: "Bücher auf dem Feld",
-               onContainer: "auf einem Karton",
-            },
-            code: {
-               withdrawObject: "buchAufheben",
-               dropObject: "buchAblegen",
-               onObject: "aufBuecher",
-               onContainer: "aufKarton",
-               nbWithdrawables: "nbBuecherAuf",
-               containerSize: "nbBuecherBestellt",
-            },
-            description: {
-               withdrawObject: "buchAufheben() hebt das Buch auf dem Feld auf",
-               dropObject: "buchAblegen() legt das getragene Buch auf dem Feld ab",
-               onObject: "aufBuecher() gibt an, ob ein oder mehrere Bücher auf dem Feld liegen",
-               onContainer: "aufKarton() gibt an, ob ein Karton auf dem Feld ist",
-               nbWithdrawables: "nbBuecherAuf() gibt an, wie viele Bücher auf dem Feld liegen",
-               containerSize: "nbBuecherBestellt() gibt an, wie viele Bücher für diesen Karton bestellt sind",
-               dropNum: "ablegen(nbBuecher) legt nbBuecher Bücher auf dem Feld ab",
-               withdrawNum: "aufheben(nbBuecher) hebt nbBuecher Bücher vom Feld auf",
-            },
-            messages: {
-               emptyBag: "Der Roboter trägt kein Buch!",
-               tooManyObjects: "Der Roboter trägt bereits ein Buch!",
-               successContainersFilled: "Bravo, alle Kartons sind voll. Die Pakete können geliefert werden!",
-               failureContainersFilled: "Nicht alle Bücher wurden in Kartons gelegt.",
-               failureContainersFilledLess: "Es gibt mindestens einen Karton, der nicht voll ist.",
-               failureContainersFilledBag: "Dein Roboter hat zu viele Bücher aufgehoben.",
-               failureDropObject: "Dieses Paket ist bereits voll. Dein Roboter versucht, zu viele Bücher abzulegen.",
-               nothingToPickUp: "Hier liegt kein Buch mehr!"
-            }
-         },
+
          es: {
             label: {
                withdrawObject: "recoger la bola",
@@ -2771,6 +2556,8 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "aufKiste",
                nbWithdrawables: "anzahlDerBuecher",
                containerSize: "groesseDerKiste",
+            },
+            description: {
             },
             // description: {
             //    withdrawObject: "nimmBuch() hebe das Buch an diesem Platz auf",
@@ -2864,31 +2651,7 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilledBag: "Je robot heeft niet alle voorwerpen geplaatst",
              }
          },
-         de: {
-             label: {
-               dropObject: "das Feld bemalen",
-               onContainer: "auf einem markierten Feld",
-               readNumber: "Zahl auf dem Feld",
-             },
-             code: {
-                dropObject: "feldBemalen",
-                onContainer: "aufMarkiertemFeld",
-                readNumber: "zahlAufFeld"
-            },
-            description: {
-               dropObject: "feldBemalen() bemalt das Feld unter dem Roboter",
-               onContainer: "aufMarkiertemFeld() gibt an, ob der Roboter auf einem markierten Feld steht",
-               readNumber: "zahlAufFeld() gibt die Zahl zurück, die auf dem Feld unter dem Roboter steht"
-             },
-             messages: {
-               successContainersFilled: "Bravo, dein Roboter hat das Muster bemalt!",
-               failureContainersFilledSingular: "Dein Roboter hat nicht das richtige Feld bemalt.",
-               failureContainersFilled: "Dein Roboter hat nicht die richtigen Felder bemalt.",
-               failureContainersFilledLess: "Dein Roboter hat nicht alle markierten Felder bemalt.",
-               failureContainersFilledLessSingular: "Dein Roboter hat das Feld nicht bemalt.",
-               failureContainersFilledBag: "Dein Roboter hat nicht alle Objekte platziert",
-             }
-         },
+
          es: {
              label: {
                dropObject: "pintar la casilla",
@@ -2918,10 +2681,14 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "aufMarkierung",
                readNumber: "leseZahl",
             },
+            description: {
+             },
             messages: {
               successContainersFilled: "Bravo, der Roboter hat das vorgegebene Muster richtig gemalt!",
+               failureContainersFilledSingular: "Dein Roboter hat nicht das richtige Feld bemalt.",
               failureContainersFilled: "Der Roboter hat nicht die richtigen Felder bemalt.",
               failureContainersFilledLess: "Der Roboter hat nicht alle markierten Felder bemalt.",
+               failureContainersFilledLessSingular: "Dein Roboter hat das Feld nicht bemalt.",
             }
         },  
       },
@@ -2958,7 +2725,7 @@ var getContext = function(display, infos, curLevel) {
 				   failureDropObject: "Der Roboter hat die falsche Farbe für das Feld genommen.",
                failureDropOutside: "Der Roboter versucht außerhalb der Leinwand zu malen."
             }
-         },
+         }
       },
       rocket: {
          fr: {
@@ -3002,21 +2769,7 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "Pas op voor de asteroïde!"
             }
          },
-         de: {
-            label: {
-               obstacleRight: "Asteroid rechts",
-               obstacleInFront: "Asteroid voraus",
-               onExit: "auf einer Rakete"
-            },
-            code: {
-               onExit: "aufRakete"
-            },
-            messages: {
-               successReachExit: "Gut gemacht, der Roboter hat die Rakete erreicht!",
-               failureReachExit: "Der Roboter ist im Weltraum verloren. Versuchen Sie es erneut, um ihm zu helfen, die Rakete zu erreichen.",
-               obstacle: "Achtung, Asteroid!"
-            }
-         },
+
          es: {
             label: {
                obstacleRight: "asteroide a la derecha",
@@ -3032,8 +2785,10 @@ var getContext = function(display, infos, curLevel) {
             label: {
                obstacleRight: "rechts von Asteroiden",
                obstacleInFront: "vor Asteroiden",
+               onExit: "auf einer Rakete",
             },
             code: {
+               onExit: "aufRakete",
                obstacleRight: "rechtsVonAsteroiden",
                obstacleInFront: "vorAsteroiden",
             },
@@ -3043,6 +2798,66 @@ var getContext = function(display, infos, curLevel) {
                successPickedAllWithdrawables: "Bravo, der Roboter ist zur Rakete zurückgekehrt!",
                failurePickedAllWithdrawables: "Der Roboter hat den Weltraumschrott liegen gelassen.",
                obstacle: "Achtung, Asteroiden!"
+            }
+         },
+      },
+      seashells: {
+         fr: {
+            label: {
+               withdrawObject: "ramasser le coquillage",
+               dropObject: "déposer les coquillages",
+               withdrawNum: "prendre %1 coquillages",
+               withdrawNum_noShadow: "prendre %1 coquillages",
+               dropNum: "déposer %1 coquillages",
+               dropNum_noShadow: "déposer %1 coquillages",
+               nbWithdrawables: "nombre de coquillages sur la case",
+               containerSize: "taille du panier",
+               onObject: "sur un coquillage",
+               onContainer: "sur un panier",
+               obstacleNorth: "rocher au nord",
+               obstacleSouth: "rocher au sud",
+               obstacleEast: "rocher à l'est",
+               obstacleWest: "rocher à l'ouest"
+            },
+            code: {
+               withdrawObject: "ramasserCoquillage",
+               dropObject: "deposerCoquillages",
+               onObject: "surCoquillage",
+               onContainer: "surPanier",
+               nbWithdrawables: "nbCoquillages",
+               containerSize: "taillePanier",
+               withdrawNum: "ramasser",
+               withdrawNum_noShadow: "ramasser",
+               obstacleNorth: "rocherNord",
+               obstacleSouth: "rocherSud",
+               obstacleEast: "rocherEst",
+               obstacleWest: "rocherOuest"
+            },
+            description: {
+               withdrawObject: "ramasserCoquillage() ramasse le coquillage qui se trouve sur la case",
+               dropObject: "deposerCoquillages() dépose tous les coquillages transportés",
+               onObject: "surCoquillage() indique s'il y a un ou des coquillages sur la case",
+               onContainer: "surPanier() indique s'il y a un panier sur la case",
+               nbWithdrawables: "nbCoquillages() indique combien de coquillages sont sur la case",
+               containerSize: "taillePanier() indique combien le panier doit contenir de coquillages",
+               dropNum: "deposer(nbCoquillages) dépose nbCoquillages coquillagess sur la case",
+               withdrawNum: "ramasser(nbCoquillages) ramasse nbCoquillages coquillages sur la case",
+               obstacleNorth: "rocherNord() teste s'il y a un rocher sur la case au nord du robot",
+               obstacleSouth: "rocherSud() teste s'il y a un rocher sur la case au nord du robot",
+               obstacleEast: "rocherEst() teste s'il y a un rocher sur la case au nord du robot",
+               obstacleWest: "rocherOuest() teste s'il y a un rocher sur la case au nord du robot"
+            },
+            messages: {
+               emptyBag: "Le robot ne porte pas de coquillage !",
+               successContainersFilled: "Bravo, votre robot a collecté tous les coquillages !",
+               failureContainersFilledLess: "Il reste encore au moins un coquillage à ramasser.",
+               failureContainersFilledBag: "Il faut apporter les coquillages dans le panier !",
+               failureDropObject: "Ce panier a déjà assez de coquillages.",
+               nothingToPickUp: "Pas de coquillage ici !",
+               failureContainersFilledBag: "Votre robot a ramassé trop de coquillages.",
+               failureDropObject: "Votre robot essaie de déposer trop de coquillages dans ce panier.",
+               obstacle: "Le robot essaie de foncer dans un rocher.",
+               failureReachExit: "Le robot n'a pas déposé les coquillages dans le panier."
             }
          },
          en: {
@@ -3189,18 +3004,6 @@ var getContext = function(display, infos, curLevel) {
                obstacleWest: "felsWest"
             },
             description: {
-               withdrawObject: "muschelAufheben() hebt die Muschel auf dem Feld auf",
-               dropObject: "muschelnAblegen() legt alle getragenen Muscheln ab",
-               onObject: "aufMuschel() gibt an, ob eine oder mehrere Muscheln auf dem Feld liegen",
-               onContainer: "aufKorb() gibt an, ob ein Korb auf dem Feld ist",
-               nbWithdrawables: "nbMuscheln() gibt an, wie viele Muscheln auf dem Feld liegen",
-               containerSize: "korbGroesse() gibt an, wie viele Muscheln der Korb enthalten muss",
-               dropNum: "ablegen(nbMuscheln) legt nbMuscheln Muscheln auf dem Feld ab",
-               withdrawNum: "aufheben(nbMuscheln) hebt nbMuscheln Muscheln vom Feld auf",
-               obstacleNorth: "felsNord() prüft, ob nördlich des Roboters ein Fels liegt",
-               obstacleSouth: "felsSued() prüft, ob südlich des Roboters ein Fels liegt",
-               obstacleEast: "felsOst() prüft, ob östlich des Roboters ein Fels liegt",
-               obstacleWest: "felsWest() prüft, ob westlich des Roboters ein Fels liegt"
             },
             messages: {
                emptyBag: "Der Roboter trägt keine Muschel!",
@@ -3299,36 +3102,6 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "De robot probeert tegen een muur of een kist te rijden!"
             }
          },
-         de: {
-            label: {
-               pushObject: "die Kiste schieben",
-               onContainer: "auf einem markierten Feld",
-               pushableInFront: "Kiste davor",
-               obstacleInFront: "Hindernis davor",
-               readNumber: "Zahl auf dem Feld"
-            },
-            code: {
-               pushObject: "kisteSchieben",
-               onContainer: "aufMarkiertemFeld",
-               pushableInFront: "kisteDavor",
-               obstacleInFront: "hindernisDavor",
-               readNumber: "zahlAufFeld"
-            },
-            description: {
-               onContainer: "aufMarkiertemFeld() gibt an, ob der Roboter auf einem markierten Feld steht",
-               pushableInFront: "kisteDavor() gibt an, ob der Roboter direkt vor einer Kiste steht",
-               pushObject: "kisteSchieben() bewegt den Roboter vorwärts und schiebt die Kiste davor",
-            },
-            messages: {
-               successContainersFilled: "Bravo, die Kisten sind richtig platziert!",
-               successContainersFilledSingular: "Bravo, die Kiste ist richtig platziert!",
-               failureContainersFilled: "Es gibt noch Kisten, die nicht an ihrem Platz stehen.",
-               failureContainersFilledSingular: "Die Kiste steht nicht an ihrem Platz!",
-               failureNothingToPush: "Hier gibt es keine Kiste zum Schieben!",
-               failureWhilePushing: "Der Roboter kann hier nicht schieben!",
-               obstacle: "Der Roboter versucht, in eine Wand oder eine Kiste zu fahren!"
-            }
-         },
 
          es: {
             label: {
@@ -3368,6 +3141,8 @@ var getContext = function(display, infos, curLevel) {
                obstacleInFront: "vorHindernis",
                readNumber: "liesZahl"
             },
+            description: {
+            },
             // description: {
             //    onContainer: "aufMarkierung() zeigt an, ob sich der Roboter auf einem markierten Feld befindet",
             //    pushableInFront: "vorKiste() gibt an, ob der Roboter vor einer Kiste steht",
@@ -3375,7 +3150,9 @@ var getContext = function(display, infos, curLevel) {
             // },
             messages: {
                successContainersFilled: "Herzlichen Glückwunsch, die Kisten sind alle auf den Markierungen!",
+               successContainersFilledSingular: "Bravo, die Kiste ist richtig platziert!",
                failureContainersFilled: "Es gibt noch Kisten, die nicht an ihrem Platz sind.",
+               failureContainersFilledSingular: "Die Kiste steht nicht an ihrem Platz!",
                failureNothingToPush: "Hier gibt es keine Kiste zum Herumschieben!",
                failureWhilePushing: "Der Roboter kann hier nicht schieben!",
                obstacle: "Der Roboter ist gegen ein Hindernis gelaufen!"
@@ -3504,47 +3281,6 @@ var getContext = function(display, infos, curLevel) {
                failureDropObject: "Deze bever heeft al hout.",
             }
          },
-         de: {
-            label: {
-               withdrawObject: "das Holz aufheben",
-               dropObject: "das Holz dem Biber geben",
-               withdrawNum: "%1 Scheite aufheben",
-               withdrawNum_noShadow: "%1 Scheite aufheben",
-               dropNum: "%1 Scheite geben",
-               dropNum_noShadow: "%1 Scheite geben",
-               nbWithdrawables: "Anzahl der Scheite auf dem Feld",
-               containerSize: "Anzahl der gewünschten Scheite",
-               onObject: "auf Holz",
-               onContainer: "bei einem Biber",
-            },
-            code: {
-               withdrawObject: "holzAufheben",
-               dropObject: "holzGeben",
-               onObject: "aufHolz",
-               onContainer: "beiBiber",
-               nbWithdrawables: "nbScheiteAuf",
-               containerSize: "nbScheiteAbzulegen",
-            },
-            description: {
-               withdrawObject: "holzAufheben() hebt das Holz auf dem Feld auf",
-               dropObject: "holzGeben() legt das getragene Holz auf dem Feld ab",
-               onObject: "aufHolz() gibt an, ob Holz auf dem Feld liegt",
-               onContainer: "beiBiber() gibt an, ob ein Biber auf dem Feld ist",
-               nbWithdrawables: "nbScheiteAuf() gibt an, wie viele Scheite auf dem Feld liegen",
-               containerSize: "nbScheiteAbzulegen() gibt an, wie viele Scheite auf dem Feld gewünscht sind",
-               dropNum: "ablegen(nbScheite) legt nbScheite Scheite auf dem Feld ab",
-               withdrawNum: "aufheben(nbScheite) hebt nbScheite Scheite vom Feld auf",
-            },
-            messages: {
-               emptyBag: "Der Roboter trägt kein Holz!",
-               tooManyObjects: "Der Roboter trägt bereits Holz!",
-               successContainersFilled: "Bravo, alle Biber haben Holz. Sie danken deinem Roboter!",
-               failureContainersFilled: "Nicht alles Holz wurde verteilt.",
-               failureContainersFilledLess: "Es muss noch Holz verteilt werden.",
-               failureContainersFilledBag: "Du musst dem Biber das Holz geben!",
-               failureDropObject: "Dieser Biber hat bereits Holz.",
-            }
-         },
          es: {
             label: {
                withdrawObject: "recoger la bola",
@@ -3589,6 +3325,8 @@ var getContext = function(display, infos, curLevel) {
                nbWithdrawables: "anzahlHolzscheite",
                containerSize: "anzahlBestelltesHolz",
                nbInBag: "anzahlHolzscheiteInTasche"
+            },
+            description: {
             },
             // description: {
             //    withdrawObject: "holzEinsammeln() sammelt alles Holz auf dem Feld",
@@ -3686,12 +3424,7 @@ var getContext = function(display, infos, curLevel) {
                      code: "opPijlRechts",
                      description: "opPijlRechts(): Staat de robot op een pijl naar rechts?"
                   },
-                  de: {
-                     label: "auf einem Pfeil nach rechts",
-                     code: "aufPfeilRechts",
-                     description: "aufPfeilRechts(): Steht der Roboter auf einem Pfeil nach rechts?"
-                  },
-es: {
+                  es: {
                      label: "sobre una flecha hacia la derecha",
                      code: "sobreFlechaHaciaLaDerecha",
                      description: "sobreFlechaHaciaLaDerecha(): ¿Se encuentra el robot sobre una flecha hacia la derecha?"
@@ -3730,12 +3463,8 @@ es: {
                      code: "opPijlLinks",
                      description: "opPijlLinks(): Staat de robot op een pijl naar links?"
                   },
-                  de: {
-                     label: "auf einem Pfeil nach links",
-                     code: "aufPfeilLinks",
-                     description: "aufPfeilLinks(): Steht der Roboter auf einem Pfeil nach links?"
-                  },
-es: {
+
+                  es: {
                      label: "sobre una flecha hacia la izquierda",
                      code: "sobreFlechaHaciaLaIzquierda",
                      description: "sobreFlechaHaciaLaIzquierda(): ¿Se encuentra el robot sobre una flecha hacia la izquierda?"
@@ -3774,12 +3503,8 @@ es: {
                      code: "opPijlBoven",
                      description: "opPijlBoven(): Staat de robot op een pijl naar boven?"
                   },
-                  de: {
-                     label: "auf einem Pfeil nach oben",
-                     code: "aufPfeilOben",
-                     description: "aufPfeilOben(): Steht der Roboter auf einem Pfeil nach oben?"
-                  },
-es: {
+
+                  es: {
                      label: "sobre una flecha hacia arriba",
                      code: "sobreFlechaHaciaArriba",
                      description: "sobreFlechaHaciaArriba(): ¿Se encuentra el robot sobre una flecha hacia arriba?"
@@ -3819,12 +3544,8 @@ es: {
                      code: "opPijlBeneden",
                      description: "opPijlBeneden(): Staat de robot op een pijl naar beneden?"
                   },
-                  de: {
-                     label: "auf einem Pfeil nach unten",
-                     code: "aufPfeilUnten",
-                     description: "aufPfeilUnten(): Steht der Roboter auf einem Pfeil nach unten?"
-                  },
-es: {
+
+                  es: {
                      label: "sobre una flecha hacia abajo",
                      code: "sobreFlechaHaciaAbajo",
                      description: "sobreFlechaHaciaAbajo(): ¿Se encuentra el robot sobre una flecha hacia abajo?"
@@ -4128,12 +3849,8 @@ es: {
                      code: "rondjeKaart",
                      description: "rondjeKaart(): Staat de robot op een kaart met een rondje?"
                   },
-                  de: {
-                     label: "Kreis auf der Karte",
-                     code: "kreisAufKarte",
-                     description: "kreisAufKarte(): Steht der Roboter auf einer Karte mit einem Kreis?"
-                  },
-es: {
+
+                  es: {
                      label: "círculo sobre la carta",
                      code: "círculoCarta",
                      description: "círculoCarta(): ¿está el robot sobre una carta que contiene un círculo?"
@@ -4175,12 +3892,7 @@ es: {
                      code: "vierkantKaart",
                      description: "vierkantKaart(): Staat de robot op een kaart met een vierkant?"
                   },
-                  de: {
-                     label: "Quadrat auf der Karte",
-                     code: "quadratAufKarte",
-                     description: "quadratAufKarte(): Steht der Roboter auf einer Karte mit einem Quadrat?"
-                  },
-es: {
+                  es: {
                      label: "cuadrado sobre la carta",
                      code: "cuadradoCarta",
                      description: "cuadradoCarta(): ¿está el robot sobre una carta que contiene un cuadrado?"
@@ -4221,12 +3933,7 @@ es: {
                      code: "driehoekKaart",
                      description: "driehoekKaart(): Staat de robot op een kaart met een driehoek?"
                   },
-                  de: {
-                     label: "Dreieck auf der Karte",
-                     code: "dreieckAufKarte",
-                     description: "dreieckAufKarte(): Steht der Roboter auf einer Karte mit einem Dreieck?"
-                  },
-es: {
+                  es: {
                      label: "triángulo sobre la carta",
                      code: "triánguloCarta",
                      description: "triánguloCarta(): ¿está el robot sobre una carta que contiene un triángulo?"
@@ -4267,12 +3974,7 @@ es: {
                      code: "opGeruit",
                      description: "opGeruit(): Staat de robot op een geruite kaart?"
                   },
-                  de: {
-                     label: "auf einem karierten Muster",
-                     code: "aufKariert",
-                     description: "aufKariert(): Steht der Roboter auf einer karierten Karte?"
-                  },
-es: {
+                  es: {
                      label: "patrón cuadriculado",
                      code: "sobreCudarícula",
                      description: "sobreCudarícula(): ¿Está el robot sobre una carta cuadriculada?"
@@ -4313,12 +4015,7 @@ es: {
                      code: "opGestreept",
                      description: "opGestreept(): Staat de robot op een gestreepte kaart?"
                   },
-                  de: {
-                     label: "auf einem gestreiften Muster",
-                     code: "aufGestreift",
-                     description: "aufGestreift(): Steht der Roboter auf einer gestreiften Karte?"
-                  },
-es: {
+                  es: {
                      label: "patrón rayado",
                      code: "sobreRayado",
                      description: "sobreRayado(): ¿Está el robot sobre una carta rayada?"
@@ -4359,12 +4056,7 @@ es: {
                      code: "opGestippeld",
                      description: "opGestippeld(): Staat de robot op een gestippelde kaart?"
                   },
-                  de: {
-                     label: "auf einem gepunkteten Muster",
-                     code: "aufGepunktet",
-                     description: "aufGepunktet(): Steht der Roboter auf einer gepunkteten Karte?"
-                  },
-es: {
+                  es: {
                      label: "patrón con puntos",
                      code: "sobrePuntos",
                      description: "sobrePuntos(): ¿Está el robot sobre una carta con puntos?"
@@ -4532,6 +4224,16 @@ es: {
                  code: "surCroix",
                  description: "surCroix(): Le robot est-il sur une croix ?"
                },
+               en: {
+                     label: "on a cross",
+                     code: "onCross",
+                     description: "onCross(): Is the robot on a cross?"
+                  },
+               nl: {
+                     label: "op een kruis",
+                     code: "opKruis",
+                     description: "opKruis(): Staat de robot op een kruis?"
+                  },
                es: {
                  label: "sobre cruz",
                  code: "sobreCruz",
@@ -4546,39 +4248,35 @@ es: {
              category: "robot",
              type: "sensors",
              block: {
-               name: "onCross",
-               strings: {
-                  fr: {
-                     label: "sur croix",
-                     code: "surCroix",
-                     description: "surCroix(): Le robot est-il sur une croix ?"
-                  },
-                  en: {
-                     label: "on a cross",
-                     code: "onCross",
-                     description: "onCross(): Is the robot on a cross?"
-                  },
-                  nl: {
-                     label: "op een kruis",
-                     code: "opKruis",
-                     description: "opKruis(): Staat de robot op een kruis?"
-                  },
-                  de: {
-                     label: "auf einem Kreuz",
-                     code: "aufKreuz",
-                     description: "aufKreuz(): Steht der Roboter auf einem Kreuz?"
-                  },
-es: {
-                     label: "sobre cruz",
-                     code: "sobreCruz",
-                     description: "sobreCruz(): ¿Se encuentra el robot sobre una cruz?"
-                  }
-               },
-               category: "robot",
-               type: "sensors",
-               block: {
                   name: "onCross",
                   yieldsValue: 'bool'
+               },
+             func: function(callback) {
+               this.callCallback(callback, this.isOn(function(obj) {return obj.isCross===true;}));
+             }
+           },
+           {
+             name: "onStar",
+             strings: {
+               fr: {
+                 label: "sur étoile",
+                 code: "surEtoile",
+                 description: "surEtoile(): Le robot est-il sur une étoile ?"
+               },
+               en: {
+                     label: "on a star",
+                     code: "onStar",
+                     description: "onStar(): Is the robot on a star?"
+                  },
+               nl: {
+                     label: "op een ster",
+                     code: "opSter",
+                     description: "opSter(): Staat de robot op een ster?"
+                  },
+               es: {
+                 label: "sobre estrella",
+                 code: "sobreEstrella",
+                 description: "sobreEstrella(): ¿Se encuentra el robot sobre una estrella?"
                },
                de: {
                   label: "auf gelbem Stern",
@@ -4589,39 +4287,35 @@ es: {
              category: "robot",
              type: "sensors",
              block: {
-               name: "onStar",
-               strings: {
-                  fr: {
-                     label: "sur étoile",
-                     code: "surEtoile",
-                     description: "surEtoile(): Le robot est-il sur une étoile ?"
-                  },
-                  en: {
-                     label: "on a star",
-                     code: "onStar",
-                     description: "onStar(): Is the robot on a star?"
-                  },
-                  nl: {
-                     label: "op een ster",
-                     code: "opSter",
-                     description: "opSter(): Staat de robot op een ster?"
-                  },
-                  de: {
-                     label: "auf einem Stern",
-                     code: "aufStern",
-                     description: "aufStern(): Steht der Roboter auf einem Stern?"
-                  },
-es: {
-                     label: "sobre estrella",
-                     code: "sobreEstrella",
-                     description: "sobreEstrella(): ¿Se encuentra el robot sobre una estrella?"
-                  }
-               },
-               category: "robot",
-               type: "sensors",
-               block: {
                   name: "onStar",
                   yieldsValue: 'bool'
+               },
+             func: function(callback) {
+               this.callCallback(callback, this.isOn(function(obj) {return obj.isStar===true;}));
+             }
+           },
+           {
+             name: "onSquare",
+             strings: {
+               fr: {
+                 label: "sur carré",
+                 code: "surCarre",
+                 description: "surCarre(): Le robot est-il sur du bleu ?"
+               },
+               en: {
+                     label: "on a square",
+                     code: "onSquare",
+                     description: "onSquare(): Is the robot on a square?"
+                  },
+               nl: {
+                     label: "op een vierkant",
+                     code: "opVierkant",
+                     description: "opVierkant(): Staat de robot op een vierkant?"
+                  },
+               es: {
+                 label: "sobre cuadrado",
+                 code: "sobreCuadrado",
+                 description: "sobreCuadrado(): ¿Se encuentra el robot sobre un cuadrado?"
                },
                de: {
                   label: "auf blauem Quadrat",
@@ -4632,45 +4326,14 @@ es: {
              category: "robot",
              type: "sensors",
              block: {
-               name: "onSquare",
-               strings: {
-                  fr: {
-                     label: "sur carré",
-                     code: "surCarre",
-                     description: "surCarre(): Le robot est-il sur un carré ?"
-                  },
-                  en: {
-                     label: "on a square",
-                     code: "onSquare",
-                     description: "onSquare(): Is the robot on a square?"
-                  },
-                  nl: {
-                     label: "op een vierkant",
-                     code: "opVierkant",
-                     description: "opVierkant(): Staat de robot op een vierkant?"
-                  },
-                  de: {
-                     label: "auf einem Quadrat",
-                     code: "aufQuadrat",
-                     description: "aufQuadrat(): Steht der Roboter auf einem Quadrat?"
-                  },
-es: {
-                     label: "sobre cuadrado",
-                     code: "sobreCuadrado",
-                     description: "sobreCuadrado(): ¿Se encuentra el robot sobre un cuadrado?"
-                  }
-               },
-               category: "robot",
-               type: "sensors",
-               block: {
                   name: "onSquare",
                   yieldsValue: 'bool'
                },
-               func: function(callback) {
-                  this.callCallback(callback, this.isOn(function(obj) {return obj.isSquare===true;}));
-               }
-            },
-            {
+             func: function(callback) {
+               this.callCallback(callback, this.isOn(function(obj) {return obj.isSquare===true;}));
+             }
+           },
+           {
                name: "onTriangle",
                strings: {
                   fr: {
@@ -4691,7 +4354,6 @@ es: {
                   de: {
                      label: "auf einem Dreieck",
                      code: "aufDreieck",
-                     description: "aufDreieck(): Steht der Roboter auf einem Dreieck?"
                   }
 },
                category: "robot",
@@ -4705,25 +4367,32 @@ es: {
                }
             }
          ],
-         backgroundColor: "#4B254E",
          noBorders: false,
+         backgroundColor: "#C4E0FF",
          borderColor: "#675B6E",
          itemTypes: {
-            pink_robot: { img: "pink_robot_above.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 2 },
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            contour: { num: 2, img: "contour.png", side: 60, zOrder: 0 },
-            GG: { num: 3, img: "GG.png", side: 60, isWithdrawable: true, isCross: true, zOrder: 1 },
-            GO: { num: 4, img: "GO.png", side: 60, isWithdrawable: true, isCross: true, isStar: true, zOrder: 1 },
-            GB: { num: 5, img: "GB.png", side: 60, isWithdrawable: true, isCross: true, isSquare: true, isTriangle: true, zOrder: 1 },
-            OG: { num: 6, img: "OG.png", side: 60, isWithdrawable: true, isStar: true, isCross: true, zOrder: 1 },
-            OO: { num: 7, img: "OO.png", side: 60, isWithdrawable: true, isStar: true, zOrder: 1 },
-            OB: { num: 8, img: "OB.png", side: 60, isWithdrawable: true, isStar: true, isSquare: true, isTriangle: true, zOrder: 1 },
-            BG: { num: 9, img: "BG.png", side: 60, isWithdrawable: true, isSquare: true, isTriangle: true, isCross: true, zOrder: 1 },
-            BO: { num: 10, img: "BO.png", side: 60, isWithdrawable: true, isSquare: true, isTriangle: true, isStar: true, zOrder: 1 },
-            BB: { num: 11, img: "BB.png", side: 60, isWithdrawable: true, isSquare: true, isTriangle: true, zOrder: 1 },
-            board_background: { num: 12, color: "#ffffff", side: 60, zOrder: 0 },
-            board: {num: 13, side: 60, isWritable: true, zOrder: 1 },
-            obstacle: { num: 14, img: "wall.png", side: 60, isObstacle: true, zOrder: 0 }
+            //green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            pink_robot: { img: imgPath+"pink_robot_above.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 2 },
+            robot: { img: imgPath+"pink_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            contour: { num: 2, img: imgPath+"contour.png", side: 60, zOrder: 0 },
+            GG: { num: 3, img: imgPath+"GG.png", side: 60, isWithdrawable: true, isCross: true, zOrder: 1 },
+            GO: { num: 4, img: imgPath+"GO.png", side: 60, isWithdrawable: true, isCross: true, isStar: true, zOrder: 1 },
+            GB: { num: 5, img: imgPath+"GB.png", side: 60, isWithdrawable: true, isCross: true, isSquare: true,
+isTriangle: true, zOrder: 1 },
+            OG: { num: 6, img: imgPath+"OG.png", side: 60, isWithdrawable: true, isStar: true, isCross: true, zOrder: 1 },
+            OO: { num: 7, img: imgPath+"OO.png", side: 60, isWithdrawable: true, isStar: true, zOrder: 1 },
+            OB: { num: 8, img: imgPath+"OB.png", side: 60, isWithdrawable: true, isStar: true, isSquare: true,
+isTriangle: true, zOrder: 1 },
+            BG: { num: 9, img: imgPath+"BG.png", side: 60, isWithdrawable: true, isSquare: true,
+isTriangle: true, isCross: true, zOrder: 1 },
+            BO: { num: 10, img: imgPath+"BO.png", side: 60, isWithdrawable: true, isSquare: true,
+isTriangle: true, isStar: true, zOrder: 1 },
+            BB: { num: 11, img: imgPath+"BB.png", side: 60, isWithdrawable: true, isSquare: true,
+isTriangle: true, zOrder: 1 },
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
+            board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
+            obstacle: { num: 14, img: imgPath+"brick_wall.png", side: 60, isObstacle: true, zOrder: 0 }
          }
       },
       biscuits: {
@@ -4749,7 +4418,6 @@ es: {
                   de: {
                      label: "auf Schokolade",
                      code: "aufSchokolade",
-                     description: "aufSchokolade(): Steht der Roboter auf einem Schokoladenkeks?"
                   }
 },
                category: "robot",
@@ -4783,7 +4451,6 @@ es: {
                   de: {
                      label: "auf einem Loch",
                      code: "aufLoch",
-                     description: "aufLoch(): Steht der Roboter auf einem Keks mit Loch?"
                   }
 },
                category: "robot",
@@ -4817,7 +4484,6 @@ es: {
                   de: {
                      label: "auf einem Kreis",
                      code: "aufKreis",
-                     description: "aufKreis(): Steht der Roboter auf einem runden Keks?"
                   }
 },
                category: "robot",
@@ -4851,7 +4517,6 @@ es: {
                   de: {
                      label: "auf einem Dreieck",
                      code: "aufDreieck",
-                     description: "aufDreieck(): Steht der Roboter auf einem dreieckigen Keks?"
                   }
 },
                category: "robot",
@@ -4885,7 +4550,6 @@ es: {
                   de: {
                      label: "auf einem Quadrat",
                      code: "aufQuadrat",
-                     description: "aufQuadrat(): Steht der Roboter auf einem quadratischen Keks?"
                   }
 },
                category: "robot",
@@ -4902,22 +4566,22 @@ es: {
          noBorders: true,
          backgroundColor: "#F9E6C3",
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
-            CCF: { num: 3, img: "biscuit_circle_choc.png", side: 60, isWithdrawable: true, isCircle: true, isChocolate: true, Order: 1 },
-            CCH: { num: 4, img: "biscuit_circle_choc_hole.png", side: 60, isWithdrawable: true, isCircle: true, isChocolate: true, isHole: true, zOrder: 1 },
-            CPF: { num: 5, img: "biscuit_circle.png", side: 60, isWithdrawable: true, isCircle: true, zOrder: 1 },
-            CPH: { num: 6, img: "biscuit_circle_hole.png", side: 60, isWithdrawable: true, isCircle: true, isHole: true, zOrder: 1 },
-            SCF: { num: 7, img: "biscuit_square_choc.png", side: 60, isWithdrawable: true, isSquare: true, isChocolate: true, zOrder: 1 },
-            SCH: { num: 8, img: "biscuit_square_choc_hole.png", side: 60, isWithdrawable: true, isSquare: true, isChocolate: true, isHole: true, zOrder: 1 },
-            SPF: { num: 9, img: "biscuit_square.png", side: 60, isWithdrawable: true, isSquare: true, zOrder: 1 },
-            SPH: { num: 10, img: "biscuit_square_hole.png", side: 60, isWithdrawable: true, isSquare: true, isHole: true, zOrder: 1 },
-            TCF: { num: 11, img: "biscuit_triangle_choc.png", side: 60, isWithdrawable: true, isTriangle: true, isChocolate: true, zOrder: 1 },
-            TCH: { num: 12, img: "biscuit_triangle_choc_hole.png", side: 60, isWithdrawable: true, isTriangle: true, isChocolate: true, isHole: true, zOrder: 1 },
-            TPF: { num: 13, img: "biscuit_triangle.png", side: 60, isWithdrawable: true, isTriangle: true, zOrder: 1 },
-            TPH: { num: 14, img: "biscuit_triangle_hole.png", side: 60, isWithdrawable: true, isTriangle: true, isHole: true, zOrder: 1 },
+            red_robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            CCF: { num: 3, img: imgPath+"biscuit_circle_choc.png", side: 60, isWithdrawable: true, isCircle: true, isChocolate: true, Order: 1 },
+            CCH: { num: 4, img: imgPath+"biscuit_circle_choc_hole.png", side: 60, isWithdrawable: true, isCircle: true, isChocolate: true, isHole: true, zOrder: 1 },
+            CPF: { num: 5, img: imgPath+"biscuit_circle.png", side: 60, isWithdrawable: true, isCircle: true, zOrder: 1 },
+            CPH: { num: 6, img: imgPath+"biscuit_circle_hole.png", side: 60, isWithdrawable: true, isCircle: true, isHole: true, zOrder: 1 },
+            SCF: { num: 7, img: imgPath+"biscuit_square_choc.png", side: 60, isWithdrawable: true, isSquare: true, isChocolate: true, zOrder: 1 },
+            SCH: { num: 8, img: imgPath+"biscuit_square_choc_hole.png", side: 60, isWithdrawable: true, isSquare: true, isChocolate: true, isHole: true, zOrder: 1 },
+            SPF: { num: 9, img: imgPath+"biscuit_square.png", side: 60, isWithdrawable: true, isSquare: true, zOrder: 1 },
+            SPH: { num: 10, img: imgPath+"biscuit_square_hole.png", side: 60, isWithdrawable: true, isSquare: true, isHole: true, zOrder: 1 },
+            TCF: { num: 11, img: imgPath+"biscuit_triangle_choc.png", side: 60, isWithdrawable: true, isTriangle: true, isChocolate: true, zOrder: 1 },
+            TCH: { num: 12, img: imgPath+"biscuit_triangle_choc_hole.png", side: 60, isWithdrawable: true, isTriangle: true, isChocolate: true, isHole: true, zOrder: 1 },
+            TPF: { num: 13, img: imgPath+"biscuit_triangle.png", side: 60, isWithdrawable: true, isTriangle: true, zOrder: 1 },
+            TPH: { num: 14, img: imgPath+"biscuit_triangle_hole.png", side: 60, isWithdrawable: true, isTriangle: true, isHole: true, zOrder: 1 },
             board_background: { num: 15, color: "#ffffff", side: 60, zOrder: 0 },
             board: {num: 16, side: 60, isWritable: true, zOrder: 1 },
-            obstacle: { num: 17, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
+            obstacle: { num: 17, img: imgPath+"obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkSpecificCollection
       },
@@ -4944,7 +4608,6 @@ es: {
                   de: {
                      label: "auf Herz",
                      code: "aufHerz",
-                     description: "aufHerz(): Steht der Roboter auf einer Herz-Karte?"
                   }
 },
                category: "robot",
@@ -4978,7 +4641,6 @@ es: {
                   de: {
                      label: "auf Pik",
                      code: "aufPik",
-                     description: "aufPik(): Steht der Roboter auf einer Pik-Karte?"
                   }
 },
                category: "robot",
@@ -5012,7 +4674,6 @@ es: {
                   de: {
                      label: "auf Kreuz",
                      code: "aufKreuz",
-                     description: "aufKreuz(): Steht der Roboter auf einer Kreuz-Karte?"
                   }
 },
                category: "robot",
@@ -5046,7 +4707,6 @@ es: {
                   de: {
                      label: "auf Karo",
                      code: "aufKaro",
-                     description: "aufKaro(): Steht der Roboter auf einer Karo-Karte?"
                   }
 },
                category: "robot",
@@ -5080,7 +4740,6 @@ es: {
                   de: {
                      label: "auf einer einzelnen Form",
                      code: "aufEinerForm",
-                     description: "aufEinerForm(): Steht der Roboter auf einer Karte mit einer einzelnen Form?"
                   }
 },
                category: "robot",
@@ -5114,7 +4773,6 @@ es: {
                   de: {
                      label: "auf zwei Formen",
                      code: "aufZweiFormen",
-                     description: "aufZweiFormen(): Steht der Roboter auf einer Karte mit zwei Formen?"
                   }
 },
                category: "robot",
@@ -5131,18 +4789,18 @@ es: {
          noBorders: true,
          backgroundColor: "#880015",
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
-            H1: { num: 3, img: "hearts_1.png", side: 60, isWithdrawable: true, isHearts: true, isOneShape: true, Order: 1 },
-            H2: { num: 4, img: "hearts_2.png", side: 60, isWithdrawable: true, isHearts: true, isTwoShapes: true, Order: 1 },
-            S1: { num: 5, img: "spades_1.png", side: 60, isWithdrawable: true, isSpades: true, isOneShape: true, Order: 1 },
-            S2: { num: 6, img: "spades_2.png", side: 60, isWithdrawable: true, isSpades: true, isTwoShapes: true, Order: 1 },
-            C1: { num: 7, img: "clubs_1.png", side: 60, isWithdrawable: true, isClubs: true, isOneShape: true, Order: 1 },
-            C2: { num: 8, img: "clubs_2.png", side: 60, isWithdrawable: true, isClubs: true, isTwoShapes: true, Order: 1 },
-            D1: { num: 9, img: "diamonds_1.png", side: 60, isWithdrawable: true, isDiamonds: true, isOneShape: true, Order: 1 },
-            D2: { num: 10, img: "diamonds_2.png", side: 60, isWithdrawable: true, isDiamonds: true, isTwoShapes: true, Order: 1 },
+            red_robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            H1: { num: 3, img: imgPath+"hearts_1.png", side: 60, isWithdrawable: true, isHearts: true, isOneShape: true, Order: 1 },
+            H2: { num: 4, img: imgPath+"hearts_2.png", side: 60, isWithdrawable: true, isHearts: true, isTwoShapes: true, Order: 1 },
+            S1: { num: 5, img: imgPath+"spades_1.png", side: 60, isWithdrawable: true, isSpades: true, isOneShape: true, Order: 1 },
+            S2: { num: 6, img: imgPath+"spades_2.png", side: 60, isWithdrawable: true, isSpades: true, isTwoShapes: true, Order: 1 },
+            C1: { num: 7, img: imgPath+"clubs_1.png", side: 60, isWithdrawable: true, isClubs: true, isOneShape: true, Order: 1 },
+            C2: { num: 8, img: imgPath+"clubs_2.png", side: 60, isWithdrawable: true, isClubs: true, isTwoShapes: true, Order: 1 },
+            D1: { num: 9, img: imgPath+"diamonds_1.png", side: 60, isWithdrawable: true, isDiamonds: true, isOneShape: true, Order: 1 },
+            D2: { num: 10, img: imgPath+"diamonds_2.png", side: 60, isWithdrawable: true, isDiamonds: true, isTwoShapes: true, Order: 1 },
             board_background: { num: 15, color: "#ffffff", side: 60, zOrder: 0 },
             board: {num: 16, side: 60, isWritable: true, zOrder: 1 },
-            obstacle: { num: 17, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
+            obstacle: { num: 17, img: imgPath+"obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkSpecificCollection
       },
@@ -5169,7 +4827,6 @@ es: {
                   de: {
                      label: "auf Blau",
                      code: "aufBlau",
-                     description: "aufBlau(): Steht der Roboter auf einem blauen Objekt?"
                   }
 },
                category: "robot",
@@ -5203,7 +4860,6 @@ es: {
                   de: {
                      label: "auf einem Loch",
                      code: "aufLoch",
-                     description: "aufLoch(): Steht der Roboter auf einem Objekt mit Loch?"
                   }
 },
                category: "robot",
@@ -5237,7 +4893,6 @@ es: {
                   de: {
                      label: "auf Gelb",
                      code: "aufGelb",
-                     description: "aufGelb(): Steht der Roboter auf einem gelben Objekt?"
                   }
 },
                category: "robot",
@@ -5271,7 +4926,6 @@ es: {
                   de: {
                      label: "auf Schwarz",
                      code: "aufSchwarz",
-                     description: "aufSchwarz(): Steht der Roboter auf einem schwarzen Objekt?"
                   }
 },
                category: "robot",
@@ -5288,16 +4942,16 @@ es: {
          noBorders: true,
          backgroundColor: "#E9E9E9",
          itemTypes: {
-            red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
-            PB: { num: 3, img: "pearl_blue.png", side: 60, isWithdrawable: true, isBlue: true, isHole: true, Order: 1 },
-            PY: { num: 4, img: "pearl_yellow.png", side: 60, isWithdrawable: true, isYellow: true, isHole: true, zOrder: 1 },
-            PBK: { num: 5, img: "pearl_black.png", side: 60, isWithdrawable: true, isBlack: true, isHole: true, zOrder: 1 },
-            BB: { num: 6, img: "marble_blue.png", side: 60, isWithdrawable: true, isBlue: true, zOrder: 1 },
-            BY: { num: 7, img: "marble_yellow.png", side: 60, isWithdrawable: true, isYellow: true, zOrder: 1 },
-            BBK: { num: 8, img: "marble_black.png", side: 60, isWithdrawable: true, isBlack: true, zOrder: 1 },
+            red_robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            PB: { num: 3, img: imgPath+"pearl_blue.png", side: 60, isWithdrawable: true, isBlue: true, isHole: true, Order: 1 },
+            PY: { num: 4, img: imgPath+"pearl_yellow.png", side: 60, isWithdrawable: true, isYellow: true, isHole: true, zOrder: 1 },
+            PBK: { num: 5, img: imgPath+"pearl_black.png", side: 60, isWithdrawable: true, isBlack: true, isHole: true, zOrder: 1 },
+            BB: { num: 6, img: imgPath+"marble_blue.png", side: 60, isWithdrawable: true, isBlue: true, zOrder: 1 },
+            BY: { num: 7, img: imgPath+"marble_yellow.png", side: 60, isWithdrawable: true, isYellow: true, zOrder: 1 },
+            BBK: { num: 8, img: imgPath+"marble_black.png", side: 60, isWithdrawable: true, isBlack: true, zOrder: 1 },
             board_background: { num: 15, color: "#ffffff", side: 60, zOrder: 0 },
             board: {num: 16, side: 60, isWritable: true, zOrder: 1 },
-            obstacle: { num: 17, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
+            obstacle: { num: 17, img: imgPath+"obstacle.png", side: 60, isObstacle: true, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkSpecificCollection
       },
@@ -5324,7 +4978,6 @@ es: {
                   de: {
                      label: "eine Brücke davor bauen",
                      code: "brueckeDavorBauen",
-                     description: "brueckeDavorBauen(): baut eine Brücke auf dem Feld vor dem Roboter"
                   }
 },
                category: "robot",
@@ -5367,7 +5020,6 @@ es: {
                   de: {
                      label: "Wasser davor",
                      code: "wasserDavor",
-                     description: "wasserDavor(): gibt an, ob vor dem Roboter Wasser ist"
                   }
 },
                category: "robot",
@@ -5383,14 +5035,14 @@ es: {
          backgroundColor: "#5cb1d6",
          borderColor: "#fff",
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 3 },
-            treasure: { num: 2, img: "treasure.png", side: 70, isExit: true, isOccupied: true, offsetX: -5, zOrder: 0},
+            green_robot: { img: imgPath+"green_robot.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 3 },
+            treasure: { num: 2, img: imgPath+"treasure.png", side: 70, isExit: true, isOccupied: true, offsetX: -5, zOrder: 0},
             water : { num: 1, side: 60, isObstacle: true, isOccupied: false, zOrder: 0 },
-            island : { num: 3, img: "island.png", side: 60, isOccupied: true, zOrder: 0 },
-            bridge: { num: 4, img: "bridge.png", side: 60, isOccupied: true, zOrder: 2 },
-            wave : { num: 5, img: "wave.png", side: 60, zOrder: 0},
-            obstacle : { num: 6, img: "obstacle.png", side: 60, isObstacle: true, isOccupied: true, zOrder: 0 },
-            mask: {num: 7, img: "mask.png", side: 60, isMask: true, zOrder: 2 },
+            island : { num: 3, img: imgPath+"island.png", side: 60, isOccupied: true, zOrder: 0 },
+            bridge: { num: 4, img: imgPath+"bridge.png", side: 60, isOccupied: true, zOrder: 2 },
+            wave : { num: 5, img: imgPath+"wave.png", side: 60, zOrder: 0},
+            obstacle : { num: 6, img: imgPath+"obstacle.png", side: 60, isObstacle: true, isOccupied: true, zOrder: 0 },
+            mask: {num: 7, img: imgPath+"mask.png", side: 60, isMask: true, zOrder: 2 },
          },
          checkEndCondition: robotEndConditions.checkReachExit
 
@@ -5437,8 +5089,10 @@ es: {
          backgroundColor: "#BFF4A6",
          borderColor: "#A5D88B",
          itemTypes: {
+            green_robot: { img: imgPath+"green_robot_above.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 2 },
+            garden_robot: { img: imgPath+"garden_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             robot: { img: imgPath+"garden_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            green_robot: { img: "green_robot_above.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 2 },
+            //green_robot: { img: imgPath+"green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             earth: { num: 2, img: imgPath+"earth.png", side: 60, isContainer: true, zOrder: 0 },
             flower: { num: 3, img: imgPath+"flower.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
             fixed_flower: { num: 5, img: imgPath+"fixed_flower.png", side: 60, isObstacle: true, zOrder: 1 },
@@ -5474,7 +5128,6 @@ es: {
                   de: {
                      label: "den Code schreiben",
                      code: "codeSchreiben",
-                     description: "codeSchreiben(): schreibt den Code auf das Feld des Roboters und öffnet die Tür, wenn der Code richtig ist"
                   }
 },
                category: "robot",
@@ -5502,15 +5155,16 @@ es: {
          backgroundColor: "#BF5E47",
          borderColor: "#96413B",
          itemTypes: {
-            yellow_robot: { img: "yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            gem: { num: 3, img: "gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 },
-            obstacle: { num: 4, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
+            yellow_robot: { img: imgPath+"yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            robot: { img: imgPath+"yellow_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
+            gem: { num: 3, img: imgPath+"gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 },
+            obstacle: { num: 4, img: imgPath+"brick_wall.png", side: 60, isObstacle: true, zOrder: 0 },
             number: { num: 5, side: 60, zOrder: 1 },
-            door: { num: 6, img: "door.png", side: 60, isObstacle: true, isDoor:true, zOrder: 0 },
-            mask: {num:7, img: "mask.png", isMask: true, side: 60, zOrder: 2},
-            board_background: { num: 8, img: "board.png", side: 60, zOrder: 0 },
-            code_background: { num: 9, img: "code.png", side: 60, zOrder: 0 },
-            board: { side: 60, isWritable: true, zOrder: 1 },
+            door: { num: 6, img: imgPath+"door.png", side: 60, isObstacle: true, isDoor:true, zOrder: 0 },
+            mask: {num:7, img: imgPath+"mask.png", isMask: true, side: 60, zOrder: 2},
+            board_background: { num: 8, img: imgPath+"board.png", side: 60, zOrder: 0 },
+            code_background: { num: 9, img: imgPath+"code.png", side: 60, zOrder: 0 },
+            board: { side: 60, isWritable: true, zOrder: 1 }
          },
          checkEndCondition: robotEndConditions.checkPickedAllWithdrawables
       },
@@ -5534,12 +5188,7 @@ es: {
                      code: "opGroenVakje",
                      description: "opGroenVakje(): Staat de robot op het groene vakje?"
                   },
-                  de: {
-                     label: "auf dem grünen Feld",
-                     code: "aufGruenemFeld",
-                     description: "aufGruenemFeld(): Steht der Roboter auf dem grünen Feld?"
-                  },
-es: {
+                  es: {
                      label: "sobre la casilla verde",
                      code: "sobreCasillaVerde",
                      description: "sobreCasillaVerde(): ¿Se encuentra el robot sobre la casilla verde?"
@@ -5573,6 +5222,7 @@ es: {
       },
       laser: {
          backgroundColor: "#666699",
+         borderColor: "#40405e",
          itemTypes: {
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
             obstacle: { num: 2, img: imgPath+"asteroide.png", side: 60, isObstacle: true, isOpaque: true },
@@ -5633,10 +5283,13 @@ es: {
          bagSize: 1,
          backgroundColor: "#dadada",
          itemTypes: {
-            blue_robot: { img: "blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
-            red_robot: { img: "red_robot_alt.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
-            hole: { num: 3, img: "hole.png", side: 60, isContainer: true, zOrder: 0 },
-            marble: { num: 4, img: "marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
+            blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            red_robot: { img: imgPath+"red_robot_alt.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            robot: { img: imgPath+"red_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            //blue_robot: { img: imgPath+"blue_robot.png", side: 90, nbStates: 1, isRobot: true,  offsetX: -15, offsetY: 15, zOrder: 2 },
+            wall: { num: 2, img: imgPath+"wall.png", side: 60, isObstacle: true, zOrder: 0 },
+            hole: { num: 3, img: imgPath+"hole.png", side: 60, isContainer: true, zOrder: 0 },
+            marble: { num: 4, img: imgPath+"marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { num: 5, side: 60, zOrder: 1 },
             board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
             board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
@@ -5711,12 +5364,7 @@ es: {
                      code: "opVerf",
                      description: "opVerf(): Staat de robot op een al geschilderd vakje?"
                   },
-                  de: {
-                     label: "Farbe auf dem Feld",
-                     code: "aufFarbe",
-                     description: "aufFarbe(): Steht der Roboter auf einem bereits bemalten Feld?"
-                  },
-es: {
+                  es: {
                      label: "casilla pintada",
                      code: "casillaPintada",
                      description: "casillaPintada(): ¿El robot se encuentra sobre una casilla pintada?"
@@ -5853,26 +5501,16 @@ es: {
                blocks.push({
                   name: names[iColor],
                   strings: {
-                     fr: {
-                        label: translations["fr"][iColor],
-                        code: translations["fr"][iColor],
-                        description: translations["fr"][iColor] + "(): Peint la case en " + translations["fr"][iColor]
-                     },
-                     en: {
-                        label: translations["en"][iColor],
-                        code: translations["en"][iColor],
-                        description: translations["en"][iColor] + "(): Paint the cell " + translations["en"][iColor]
-                     },
-                     nl: {
-                        label: translations["nl"][iColor],
-                        code: translations["nl"][iColor],
-                        description: translations["nl"][iColor] + "(): Schildert het vakje in " + translations["nl"][iColor]
-                     },
-                     de: {
-                        label: translations["de"][iColor],
-                        code: translations["de"][iColor],
-                        description: translations["de"][iColor] + "(): Bemale das Feld in " + translations["de"][iColor]
-                     }
+                    fr: {
+                       label: translations["fr"][iColor],
+                       code: translations["fr"][iColor],
+                       description: translations["fr"][iColor] + "(): Peint la case en " + translations["de"][iColor]
+                    },
+                    de: {
+                     label: translations["de"][iColor],
+                     code: translations["de"][iColor],
+                     // description: translations["de"][iColor] + "(): Bemale das Feld in " + translations["de"][iColor]
+                  }
                   },
                   category: "robot",
                   type: "actions",
@@ -5915,6 +5553,8 @@ es: {
             ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"], 
             ["#ffd35c", "#ff8201", "#f37252", "#ffffff", "#c72c3a", "#ea3e70", "#954567", "#4bc4d5", "#0180b5", "#02b5a0", "#000000"],
             {fr: ["rouge", "bleu", "jaune", "blanc", "vert", "orange", "rose", "violet", "marron", "gris", "noir"],
+             en: ["Yellow", "Orange", "Tangerine", "White", "Red", "Pink", "Violet", "Turquoise", "Blue", "Teal", "Black"],
+             nl: ["Geel", "Oranje", "Mandarijn", "Wit", "Rood", "Roze", "Violet", "Turkoois", "Blauw", "Blauwgroen", "Zwart"],
              de: ["Gelb", "Orange", "Tangerine", "Weiß", "Rot", "Pink", "Violett", "Türkis", "Blau", "Blaugrün", "Schwarz"]}),
          backgroundColor: "#ece4ce",
          ignoreBag: true,
@@ -5961,12 +5601,14 @@ es: {
          ],
          backgroundColor: "#666699",
          itemTypes: {
-            robot: { img: "space_robot_above.png", side: 74, nbStates: 9, isRobot: true, offsetX: -7, offsetY: 7, zOrder: 2 },
-            board_background: { num: 2, color: "#8d8dbe", side: 60, zOrder: 0},
-            stars: { num: 3, img: "stars.png", side: 60, zOrder: 1},
-            asteroide: { num: 4, img: "asteroide.png", side: 60, isObstacle: true, zOrder: 1 },
-            rocket: { num: 5, img: "rocket.png", side: 60, isExit: true, zOrder: 1 },
+            robot: { img: imgPath+"white_robot.png", side: 74, nbStates: 9, isRobot: true, offsetX: -7,
+offsetY: 7, zOrder: 2 },
+            board_background: { num: 90, color: "#d3d3d3", side: 60, zOrder: 0 },
+            board: { num: 91, side: 60, isWritable: true, zOrder: 1, isNumber: true, isBoard: true },
             board_notwritable: { num: 92, side: 60, zOrder: 1, isNumber: true },
+            // stars: { num: 3, img: "stars.png", side: 60, zOrder: 1},
+            asteroide: { num: 4, img: imgPath+"asteroide.png", side: 60, isObstacle: true, zOrder: 1 },
+            rocket: { num: 5, img: imgPath+"rocket.png", side: 65, offsetX: -1, offsetY: 4, isExit: true, zOrder: 1 },
             // obstacle: { num: 6, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 1 },
             objet1: { num: 7, img: imgPath+"solar_panel.png", side: 60, isWithdrawable: true, zOrder: 1 },
             // objet2: { num: 8, img: "objet2.png", side: 60, isWithdrawable: true, zOrder: 1 }, 
@@ -6058,6 +5700,13 @@ es: {
    var imgPrefix = iconSrc.substring(0, iconSrc.length - 8);
    function imgUrlWithPrefix(url) {
       return /^https?:\/\//.exec(url) ? url : imgPrefix + url;
+   }
+
+   function getImgPath(url) {
+      if (window.modulesPath != undefined) {
+         return window.modulesPath + "img/algorea/" + url;
+      }
+      return imgUrlWithPrefix(url)
    }
    
    if(infos.newBlocks == undefined)
@@ -6834,6 +6483,14 @@ es: {
    
    if(infos.languageStrings != undefined) {
       context.importLanguageStrings(infos.languageStrings.blocklyRobot_lib, strings);
+      var taskMessages = infos.languageStrings.blocklyRobot_lib && infos.languageStrings.blocklyRobot_lib.messages;
+      if(taskMessages && strings.messages) {
+         for(var msgKey in taskMessages) {
+            if(taskMessages[msgKey + 'Singular'] === undefined) {
+               delete strings.messages[msgKey + 'Singular'];
+            }
+         }
+      }
    }
    
    var cells = [];
@@ -6872,6 +6529,8 @@ es: {
       infos.bottomMargin += infos.cellSide;
    }
 
+   var innerState = {};
+
    
    switch (infos.blocklyColourTheme) {
       case "bwinf":
@@ -6899,11 +6558,11 @@ es: {
       default:
          // Nothing yet.
    }
-   
+
    var hasGrid = function() {
       return !!context.tiles;
    };
-
+   
    context.reset = function(gridInfos) {
       if(gridInfos && gridInfos.tiles) {
          context.gridInfos = gridInfos;
@@ -6981,18 +6640,28 @@ es: {
    }
 
    context.getInnerState = function() {
-      return {
-         items: context.items,
-         multicell_items: context.multicell_items,
-         last_connect: context.last_connext,
-         wires: context.wires,
-         nbMoves: context.nbMoves,
-         time: context.time,
-         bag: context.bag,
+      var removeItemElement = function (item) {
+         var modifiedItem = Object.assign({}, item);
+         delete modifiedItem.element;
+         return modifiedItem;
       };
+      innerState.items = context.items.map(removeItemElement);
+      innerState.multicell_items = context.multicell_items.map(removeItemElement);
+      innerState.last_connect = context.last_connect;
+      innerState.wires = context.wires.map(removeItemElement);
+      innerState.nbMoves = context.nbMoves;
+      innerState.time = context.time;
+      innerState.bag = context.bag.map(removeItemElement);
+
+      return innerState;
    };
 
+   context.implementsInnerState = function () {
+      return true;
+   }
+
    context.reloadInnerState = function(data) {
+      innerState = data;
       context.items = data.items;
       context.multicell_items = data.multicell_items;
       context.last_connect = data.last_connect;
@@ -7565,7 +7234,28 @@ es: {
          item.element.remove();
       }
    };
-   
+
+   context.destroyMask = function(row, col) {
+      var masks = context.getItemsOn(row, col, function(obj) { return obj.isMask === true; });
+
+      for(var iMask = 0;iMask < masks.length;iMask++) {
+          context.destroy(masks[iMask]);
+      }
+   };
+
+   context.destroyMasks = function() {
+      for(var row = 0;row < context.nbRows;row++) {
+         for(var col = 0;col < context.nbCols;col++) {
+            context.destroyMask(row, col);
+         }
+      }
+   };
+
+   context.leave = function(error) {
+      context.destroyMasks();
+      throw(error);
+   };
+
    context.fall = function(item, row, col, callback) {
       var startRow = row;
       var platforms = context.getItemsOn(row + 1, col, function(obj) { return obj.isObstacle === true; });
@@ -8081,6 +7771,21 @@ es: {
    return context;
 };
 
+var getResources = function(subTask) {
+   var res = [];
+   var type = subTask.gridInfos.contextType;
+   var typeData = contextParams[type];
+   if(typeData.itemTypes){
+      for(var key in typeData.itemTypes){
+         var params = typeData.itemTypes[key];
+         if(params.img){
+            res.task.push({ type: 'image', url: params.img });
+         }
+      }
+   }
+   return res
+};
+
 var robotEndConditions = {
    checkReachExit: function(context, lastTurn) {
       var robot = context.getRobot();
@@ -8137,7 +7842,6 @@ var robotEndConditions = {
          throw(window.languageStrings.messages.failurePlugsWired);
       }
    },
-   
    checkContainersFilled: function(context, lastTurn) {
       var solved = true;
       
@@ -8179,12 +7883,14 @@ var robotEndConditions = {
                else if(context.getItemsOn(row, col, filter).length == 0) {
                   solved = false;
                   message = Math.min(message, 0);
+                  notFilledCount++;
                }
                
                if(container.containerFilter != undefined) {
                   if(context.hasOn(row, col, function(obj) { return obj.isWithdrawable === true && !container.containerFilter(obj) })) {
                      solved = false;
                      message = Math.min(message, 0);
+                     notFilledCount++;
                   }
                   for(var item in context.bag) {
                      if(filter(context.bag[item]) && context.infos.ignoreBag === undefined) {

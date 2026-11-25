@@ -75,7 +75,7 @@ var conceptViewerStrings = {
     viewerTitle: "Hilfe",
     selectLanguage: "Sprache wählen…",
     selectTopic: "Thema wählen…",
-    reloadFromTask: "Bitte öffnen Sie diese Dokumentation direkt aus der Übung. Sie können dieses Fenster schließen.",
+    reloadFromTask: "Bitte öffne diese Dokumentation direkt aus der Aufgabe. Du kannst dieses Fenster schließen.",
     concepts: {
       "taskplatform": 'Aufgabe lösen',
       "language": "Programmerstellung",

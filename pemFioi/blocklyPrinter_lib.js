@@ -42,37 +42,6 @@ var getContext = function(display, infos) {
             moreThan100Moves: "La sortie est correcte, mais vous l'avez produite en plus de 100 étapes…"
          }
       },
-      en: {
-         label: {
-            print: "print",
-            read: "read a line",
-            readInteger: "read an integer on a line",
-            readFloat: "read a floating-point number on a line",
-            eof: "end of input"
-         },
-         code: {
-            print: "print",
-            read: "input",
-            readInteger: "readInteger",
-            readFloat: "readFloat",
-            eof: "eof"
-         },
-         description: {
-         },
-         startingBlockName: "Program",
-         messages: {
-            input: "Input:",
-            output: "Output:",
-            outputWrong: "Your program did not correctly process all the lines.",
-            outputCorrect: "Congratulations! Your program correctly processed all the lines.",
-            tooFewChars: "Line too short: line ",
-            tooManyChars: "Line too long: line ",
-            tooFewLines: "Too few output lines",
-            tooManyLines: "Too many output lines",
-            correctOutput: "The output is correct!",
-            moreThan100Moves: "The output is correct, but you produced it in more than 100 steps…"
-         }
-      },
       nl: {
          label: {
             print: "schrijven",
@@ -440,10 +409,10 @@ var getContext = function(display, infos) {
             { name: "print", params: [null]}
          ],
          read:  [
-            { name: "read", yieldsValue: true },
-            { name: "readInteger", yieldsValue: true },
-            { name: "readFloat", yieldsValue: true },
-            { name: "eof", yieldsValue: true }
+            { name: "read", yieldsValue: 'string' },
+            { name: "readInteger", yieldsValue: 'int' },
+            { name: "readFloat", yieldsValue: 'int' },
+            { name: "eof", yieldsValue: 'bool' }
          ],
          manipulate: [
             { name: "convToInt",  params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
@@ -451,11 +420,7 @@ var getContext = function(display, infos) {
             // { name: "charToNumber", params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
             // { name: "numberToChar", params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}},
             { name: "charToAscii",  params: ["String"], yieldsValue: true, blocklyJson: {output: "Number"}},
-            { name: "asciiToChar",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}},
-            { name: "read", yieldsValue: 'string' },
-            { name: "readInteger", yieldsValue: 'int' },
-            { name: "readFloat", yieldsValue: 'int' },
-            { name: "eof", yieldsValue: 'bool' }
+            { name: "asciiToChar",  params: ["Number"], yieldsValue: true, blocklyJson: {output: "String"}}
          ]
       }
    }

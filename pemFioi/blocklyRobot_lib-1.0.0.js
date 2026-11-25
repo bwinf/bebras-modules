@@ -48,7 +48,6 @@ var getContext = function(display, infos, curLevel) {
         label: {},
         code: {},
         messages: {},
-        description: {}
       }
    };
    
@@ -205,10 +204,13 @@ var getContext = function(display, infos, curLevel) {
                failureReadHere: "Il n'y a pas de nombre écrit ici !",
                successNumbersWritten: "Bravo, votre robot a écrit les bons nombres !",
                failureNumbersWritten: "Votre robot n'a pas écrit les bons nombres !",
+               failureMissingNumber: "Le robot n'a pas écrit tous les nombres.",
                failureNothingToPush: "Il n'y a pas d'objet à pousser !",
                failureWhilePushing: "Le robot ne peut pas pousser cet objet !",
                failureDropObject: "On ne peut pas poser d'objet ici",
                failureDropPlatform: "Il y a déjà une plateforme ici",
+               failureDropWater: "Il y a déjà de l'eau ici",
+               failureDropToken: "Il y a déjà un jeton ici",
                failureDropOutside: "Votre robot essaie de poser un objet hors de la grille",
                failureNotEnoughPlatform: "Pas assez de plateformes",
                failureLights: "Il reste des spots à allumer.",
@@ -224,7 +226,9 @@ var getContext = function(display, infos, curLevel) {
                failureTotalLengthExceeded: "Vous n'avez pas assez de longueur de câble pour relier ces deux prises !",
                failureProjectile: "Le robot s'est pris un projectile !",
                failureRewrite: "Le robot a essayé de repeindre une case.",
-               noContainer: "Il n'y a pas de conteneur ici !"
+               noContainer: "Il n'y a pas de conteneur ici !",
+               failureLineBreak: "Le robot ne peut pas changer de ligne.",
+               failureFuse: "Le robot a tiré sur un fusible !"
             },
             cardinals: {
                north: "Nord",
@@ -748,7 +752,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "auf Kiste",
                onNumber: "auf Zahl",
                onWritable: "auf Tafel",
-               onLauncher: "sur un lanceur laser", // TODO :: translate
+               onLauncher: "sur un lanceur laser",
                writeNumber: "schreibe Zahl",
                readNumber: "Zahl auf dem Feld",
                pushObject: "schiebe Kiste",
@@ -756,7 +760,22 @@ var getContext = function(display, infos, curLevel) {
                shoot: "richte Laserstrahl aus nach %1",
                shoot_noShadow: "richte Laserstrahl aus nach %1",
                shootCondition: "Rückkehr von der Schießrichtung %1",
-               shootCondition_noShadow: "Rückkehr von der Schießrichtung %1"
+               shootCondition_noShadow: "Rückkehr von der Schießrichtung %1",
+               wait: "warte",
+               gridEdgeNorth: "Gitterrand oben",
+               gridEdgeSouth: "Gitterrand unten",
+               dropNum: "lasse %1 Objekte fallen",
+               dropNum_noShadow: "lasse %1 Objekte fallen",
+               nbWithdrawables: "Anzahl der Objekte auf dem Platz",
+               nbInBag: "Anzahl der Objekte in der Tasche",
+               containerSize: "Anzahl der Objekte, die auf dem Feld platziert werden sollen",
+               withdrawNum: "nimm %1 Objekte",
+               withdrawNum_noShadow: "nimm %1 Objekte",
+               connect: "ein Kabel anschließen",
+               onMale: "auf Stecker",
+               onFemale: "auf Dose",
+               dropPlatformInFront: "baue eine Plattform vorne",
+               dropPlatformAbove: "baue eine Plattform oben"
             },
             code: {
                row: "ligneRobot",
@@ -798,7 +817,20 @@ var getContext = function(display, infos, curLevel) {
                shoot: "tirerLaser",
                shoot_noShadow: "tirerLaser",
                shootCondition: "tirerCondition",
-               shootCondition_noShadow: "tirerCondition"
+               shootCondition_noShadow: "tirerCondition",
+               wait: "warte",
+               dropNum: "legeAb",
+               dropNum_noShadow: "legeAb",
+               containerSize: "anzahlObjektePlatzieren",
+               nbInBag: "anzahlObjekteinTasche",
+               nbWithdrawables: "anzahlObjekteAnPlatz",
+               withdrawNum: "nimmObjekte",
+               withdrawNum_noShadow: "nimmObjekte",
+               connect: "anschliessen",
+               onMale: "aufStecker",
+               onFemale: "aufSteckdose",
+               dropPlatformInFront: "bauePlattformVorne",
+               dropPlatformAbove: "bauePlattformOben"
             },
             messages: {
                leavesGrid: "Der Roboter hat das Gitter verlassen!",
@@ -835,6 +867,11 @@ var getContext = function(display, infos, curLevel) {
                failureLights: "Der Roboter hat nicht alles beleuchtet!",
                successLights: "Bravo! Der Roboter hat alles beleuchtet.",
                failureLaser: "Der Roboter muss auf einem Laser stehen, um den Laserstrahl zu aktivieren!",
+               failureMissingNumber: "Der Roboter hat nicht alle Zahlen geschrieben!",
+               failureDropWater: "An dieser Stelle ist schon Wasser!",
+               failureDropToken: "An dieser Stelle liegt schon eine Spielmarke!",
+               failureLineBreak: "Der Roboter kann nicht in eine andere Zeile wechseln!",
+               failureFuse: "Der Roboter hat auf eine Sicherung geschossen!"
             },
             cardinals: {
                north: "Norden",
@@ -1019,6 +1056,18 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "Der Roboter wird die markierte Strecke verlassen!",
                successReachExit: "Bravo, dein Roboter hat die Truhe geholt!",
                failureReachExit: "Dein Roboter hat sich verlaufen."
+            },
+            label: {
+               onRightArrow: "auf Pfeil nach rechts",
+               onLeftArrow: "auf Pfeil nach links",
+               onTopArrow: "auf Pfeil nach oben",
+               onBottomArrow: "auf Pfeil nach unten"
+            },
+            code: {
+               onRightArrow: "aufPfeilNachRechts",
+               onLeftArrow: "aufPfeilNachLinks",
+               onTopArrow: "aufPfeilNachOben",
+               onBottomArrow: "aufPfeilNachUnten"
             }
          },
 
@@ -1080,6 +1129,12 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "die Karte ablegen",
                onObject: "auf einer Karte",
                onContainer: "auf einem Ablageplatz",
+               onRound: "auf Kreis",
+               onSquare: "auf Quadrat",
+               onTriangle: "auf Dreieck",
+               onQuadrille: "auf Gittermuster",
+               onStriped: "auf Streifen",
+               onDotted: "auf Punkten"
             },
              messages: {
                successContainersFilled: "Bravo, dein Roboter hat die Karten am richtigen Ort abgelegt!",
@@ -1087,6 +1142,14 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilled: "Einige Karten liegen falsch",
                failureContainersFilledLess: "Es sind noch Karten einzusortieren.",
                failureContainersFilledBag: "Dein Roboter muss seine Karte ablegen."
+            },
+            code: {
+               onRound: "aufKreis",
+               onSquare: "aufQuadrat",
+               onTriangle: "aufDreieck",
+               onQuadrille: "aufGittermuster",
+               onStriped: "aufStreifen",
+               onDotted: "aufPunkten"
             }
          },
 
@@ -1364,11 +1427,6 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "erdeAufFeld",
                obstacleInFront: "blumeDavor"
             },
-            description: {
-               dropObject: "samenSaeen() sät einen Samen auf das Feld des Roboters",
-               onContainer: "erdeAufFeld() prüft, ob sich Erde auf dem Feld des Roboters befindet",
-               obstacleInFront: "blumeDavor() prüft, ob sich eine Blume auf dem Feld vor dem Roboter befindet"
-            },
             messages: {
                successContainersFilled: "Bravo, dein Roboter ist ein guter Gärtner!",
                failureContainersFilled: "Dein Roboter hat außerhalb der Erde gesät.",
@@ -1481,15 +1539,14 @@ var getContext = function(display, infos, curLevel) {
          de: {
             label: {
                withdrawObject: "den Domino aufheben",
-               onObject: "auf einem Domino"
+               onObject: "auf einem Domino",
+               onCross: "auf grünem Kreuz",
+               onStar: "auf gelbem Stern",
+               onSquare: "auf blauem Quadrat"
             },
             code: {
                withdrawObject: "dominoAufheben",
                onObject: "aufDomino"
-            },
-            description: {
-               withdrawObject: "dominoAufheben() hebt den Domino auf dem Feld des Roboters auf",
-               onObject: "aufDomino() prüft, ob der Roboter auf einem Dominofeld steht"
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Dominos aufgehoben!",
@@ -1573,10 +1630,6 @@ var getContext = function(display, infos, curLevel) {
                withdrawObject: "hebeKeksAuf",
                dropObject: "legeKeksAb"
             },
-            description: {
-               withdrawObject: "hebeKeksAuf() hebt den Keks vom Feld des Roboters auf",
-               dropObject: "legeKeksAb() legt den zuletzt aufgehobenen Keks auf dem Feld des Roboters ab"
-            },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Kekse aufgehoben!",
                "failurePickedAllWithdrawables": "Der Roboter hat die geforderten Kekse nicht aufgehoben."
@@ -1637,9 +1690,6 @@ var getContext = function(display, infos, curLevel) {
             code: {
                withdrawObject: "hebeKarteAuf"
             },
-            description: {
-               withdrawObject: "hebeKarteAuf() hebt die Karte vom Feld des Roboters auf"
-            },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Karten aufgehoben!",
                "failurePickedAllWithdrawables": "Der Roboter hat die geforderten Karten nicht aufgehoben."
@@ -1699,9 +1749,6 @@ var getContext = function(display, infos, curLevel) {
             },
             code: {
                withdrawObject: "hebePerleAuf"
-            },
-            description: {
-               withdrawObject: "hebePerleAuf() hebt die Perle vom Feld des Roboters auf"
             },
             messages: {
                "successPickedAllWithdrawables": "Bravo, der Roboter hat alle geforderten Perlen aufgehoben!",
@@ -1855,6 +1902,7 @@ var getContext = function(display, infos, curLevel) {
                containerSize: "Anzahl der bestellten Fische",
                onObject: "Fisch auf dem Feld",
                onContainer: "auf einer Insel",
+               nbInBag: "Anzahl Fische in Tasche"
             },
             code: {
                withdrawObject: "nimmFisch",
@@ -1864,17 +1912,8 @@ var getContext = function(display, infos, curLevel) {
                nbWithdrawables: "nbFischeAuf",
                containerSize: "nbFischeBestellt",
                withdrawNum: "nimm",
-               withdrawNum_noShadow: "nimm"
-            },
-            description: {
-               withdrawObject: "nimmFisch() nimmt den Fisch vom Feld",
-               dropObject: "legeFischAb() legt einen getragenen Fisch auf dem Feld ab",
-               onObject: "aufFisch() zeigt an, ob sich ein oder mehrere Fische auf dem Feld befinden",
-               onContainer: "aufInsel() zeigt an, ob sich eine Insel auf dem Feld befindet",
-               nbWithdrawables: "nbFischeAuf() zeigt an, wie viele Fische auf dem Feld sind",
-               containerSize: "nbFischeBestellt() zeigt an, wie viele Fische zur Insel geliefert werden müssen",
-               dropNum: "legeAb(nbFische) legt nbFische Fische auf dem Feld ab",
-               withdrawNum: "nimm(nbFische) nimmt nbFische Fische vom Feld",
+               withdrawNum_noShadow: "nimm",
+               dropNum: "legeFischeAb"
             },
             messages: {
                emptyBag: "Der Roboter trägt keinen Fisch!",
@@ -1887,7 +1926,6 @@ var getContext = function(display, infos, curLevel) {
                nothingToPickUp: "Kein Fisch hier!",
             }
          },
-
 
          es: {
             label: {
@@ -2015,12 +2053,6 @@ var getContext = function(display, infos, curLevel) {
                failureDropPlatform: "Hier ist bereits eine Plattform!",
                emptyBag: "Der Roboter versucht, ein Zahnrad einzuhängen, ohne eines zu tragen!"
             },
-            description: {
-               withdrawObject: "zahnradAufheben() hebt das Zahnrad auf dem Feld des Roboters auf",
-               dropObject: "zahnradEinhaengen() legt das Zahnrad auf dem Feld des Roboters ab",
-               onObject: "aufZahnrad() prüft, ob der Roboter auf einem Feld mit einem Zahnrad steht",
-               onContainer: "aufMaschine() prüft, ob der Roboter auf einem Feld mit einer Maschine steht"
-            }
          },
 
          es: {
@@ -2142,12 +2174,6 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "legeMurmelAb",
                onObject: "aufMurmel",
                onContainer: "aufLoch",
-            },
-            description: {
-               withdrawObject: "hebeMurmelAuf() hebt die Murmel vom Feld des Roboters auf",
-               dropObject: "legeMurmelAb() legt die getragene Murmel auf dem Feld des Roboters ab",
-               onObject: "aufMurmel() zeigt an, ob sich eine Murmel auf dem Feld des Roboters befindet",
-               onContainer: "aufLoch() zeigt an, ob sich ein Loch auf dem Feld des Roboters befindet",
             },
             messages: {
                emptyBag: "Der Roboter trägt keine Murmel!",
@@ -2385,16 +2411,6 @@ var getContext = function(display, infos, curLevel) {
                nbWithdrawables: "nbBuecherAuf",
                containerSize: "nbBuecherBestellt",
             },
-            description: {
-               withdrawObject: "hebeBuchAuf() hebt das Buch vom Feld auf",
-               dropObject: "legeBuchAb() legt das getragene Buch auf dem Feld ab",
-               onObject: "aufBuechern() zeigt an, ob sich ein oder mehrere Bücher auf dem Feld befinden",
-               onContainer: "aufKarton() zeigt an, ob sich ein Karton auf dem Feld befindet",
-               nbWithdrawables: "nbBuecherAuf() zeigt an, wie viele Bücher auf dem Feld sind",
-               containerSize: "nbBuecherBestellt() zeigt an, wie viele Bücher für diesen Karton bestellt sind",
-               dropNum: "legeAb(nbBuecher) legt nbBuecher Bücher auf dem Feld ab",
-               withdrawNum: "hebeAuf(nbBuecher) hebt nbBuecher Bücher vom Feld auf",
-            },
             messages: {
                emptyBag: "Der Roboter trägt kein Buch!",
                tooManyObjects: "Der Roboter trägt bereits ein Buch!",
@@ -2405,7 +2421,6 @@ var getContext = function(display, infos, curLevel) {
                failureDropObject: "Dieser Karton ist bereits voll.",
             }
          },
-
 
          es: {
             label: {
@@ -2500,17 +2515,14 @@ var getContext = function(display, infos, curLevel) {
                dropObject: "das Feld bemalen",
                onContainer: "auf einem markierten Feld",
                readNumber: "Zahl auf dem Feld",
+               onPaint: "Farbe auf Feld"
              },
              code: {
                 dropObject: "maleFeld",
                 onContainer: "aufMarkiertemFeld",
-                readNumber: "zahlAufFeld"
+                readNumber: "zahlAufFeld",
+                onPaint: "farbeAufFeld"
             },
-            description: {
-               dropObject: "maleFeld() bemalt das Feld unter dem Roboter",
-               onContainer: "aufMarkiertemFeld() zeigt an, ob der Roboter auf einem markierten Feld steht",
-               readNumber: "zahlAufFeld() gibt die Zahl zurück, die auf dem Feld unter dem Roboter steht"
-             },
              messages: {
                successContainersFilled: "Bravo, dein Roboter hat das Muster bemalt!",
                failureContainersFilled: "Dein Roboter hat nicht die richtigen Felder bemalt.",
@@ -2518,7 +2530,6 @@ var getContext = function(display, infos, curLevel) {
                failureContainersFilledBag: "Dein Roboter hat nicht alle Objekte abgelegt",
              }
          },
-
 
          es: {
              label: {
@@ -2631,7 +2642,6 @@ var getContext = function(display, infos, curLevel) {
                obstacle: "Achtung vor dem Asteroiden!"
             }
          },
-
 
          es: {
             label: {
@@ -2847,20 +2857,6 @@ var getContext = function(display, infos, curLevel) {
                obstacleEast: "felsenOst",
                obstacleWest: "felsenWest"
             },
-            description: {
-               withdrawObject: "hebeMuschelAuf() hebt die Muschel vom Feld auf",
-               dropObject: "legeMuschelnAb() legt alle getragenen Muscheln ab",
-               onObject: "aufMuschel() zeigt an, ob sich eine oder mehrere Muscheln auf dem Feld befinden",
-               onContainer: "aufKorb() zeigt an, ob sich ein Korb auf dem Feld befindet",
-               nbWithdrawables: "nbMuscheln() zeigt an, wie viele Muscheln auf dem Feld sind",
-               containerSize: "korbGroesse() zeigt an, wie viele Muscheln der Korb enthalten muss",
-               dropNum: "legeAb(nbMuscheln) legt nbMuscheln Muscheln auf dem Feld ab",
-               withdrawNum: "hebeAuf(nbMuscheln) hebt nbMuscheln Muscheln vom Feld auf",
-               obstacleNorth: "felsenNord() prüft, ob sich nördlich des Roboters ein Felsen befindet",
-               obstacleSouth: "felsenSued() prüft, ob sich südlich des Roboters ein Felsen befindet",
-               obstacleEast: "felsenOst() prüft, ob sich östlich des Roboters ein Felsen befindet",
-               obstacleWest: "felsenWest() prüft, ob sich westlich des Roboters ein Felsen befindet"
-            },
             messages: {
                emptyBag: "Der Roboter trägt keine Muschel!",
                successContainersFilled: "Bravo, dein Roboter hat alle Muscheln gesammelt!",
@@ -2971,11 +2967,6 @@ var getContext = function(display, infos, curLevel) {
                pushableInFront: "kisteDavor",
                obstacleInFront: "hindernisDavor",
                readNumber: "zahlAufFeld"
-            },
-            description: {
-               onContainer: "aufMarkiertemFeld() gibt an, ob der Roboter auf einem markierten Feld steht",
-               pushableInFront: "kisteDavor() gibt an, ob der Roboter direkt vor einer Kiste steht",
-               pushObject: "kisteSchieben() bewegt den Roboter vorwärts und schiebt die Kiste davor",
             },
             messages: {
                successContainersFilled: "Bravo, die Kisten sind richtig platziert!",
@@ -3146,6 +3137,7 @@ var getContext = function(display, infos, curLevel) {
                containerSize: "Anzahl der gewünschten Holzblöcke",
                onObject: "auf Holz",
                onContainer: "bei einem Biber",
+               nbInBag: "Anzahl Holzstapel in der Tasche"
             },
             code: {
                withdrawObject: "hebeHolzAuf",
@@ -3154,16 +3146,7 @@ var getContext = function(display, infos, curLevel) {
                onContainer: "beiBiber",
                nbWithdrawables: "nbHolzbloeckeAuf",
                containerSize: "nbHolzbloeckeAbzulegen",
-            },
-            description: {
-               withdrawObject: "hebeHolzAuf() hebt das Holz vom Feld auf",
-               dropObject: "gibHolz() legt das getragene Holz auf dem Feld ab",
-               onObject: "aufHolz() zeigt an, ob sich Holz auf dem Feld befindet",
-               onContainer: "beiBiber() zeigt an, ob sich ein Biber auf dem Feld befindet",
-               nbWithdrawables: "nbHolzbloeckeAuf() zeigt an, wie viele Holzblöcke auf dem Feld sind",
-               containerSize: "nbHolzbloeckeAbzulegen() zeigt an, wie viele Holzblöcke auf dem Feld gewünscht sind",
-               dropNum: "legeAb(nbHolzbloecke) legt nbHolzbloecke Holzblöcke auf dem Feld ab",
-               withdrawNum: "hebeAuf(nbHolzbloecke) hebt nbHolzbloecke Holzblöcke vom Feld auf",
+               nbInBag: "anzahlHolzscheiteInTasche"
             },
             messages: {
                emptyBag: "Der Roboter trägt kein Holz!",
@@ -3175,7 +3158,6 @@ var getContext = function(display, infos, curLevel) {
                failureDropObject: "Dieser Biber hat bereits Holz.",
             }
          },
-
 
          es: {
             label: {
@@ -3233,7 +3215,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem Pfeil nach rechts",
                      code: "aufPfeilRechts",
-                     description: "aufPfeilRechts(): Steht der Roboter auf einem Pfeil nach rechts?"
                   },
                   es: {
                      label: "sobre una flecha hacia la derecha",
@@ -3272,7 +3253,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem Pfeil nach links",
                      code: "aufPfeilLinks",
-                     description: "aufPfeilLinks(): Steht der Roboter auf einem Pfeil nach links?"
                   },
 
                   es: {
@@ -3312,7 +3292,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem Pfeil nach oben",
                      code: "aufPfeilOben",
-                     description: "aufPfeilOben(): Steht der Roboter auf einem Pfeil nach oben?"
                   },
 
                   es: {
@@ -3352,7 +3331,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem Pfeil nach unten",
                      code: "aufPfeilUnten",
-                     description: "aufPfeilUnten(): Steht der Roboter auf einem Pfeil nach unten?"
                   },
 
                   es: {
@@ -3407,7 +3385,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Kreis auf der Karte",
                      code: "kreisAufKarte",
-                     description: "kreisAufKarte(): Steht der Roboter auf einer Karte mit einem Kreis?"
                   },
 
                   es: {
@@ -3424,7 +3401,7 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                     this.leave(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isRound===true;}));
                }
             },
@@ -3449,7 +3426,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Quadrat auf der Karte",
                      code: "quadratAufKarte",
-                     description: "quadratAufKarte(): Steht der Roboter auf einer Karte mit einem Quadrat?"
                   },
                   es: {
                      label: "cuadrado sobre la carta",
@@ -3465,7 +3441,7 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                     this.leave(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isSquare===true;}));
                }
             },
@@ -3490,7 +3466,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Dreieck auf der Karte",
                      code: "dreieckAufKarte",
-                     description: "dreieckAufKarte(): Steht der Roboter auf einer Karte mit einem Dreieck?"
                   },
                   es: {
                      label: "triángulo sobre la carta",
@@ -3506,7 +3481,7 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                     this.leave(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isTriangle===true;}));
                }
             },
@@ -3531,7 +3506,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem karierten Muster",
                      code: "aufKariert",
-                     description: "aufKariert(): Steht der Roboter auf einer karierten Karte?"
                   },
                   es: {
                      label: "patrón cuadriculado",
@@ -3547,7 +3521,7 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                     this.leave(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isQuadrille===true;}));
                }
             },
@@ -3572,7 +3546,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem gestreiften Muster",
                      code: "aufGestreift",
-                     description: "aufGestreift(): Steht der Roboter auf einer gestreiften Karte?"
                   },
                   es: {
                      label: "patrón rayado",
@@ -3588,7 +3561,7 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                     this.leave(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isStriped===true;}));
                }
             },
@@ -3613,7 +3586,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf einem gepunkteten Muster",
                      code: "aufGepunktet",
-                     description: "aufGepunktet(): Steht der Roboter auf einer gepunkteten Karte?"
                   },
                   es: {
                      label: "patrón con puntos",
@@ -3629,7 +3601,7 @@ var getContext = function(display, infos, curLevel) {
                },
                func: function(callback) {
                   if(!this.isOn(function(obj) {return obj.isWithdrawable===true || obj.isContainer===true;}))
-                     throw(strings.messages.nothingToLookAt);
+                     this.leave(strings.messages.nothingToLookAt);
                   this.callCallback(callback, this.isOn(function(obj) {return obj.isDotted===true ;}));
                }
             }
@@ -3671,7 +3643,7 @@ var getContext = function(display, infos, curLevel) {
       },
       chticode_rel: {
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -14, zOrder: 2 },
+            green_robot: { img: "green_robot.png", side: 70, nbStates: 9, isRobot: true, offsetX: -5, offsetY: 5, zOrder: 2 },
             obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true },
             green: { num: 3, color: "#b5e61d", side: 60, isExit: true},
             gem: { num: 4, img: "gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 }
@@ -3695,10 +3667,12 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       course: {
+         backgroundColor: "#fff1c4",
+         borderColor: "#d4eda5",
          itemTypes: {
             red_robot: { img: "red_robot.png", side: 70, nbStates: 1, offsetX: -5, offsetY: 5, isRobot: true, zOrder: 2 },
             obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
-            green: { num: 3, color: "#b5e61d", side: 60, isExit: true, zOrder: 0},
+            green: { num: 3, img: "green.png", side: 60, isExit: true, zOrder: 0},
             number: { num: 5, side: 60, zOrder: 1 },
             horizontal_closed_door: { num: 7, img: "horizontal_closed_door.png", side: 60, isObstacle: true, zOrder: 1 },
             vertical_closed_door: { num: 8, img: "vertical_closed_door.png", side: 60, isObstacle: true, zOrder: 1 },
@@ -3730,7 +3704,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Kreuz",
                   code: "aufKreuz",
-                  description: "aufKreuz(): Steht der Roboter auf einem Kreuz?"
                },
                es: {
                  label: "sobre cruz",
@@ -3769,7 +3742,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Stern",
                   code: "aufStern",
-                  description: "aufStern(): Steht der Roboter auf einem Stern?"
                },
                es: {
                  label: "sobre estrella",
@@ -3793,7 +3765,7 @@ var getContext = function(display, infos, curLevel) {
                fr: {
                  label: "sur carré",
                  code: "surCarre",
-                 description: "surCarre(): Le robot est-il sur du bleu ?"
+                 description: "surCarre(): Le robot est-il sur un carré ?"
                },
                en: {
                   label: "on a square",
@@ -3808,7 +3780,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Quadrat",
                   code: "aufQuadrat",
-                  description: "aufQuadrat(): Steht der Roboter auf einem Quadrat?"
                },
                es: {
                  label: "sobre cuadrado",
@@ -3825,8 +3796,7 @@ var getContext = function(display, infos, curLevel) {
              func: function(callback) {
                this.callCallback(callback, this.isOn(function(obj) {return obj.isSquare===true;}));
              }
-           }
-           ,
+           },
            {
                name: "dropToken",
                strings: {
@@ -3848,7 +3818,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "einen Spielstein ablegen",
                      code: "legeSpielsteinAb",
-                     description: "legeSpielsteinAb(): Der Roboter legt einen Spielstein auf dem Feld ab."
                   }
                 },
                category: "robot",
@@ -3879,6 +3848,7 @@ var getContext = function(display, infos, curLevel) {
             BG: { num: 9, img: "BG.png", side: 60, isWithdrawable: true, isSquare: true, isCross: true, zOrder: 1 },
             BO: { num: 10, img: "BO.png", side: 60, isWithdrawable: true, isSquare: true, isStar: true, zOrder: 1 },
             BB: { num: 11, img: "BB.png", side: 60, isWithdrawable: true, isSquare: true, zOrder: 1 },
+            mask: {num: 12, img: "mask.png", side: 60, isMask: true, zOrder: 2 },
             board_background: { num: 12, color: "#ffffff", side: 60, zOrder: 0 },
             board: {num: 13, side: 60, isWritable: true, zOrder: 1 },
             obstacle: { num: 14, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
@@ -3914,7 +3884,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Schokolade",
                   code: "aufSchokolade",
-                  description: "aufSchokolade(): Steht der Roboter auf einem Schokoladenkeks?"
                }
              },
              category: "robot",
@@ -3948,7 +3917,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Loch",
                   code: "aufLoch",
-                  description: "aufLoch(): Steht der Roboter auf einem Keks mit einem Loch?"
                }
              },
              category: "robot",
@@ -3982,7 +3950,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Kreis",
                   code: "aufKreis",
-                  description: "aufKreis(): Steht der Roboter auf einem runden Keks?"
                }
              },
              category: "robot",
@@ -4016,7 +3983,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Dreieck",
                   code: "aufDreieck",
-                  description: "aufDreieck(): Steht der Roboter auf einem Dreieckskeks?"
                }
              },
              category: "robot",
@@ -4050,7 +4016,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Quadrat",
                   code: "aufQuadrat",
-                  description: "aufQuadrat(): Steht der Roboter auf einem quadratischen Keks?"
                }
              },
              category: "robot",
@@ -4109,7 +4074,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Herz",
                   code: "aufHerz",
-                  description: "aufHerz(): Steht der Roboter auf einer Herzkarte?"
                }
              },
              category: "robot",
@@ -4143,7 +4107,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Pik",
                   code: "aufPik",
-                  description: "aufPik(): Steht der Roboter auf einer Pikkarte?"
                }
              },
              category: "robot",
@@ -4177,7 +4140,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Kreuz",
                   code: "aufKreuz",
-                  description: "aufKreuz(): Steht der Roboter auf einer Kreuzkarte?"
                }
              },
              category: "robot",
@@ -4211,7 +4173,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Karo",
                   code: "aufKaro",
-                  description: "aufKaro(): Steht der Roboter auf einer Karokarte?"
                }
              },
              category: "robot",
@@ -4245,7 +4206,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einer einzelnen Form",
                   code: "aufEinerForm",
-                  description: "aufEinerForm(): Steht der Roboter auf einer Karte mit einer einzelnen Form?"
                }
              },
              category: "robot",
@@ -4279,7 +4239,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf zwei Formen",
                   code: "aufZweiFormen",
-                  description: "aufZweiFormen(): Steht der Roboter auf einer Karte mit zwei Formen?"
                }
              },
              category: "robot",
@@ -4334,7 +4293,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Blau",
                   code: "aufBlau",
-                  description: "aufBlau(): Steht der Roboter auf einem blauen Objekt?"
                }
              },
              category: "robot",
@@ -4368,7 +4326,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf einem Loch",
                   code: "aufLoch",
-                  description: "aufLoch(): Steht der Roboter auf einem Objekt mit einem Loch?"
                }
              },
              category: "robot",
@@ -4402,7 +4359,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Gelb",
                   code: "aufGelb",
-                  description: "aufGelb(): Steht der Roboter auf einem gelben Objekt?"
                }
              },
              category: "robot",
@@ -4436,7 +4392,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "auf Schwarz",
                   code: "aufSchwarz",
-                  description: "aufSchwarz(): Steht der Roboter auf einem schwarzen Objekt?"
                }
              },
              category: "robot",
@@ -4489,7 +4444,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "eine Brücke davor bauen",
                   code: "baueBrueckeDavor",
-                  description: "baueBrueckeDavor(): baut eine Brücke auf dem Feld vor dem Roboter"
                }
              },
              category: "robot",
@@ -4532,7 +4486,6 @@ var getContext = function(display, infos, curLevel) {
                de: {
                   label: "Wasser davor",
                   code: "wasserDavor",
-                  description: "wasserDavor(): zeigt an, ob sich vor dem Roboter Wasser befindet"
                }
              },
             category: "robot", 
@@ -4573,8 +4526,8 @@ var getContext = function(display, infos, curLevel) {
             		obj.img = "red_robot.png";
             } },
             island: { num: 2, img: "island.png", side: 75, isContainer: true, offsetX: -7, offsetY: 0, zOrder: 0, containerFilter: function(obj) { return obj.isWithdrawable === true; } },
-            fishes: { num: 3, img: "fishes.png", side: 60, isWithdrawable: true, offsetY: 2, zOrder: 1 },
-            fishes: { num: 4, img: "fishes.png", side: 60, isWithdrawable: true, offsetY: 8, offsetX: 2, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
+            fishes: { num: 3, img: "fishes.png", side: 60, isWithdrawable: true,isContainer:true, offsetY: 2, zOrder: 1 },
+            fishes: { num: 4, img: "fishes.png", side: 60, isWithdrawable: true,isContainer:true, offsetY: 8, offsetX: 2, zOrder: 1, canBeOutside: true, customDisplay: function(obj) {
             	if(context.hasOn(obj.row, obj.col, function(item) { return item.num == 2; }))
             		obj.offsetX = 0;
             } },
@@ -4590,6 +4543,7 @@ var getContext = function(display, infos, curLevel) {
             }, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -15, offsetY: -14},
             obstacle: { num: 7, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
             net: { num: 8, img: "net.png", side: 60, zOrder: 2 },
+            board: { num: 9, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -14, offsetY: -14 },
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -4616,7 +4570,6 @@ var getContext = function(display, infos, curLevel) {
                  de: {
                     label: "auf trockener Erde",
                     code: "aufTrockenerErde",
-                    description: "aufTrockenerErde(): Steht der Roboter auf trockener Erde?"
                  }
                },
                category: "robot",
@@ -4650,7 +4603,6 @@ var getContext = function(display, infos, curLevel) {
                  de: {
                     label: "auf Erde",
                     code: "aufErde",
-                    description: "aufErde(): Steht der Roboter auf Erde?"
                  }
                },
                category: "robot",
@@ -4684,7 +4636,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "gießen",
                      code: "giessen",
-                     description: "giessen(): Der Roboter gießt das Feld."
                   }
                 },
                category: "robot",
@@ -4704,13 +4655,18 @@ var getContext = function(display, infos, curLevel) {
            count: 200,
            type: "flower"
          },
-         backgroundColor: "#f9f9c1",
+         ignoreBag: true,
+         backgroundColor: "#BFF4A6",
+         borderColor: "#A5D88B",
          itemTypes: {
-            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
-            marker: { num: 2, img: "marker.png", side: 60, isContainer: true, zOrder: 0 },
-            flower: { num: 3, img: "flower.png", side: 60, isWithdrawable: true, isObstacle: true, zOrder: 1 },
+            green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 3 },
+            marker: { num: 2, img: "marker.png", side: 60, isContainer: true, containerSize: 1, isMarkerSoil: true, containerFilter: function(obj){return obj.isFlower === true;}, zOrder: 0 },
+            flower: { num: 3, img: "flower.png", side: 60, isWithdrawable: true, isFlower: true, isObstacle: true, zOrder: 1 },
             fixed_flower: { num: 5, img: "fixed_flower.png", side: 60, isObstacle: true, zOrder: 1 },
-            number: { num: 6, side: 60, zOrder: 1 }
+            number: { num: 6, side: 60, zOrder: 1 },
+            mask: {num: 7, img: "mask.png", side: 60, isMask: true, zOrder: 2 },
+            water: { num: 8, img: "water.png", side: 60, isWithdrawable: true, isWater: true, zOrder: 1 },
+            marker_dry: { num: 9, img: "marker_dry.png", side: 60, isContainer: true, containerSize: 1, isMarkerDry: true, containerFilter: function(obj){return obj.isWater === true;}, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -4740,7 +4696,6 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       gems: {
-         backgroundColor: "#e6b5d3",
          newBlocks: [
             {
                name: "writeCode",
@@ -4763,7 +4718,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "den Code schreiben",
                      code: "schreibeCode",
-                     description: "schreibeCode(): schreibt den Code auf das Feld des Roboters und öffnet die Tür, wenn der Code richtig ist"
                   }
                },
                category: "robot",
@@ -4794,7 +4748,12 @@ var getContext = function(display, infos, curLevel) {
             green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             gem: { num: 3, img: "gem.png", side: 60, isWithdrawable: true, autoWithdraw: true, zOrder: 1 },
             obstacle: { num: 4, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
-            number: { num: 5, side: 60, zOrder: 1 }
+            number: { num: 5, side: 60, zOrder: 1 },
+            door: { num: 6, img: "door.png", side: 60, isObstacle: true, isDoor:true, zOrder: 0 },
+            mask: {num:7, img: "mask.png", isMask: true, side: 60, zOrder: 2},
+            board_background: { num: 8, img: "board.png", side: 60, zOrder: 0 },
+            code_background: { num: 9, img: "code.png", side: 60, zOrder: 0 },
+            board: { side: 60, isWritable: true, zOrder: 1 },
          },
          checkEndCondition: robotEndConditions.checkPickedAllWithdrawables
       },
@@ -4821,7 +4780,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "auf dem grünen Feld",
                      code: "aufGruenemFeld",
-                     description: "aufGruenemFeld(): Steht der Roboter auf dem grünen Feld?"
                   },
                   es: {
                      label: "sobre la casilla verde",
@@ -4851,7 +4809,7 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkReachExit
       },
       laser: {
-         backgroundColor: "#33237a",
+         backgroundColor: "#00015e",
          itemTypes: {
             green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
             obstacle: { num: 2, img: "obstacle.png", side: 60, isObstacle: true, isOpaque: true },
@@ -4861,6 +4819,7 @@ var getContext = function(display, infos, curLevel) {
             mirrorZ: { num: 7, img: "mirrorZ.png", isMirror: true, mirrorFunction: function(dir) { return (10 - dir) % 8; }, side: 60 },
             mirrorH: { num: 8, img: "mirrorH.png", isMirror: true, mirrorFunction: function(dir) { return (12 - dir) % 8; }, side: 60 },
             mirrorI: { num: 9, img: "mirrorI.png", isMirror: true, mirrorFunction: function(dir) { return (8 - dir) % 8; }, side: 60 },
+            fuse: { num:10, img: "fuse.png", states: ["fuse.png", "dispersion.png"], isFuse: true, side:60, state: 0},
             number: { side: 60, zOrder: 1 },
             board_background: { num: 4, color: "#685aa6", side: 60, zOrder: 0 },
          },
@@ -4875,7 +4834,7 @@ var getContext = function(display, infos, curLevel) {
             marble: { num: 4, img: "marble.png", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { num: 5, side: 60, zOrder: 1 },
             board: { num: 6, side: 60, isWritable: true, zOrder: 1 },
-            white: { num: 7, color: "shadow.png", side: 60, zOrder: 0 }
+            white: { num: 7, color: "#ffffff", side: 60, zOrder: 0 }
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -4947,7 +4906,6 @@ var getContext = function(display, infos, curLevel) {
                   de: {
                      label: "Farbe auf dem Feld",
                      code: "aufFarbe",
-                     description: "aufFarbe(): Steht der Roboter auf einem bereits bemalten Feld?"
                   },
                   es: {
                      label: "casilla pintada",
@@ -4962,7 +4920,7 @@ var getContext = function(display, infos, curLevel) {
                   yieldsValue: 'bool'
                },
                func: function(callback) {
-                  this.callCallback(callback, this.isOn(function(obj) {return obj.isWithdrawable===true;}));
+                  this.callCallback(callback, this.isOn(function(obj) {return obj.isPaint===true;}));
                }
             }
          ],
@@ -4971,13 +4929,14 @@ var getContext = function(display, infos, curLevel) {
            type: "paint"
          },
          ignoreBag: true,
-         backgroundColor: "#ffbf5e",
+         backgroundColor: "#c5e2dd",
+         borderColor: "#b4ccc7",
          itemTypes: {
             red_robot: { img: "red_robot.png", side: 90, nbStates: 1, isRobot: true, offsetX: -15, offsetY: 15, zOrder: 3 },
-            initialPaint: { num: 2, color: "#2e1de5", side: 60, isPaint: true, zOrder: 1 },
+            initialPaint: { num: 2, img: "paint.png", side: 60, isPaint: true, zOrder: 1 },
             marker: { num: 3, img: "marker.png", side: 60, isContainer: true, containerFilter: function(item) {return item.type === "paint";}, zOrder: 0 },
             marker_white: { num: 4, img: "marker_white.png", isContainer: true, isFake: true, side: 60, zOrder: 0 },
-            paint: { color: "#2e1de5", side: 60, isWithdrawable: true, zOrder: 1 },
+            paint: { img: "paint.png", side: 60, isWithdrawable: true, zOrder: 1 },
             number: { side: 60, zOrder: 2 },
             board_background: { num: 5, color: "#ffffff", side: 60, zOrder: 0 },
             board: { side: 60, isWritable: true, zOrder: 1 }
@@ -4985,7 +4944,7 @@ var getContext = function(display, infos, curLevel) {
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       pixelArt: {
-         newBlocks: (function(names, colors, colorsSecondary, colorsTertiary, translations) {
+         newBlocks: (function(names, colors, colorsSecondary, colorsTertiary, colorsFill, translations) {
             var blocks = [];
             for(var iColor = 0;iColor < colors.length;iColor++) {
                blocks.push({
@@ -5009,24 +4968,30 @@ var getContext = function(display, infos, curLevel) {
                     de: {
                        label: translations["de"][iColor],
                        code: translations["de"][iColor],
-                       description: translations["de"][iColor] + "(): Malt die Zelle in " + translations["de"][iColor] + " an"
                     }
                   },
                   category: "robot",
                   type: "actions",
                   block: {
-                     name: names[iColor], blocklyJson: {"colour": colors[iColor], "colourSecondary": colorsSecondary[iColor], "colourTertiary": colorsTertiary[iColor]}
+                     name: names[iColor], blocklyJson: {"colour": colors[iColor],
+                                                        "colourSecondary": colorsSecondary[iColor],
+                                                        "colourTertiary": colorsTertiary[iColor],
+                                                        "textStyle": "fill:" + colorsFill[iColor] +"; font-weight: 500;"}
                   },
                   func: (function(cur_color) { return function(callback) {
                      var robot = this.getRobot();
                      if(infos.allowRewrite === true) {
                         this.withdraw(undefined, false);
                      }
-                     else if(this.isOn(function(obj) { return obj.isWithdrawable === true;})) {
-                        throw(window.languageStrings.messages.failureRewrite);
+                     else if(this.isOn(function(obj) { return obj.type === "paint";})) {
+                        this.leave(window.languageStrings.messages.failureRewrite);
                      }
-                     
-                     this.dropObject({type: "paint", color: cur_color});
+
+                     if(this.isOn(function(obj) { return obj.isTrap === true;})) {
+                        this.leave(window.languageStrings.messages.failureLineBreak);
+                     }
+
+                     this.dropObject({type: "paint", color: names[cur_color], img: names[cur_color] + '.png', imgalt: translations["fr"][cur_color]});
                      if (robot.col == context.nbCols - 1) {
                         robot.row = (robot.row + 1) % context.nbRows;
                         robot.col = 0;
@@ -5063,7 +5028,6 @@ var getContext = function(display, infos, curLevel) {
                     de: {
                        label: "Auf " + translations["de"][iColor],
                        code: "auf" + translations["de"][iColor],
-                       description: "auf" + translations["de"][iColor] + "(): Testet, ob die Zelle " + translations["de"][iColor] + " ist"
                     }
                   },
                   category: "robot",
@@ -5096,24 +5060,26 @@ var getContext = function(display, infos, curLevel) {
          blockingFilter: false,
          itemTypes: {
             green_robot: { img: "cursor.png", side: 60, nbStates: 9, isRobot: true, zOrder: 2 },
-            marker_red: { num: 2, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff0000";} },
-            marker_blue: { num: 3, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#0000ff";} },
-            marker_yellow: { num: 4, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffff00";} },
-            marker_white: { num: 5, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ffffff";} },
-            marker_green: { num: 6, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#00ff00";} },
-            marker_orange: { num: 7, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff8000";} },
-            marker_pink: { num: 8, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#ff80ff";} },
-            marker_purple: { num: 9, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#800080";} },
-            marker_brown: { num: 10, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#804d00";} },
-            marker_grey: { num: 11, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#808080";} },
-            marker_black: { num: 12, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.color === "#000000";} },
+            marker_red: { num: 2, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "red";} },
+            marker_blue: { num: 3, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "blue";} },
+            marker_yellow: { num: 4, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "yellow";} },
+            marker_white: { num: 5, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "white";} },
+            marker_green: { num: 6, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "green";} },
+            marker_orange: { num: 7, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "orange";} },
+            marker_pink: { num: 8, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "pink";} },
+            marker_purple: { num: 9, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "purple";} },
+            marker_brown: { num: 10, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "brown";} },
+            marker_grey: { num: 11, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "grey";} },
+            marker_black: { num: 12, side: 60, isContainer: true, zOrder: 1, containerFilter: function(item) {return item.color === "black";} },
             paint: { side: 60, isWithdrawable: true, zOrder: 1 },
             marker_paint: { num: 1, side: 60, isContainer: true, zOrder: 0, containerFilter: function(item) {return item.type === "paint";} },
+            marker: { num: 13, img: "marker.png", isWritable: true, side: 60, zOrder: 0},
+            stop_cell: {num:100, side:60, isTrap: true},
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
       rocket: {
-         backgroundColor: "#666699",
+         backgroundColor: "#2c293e",
          itemTypes: {
             green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             board_background: { num: 2, color: "#8d8dbe", side: 60, zOrder: 0},
@@ -5123,12 +5089,47 @@ var getContext = function(display, infos, curLevel) {
             obstacle: { num: 6, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 1 },
             objet1: { num: 7, img: "objet1.png", side: 60, isWithdrawable: true, zOrder: 1 },
             objet2: { num: 8, img: "objet2.png", side: 60, isWithdrawable: true, zOrder: 1 }, 
+            mask: {num: 9, img: "mask.png", side: 60, isMask: true, zOrder: 2 },
             number: { side: 60, zOrder: 1 }            
          },
          checkEndCondition: robotEndConditions.checkReachExit
       },
+      seashells: {
+         backgroundColor: "#f3e4bf",
+         borderColor: "#ddb03c",
+         bagSize: 200,
+         itemTypes: {
+            red_robot: { img: "red_robot.png", side: 60, nbStates: 1, isRobot: true, zOrder: 4, customDisplay: function(obj) {
+            	if(context.bag.length != 0)
+            		obj.img = "red_robot_shell.png";
+            	else
+            		obj.img = "red_robot.png";
+            } },
+            basket: { num: 2, img: "basket.png", side: 75, isExit: true, isContainer: true, offsetX: -7, offsetY: 7, zOrder: 1},
+            shell: { num: 3, img: "shell.png", side: 60, isWithdrawable: true, offsetY: 2, zOrder: 2 },
+            shell: { num: 4, img: "shell.png", side: 60, isWithdrawable: true, offsetY: 0, offsetX: 0, zOrder: 2, canBeOutside: true, customDisplay: function(obj) {
+            	if(context.hasOn(obj.row, obj.col, function(item) { return item.num == 2; }))
+            		obj.offsetX = 0;
+            } },
+            count_shells: { num: 5, value: function(obj) {
+               return context.getItemsOn(obj.row, obj.col, function(item) {
+                  return item.isWithdrawable === true;
+               }).length;
+            }, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -14, offsetY: -14},
+            count_needs: { num: 6, value: function(obj) {
+               return context.getItemsOn(obj.row, obj.col, function(item) {
+                  return item.isContainer === true;
+               })[0].containerSize;
+            }, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -15, offsetY: -14},
+            obstacle: { num: 7, img: "obstacle.png", side: 60, isObstacle: true, zOrder: 0 },
+            board: { num: 8, side: 60, isWritable: true, fontColor: "#ffffff", fontBold: true, zOrder: 3, offsetX: -14, offsetY: -14 },
+            mask: {num: 12, img: "mask.png", side: 60, isMask: true, zOrder: 3 },
+         },
+         checkEndCondition: robotEndConditions.checkBothReachAndCollect
+      },
       sokoban: {
-         backgroundColor: "#ffeead",
+         backgroundColor: "#c2c6f2",
+         borderColor: "#a4aacd",
          itemTypes: {
             green_robot: { img: "green_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2 },
             wall: { num: 2, img: "wall.png", side: 60, isObstacle: true, zOrder: 0 },
@@ -5159,6 +5160,8 @@ var getContext = function(display, infos, curLevel) {
                   return item.isContainer === true;
                })[0].containerSize;
             }, side: 60, isWritable: true, fontColor: "#4a90e2", fontBold: true, zOrder: 1, offsetX: -20, offsetY: -17},
+            mask: {num: 8, img: "mask.png", side: 60, isMask: true, zOrder: 2 },
+            number: { num: 9, side: 60, zOrder: 1 }  
          },
          checkEndCondition: robotEndConditions.checkContainersFilled
       },
@@ -5498,16 +5501,9 @@ var getContext = function(display, infos, curLevel) {
       type: "sensors",
       block: { name: "onContainer", yieldsValue: 'bool' },
       func: function(callback) {
+         var robot = this.getRobot();
+         this.destroyMask(robot.row, robot.col);
          this.callCallback(callback, this.isOn(function(obj) { return obj.isContainer === true;}));
-      }
-   });
-
-   infos.newBlocks.push({
-      name: "onExit",
-      type: "sensors",
-      block: { name: "onExit", yieldsValue: 'bool' },
-      func: function(callback) {
-         this.callCallback(callback, this.isOn(function(obj) { return obj.isExit === true;}));
       }
    });
    
@@ -5555,6 +5551,7 @@ var getContext = function(display, infos, curLevel) {
       block: { name: "readNumber", yieldsValue: 'int' },
       func: function(callback) {
          var robot = this.getRobot();
+         this.destroyMask(robot.row, robot.col);
          this.callCallback(callback, this.readNumber(robot.row, robot.col));
       }
    });
@@ -5740,7 +5737,7 @@ var getContext = function(display, infos, curLevel) {
             }
          }
          else {
-            throw(window.languageStrings.messages.failureLaser);
+            this.leave(window.languageStrings.messages.failureLaser);
          }
          this.waitDelay(callback);
       }
@@ -5777,7 +5774,7 @@ var getContext = function(display, infos, curLevel) {
             }
          }
          else {
-            throw(window.languageStrings.messages.failureLaser);
+            this.leave(window.languageStrings.messages.failureLaser);
          }
          this.waitDelay(callback);
       }
@@ -5814,7 +5811,7 @@ var getContext = function(display, infos, curLevel) {
             this.waitDelay(callback, retour);
          }
          else {
-            throw(window.languageStrings.messages.failureLaser);
+            this.leave(window.languageStrings.messages.failureLaser);
             this.callCallback(callback);
          }
       }
@@ -5853,7 +5850,7 @@ var getContext = function(display, infos, curLevel) {
             this.waitDelay(callback, retour);
          }
          else {
-            throw(window.languageStrings.messages.failureLaser);
+            this.leave(window.languageStrings.messages.failureLaser);
             this.callCallback(callback);
          }
       }
@@ -5893,11 +5890,11 @@ var getContext = function(display, infos, curLevel) {
       block: { name: "dropPlatformInFront" },
       func: function(callback) {
          if(this.nbPlatforms == 0)
-            throw(window.languageStrings.messages.failureNotEnoughPlatform);
+            this.leave(window.languageStrings.messages.failureNotEnoughPlatform);
             
          var coords = {row: this.coordsInFront().row + 1, col: this.coordsInFront().col};
          if(this.getItemsOn(coords.row, coords.col, function(item) { return item.isObstacle === true; }).length != 0) {
-            throw(window.languageStrings.messages.failureDropPlatform);
+            this.leave(window.languageStrings.messages.failureDropPlatform);
          }
          this.nbPlatforms -= 1;
          this.dropObject({type: "platform"}, coords);
@@ -5911,11 +5908,11 @@ var getContext = function(display, infos, curLevel) {
       block: { name: "dropPlatformAbove" },
       func: function(callback) {
          if(this.nbPlatforms == 0)
-            throw(window.languageStrings.messages.failureNotEnoughPlatform);
+            this.leave(window.languageStrings.messages.failureNotEnoughPlatform);
             
          var coords = {row: this.getRobot().row - 1, col: this.getRobot().col};
          if(this.getItemsOn(coords.row, coords.col, function(item) { return item.isObstacle === true; }).length != 0) {
-            throw(window.languageStrings.messages.failureDropPlatform);
+            this.leave(window.languageStrings.messages.failureDropPlatform);
          }
          this.nbPlatforms -= 1;
          this.dropObject({type: "platform"}, coords);
@@ -5988,6 +5985,8 @@ var getContext = function(display, infos, curLevel) {
       infos.bottomMargin += infos.cellSide;
    }
 
+   var innerState = {};
+
    
    switch(infos.blocklyColourTheme) {
       case "bwinf":
@@ -6014,11 +6013,11 @@ var getContext = function(display, infos, curLevel) {
          break;
       default:
    }
-   
+
    var hasGrid = function() {
       return !!context.tiles;
    };
-
+   
    context.reset = function(gridInfos) {
       if(gridInfos && gridInfos.tiles) {
          context.gridInfos = gridInfos;
@@ -6096,18 +6095,28 @@ var getContext = function(display, infos, curLevel) {
    }
 
    context.getInnerState = function() {
-      return {
-         items: context.items,
-         multicell_items: context.multicell_items,
-         last_connect: context.last_connext,
-         wires: context.wires,
-         nbMoves: context.nbMoves,
-         time: context.time,
-         bag: context.bag,
+      var removeItemElement = function (item) {
+         var modifiedItem = Object.assign({}, item);
+         delete modifiedItem.element;
+         return modifiedItem;
       };
+      innerState.items = context.items.map(removeItemElement);
+      innerState.multicell_items = context.multicell_items.map(removeItemElement);
+      innerState.last_connect = context.last_connect;
+      innerState.wires = context.wires.map(removeItemElement);
+      innerState.nbMoves = context.nbMoves;
+      innerState.time = context.time;
+      innerState.bag = context.bag.map(removeItemElement);
+
+      return innerState;
    };
 
+   context.implementsInnerState = function () {
+      return true;
+   }
+
    context.reloadInnerState = function(data) {
+      innerState = data;
       context.items = data.items;
       context.multicell_items = data.multicell_items;
       context.last_connect = data.last_connect;
@@ -6276,6 +6285,11 @@ var getContext = function(display, infos, curLevel) {
       
       if(item.img) {
          item.element = paper.image(imgUrlWithPrefix(item.img), x, y, item.side * item.nbStates * scale, item.side * scale);
+         var imgalt = item.imgalt || itemType.imgalt
+         if (imgalt) {
+            item.element.attr('title', imgalt);
+         }
+
       }
       else if(item.value !== undefined) {
          var fontColor = item.fontColor;
@@ -6305,6 +6319,11 @@ var getContext = function(display, infos, curLevel) {
          item.element.attr(itemAttributes(item));
       if(resetZOrder)
          resetItemsZOrder(item.row, item.col);
+   };
+
+   context.leave = function(error) {
+      context.destroyMasks();
+      throw(error);
    };
    
    context.updateScale = function() {
@@ -6423,7 +6442,7 @@ var getContext = function(display, infos, curLevel) {
          
          var robot = this.getRobot();
          if(this.hasOn(robot.row, robot.col, function(item) { return item.isProjectile === true; })) {
-            throw(context.strings.messages.failureProjectile);
+            context.leave(context.strings.messages.failureProjectile);
          }
       }
    };
@@ -6656,8 +6675,24 @@ var getContext = function(display, infos, curLevel) {
       context.setIndexes();
       context.items.splice(item.index, 1);
 
-      if(context.display) {
+      if(context.display && item.element !== undefined) {
          item.element.remove();
+      }
+   };
+
+   context.destroyMask = function(row, col) {
+      var masks = context.getItemsOn(row, col, function(obj) { return obj.isMask === true; });
+      
+      for(var iMask = 0;iMask < masks.length;iMask++) {
+          context.destroy(masks[iMask]);
+      }
+   };
+
+   context.destroyMasks = function() {
+      for(var row = 0;row < context.nbRows;row++) {
+         for(var col = 0;col < context.nbCols;col++) {
+            context.destroyMask(row, col);
+         }
       }
    };
    
@@ -6671,11 +6706,11 @@ var getContext = function(display, infos, curLevel) {
       }
       
       if(!context.isInGrid(row + 1, col)) {
-         throw(context.strings.messages.falls);
+         context.leave(context.strings.messages.falls);
       }
       
       if(row - startRow > infos.maxFallAltitude) {
-         throw(context.strings.messages.willFallAndCrash);
+         context.leave(context.strings.messages.willFallAndCrash);
       }
       context.nbMoves++;
       context.moveRobot(row, col, item.dir, callback);
@@ -6683,20 +6718,20 @@ var getContext = function(display, infos, curLevel) {
    
    context.jump = function(callback) {
       if(!infos.hasGravity) {
-         throw("Error: can't jump without gravity");
+         context.leave("Error: can't jump without gravity");
       }
       
       var item = context.getRobot();
       if(!context.isInGrid(item.row - 1, item.col)) {
-         throw(context.strings.messages.jumpOutsideGrid);
+         context.leave(context.strings.messages.jumpOutsideGrid);
       }
       var obstacle = context.getItemsOn(item.row - 2, item.col, function(obj) { return obj.isObstacle === true || obj.isProjectile === true; });
       if(obstacle.length > 0) {
-         throw(context.strings.messages.jumpObstacleBlocking);
+         context.leave(context.strings.messages.jumpObstacleBlocking);
       }
       var platforms = context.getItemsOn(item.row - 1, item.col, function(obj) { return obj.isObstacle === true; });
       if(platforms.length == 0) {
-         throw(context.strings.messages.jumpNoPlatform);
+         context.leave(context.strings.messages.jumpNoPlatform);
       }
       context.nbMoves++;
       context.moveRobot(item.row - 2, item.col, item.dir, callback);
@@ -6711,14 +6746,15 @@ var getContext = function(display, infos, curLevel) {
       }
       var item = context.getRobot();
       var withdrawables = context.getItemsOn(item.row, item.col, function(obj) { return obj.isWithdrawable === true && filter(obj); });
+      context.destroyMask(item.row, item.col);
       if(withdrawables.length == 0) {
          if(errorWhenEmpty)
-            throw(context.strings.messages.nothingToPickUp);
+         context.leave(context.strings.messages.nothingToPickUp);
          return;
       }
       
       if(infos.bagSize != undefined && context.bag.length == infos.bagSize) {
-         throw(context.strings.messages.tooManyObjects);
+         context.leave(context.strings.messages.tooManyObjects);
       }
       
       var withdrawable = withdrawables[0];
@@ -6751,23 +6787,22 @@ var getContext = function(display, infos, curLevel) {
          if(container.containerSize == undefined && container.containerFilter == undefined) {
             container.containerSize = 1;
          }
-         var filter;
-         if(container.containerFilter == undefined)
-            filter = function(obj) { return obj.isWithdrawable === true; };
-         else
-            filter = function(obj) { return obj.isWithdrawable === true && container.containerFilter(obj) };
-         
-         if(container.containerSize != undefined && context.getItemsOn(coords.row, coords.col, filter).length > container.containerSize) {
-            throw(window.languageStrings.messages.failureDropObject);
-            return;
-         }
 
-         
+         var filter;
+         if (container.containerFilter != undefined) {
+            filter = container.containerFilter;
+         } else {
+            filter = function(obj) { return obj.isWithdrawable === true; };
+         }
+         if(container.containerSize != undefined && context.getItemsOn(coords.row, coords.col, filter).length > container.containerSize) {
+            context.leave(window.languageStrings.messages.failureDropObject);
+            return;
+         }        
 
          if(container.containerFilter != undefined) {
             if(context.hasOn(coords.row, coords.col, function(obj) { return obj.isWithdrawable === true && !container.containerFilter(obj) }) && (context.infos.blockingFilter !== false)) {
 
-               throw(window.languageStrings.messages.failureDropObject);
+               context.leave(window.languageStrings.messages.failureDropObject);
                return;
             }
          }
@@ -6785,10 +6820,11 @@ var getContext = function(display, infos, curLevel) {
          var item = context.getRobot();
          coords = {row: item.row, col: item.col};
       }
-      
+      context.destroyMask(coords.row, coords.col);
+
       for(var i = 0;i < count;i++) {
          if(context.bag.length == 0) {
-            throw(context.strings.messages.emptyBag);
+            context.leave(context.strings.messages.emptyBag);
          }
          
          var object = context.bag.pop();
@@ -6819,7 +6855,7 @@ var getContext = function(display, infos, curLevel) {
       }
       
       if(!context.isInGrid(coords.row, coords.col)) {
-         throw(window.languageStrings.messages.failureDropOutside);
+         context.leave(window.languageStrings.messages.failureDropOutside);
          return;
       }
       
@@ -6872,7 +6908,7 @@ var getContext = function(display, infos, curLevel) {
          context.waitDelay(callback);
       } else {
          context.moveRobot(robot.row + (coords.row - robot.row) / 4, robot.col + (coords.col - robot.col) / 4, robot.dir);
-         throw ttbo;
+         context.leave(ttbo);
       }
    };
    
@@ -6891,7 +6927,7 @@ var getContext = function(display, infos, curLevel) {
          context.waitDelay(callback);
       } else {
          context.moveRobot(robot.row + (coords.row - robot.row) / 4, robot.col + (coords.col - robot.col) / 4, robot.dir);
-         throw ttbo;
+         context.leave(ttbo);
       }
    };
    
@@ -6905,7 +6941,7 @@ var getContext = function(display, infos, curLevel) {
          context.waitDelay(callback);
       } else {
          context.moveRobot(item.row - 1/4, item.col, 3);
-         throw ttbo;
+         context.leave(ttbo);
       }
    };
    
@@ -6919,7 +6955,7 @@ var getContext = function(display, infos, curLevel) {
          context.waitDelay(callback);
       } else {
          context.moveRobot(item.row + 1/4, item.col, 1);
-         throw ttbo;
+         context.leave(ttbo);
       }
    };
    
@@ -6933,7 +6969,7 @@ var getContext = function(display, infos, curLevel) {
          context.waitDelay(callback);
       } else {
          context.moveRobot(item.row, item.col + 1/4, 0);
-         throw ttbo;
+         context.leave(ttbo);
       }
    };
    
@@ -6947,11 +6983,13 @@ var getContext = function(display, infos, curLevel) {
          context.waitDelay(callback);
       } else {
          context.moveRobot(item.row, item.col - 1/4, 2);
-         throw ttbo;
+         context.leave(ttbo);
       }
    };
    
    context.obstacleInFront = function() {
+      var coords = context.coordsInFront();
+      context.destroyMask(coords.row, coords.col);
       return context.isInFront(function(obj) { return obj.isObstacle === true; });
    };
    
@@ -6969,7 +7007,7 @@ var getContext = function(display, infos, curLevel) {
       var numbers = context.getItemsOn(row, col, function(obj) { return obj.isWritable === true; });
       
       if(numbers.length == 0) {
-         throw(strings.messages.failureWriteHere);
+         context.leave(strings.messages.failureWriteHere);
       }
       
       var number = numbers[0];
@@ -6983,7 +7021,7 @@ var getContext = function(display, infos, curLevel) {
       var numbers = context.getItemsOn(row, col, function(obj) { return obj.value !== undefined; });
       
       if(numbers.length == 0) {
-         throw(strings.messages.failureReadHere);
+         context.leave(strings.messages.failureReadHere);
       }
       
       return parseInt(numbers[0].value);
@@ -6996,17 +7034,17 @@ var getContext = function(display, infos, curLevel) {
       var items = context.getItemsOn(coords.row, coords.col, function(obj) { return obj.isPushable === true ; });
       
       if(items.length == 0) {
-         throw(strings.messages.failureNothingToPush);
+         context.leave(strings.messages.failureNothingToPush);
       }
       
       var coordsAfter = context.coordsInFront(0, 2);
       
       if(!context.isInGrid(coordsAfter.row, coordsAfter.col))
-         throw(strings.messages.failureWhilePushing);
+         context.leave(strings.messages.failureWhilePushing);
       if(context.hasOn(coordsAfter.row, coordsAfter.col, function(obj) { return obj.isObstacle === true; } ))
-         throw(strings.messages.failureWhilePushing);
+         context.leave(strings.messages.failureWhilePushing);
       if(context.tiles[coordsAfter.row][coordsAfter.col] == 0)
-         throw(strings.messages.failureWhilePushing);
+         context.leave(strings.messages.failureWhilePushing);
       
       context.moveItem(items[0], coordsAfter.row, coordsAfter.col);
       
@@ -7029,7 +7067,19 @@ var getContext = function(display, infos, curLevel) {
       var lights = context.getItemsOn(lig, col, function(obj) {
          return obj.isLight === true;
       });
-      
+
+      var fuses = context.getItemsOn(lig, col, function(obj) {
+         return obj.isFuse === true;
+      });
+
+      for(var fuse in fuses) {
+         fuses[fuse].state = 1;
+         fuses[fuse].img = fuses[fuse].states[fuses[fuse].state];
+         if(context.display)
+            redisplayItem(fuses[fuse]);
+         context.leave(strings.messages.failureFuse);
+      }
+
       for(var light in lights) {
          lights[light].state = 1;
          lights[light].img = lights[light].states[lights[light].state];
@@ -7043,6 +7093,19 @@ var getContext = function(display, infos, curLevel) {
       var taille = infos.cellSide;
       
       var findRobot = false;
+
+      var dx = (taille * dirs[dir][1]) * scale;
+      var dy = (taille * dirs[dir][0]) * scale;
+      
+      if(context.display && paper != undefined) {
+         var segment = paper.path("M " + x + " " + y + " l " + dx + " " + dy);
+         
+         segment.attr({'stroke-width': 5, 'stroke': '#fab9c7'});
+         
+         context.delayFactory.createTimeout("deleteSegement_" + Math.random(), function() {
+            segment.remove();
+         }, infos.actionDelay * 2);
+      }
       
       var plig = lig + dirs[dir][0];
       var pcol = col + dirs[dir][1];
@@ -7065,19 +7128,6 @@ var getContext = function(display, infos, curLevel) {
          }
       }
       
-      var dx = (taille * dirs[dir][1]) * scale;
-      var dy = (taille * dirs[dir][0]) * scale;
-      
-      if(context.display && paper != undefined) {
-         var segment = paper.path("M " + x + " " + y + " l " + dx + " " + dy);
-         
-         segment.attr({'stroke-width': 5, 'stroke': '#ffff93'});
-         
-         context.delayFactory.createTimeout("deleteSegement_" + Math.random(), function() {
-            segment.remove();
-         }, infos.actionDelay * 2);
-      }
-      
       return findRobot;
    };
    
@@ -7087,20 +7137,20 @@ var getContext = function(display, infos, curLevel) {
       var plugs = context.getItemsOn(robot.row, robot.col, function(obj) { return obj.plugType !== undefined ; });
       
       if(plugs.length == 0) {
-         throw(strings.messages.failureNoPlug);
+         context.leave(strings.messages.failureNoPlug);
       }
       
       var wires = context.getItemsOn(robot.row, robot.col, function(obj) { return obj.isWire === true; });
       
       if(wires.length != 0) {
-         throw(strings.messages.failureAlreadyWired);
+         context.leave(strings.messages.failureAlreadyWired);
       }
       
       this.dropObject({type: "wire", zOrder: 1});
       
       if(this.last_connect !== undefined) {
          if(this.last_connect.plugType + plugs[0].plugType != 0)
-            throw(strings.messages.failureWrongPlugType);
+            context.leave(strings.messages.failureWrongPlugType);
             
          function segmentLength(segment) {
             return Math.sqrt((segment[0][0] - segment[1][0]) * (segment[0][0] - segment[1][0]) + (segment[0][1] - segment[1][1]) * (segment[0][1] - segment[1][1]));
@@ -7109,19 +7159,19 @@ var getContext = function(display, infos, curLevel) {
          var wire = [[this.last_connect.row, this.last_connect.col],[plugs[0].row, plugs[0].col]];
          
          if(segmentLength(wire) > infos.maxWireLength) {
-            throw(strings.messages.failureWireTooLong);
+            context.leave(strings.messages.failureWireTooLong);
          }
          
          var totalLength = segmentLength(wire);
          for(var iWire = 0;iWire < this.wires.length;iWire++) {
             if(this.isCrossing(wire, this.wires[iWire])) {
-               throw(strings.messages.failureWireCrossing);
+               context.leave(strings.messages.failureWireCrossing);
             }
             totalLength += segmentLength(this.wires[iWire]);
          }
          
          if(totalLength > infos.maxTotalLength) {
-            throw(strings.messages.failureTotalLengthExceeded);
+            context.leave(strings.messages.failureTotalLengthExceeded);
          }
          
          this.wires.push(wire);
@@ -7155,11 +7205,11 @@ var robotEndConditions = {
       var robot = context.getRobot();
       if(context.isOn(function(obj) { return obj.isExit === true; })) {
          context.success = true;
-         throw(window.languageStrings.messages.successReachExit);
+         context.leave(window.languageStrings.messages.successReachExit);
       }
       if(lastTurn) {
          context.success = false;
-         throw(window.languageStrings.messages.failureReachExit);
+         context.leave(window.languageStrings.messages.failureReachExit);
       }
    },
    checkPickedAllWithdrawables: function(context, lastTurn) {
@@ -7174,11 +7224,11 @@ var robotEndConditions = {
       
       if(solved) {
          context.success = true;
-         throw(window.languageStrings.messages.successPickedAllWithdrawables);
+         context.leave(window.languageStrings.messages.successPickedAllWithdrawables);
       }
       if(lastTurn) {
          context.success = false;
-         throw(window.languageStrings.messages.failurePickedAllWithdrawables);
+         context.leave(window.languageStrings.messages.failurePickedAllWithdrawables);
       }
    },
    checkPlugsWired: function(context, lastTurn) {
@@ -7193,11 +7243,11 @@ var robotEndConditions = {
       
       if(solved) {
          context.success = true;
-         throw(window.languageStrings.messages.successPlugsWired);
+         context.leave(window.languageStrings.messages.successPlugsWired);
       }
       if(lastTurn) {
          context.success = false;
-         throw(window.languageStrings.messages.failurePlugsWired);
+         context.leave(window.languageStrings.messages.failurePlugsWired);
       }
    },
    checkContainersFilled: function(context, lastTurn) {
@@ -7212,7 +7262,7 @@ var robotEndConditions = {
       if (context.infos.maxMoves != undefined) {
          if (context.nbMoves > context.infos.maxMoves) {
             context.success = false;
-            throw(window.languageStrings.messages.failureTooManyMoves + " : " + context.nbMoves);
+            context.leave(window.languageStrings.messages.failureTooManyMoves + " : " + context.nbMoves);
          }
       }
       for(var row = 0;row < context.nbRows;row++) {
@@ -7224,10 +7274,11 @@ var robotEndConditions = {
                   container.containerSize = 1;
                }
                var filter;
-               if(container.containerFilter == undefined)
+               if (container.containerFilter != undefined) {
+                  filter = container.containerFilter;
+               } else {
                   filter = function(obj) { return obj.isWithdrawable === true; };
-               else
-                  filter = function(obj) { return obj.isWithdrawable === true && container.containerFilter(obj) };
+               }
                
                if(container.containerSize != undefined && context.getItemsOn(row, col, filter).length != container.containerSize) {
                   solved = false;
@@ -7262,11 +7313,48 @@ var robotEndConditions = {
       
       if(solved) {
          context.success = true;
-         throw(window.languageStrings.messages.successContainersFilled);
+         context.leave(window.languageStrings.messages.successContainersFilled);
       }
       if(lastTurn) {
          context.success = false;
-         throw(messages[message]);
+         context.leave(messages[message]);
+      }
+   },
+   checkSpecificCollection: function(context, lastTurn) {
+      // Look for a custom filter in the task infos, otherwise accept everything (legacy behavior)
+      var filter = context.infos.checkFilter || function(obj) { return true; };
+      
+      var solved = true;
+
+      // 1. Check if there are valid items left on the grid (Failure if yes)
+      for(var row = 0;row < context.nbRows;row++) {
+         for(var col = 0;col < context.nbCols;col++) {
+            // We look for items that are withdrawable AND match the criteria
+            var remainingTargets = context.getItemsOn(row, col, function(obj) { 
+               return obj.isWithdrawable === true && filter(obj); 
+            });
+            if(remainingTargets.length > 0) {
+               solved = false;
+            }
+         }
+      }
+      
+      // 2. Check if the robot picked up something it shouldn't have
+      for(var i = 0; i < context.bag.length; i++) {
+         var item = context.bag[i];
+         if(!filter(item)) {
+            context.success = false;
+            throw(window.languageStrings.messages.failureUnfilteredObject); 
+         }
+      }
+      
+      if(solved) {
+         context.success = true;
+         throw(window.languageStrings.messages.successPickedAllWithdrawables);
+      }
+      if(lastTurn) {
+         context.success = false;
+         throw(window.languageStrings.messages.failurePickedAllWithdrawables);
       }
    },
    checkBothReachAndCollect: function(context, lastTurn) {
@@ -7277,19 +7365,19 @@ var robotEndConditions = {
             for(var col = 0;col < context.nbCols;col++) {
                if(context.hasOn(row, col, function(obj) { return obj.isWithdrawable === true; })) {
                   solved = false;
-                  throw(window.languageStrings.messages.failurePickedAllWithdrawables);
+                  context.leave(window.languageStrings.messages.failurePickedAllWithdrawables);
                }
             }
          }
          
          if(solved) {
             context.success = true;
-            throw(window.languageStrings.messages.successPickedAllWithdrawables);
+            context.leave(window.languageStrings.messages.successPickedAllWithdrawables);
          }
       }
       if(lastTurn) {
          context.success = false;
-         throw(window.languageStrings.messages.failureReachExit);
+         context.leave(window.languageStrings.messages.failureReachExit);
       }
    },
    checkLights: function(context, lastTurn) {
@@ -7304,11 +7392,11 @@ var robotEndConditions = {
       
       if(solved) {
          context.success = true;
-         throw(window.languageStrings.messages.successLights);
+         context.leave(window.languageStrings.messages.successLights);
       }
       if(lastTurn) {
          context.success = false;
-         throw(window.languageStrings.messages.failureLights);
+         context.leave(window.languageStrings.messages.failureLights);
       }
    }
 };
@@ -7328,19 +7416,20 @@ var robotEndFunctionGenerator = {
          }
          
          for(var item in context.bag) {
-            if(!filter(context.bag[item])) {
+            var obj = context.bag[item];
+            if(obj.isWithdrawable && !filter(obj)) {
                context.success = false;
-               throw(window.languageStrings.messages.failureUnfilteredObject);
+               context.leave(window.languageStrings.messages.failureUnfilteredObject);
             }
          }
          
          if(solved) {
             context.success = true;
-            throw(window.languageStrings.messages.successPickedAllWithdrawables);
+            context.leave(window.languageStrings.messages.successPickedAllWithdrawables);
          }
          if(lastTurn) {
             context.success = false;
-            throw(window.languageStrings.messages.failurePickedAllWithdrawables);
+            context.leave(window.languageStrings.messages.failurePickedAllWithdrawables);
          }
       };
    },
@@ -7351,7 +7440,7 @@ var robotEndFunctionGenerator = {
             var number = numbers[iNumber];
             var items = context.getItemsOn(number.row, number.col, function(obj) { return obj.value !== undefined; });
             if(items.length == 0)
-               throw("Error: no number here");
+               context.leave(window.languageStrings.messages.failureMissingNumber);
             
             var expected;
             if(typeof number.value === "number") {
@@ -7367,13 +7456,29 @@ var robotEndFunctionGenerator = {
          
          if(solved) {
             context.success = true;
-            throw(window.languageStrings.messages.successNumbersWritten);
+            context.leave(window.languageStrings.messages.successNumbersWritten);
          }
          
          if(lastTurn) {
             context.success = false;
-            throw(window.languageStrings.messages.failureNumbersWritten);
+            context.leave(window.languageStrings.messages.failureNumbersWritten);
          }
+      };
+   },
+   combineEndFunctions: function(firstFunction, secondFunction) {
+      return function(context, lastTurn) {
+         let oldLeave = context.leave;
+         
+         context.leave = function(message) {
+            context.leave = oldLeave;
+            if(!context.success) {
+               context.leave(message);
+            } else {
+               secondFunction(context, lastTurn);
+            }
+         };
+
+         firstFunction(context, lastTurn);
       };
    }
 };

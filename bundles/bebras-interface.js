@@ -148,7 +148,6 @@ if (!isCrossDomain()) {
             success(h);
          }, error);
       }
-
       var gradeAnswer = function(params, success, error) {
          var newSuccess = function(score, message, scoreToken) {
             success([score, message, scoreToken]);
@@ -306,7 +305,7 @@ window.displayHelper = {
    stoppedShowingResult: false,
    previousMessages: {},
    popupMessageShown: false,
-   alwaysAskLevelChange: false,
+   alwaysAskLevelChange: true, 
    taskParams: {},
    taskParamsInitialised: false,
 
@@ -650,19 +649,19 @@ window.displayHelper = {
          tryToDoBetterOrChangeTask: "Versuche, dich zu verbessern oder wähle eine andere Frage.",
          tryToDoBetterOrMoveToNextLevel: "Versuche, dich zu verbessern oder wähle schwierigere Version.",
          bestPossibleScoreCongrats: "Das ist die bestmögliche Punktzahl für diese Aufgabe. Glückwunsch!",
-         forMorePointsMoveToNextLevel: "Wähle eine schwerere Version aus, um noch mehr Punkte zu bekommen.",
+         forMorePointsMoveToNextLevel: "Wähle eine schwierigere Version aus, um noch mehr Punkte zu bekommen.",
          youDidBetterBefore: "Du hast dich verbessern.",
          scoreStays2: "Dein Punktestand bleibt gleich.",
          reloadBestAnswer: "Deine beste Antwort wieder laden.",
          noAnswerSaved: "Bisher noch keine Antwort für diese Version gespeichert.",
          validate: "Erstellen",
          restart: "Neustarten",
-         harderLevelSolved: "Achtung: Du hast schon eine schwerere Version gelöst. Du kannst mit dieser Version keine zusätzlichen Punkte bekommen.",
+         harderLevelSolved: "Achtung: Du hast schon eine schwierigere Version gelöst. Du kannst mit dieser Version keine zusätzlichen Punkte bekommen.",
          showLevelAnyway: "Trotzdem anzeigen",
          scoreObtained: "Erhaltene Punkte:",
          hardVersionTakesTime: "Eine {0} zu lösen kann dich viel Zeit kosten; Denke zunächst daran, die Fragen in {1} zu beantworten, um schnell Punkte zu bekommen.",
          illKeepThatInMind: "Ich hab das verstanden",
-         harderLevelAvailable: "Beachte, dass du bei dieser Frage direkt zu einer schwereren Version gehen kannst.",
+         harderLevelAvailable: "Beachte, dass du bei dieser Frage direkt zu einer schwierigeren Version gehen kannst.",
          lockedLevel: "Diese Version ist noch gesperrt. Löse die vorherige um diese freizuschalten.",
          lockedLevelDev: "This version is normally locked, and the previous version must be solved before displaying this. As you opened this task locally, you can however display this version for testing purposes.",
          gradeThisAnswer: "Diese Antwort auswerten",
@@ -1218,6 +1217,21 @@ window.displayHelper = {
                callSetupLevels();
             });
          }
+      }
+      this.initLevelVars();
+
+      var self = this;
+      function callSetupLevels() {
+         if(!initLevel) {
+            initLevel = self.taskParams.options.difficulty ? self.taskParams.options.difficulty : "easy";
+         }
+         self.doSetupLevels(initLevel);
+      };
+      if (!this.taskParams) {
+         window.platform.getTaskParams(null, null, function(taskParams) {
+            self.taskParams = taskParams;
+            callSetupLevels();
+         });
       } else {
          callSetupLevels();
       }
@@ -2065,7 +2079,7 @@ window.displayHelper = {
          }
       } else {
          var strPoint = this.strings.point;
-         if (this.submittedScore > 1) {
+         if (this.submittedScore > 0) {
             strPoint = this.strings.points;
          }
          message = this.strings.scoreObtained + ' <span id="answerScore">' + this.submittedScore + " " + strPoint + " " + this.strings.outOf + " " + maxScoreLevel + ".</span><br/>";
@@ -3160,7 +3174,7 @@ window.implementGetResources = function(task) {
          }
       }
       $('#task img').each(addImageTo(res.task));
-      fillImages($('#task').html(), images, res.task);
+      fillImages($('#task').html(),  images, res.task);
       $('script').each(function() {
          if ($(this).hasClass('remove') || $(this).attr('src') || $(this).attr('href')) {
             return;

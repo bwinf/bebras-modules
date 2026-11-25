@@ -1907,7 +1907,7 @@
      * --------------------------------------------------------- */
 
     function getBlockly() {
-        return window.Blockly || null;
+        return window.__jwinfBlockly || window.Blockly || null;
     }
 
 
@@ -2217,6 +2217,34 @@
                 );
 
                 Blockly.Xml.domToWorkspace(wrapper, workspace);
+            } else if (
+                Blockly.Xml &&
+                typeof Blockly.Xml.appendDomToWorkspace === "function"
+            ) {
+                var container = document.createElementNS(
+                    "https://developers.google.com/blockly/xml",
+                    "xml"
+                );
+
+                container.appendChild(xml);
+
+                var events = Blockly.Events;
+                var ownGroup =
+                    events &&
+                    typeof events.setGroup === "function" &&
+                    !events.getGroup();
+
+                if (ownGroup) {
+                    events.setGroup(true);
+                }
+
+                try {
+                    Blockly.Xml.appendDomToWorkspace(container, workspace);
+                } finally {
+                    if (ownGroup) {
+                        events.setGroup(false);
+                    }
+                }
             } else {
                 throw new Error(
                     "Keine passende Blockly-Einfügefunktion gefunden."
