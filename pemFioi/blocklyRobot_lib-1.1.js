@@ -2685,10 +2685,8 @@ var getContext = function(display, infos, curLevel) {
              },
             messages: {
               successContainersFilled: "Bravo, der Roboter hat das vorgegebene Muster richtig gemalt!",
-               failureContainersFilledSingular: "Dein Roboter hat nicht das richtige Feld bemalt.",
-              failureContainersFilled: "Der Roboter hat nicht die richtigen Felder bemalt.",
-              failureContainersFilledLess: "Der Roboter hat nicht alle markierten Felder bemalt.",
-               failureContainersFilledLessSingular: "Dein Roboter hat das Feld nicht bemalt.",
+              failureContainersFilled: "Der Roboter hat nicht die richtigen Felder gefärbt.",
+              failureContainersFilledLess: "Der Roboter hat nicht alle markierten Felder gefärbt.",
             }
         },  
       },
@@ -3149,10 +3147,8 @@ var getContext = function(display, infos, curLevel) {
             //    pushObject: "schiebeKiste() schiebt die Kiste ein Feld weiter",               
             // },
             messages: {
-               successContainersFilled: "Herzlichen Glückwunsch, die Kisten sind alle auf den Markierungen!",
-               successContainersFilledSingular: "Bravo, die Kiste ist richtig platziert!",
-               failureContainersFilled: "Es gibt noch Kisten, die nicht an ihrem Platz sind.",
-               failureContainersFilledSingular: "Die Kiste steht nicht an ihrem Platz!",
+               successContainersFilled: "Herzlichen Glückwunsch, alle Kiste(n) stehen auf einer markierten Position.",
+               failureContainersFilled: "Es gibt noch Kisten, die nicht auf einer markierten Position stehen.",
                failureNothingToPush: "Hier gibt es keine Kiste zum Herumschieben!",
                failureWhilePushing: "Der Roboter kann hier nicht schieben!",
                obstacle: "Der Roboter ist gegen ein Hindernis gelaufen!"
