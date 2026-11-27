@@ -4240,7 +4240,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCruz(): ¿Se encuentra el robot sobre una cruz?"
                },
                de: {
-                  label: "auf grünem Kreuz",
+                  label: "auf rotem Kreuz",
                   code: "aufKreuz",
                   // description: "aufKreuz(): Steht der Roboter über einem Kreuz?"
                 }
@@ -4318,7 +4318,7 @@ var getContext = function(display, infos, curLevel) {
                  description: "sobreCuadrado(): ¿Se encuentra el robot sobre un cuadrado?"
                },
                de: {
-                  label: "auf blauem Quadrat",
+                  label: "auf blauem Dreieck",
                   code: "aufQuadrat",
                   // description: "aufViereck(): Steht der Roboter über einem Viereck?"
                 }
@@ -5227,7 +5227,7 @@ isTriangle: true, zOrder: 1 },
             robot: { img: imgPath+"white_robot.png", side: 80, nbStates: 9, isRobot: true, offsetX: -11, zOrder: 2, isOpaque: true },
             obstacle: { num: 2, img: imgPath+"asteroide.png", side: 60, isObstacle: true, isOpaque: true },
             light: { num: 3, img: imgPath+"off_spot.png", states: [imgPath+"off_spot.png", imgPath+"on_spot.png"], isLight: true, state: 0, side: 60 },
-            launcher: { num: 5, img: imgPath+"launcher2.png", isLaser: true, side: 60 },
+            launcher: { num: 5, img: imgPath+"launcher.png", isLaser: true, side: 60 },
             mirrorN: { num: 6, img: imgPath+"mirrorN.png", isMirror: true, mirrorFunction: function(dir) { return (14 - dir) % 8; }, side: 60 },
             mirrorZ: { num: 7, img: imgPath+"mirrorZ.png", isMirror: true, mirrorFunction: function(dir) { return (10 - dir) % 8; }, side: 60 },
             mirrorH: { num: 8, img: imgPath+"mirrorH.png", isMirror: true, mirrorFunction: function(dir) { return (12 - dir) % 8; }, side: 60 },
