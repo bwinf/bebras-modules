@@ -2749,72 +2749,72 @@
     }
 
 
-    function positionBlocklyToolboxCollapser(button) {
-        var elements = getBlocklyToolboxElements();
-        var root = elements.root;
-        var injectionDiv = elements.injectionDiv;
-        var flyout = elements.flyout;
-        var left = 0;
-        var flyoutRect;
-        var injectionRect;
+    // function positionBlocklyToolboxCollapser(button) {
+    //     var elements = getBlocklyToolboxElements();
+    //     var root = elements.root;
+    //     var injectionDiv = elements.injectionDiv;
+    //     var flyout = elements.flyout;
+    //     var left = 0;
+    //     var flyoutRect;
+    //     var injectionRect;
 
-        if (!root || !injectionDiv || !button) {
-            return;
-        }
+    //     if (!root || !injectionDiv || !button) {
+    //         return;
+    //     }
 
-        if (
-            root.classList.contains(
-                "jwinf-blockly-toolbox-collapsed"
-            )
-        ) {
-            button.style.left = "0px";
-            return;
-        }
+    //     if (
+    //         root.classList.contains(
+    //             "jwinf-blockly-toolbox-collapsed"
+    //         )
+    //     ) {
+    //         button.style.left = "0px";
+    //         return;
+    //     }
 
-        /*
-         * Wenn möglich: echte rechte Kante der Flyout-Leiste.
-         */
-        if (flyout) {
-            flyoutRect = flyout.getBoundingClientRect();
-            injectionRect = injectionDiv.getBoundingClientRect();
+    //     /*
+    //      * Wenn möglich: echte rechte Kante der Flyout-Leiste.
+    //      */
+    //     if (flyout) {
+    //         flyoutRect = flyout.getBoundingClientRect();
+    //         injectionRect = injectionDiv.getBoundingClientRect();
 
-            if (
-                flyoutRect &&
-                injectionRect &&
-                isFinite(flyoutRect.right) &&
-                isFinite(injectionRect.left) &&
-                flyoutRect.right > injectionRect.left
-            ) {
-                left = flyoutRect.right - injectionRect.left;
-            }
-        }
+    //         if (
+    //             flyoutRect &&
+    //             injectionRect &&
+    //             isFinite(flyoutRect.right) &&
+    //             isFinite(injectionRect.left) &&
+    //             flyoutRect.right > injectionRect.left
+    //         ) {
+    //             left = flyoutRect.right - injectionRect.left;
+    //         }
+    //     }
 
-        /*
-         * Falls die echte Position noch nicht messbar ist,
-         * über die Flyout-Breite gehen.
-         */
-        if (!left || !isFinite(left) || left <= 0) {
-            left = getBlocklyFlyoutWidth(elements);
-        }
+    //     /*
+    //      * Falls die echte Position noch nicht messbar ist,
+    //      * über die Flyout-Breite gehen.
+    //      */
+    //     if (!left || !isFinite(left) || left <= 0) {
+    //         left = getBlocklyFlyoutWidth(elements);
+    //     }
 
-        button.style.left = Math.round(left) + "px";
-    }
+    //     button.style.left = Math.round(left) + "px";
+    // }
 
 
-    function getBlocklyCollapserIcon() {
-        return (
-            '<svg data-prefix="fas" data-icon="chevron-left" ' +
-            'class="svg-inline--fa fa-chevron-left" role="img" ' +
-            'viewBox="0 0 320 512" aria-hidden="true">' +
-            '<path fill="currentColor" d="' +
-            'M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3' +
-            'l192 192c12.5 12.5 32.8 12.5 45.3 0' +
-            's12.5-32.8 0-45.3L77.3 256 246.6 86.6' +
-            'c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5' +
-            '-45.3 0l-192 192z' +
-            '"></path></svg>'
-        );
-    }
+    // function getBlocklyCollapserIcon() {
+    //     return (
+    //         '<svg data-prefix="fas" data-icon="chevron-left" ' +
+    //         'class="svg-inline--fa fa-chevron-left" role="img" ' +
+    //         'viewBox="0 0 320 512" aria-hidden="true">' +
+    //         '<path fill="currentColor" d="' +
+    //         'M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3' +
+    //         'l192 192c12.5 12.5 32.8 12.5 45.3 0' +
+    //         's12.5-32.8 0-45.3L77.3 256 246.6 86.6' +
+    //         'c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5' +
+    //         '-45.3 0l-192 192z' +
+    //         '"></path></svg>'
+    //     );
+    // }
 
 
     function ensureBlocklyResizeHandler() {
@@ -2824,21 +2824,21 @@
 
         blocklyResizeHandlerInstalled = true;
 
-        /*
-         * Der Handler sucht bei jedem Resize den aktuell von React
-         * gerenderten Button. Dadurch bleibt genau ein globaler
-         * Listener aktiv, auch wenn React die Blockly-Ansicht ersetzt.
-         */
-        window.addEventListener("resize", function () {
-            var button = document.querySelector(
-                "#react-container " +
-                ".jwinf-blockly-toolbox-collapser"
-            );
+        // /*
+        //  * Der Handler sucht bei jedem Resize den aktuell von React
+        //  * gerenderten Button. Dadurch bleibt genau ein globaler
+        //  * Listener aktiv, auch wenn React die Blockly-Ansicht ersetzt.
+        //  */
+        // window.addEventListener("resize", function () {
+        //     var button = document.querySelector(
+        //         "#react-container " +
+        //         ".jwinf-blockly-toolbox-collapser"
+        //     );
 
-            if (button) {
-                positionBlocklyToolboxCollapser(button);
-            }
-        });
+        //     if (button) {
+        //         positionBlocklyToolboxCollapser(button);
+        //     }
+        // });
     }
 
     function syncMainPrinterStore() {
@@ -2970,22 +2970,22 @@
         }
     }
 
-    function enhanceBlocklyToolboxCollapser() {
-        var elements = getBlocklyToolboxElements();
-        var root = elements.root;
-        var injectionDiv = elements.injectionDiv;
-        var existingButton;
-        var hadCustomState;
+    // function enhanceBlocklyToolboxCollapser() {
+    //     var elements = getBlocklyToolboxElements();
+    //     var root = elements.root;
+    //     var injectionDiv = elements.injectionDiv;
+    //     var existingButton;
+    //     var hadCustomState;
 
-        if (!root || !injectionDiv) {
-            return;
-        }
+    //     if (!root || !injectionDiv) {
+    //         return;
+    //     }
 
-        ensureBlocklyResizeHandler();
+    //     ensureBlocklyResizeHandler();
 
-        existingButton = injectionDiv.querySelector(
-            ".jwinf-blockly-toolbox-collapser"
-        );
+        // existingButton = injectionDiv.querySelector(
+        //     ".jwinf-blockly-toolbox-collapser"
+        // );
 
         /*
          * Bei einer nach Kategorien gruppierten Toolbox übernimmt
@@ -2995,173 +2995,173 @@
          * Falls beim Levelwechsel noch ein eingeklappter Zustand aktiv
          * ist, wird dieser ebenfalls wieder aufgehoben.
          */
-        if (isBlocklyGroupedByCategory(injectionDiv)) {
-            hadCustomState = Boolean(
-                existingButton ||
-                injectionDiv.classList.contains(
-                    "jwinf-blockly-toolbox-wrapper"
-                ) ||
-                root.classList.contains(
-                    "jwinf-blockly-toolbox-collapsed"
-                )
-            );
+        // if (isBlocklyGroupedByCategory(injectionDiv)) {
+        //     hadCustomState = Boolean(
+        //         existingButton ||
+        //         injectionDiv.classList.contains(
+        //             "jwinf-blockly-toolbox-wrapper"
+        //         ) ||
+        //         root.classList.contains(
+        //             "jwinf-blockly-toolbox-collapsed"
+        //         )
+        //     );
 
-            if (existingButton) {
-                existingButton.remove();
-            }
+        //     if (existingButton) {
+        //         existingButton.remove();
+        //     }
 
-            injectionDiv.classList.remove(
-                "jwinf-blockly-toolbox-wrapper"
-            );
+        //     injectionDiv.classList.remove(
+        //         "jwinf-blockly-toolbox-wrapper"
+        //     );
 
-            root.classList.remove(
-                "jwinf-blockly-toolbox-collapsed"
-            );
+        //     root.classList.remove(
+        //         "jwinf-blockly-toolbox-collapsed"
+        //     );
 
-            if (hadCustomState) {
-                setBlocklyToolboxVisible(true);
-                resizeBlocklyWorkspaceSoon();
-            }
+        //     if (hadCustomState) {
+        //         setBlocklyToolboxVisible(true);
+        //         resizeBlocklyWorkspaceSoon();
+        //     }
 
-            return;
-        }
+        //     return;
+        // }
 
-        if (
-            existingButton &&
-            existingButton.dataset.jwinfBound === "true"
-        ) {
-            positionBlocklyToolboxCollapser(existingButton);
-            return;
-        }
+        // if (
+        //     existingButton &&
+        //     existingButton.dataset.jwinfBound === "true"
+        // ) {
+        //     positionBlocklyToolboxCollapser(existingButton);
+        //     return;
+        // }
 
-        if (existingButton) {
-            existingButton.remove();
-        }
+        // if (existingButton) {
+        //     existingButton.remove();
+        // }
 
-        injectionDiv.classList.add(
-            "jwinf-blockly-toolbox-wrapper"
-        );
+        // injectionDiv.classList.add(
+        //     "jwinf-blockly-toolbox-wrapper"
+        // );
 
-        var button = document.createElement("button");
-        button.type = "button";
-        button.className =
-            "task-available-blocks-collapser " +
-            "jwinf-blockly-toolbox-collapser";
-        button.dataset.jwinfBound = "true";
-        button.setAttribute("aria-expanded", "true");
-        button.setAttribute(
-            "aria-label",
-            "Bausteinleiste ausblenden"
-        );
-        button.setAttribute(
-            "title",
-            "Bausteinleiste ausblenden"
-        );
-        button.innerHTML = getBlocklyCollapserIcon();
+        // var button = document.createElement("button");
+        // button.type = "button";
+        // button.className =
+        //     "task-available-blocks-collapser " +
+        //     "jwinf-blockly-toolbox-collapser";
+        // button.dataset.jwinfBound = "true";
+        // button.setAttribute("aria-expanded", "true");
+        // button.setAttribute(
+        //     "aria-label",
+        //     "Bausteinleiste ausblenden"
+        // );
+        // button.setAttribute(
+        //     "title",
+        //     "Bausteinleiste ausblenden"
+        // );
+        // button.innerHTML = getBlocklyCollapserIcon();
 
-        button.addEventListener(
-            "click",
-            function (event) {
-                var collapsed;
+        // button.addEventListener(
+        //     "click",
+        //     function (event) {
+        //         var collapsed;
 
-                event.preventDefault();
-                event.stopPropagation();
+        //         event.preventDefault();
+        //         event.stopPropagation();
 
-                if (
-                    typeof event.stopImmediatePropagation ===
-                    "function"
-                ) {
-                    event.stopImmediatePropagation();
-                }
+        //         if (
+        //             typeof event.stopImmediatePropagation ===
+        //             "function"
+        //         ) {
+        //             event.stopImmediatePropagation();
+        //         }
 
-                collapsed = !root.classList.contains(
-                    "jwinf-blockly-toolbox-collapsed"
-                );
+        //         collapsed = !root.classList.contains(
+        //             "jwinf-blockly-toolbox-collapsed"
+        //         );
 
-                root.classList.toggle(
-                    "jwinf-blockly-toolbox-collapsed",
-                    collapsed
-                );
+        //         root.classList.toggle(
+        //             "jwinf-blockly-toolbox-collapsed",
+        //             collapsed
+        //         );
 
-                button.classList.toggle(
-                    "is-collapsed",
-                    collapsed
-                );
+        //         button.classList.toggle(
+        //             "is-collapsed",
+        //             collapsed
+        //         );
 
-                button.setAttribute(
-                    "aria-expanded",
-                    collapsed ? "false" : "true"
-                );
+        //         button.setAttribute(
+        //             "aria-expanded",
+        //             collapsed ? "false" : "true"
+        //         );
 
-                button.setAttribute(
-                    "aria-label",
-                    collapsed
-                        ? "Bausteinleiste einblenden"
-                        : "Bausteinleiste ausblenden"
-                );
+        //         button.setAttribute(
+        //             "aria-label",
+        //             collapsed
+        //                 ? "Bausteinleiste einblenden"
+        //                 : "Bausteinleiste ausblenden"
+        //         );
 
-                button.setAttribute(
-                    "title",
-                    collapsed
-                        ? "Bausteinleiste einblenden"
-                        : "Bausteinleiste ausblenden"
-                );
-                setBlocklyToolboxVisible(!collapsed);
+        //         button.setAttribute(
+        //             "title",
+        //             collapsed
+        //                 ? "Bausteinleiste einblenden"
+        //                 : "Bausteinleiste ausblenden"
+        //         );
+        //         setBlocklyToolboxVisible(!collapsed);
 
-                positionBlocklyToolboxCollapser(button);
-                resizeBlocklyWorkspaceSoon();
+        //         positionBlocklyToolboxCollapser(button);
+        //         resizeBlocklyWorkspaceSoon();
 
-                window.setTimeout(function () {
-                    positionBlocklyToolboxCollapser(button);
-                }, 80);
+        //         window.setTimeout(function () {
+        //             positionBlocklyToolboxCollapser(button);
+        //         }, 80);
 
-                window.setTimeout(function () {
-                    positionBlocklyToolboxCollapser(button);
-                }, 250);
-            },
-            true
-        );
+        //         window.setTimeout(function () {
+        //             positionBlocklyToolboxCollapser(button);
+        //         }, 250);
+        //     },
+        //     true
+        // );
 
         /*
          * Den Button zunächst unsichtbar und ohne Animation an seine
          * endgültige Position setzen. Dadurch fliegt er beim Laden
          * nicht vom linken Rand zur Bausteinleiste.
          */
-        button.style.visibility = "hidden";
-        button.style.transition = "none";
+        // button.style.visibility = "hidden";
+        // button.style.transition = "none";
 
         /*
          * Die Position kann bereits vor dem Einfügen gesetzt werden.
          * So besitzt der Button beim ersten Rendern direkt die
          * richtige Ausgangsposition.
          */
-        positionBlocklyToolboxCollapser(button);
-        injectionDiv.appendChild(button);
+        // positionBlocklyToolboxCollapser(button);
+        // injectionDiv.appendChild(button);
 
         /*
          * Blockly benötigt beim ersten Laden etwas Zeit, bis die
          * endgültige Breite der Bausteinleiste feststeht.
          */
-        window.setTimeout(function () {
-            if (!document.documentElement.contains(button)) {
-                return;
-            }
+        // window.setTimeout(function () {
+        //     if (!document.documentElement.contains(button)) {
+        //         return;
+        //     }
 
-            positionBlocklyToolboxCollapser(button);
-            button.style.visibility = "visible";
+        //     positionBlocklyToolboxCollapser(button);
+        //     button.style.visibility = "visible";
 
-            /*
-             * Den korrekt positionierten Zustand einmal berechnen lassen,
-             * bevor spätere Animationen wieder erlaubt werden.
-             */
-            button.getBoundingClientRect();
+        //     /*
+        //      * Den korrekt positionierten Zustand einmal berechnen lassen,
+        //      * bevor spätere Animationen wieder erlaubt werden.
+        //      */
+        //     button.getBoundingClientRect();
 
-            window.requestAnimationFrame(function () {
-                button.style.transition = "";
-            });
-        }, 150);
+        //     window.requestAnimationFrame(function () {
+        //         button.style.transition = "";
+        //     });
+        // }, 150);
 
-    }
+    // }
 
     function arrangeNativeMenuItems(menu) {
         var aboutItem = findAboutMenuItem(menu);
